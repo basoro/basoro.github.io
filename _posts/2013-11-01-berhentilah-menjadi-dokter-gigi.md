@@ -1,8 +1,18 @@
 ---
-published: true
-star: true
+title: "Berhentilah Menjadi Dokter Gigi"
+layout: post
+date: 2013-11-01 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- dokter
+- puskesmas
+- gigi
+- dokter gigi
+- sistemik
 category: blog
 author: basoro
+description: Berhentilah Menjadi Dokter Gigi
 ---
 Beberapa bulan belakangan terjadi perdebatan seru tentang layanan primer Dokter Gigi. Tentang konsep layanan paripurna bidang kesehatan Gigi dan Mulut. Yang menjadi pertanyaan adalah, “Mengapa Dokter Gigi lebih identik dengan masalah-masalah kesehatan gigi saja?”. Maksud saya apakah sekedar ngurusin urusan kavitas, gigi goyang, sakit gigi, karang gigi hingga cabut-mencabut. Bukankah kita juga dituntut untuk melaksanakan konsep layanan kesehatan secara utuh?. Bukankah kita dulu sekolah dibidang kesehatan Gigi dan Mulut?. Hingga rumah sakit tempat kita mengasah skill dengan bangganya manamakan diri sebagai Rumah Sakit Gigi dan Mulut (RSGM). Yang berarti bidang kita adalah pelayanan kesehatan Gigi dan Mulut secara menyeluruh.
 
