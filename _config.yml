@@ -85,6 +85,7 @@ show-tags: true
 
 # related posts inside a post?
 related: true
+comment: true
 
 # Display links for next and previous posts for the specified categories
 post-advance-links: [blog]
