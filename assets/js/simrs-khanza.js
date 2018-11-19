@@ -41,15 +41,16 @@ function GetReleases(repo) {
                             .text(fileSize.toLocaleString() + " KB")
                         )
                     )
+                    //.append($("<td>")
+                    //    .text(downloadCount.toLocaleString())
+                    //)
                     .append($("<td>")
-                        .text(downloadCount.toLocaleString())
+                    //    .text(moment(asset.updated_at).format("YYYY-MM-DD HH:mm"))
+                        .text(moment(asset.updated_at).format("YYYY-MM-DD"))
                     )
-                    .append($("<td>")
-                        .text(moment(asset.updated_at).format("YYYY-MM-DD HH:mm"))
-                    )
-                    .append($("<td>")
-                        .text(activeDays.toFixed(1))
-                    )
+                    //.append($("<td>")
+                    //    .text(activeDays.toFixed(1))
+                    //)
                 );
         }
 
