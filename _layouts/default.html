@@ -27,7 +27,28 @@ layout: compress
     {% capture scss_sheet %}{% include style.scss %}{% endcapture %}
     {{ scss_sheet | scssify }}
     </style>
-
+    <style>
+    table {
+      margin-bottom: 1rem;
+      width: 100%;
+      font-size: 110%;
+      border: 1px solid #e5e5e5;
+      border-collapse: collapse;
+    }
+    td,
+    th {
+      padding: .5rem 1.5rem;
+      border: 1px solid #e5e5e5;
+    }
+    th {
+      text-align: left;
+    }
+    tbody tr:nth-child(odd) td,
+    tbody tr:nth-child(odd) th {
+      background-color: #f9f9f9;
+    }
+    </style>
+    
 </head>
 <body>
 
