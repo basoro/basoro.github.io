@@ -1,5 +1,8 @@
 ---
 published: true
+star: true
+category: blog
+author: basoro
 ---
 **Dalam setiap perjalanan ada pelajaran, bukan bagaimana cara mencapai tujuan, tapi bagaimana cara menikmati perjalanan itu sendiri. (drg. FAISOL BASORO)**
 
