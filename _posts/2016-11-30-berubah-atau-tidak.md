@@ -1,6 +1,9 @@
 ---
 layout: post
 title: Berubah Atau Tidak
+star: true
+category: blog
+author: basoro
 ---
 
 **…. Saya masih harus belajar banyak memahami kultur yang sedang berjalan di Puskesmas Barabai….**
