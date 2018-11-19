@@ -1,7 +1,6 @@
 ---
 title: ":ramen: SLEMP SIMRS Khanza Centos 6"
 layout: post
-published: false
 date: 2018-07-25 14:13
 tag:
 - linux
