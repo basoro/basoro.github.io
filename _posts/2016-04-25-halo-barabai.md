@@ -1,6 +1,9 @@
 ---
-layout : post
 title : Halo Barabai
+layout : post
+star: true
+category: blog
+author: basoro
 ---
 
 Inilah kota yang akhirnya saya memutuskan menetap setelah resmi menikah, Barabai. Atau yang lebih dikenal sebagai kota Apam. Dibandingkan kota-kota di daerah Jawa, Barabai tergolong kota kecil. 
