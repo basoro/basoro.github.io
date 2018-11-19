@@ -29,7 +29,7 @@ table {
 
 td,
 th {
-  padding: .5rem 1.0rem;
+  padding: .5rem 1.5rem;
   border: 1px solid #e5e5e5;
 }
 
