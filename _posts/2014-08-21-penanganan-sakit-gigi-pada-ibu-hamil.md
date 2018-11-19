@@ -1,5 +1,8 @@
 ---
 published: true
+star: true
+category: blog
+author: basoro
 ---
 
 <p>"Dok, obat apa ya yang boleh untuk sakit gigi pada ibu hamil?" 
