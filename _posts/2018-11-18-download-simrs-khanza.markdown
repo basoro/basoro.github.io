@@ -1,5 +1,5 @@
 ---
-title: ":cat: Downloads SIMRS Khanza"
+title: ":floppy_disk: Downloads SIMRS Khanza"
 layout: post
 date: 2018-11-18 14:13
 tag:
