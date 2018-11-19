@@ -1,6 +1,9 @@
 ---
 layout: post
 title: Puskesmas Barabai Dalam Harapan
+star: true
+category: blog
+author: basoro
 ---
 
 **...Dengan ini saudara-saudara saya lantik sebagai pejabat eselon dilingkungan Pemerintah Kabupaten Hulu Sungai Tengah....**
