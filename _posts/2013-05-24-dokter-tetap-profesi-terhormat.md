@@ -5,12 +5,11 @@ date: 2013-05-24 22:48
 image: /assets/images/profile.jpg
 headerImage: true
 tag:
-- markdown
-- components
-- extra
+- dokter
+- dokterpreuner
 category: blog
 author: basoro
-description: Markdown summary with different options
+description: Dokter Tetap Profesi Terhormat
 # jemoji: '<img class="emoji" title=":ramen:" alt=":ramen:" src="https://assets.github.com/images/icons/emoji/unicode/1f35c.png" height="20" width="20" align="absmiddle">'
 ---
 
