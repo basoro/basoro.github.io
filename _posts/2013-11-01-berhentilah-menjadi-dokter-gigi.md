@@ -1,5 +1,8 @@
 ---
 published: true
+star: true
+category: blog
+author: basoro
 ---
 Beberapa bulan belakangan terjadi perdebatan seru tentang layanan primer Dokter Gigi. Tentang konsep layanan paripurna bidang kesehatan Gigi dan Mulut. Yang menjadi pertanyaan adalah, “Mengapa Dokter Gigi lebih identik dengan masalah-masalah kesehatan gigi saja?”. Maksud saya apakah sekedar ngurusin urusan kavitas, gigi goyang, sakit gigi, karang gigi hingga cabut-mencabut. Bukankah kita juga dituntut untuk melaksanakan konsep layanan kesehatan secara utuh?. Bukankah kita dulu sekolah dibidang kesehatan Gigi dan Mulut?. Hingga rumah sakit tempat kita mengasah skill dengan bangganya manamakan diri sebagai Rumah Sakit Gigi dan Mulut (RSGM). Yang berarti bidang kita adalah pelayanan kesehatan Gigi dan Mulut secara menyeluruh.
 
