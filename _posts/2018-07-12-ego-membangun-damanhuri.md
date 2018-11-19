@@ -1,5 +1,8 @@
 ---
 published: true
+star: true
+category: blog
+author: basoro
 ---
 Tolong beritahu saya. Siapa yang punya ide mebuat visi RSUD H. Damanhuri sebegitu menterengnya. “Terwujudnya pelayanan prima menuju rumah sakit terbaik se Kalimantan Selatan”.
 
