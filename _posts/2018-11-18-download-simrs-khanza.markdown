@@ -19,30 +19,6 @@ author: basoro
 externalLink: false
 ---
 
-<style>
-table {
-  margin-bottom: 1rem;
-  width: 100%;
-  font-size: 110%;
-  border: 1px solid #e5e5e5;
-  border-collapse: collapse;
-}
-
-td,
-th {
-  padding: .5rem 1.5rem;
-  border: 1px solid #e5e5e5;
-}
-
-th {
-  text-align: left;
-}
-
-tbody tr:nth-child(odd) td,
-tbody tr:nth-child(odd) th {
-  background-color: #f9f9f9;
-}
-</style>
 SIMRS Khanza adalah Software Menejemen Rumah Sakit/Klinik/ Puskesmas yang gratis dan boleh digunakan siapa saja tanpa dikenai
 biaya apapun. Dilarang keras memperjualbelikan/mengambil keuntungan dari Software ini dalam bentuk apapun tanpa seijin pembuat
 software (Khanza.Soft Media).
@@ -61,5 +37,3 @@ software (Khanza.Soft Media).
   <tbody>
   </tbody>
 </table>
-
-<script src="/assets/js/simrs-khanza.js"></script>
