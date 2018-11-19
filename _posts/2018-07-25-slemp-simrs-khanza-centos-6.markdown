@@ -1,18 +1,22 @@
 ---
-title: "SLEMP SIMRS Khanza Centos 6"
+title: ":ramen: SLEMP SIMRS Khanza Centos 6"
 layout: post
+published: false
 date: 2018-07-25 14:13
-image: /assets/images/markdown.jpg
-headerImage: false
 tag:
 - linux
 - centos
 - simrs
 - khanza
 star: true
-category: blog
+image: /assets/images/markdown.jpg
+headerImage: true
+projects: true
+hidden: true # don't count this post in blog pagination
+description: "Simple Linux Nginx MySQL PHP-FPM Untuk Server SIMRS Khanza di Linux Centos 6 Minimal"
+category: project
 author: basoro
-description: Markdown summary with different options
+externalLink: false
 ---
 
 ### Simple Linux Nginx MySQL PHP-FPM Untuk Server SIMRS Khanza di Linux Centos 6 Minimal  
