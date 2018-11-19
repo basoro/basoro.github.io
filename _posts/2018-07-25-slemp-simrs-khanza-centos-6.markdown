@@ -1,5 +1,5 @@
 ---
-title: ":ramen: SLEMP SIMRS Khanza Centos 6"
+title: ":writing_hand: SLEMP SIMRS Khanza Centos 6"
 layout: post
 date: 2018-07-25 14:13
 tag:
