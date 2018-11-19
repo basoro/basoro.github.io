@@ -1,5 +1,8 @@
 ---
 published: true
+star: true
+category: blog
+author: basoro
 ---
 Sesorean Ryan dan Heri berbincang hebat tentang suasana kantor yang semakin sibuk. Apalagi menjelang bulan puasa dan lebaran. Tugas jaga untuk posko lebaran telah dibuat. Untungnya untuk tahun ini jadwal jaga Ryan tidak bertepatan dengan hari H lebaran. Kopi pahit yang mereka nikmati bersama rupanya sisa separuh.
 
