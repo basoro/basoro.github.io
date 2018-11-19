@@ -49,9 +49,9 @@ tbody tr:nth-child(odd) th {
     <tr>
       <th>Release</th>
       <th>Size</th>
-      <th>Count</th>
+      <!--<th>Count</th>-->
       <th>Date</th>
-      <th>Active days</th>
+      <!--<th>Active days</th>-->
     </tr>
   </thead>
   <tbody>
