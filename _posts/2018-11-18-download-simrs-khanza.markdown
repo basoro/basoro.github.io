@@ -1,8 +1,21 @@
 ---
-layout: page
-title: Downloads SIMRS Khanza
-project: true
+title: ":ramen: Downloads SIMRS Khanza"
+layout: post
+date: 2018-11-18 14:13
+tag:
+- linux
+- centos
+- simrs
+- khanza
+star: true
+image: /assets/images/markdown.jpg
+headerImage: true
+projects: true
+hidden: true # don't count this post in blog pagination
+description: "Downloads SIMRS Khanza"
 category: project
+author: basoro
+externalLink: false
 ---
 
 <style>
