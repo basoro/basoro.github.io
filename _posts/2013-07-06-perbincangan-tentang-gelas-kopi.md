@@ -1,8 +1,17 @@
 ---
-published: true
-star: true
+title: "Perbincangan Tentang Gelas Kopi"
+layout: post
+date: 2013-05-24 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- kopi
+- cerita
+- keluarga
+- filosofi
 category: blog
 author: basoro
+description: Perbincangan Tentang Gelas Kopi
 ---
 Sesorean Ryan dan Heri berbincang hebat tentang suasana kantor yang semakin sibuk. Apalagi menjelang bulan puasa dan lebaran. Tugas jaga untuk posko lebaran telah dibuat. Untungnya untuk tahun ini jadwal jaga Ryan tidak bertepatan dengan hari H lebaran. Kopi pahit yang mereka nikmati bersama rupanya sisa separuh.
 
