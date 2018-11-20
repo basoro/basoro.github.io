@@ -11,7 +11,6 @@ tag:
 category: blog
 author: basoro
 description: Dokter Tetap Profesi Terhormat
-# jemoji: '<img class="emoji" title=":ramen:" alt=":ramen:" src="https://assets.github.com/images/icons/emoji/unicode/1f35c.png" height="20" width="20" align="absmiddle">'
 ---
 
 Jadi dokter harus kaya. Sepenggal kata itu selalu jadi mantra bagi rekan sejawat dokter dari manapun diluluskan. Bukan apa-apa, stigma masyarakat yang selalu menganalogikan bahwa dokter kaya seringkali semakin menjadikan dokter semakin terjepit. Antar pilihan idelais dengan pilihan duitis. Ok, akan saya urutkan strata dokter berdasarkan urutan “kaya” dan karena apa dokter itu bisa “kaya”.
