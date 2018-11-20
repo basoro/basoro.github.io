@@ -1,9 +1,20 @@
 ---
-published: true
+title: Ego Membangun Damanhuri
+layout: post
 commentIssueId: 11 
-star: true
+date: 2018-07-12 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- RSHD
+- damanhuri
+- rumah sakit
+- dokter
+- HST
+- barabai
 category: blog
 author: basoro
+description: Ego Membangun Damanhuri
 ---
 Tolong beritahu saya. Siapa yang punya ide mebuat visi RSUD H. Damanhuri sebegitu menterengnya. “Terwujudnya pelayanan prima menuju rumah sakit terbaik se Kalimantan Selatan”.
 
