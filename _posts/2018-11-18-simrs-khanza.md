@@ -24,7 +24,7 @@ biaya apapun. Dilarang keras memperjualbelikan atau mengambil keuntungan dari So
 
 Berikut adalah rilis SIMRS Khanza tiap awal bulan. Dalam rilis bulanan ini, sudah lengkap paket binary untuk klien dan paket bundle untuk server beserta databasenya. Untuk cara instalasi dan konfigurasi silahkan merujuk ke situs resmi <a href="https://www.yaski.or.id" target="_blank">Yaski</a>. Jika menginginkan konfigurasi server Linux yang tangguh beserta pakte SIMRS Khanza untuk Klien, silahkan merujuk ke <a href="https://basoro.github.io/slemp-simrs-khanza-centos-6/">SLEMP SIMRS Khanza Centos 6</a>
 
-<!--<h3>Last 30 releases<span class="total-downloads"></span></h3>-->
+<h3>Last 30 releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
   <thead>
     <tr>
