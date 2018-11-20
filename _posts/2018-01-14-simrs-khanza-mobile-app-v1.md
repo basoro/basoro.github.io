@@ -1,5 +1,5 @@
 ---
-title: ":writing_hand: SIMRS Khanza Aplikasi Mobile (Android Web View)"
+title: ":writing_hand: SIMRS Khanza Mobile App Versi 1"
 layout: post
 commentIssueId: 10 
 date: 2018-07-25 14:13
