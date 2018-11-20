@@ -6,11 +6,11 @@ date: 2018-07-12 22:48
 image: /assets/images/profile.jpg
 headerImage: true
 tag:
-- RSHD
+- rshd
 - damanhuri
 - rumah sakit
 - dokter
-- HST
+- hst
 - barabai
 category: blog
 author: basoro
