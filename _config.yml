@@ -97,6 +97,11 @@ show-author: true
 # do you want some animations?
 animation: true
 
+compress_html:
+  clippings: all
+  comments:  ["<!-- ", " -->"]
+  endings:   all
+  
 plugins:
   - jekyll-seo-tag
   - jekyll-gist
