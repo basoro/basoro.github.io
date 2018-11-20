@@ -1,6 +1,7 @@
 ---
 title: ":writing_hand: SLEMP SIMRS Khanza Centos 6"
 layout: post
+commentIssueId: 12 
 date: 2018-07-25 14:13
 tag:
 - linux
