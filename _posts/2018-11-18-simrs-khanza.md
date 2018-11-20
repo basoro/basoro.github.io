@@ -30,7 +30,7 @@ software (Khanza.Soft Media).
       <th>Release</th>
       <th>Size</th>
       <!--<th>Count</th>-->
-      <th>Date</th>
+      <th class="none">Date</th>
       <!--<th>Active days</th>-->
     </tr>
   </thead>
