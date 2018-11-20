@@ -1,7 +1,7 @@
 ---
 title: "Dokter Tetap Profesi Terhormat"
 layout: post
-commentIssueId: 13 
+commentIssueId: 2 
 date: 2013-05-24 22:48
 image: /assets/images/profile.jpg
 headerImage: true
