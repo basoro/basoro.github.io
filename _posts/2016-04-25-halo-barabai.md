@@ -1,10 +1,19 @@
 ---
 title : Halo Barabai
-layout : post
+layout: post
 commentIssueId: 6 
-star: true
+date: 2016-04-25 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- puskesmas
+- dokter gigi
+- HST
+- barabai
+- banjar
 category: blog
 author: basoro
+description: Halo Barabai
 ---
 
 Inilah kota yang akhirnya saya memutuskan menetap setelah resmi menikah, Barabai. Atau yang lebih dikenal sebagai kota Apam. Dibandingkan kota-kota di daerah Jawa, Barabai tergolong kota kecil. 
