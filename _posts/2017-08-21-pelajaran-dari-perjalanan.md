@@ -1,9 +1,19 @@
 ---
-published: true
-star: true
+title: Pelajaran Dari Perjalanan
+layout: post
 commentIssueId: 9 
+date: 2017-18-21 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- puskesmas
+- rshd
+- dokter
+- HST
+- barabai
 category: blog
 author: basoro
+description: Halo Barabai
 ---
 **Dalam setiap perjalanan ada pelajaran, bukan bagaimana cara mencapai tujuan, tapi bagaimana cara menikmati perjalanan itu sendiri. (drg. FAISOL BASORO)**
 
