@@ -1,3 +1,4 @@
+$(document).ready(function () {
   function loadComments(data) {
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
@@ -17,3 +18,4 @@
       loadComments(msg);
    }
   });
+});
