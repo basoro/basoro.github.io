@@ -1,6 +1,7 @@
 ---
 title: "Berhentilah Menjadi Dokter Gigi"
 layout: post
+commentIssueId: 3 
 date: 2013-11-01 22:48
 image: /assets/images/profile.jpg
 headerImage: true
