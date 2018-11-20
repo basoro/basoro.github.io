@@ -1,9 +1,20 @@
 ---
-commentIssueId: 4
-published: true
-star: true
+title: "Penanganan Sakit Gigi Pada Ibu Hamil"
+layout: post
+commentIssueId: 4 
+date: 2014-08-21 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- dokter
+- dokterpreuner
+- dokter gigi
+- dental
+- kalsium
+- sakit gigi
 category: blog
 author: basoro
+description: Penanganan Sakit Gigi Pada Ibu Hamil
 ---
 
 <p>"Dok, obat apa ya yang boleh untuk sakit gigi pada ibu hamil?" 
