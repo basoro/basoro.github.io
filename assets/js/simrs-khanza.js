@@ -44,7 +44,7 @@ function GetReleases(repo) {
                     //.append($("<td>")
                     //    .text(downloadCount.toLocaleString())
                     //)
-                    .append($("<td>")
+                    .append($("<td class=\"none\">")
                     //    .text(moment(asset.updated_at).format("YYYY-MM-DD HH:mm"))
                         .text(moment(asset.updated_at).format("YYYY-MM-DD"))
                     )
