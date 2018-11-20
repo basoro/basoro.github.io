@@ -1,7 +1,7 @@
 ---
 title: "Perbincangan Tentang Gelas Kopi"
 layout: post
-commentIssueId: 2 
+commentIssueId: 13 
 date: 2013-05-24 22:48
 image: /assets/images/profile.jpg
 headerImage: true
