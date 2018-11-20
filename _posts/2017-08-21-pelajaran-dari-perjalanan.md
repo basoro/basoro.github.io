@@ -2,7 +2,7 @@
 title: Pelajaran Dari Perjalanan
 layout: post
 commentIssueId: 9 
-date: 2017-18-21 22:48
+date: 2017-08-21 22:48
 image: /assets/images/profile.jpg
 headerImage: true
 tag:
