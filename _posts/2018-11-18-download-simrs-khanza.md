@@ -1,9 +1,8 @@
 ---
 title: ":floppy_disk: Downloads SIMRS Khanza"
 layout: post
-commentIssueId: 13 
+commentIssueId: 14 
 date: 2018-11-18 14:13
-commentIssueId: 1 
 tag:
 - linux
 - centos
