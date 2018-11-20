@@ -37,3 +37,4 @@ software (Khanza.Soft Media).
   <tbody>
   </tbody>
 </table>
+<script src="/assets/js/simrs-khanza.js"></script>
