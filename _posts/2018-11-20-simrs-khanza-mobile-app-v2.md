@@ -9,7 +9,7 @@ tag:
 - simrs
 - khanza
 star: true
-image: /assets/images/damanhuri-icon-app.png
+image: /assets/images/logo-app.png
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
