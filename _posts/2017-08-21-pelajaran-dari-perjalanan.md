@@ -9,7 +9,6 @@ tag:
 - puskesmas
 - rshd
 - dokter
-- HST
 - barabai
 category: blog
 author: basoro
