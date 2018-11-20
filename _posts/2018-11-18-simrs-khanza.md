@@ -24,7 +24,7 @@ biaya apapun. Dilarang keras memperjualbelikan atau mengambil keuntungan dari So
 
 Berikut adalah rilis SIMRS Khanza tiap awal bulan. Dalam rilis bulanan ini, sudah lengkap paket binary untuk klien dan paket bundle untuk server beserta databasenya. Untuk cara instalasi dan konfigurasi silahkan merujuk ke situs resmi <a href="https://www.yaski.or.is" target="_blank">Yaski</a>.
 
-<h3>Last 30 releases<span class="total-downloads"></span></h3>
+<!--<h3>Last 30 releases<span class="total-downloads"></span></h3>-->
 <table class="table-downloads">
   <thead>
     <tr>
