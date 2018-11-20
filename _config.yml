@@ -58,7 +58,7 @@ authors:
     basoro:
         name: Basoro
         bio: Seorang bapak dari 3 anak. Sebagai Dokter Gigi di RSUD H. Damanhuri di Barabai - Hulu Sungai Tengah
-        external-image: false
+        external-image: true
         #picture: assets/images/profile.jpg
         picture: https://avatars3.githubusercontent.com/u/14934712?v=4
 
