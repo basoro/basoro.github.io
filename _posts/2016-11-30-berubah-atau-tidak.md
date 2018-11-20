@@ -1,5 +1,6 @@
 ---
 layout: post
+commentIssueId: 8 
 title: Berubah Atau Tidak
 star: true
 category: blog
