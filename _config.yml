@@ -9,7 +9,6 @@ description: Catatan ringan angin-anginan. Sebagai Dokter Gigi Puskesmas di Bara
 # better with square images
 external-image: false
 picture: assets/images/profile.jpg
-avatar: https://avatars3.githubusercontent.com/u/14934712?v=4
 
 # If you want to include your resume, set to true
 # and specify source (external or local).
@@ -60,7 +59,8 @@ authors:
         name: Basoro
         bio: Seorang bapak dari 3 anak. Sebagai Dokter Gigi di RSUD H. Damanhuri di Barabai - Hulu Sungai Tengah
         external-image: false
-        picture: assets/images/profile.jpg
+        #picture: assets/images/profile.jpg
+        picture: https://avatars3.githubusercontent.com/u/14934712?v=4
 
 # do you want a larger site? change the option below
 # options: [normal, large] | default: normal
