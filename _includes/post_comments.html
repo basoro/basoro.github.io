@@ -1,8 +1,8 @@
 <div class="clearfix"></div>
 <br>
-<div id="komentar">
+<div id="comments">
 <div class="post-header">
-  <h1 class="h1 post-title">Komentar</h1>
+  <h1 class="h1 post-title">Comments</h1>
 </div>
 
 <article class="post-content">
@@ -21,7 +21,7 @@
       var cavatarlink = data[i].user.avatar_url;      
       var cdate = new Date(data[i].created_at);
       var dopts = { month: 'short', day: 'numeric', year: 'numeric' }
-      $("#komentar").append('<br><div class="post-header"><span class="post-meta">' + cdate.toLocaleDateString("en", dopts) + '</span><br><a class="post-link" href="' + cuserlink + '"><h3 class="h3 post-title">' + cuser + '</h3></a></div><article class="post-content">' + cbody + '</article>');
+      $("#comments").append('<br><div class="post-header"><span class="post-meta">' + cdate.toLocaleDateString("en", dopts) + '</span><br><a class="post-link" href="' + cuserlink + '"><h3 class="h3 post-title">' + cuser + '</h3></a></div><article class="post-content">' + cbody + '</article>');
     }
   }
   $.ajax("https://api.github.com/repos/basoro/basoro.github.io/issues/{{page.commentIssueId}}/comments", {
