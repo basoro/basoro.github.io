@@ -16,6 +16,7 @@ category: blog
 author: basoro
 description: Ego Membangun Damanhuri
 ---
+
 Tolong beritahu saya. Siapa yang punya ide mebuat visi RSUD H. Damanhuri sebegitu menterengnya. “Terwujudnya pelayanan prima menuju rumah sakit terbaik se Kalimantan Selatan”.
 
 Yang saya tahu sejak saya bekerja di rumah sakit ini memang sudah ada seperti itu. Belum lagi misi rumah sakit yang ada dalam profil dan spanduk besar bagian tengah rumah sakit ini. Mungkin tidak terlalu banyak yang memperhatikan. Kalau disarikan kira-kira seperti ini. “Dengan memberikan pelayanan yang baik, bermutu, canggih, professional, representatif, cepat, tepat melalui pengembangan tekhnologi informasi dan sumber daya manusia untuk perlindungan hukum dan keselamatan seluruh karyawan”. Kira-kira seperti itu.
