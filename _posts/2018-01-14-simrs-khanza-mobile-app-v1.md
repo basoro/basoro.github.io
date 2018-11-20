@@ -19,4 +19,4 @@ author: basoro
 externalLink: false
 ---
 
-### Aplikasi Mobile (Android Web View) SIMRS Khanza  
+### Aplikasi Mobile (Android Web View) SIMRS Khanza Versi 1
