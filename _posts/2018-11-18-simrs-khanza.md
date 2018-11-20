@@ -30,7 +30,7 @@ Berikut adalah rilis SIMRS Khanza tiap awal bulan. Dalam rilis bulanan ini, suda
     <tr>
       <th>Release</th>
       <th>Size</th>
-      <!--<th>Count</th>-->
+      <th class="none">Count</th>
       <th class="none">Date</th>
       <!--<th>Active days</th>-->
     </tr>
