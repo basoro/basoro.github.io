@@ -1,6 +1,7 @@
 ---
 title: ":writing_hand: SIMRS Khanza Aplikasi Mobile (Android Web View)"
 layout: post
+commentIssueId: 10 
 date: 2018-07-25 14:13
 tag:
 - android
