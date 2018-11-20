@@ -1,6 +1,7 @@
 ---
 title : Halo Barabai
 layout : post
+commentIssueId: 6 
 star: true
 category: blog
 author: basoro
