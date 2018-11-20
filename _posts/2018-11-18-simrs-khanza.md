@@ -1,5 +1,5 @@
 ---
-title: ":floppy_disk: Downloads SIMRS Khanza"
+title: ":floppy_disk: SIMRS Khanza"
 layout: post
 commentIssueId: 14 
 date: 2018-11-18 14:13
@@ -13,7 +13,7 @@ image: /assets/images/markdown.jpg
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
-description: "Downloads SIMRS Khanza"
+description: "SIMRS Khanza"
 category: project
 author: basoro
 externalLink: false
