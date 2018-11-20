@@ -1,5 +1,6 @@
 ---
 layout: post
+commentIssueId: 7 
 title: Puskesmas Barabai Dalam Harapan
 star: true
 category: blog
