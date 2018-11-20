@@ -9,7 +9,7 @@ tag:
 - simrs
 - khanza
 star: true
-image: /assets/images/markdown.jpg
+image: /assets/images/aski.png
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
