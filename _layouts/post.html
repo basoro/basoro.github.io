@@ -48,6 +48,6 @@ layout: page
     {% include disqus.html %}
 {% endif %}
 
-{% if site.comments %}
+{% if site.comments and page.commentIssueId %}
     {% include post_comments.html %}
 {% endif %}
