@@ -24,7 +24,8 @@
       $("#comments").append('<br><div class="post-header bg-{{site.default_post_color}}"><span class="post-meta">' + cdate.toLocaleDateString("en", dopts) + '</span><br><a class="post-link" href="' + cuserlink + '"><h3 class="h3 post-title">' + cuser + '</h3></a></div><article class="post-content">' + cbody + '</article>');
     }
   }
-  $.ajax("https://api.github.com/repos/basoro/basoro.github.io/issues/{{ page.commentIssueId }}/comments", {
+  //$.ajax("https://api.github.com/repos/basoro/basoro.github.io/issues/{{ page.commentIssueId }}/comments", {
+  $.ajax("https://api.github.com/repos/basoro/basoro.github.io/issues/1/comments", {
     headers: {Accept: "application/vnd.github.v3.html+json"},
     dataType: "json",
     success: function(msg){
