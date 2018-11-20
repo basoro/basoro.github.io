@@ -1,10 +1,18 @@
 ---
+title: Berubah Atau Tidak
 layout: post
 commentIssueId: 8 
-title: Berubah Atau Tidak
-star: true
+date: 2016-11-30 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- puskesmas
+- HST
+- barabai
+- JKN
 category: blog
 author: basoro
+description: Berubah Atau Tidak
 ---
 
 **…. Saya masih harus belajar banyak memahami kultur yang sedang berjalan di Puskesmas Barabai….**
