@@ -9,6 +9,7 @@ description: Catatan ringan angin-anginan. Sebagai Dokter Gigi Puskesmas di Bara
 # better with square images
 external-image: false
 picture: assets/images/profile.jpg
+avatar: https://avatars3.githubusercontent.com/u/14934712?v=4
 
 # If you want to include your resume, set to true
 # and specify source (external or local).
