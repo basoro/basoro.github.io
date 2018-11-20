@@ -1,6 +1,7 @@
 ---
 title: ":writing_hand: Siap Dokter"
 layout: post
+commentIssueId: 5 
 date: 2018-07-25 14:13
 tag:
 - sistem informasi
