@@ -1,10 +1,17 @@
 ---
+title: Puskesmas Barabai Dalam Harapan
 layout: post
 commentIssueId: 7 
-title: Puskesmas Barabai Dalam Harapan
-star: true
+date: 2016-11-26 22:48
+image: /assets/images/profile.jpg
+headerImage: true
+tag:
+- puskesmas
+- HST
+- barabai
 category: blog
 author: basoro
+description: Puskesmas Barabai Dalam Harapan
 ---
 
 **...Dengan ini saudara-saudara saya lantik sebagai pejabat eselon dilingkungan Pemerintah Kabupaten Hulu Sungai Tengah....**
