@@ -210,7 +210,7 @@ mkdir /var/www/panel
 mkdir /var/www/logs/
 mkdir /usr/share/nginx/logs/
 
-curl -o /var/www/panel/tinyfilemanager.php https://raw.githubusercontent.com/basoro/basoro.github.io/master/_/filemanager.php
+curl -o /var/www/panel/filemanager.php https://raw.githubusercontent.com/basoro/basoro.github.io/master/_/filemanager.php
 curl -o /var/www/panel/phpminiadmin.php https://raw.githubusercontent.com/osalabs/phpminiadmin/master/phpminiadmin.php
 
 cat > /var/www/html/index.php <<END
