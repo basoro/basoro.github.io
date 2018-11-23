@@ -24,7 +24,7 @@ biaya apapun. Dilarang keras memperjualbelikan atau mengambil keuntungan dari So
 
 Berikut adalah rilis SIMRS Khanza tiap awal bulan. Dalam rilis bulanan ini, sudah lengkap paket binary untuk klien dan paket bundle untuk server beserta databasenya. Untuk cara instalasi dan konfigurasi silahkan merujuk ke situs resmi <a href="https://www.yaski.or.id" target="_blank">Yaski</a>. Jika menginginkan konfigurasi server Linux yang tangguh beserta pakte SIMRS Khanza untuk Klien, silahkan merujuk ke <a href="https://basoro.github.io/slemp-simrs-khanza-centos-6/">SLEMP SIMRS Khanza Centos 6</a>
 
-Licensi yang dianut di software ini adalah <a href="https://en.wikipedia.org/wiki/Aladdin_Free_Public_License">Aladdin Free Public License<a/>. 
+Licensi yang dianut di software ini adalah <a href="https://en.wikipedia.org/wiki/Aladdin_Free_Public_License">Aladdin Free Public License<a/>.<br> 
 Informasi dan panduan bisa dicek di halaman <a href="https://github.com/mas-elkhanza/SIMRS-Khanza/wiki">Wiki SIMRS Khanza</a>.  
 
 <h3>Last releases<span class="total-downloads"></span></h3>
