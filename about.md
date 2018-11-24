@@ -11,7 +11,7 @@ Nama : Faisol Basoro<br />
 Tempat/Tanggal Lahir : Probolinggo/17 April 1978<br />
 Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hulu Sungai Tengah (Barabai), Kalimantan Selatan<br />
 e-Mail : dentix.id@gmail.com<br />
-Website : <a href="https://basoro.github.io" rel="nofollow">https://basoro.github.io</a><br /><br>
+Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br /><br>
 
 **PENGALAMAN KERJA**
 <br><br>
