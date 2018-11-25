@@ -20,7 +20,17 @@ externalLink: false
 ---
 
 ### Aplikasi Mobile SIMRS Khanza Versi 2
-Aplikasi Hybrid dengan menggunakan Cordova Phonegap. Untuk cara instalasi silahkan merujuk kesitus resmi YASKI <a href="https://yaski.or.id/detailpost/instalasi-apam-online-simrs-khanza" target="_blank">disini</a>.
+<div class="side-by-side">
+    <div class="toleft">
+        <p>Aplikasi Hybrid dengan menggunakan Cordova Phonegap. Untuk cara instalasi silahkan merujuk kesitus resmi YASKI <a href="https://yaski.or.id/detailpost/instalasi-apam-online-simrs-khanza" target="_blank">disini</a>.</p>
+    </div>
+
+    <div class="toright">
+        <img class="image" src="/assets/images/apam-barabai.png" alt="Alt Text">
+        <figcaption class="caption">APAM Barabai</figcaption>
+    </div>
+</div>
+
 
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
