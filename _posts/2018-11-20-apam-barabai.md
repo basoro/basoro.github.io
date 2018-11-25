@@ -1,5 +1,5 @@
 ---
-title: ":floppy_disk: SIMRS Khanza Mobile App Versi 2"
+title: ":floppy_disk: APAM Barabai"
 layout: post
 commentIssueId: 15 
 date: 2018-11-20 14:13
@@ -13,7 +13,7 @@ image: /assets/images/logo-app.png
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
-description: "Aplikasi Mobile (Android Web View) untuk pasien rawat jalan SIMRS Khanza"
+description: "Aplikasi Mobile (Android Web View) untuk pasien rawat jalan SIMRS Khanza versi 2"
 category: project
 author: basoro
 externalLink: false
