@@ -25,7 +25,8 @@ Aplikasi Hybrid dengan menggunakan Cordova Phonegap. Untuk cara instalasi silahk
 
 APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang diperuntukan bagi pasien yang ingin mendaftar online di Rumah Sakit. Syaratnya SIMRS yang digunakan adalah SIMRS Khanza. Silahkan merujuk kesini untuk keterangan lebih lanjut. Selain itu ada fitur aduan jika ada keluhan dan ketidakpuasan terhadap layanan RS.
 
-<img class="image" src="/assets/images/apam-barabai.png" alt="Alt Text">
+![Markdowm Image][/assets/images/apam-barabai.png]
+<figcaption class="caption">APAM Barabai</figcaption>
 
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
