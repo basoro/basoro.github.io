@@ -20,13 +20,13 @@ Kedua, buat folder usplash di /usr/local/src agar kemudian bisa kita pake lagi. 
 
 Ketiga, lakukan compile code sumber dari usplash.zip tadi untuk membuat file binary usplash.so dengan langkah sebagai berikut.
 
-{% highlight html %}
+{% highlight raw %}
 
-sudo pngtousplash usplash.png &gt; usplash.c
+sudo pngtousplash usplash.png > usplash.c
 
-sudo pngtousplash throbber_back.png &gt; throbber_back.c
+sudo pngtousplash throbber_back.png > throbber_back.c
 
-sudo pngtousplash throbber_fore.png &gt; throbber_fore.c
+sudo pngtousplash throbber_fore.png > throbber_fore.c
 
 sudo gcc -g -Wall -fPIC -o usplash.o -c usplash.c
 
