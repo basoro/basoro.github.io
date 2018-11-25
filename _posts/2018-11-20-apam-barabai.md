@@ -1,5 +1,5 @@
 ---
-title: ":writing_hand: SIMRS Khanza Mobile App Versi 2"
+title: ":floppy_disk: SIMRS Khanza Mobile App Versi 2"
 layout: post
 commentIssueId: 15 
 date: 2018-11-20 14:13
