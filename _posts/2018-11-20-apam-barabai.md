@@ -19,7 +19,8 @@ author: basoro
 externalLink: false
 ---
 
-### Aplikasi Mobile (Android Web View) SIMRS Khanza Versi 2
+### Aplikasi Mobile SIMRS Khanza Versi 2
+Aplikasi Hybrid dengan menggunakan Cordova Phonegap. Untuk cara instalasi silahkan merujuk kesitus resmi YASKI <a href="https://yaski.or.id/detailpost/instalasi-apam-online-simrs-khanza" target="_blank">disini</a>.
 
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
