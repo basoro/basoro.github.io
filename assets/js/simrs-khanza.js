@@ -51,9 +51,9 @@ function GetReleases(repo) {
                     //    .text(moment(asset.updated_at).format("YYYY-MM-DD HH:mm"))
                         .text(moment(asset.updated_at).format("YYYY-MM-DD"))
                     )
-                    //.append($("<td>")
-                    //    .text(activeDays.toFixed(1))
-                    //)
+                    .append($("<td class=\"none\">")
+                        .text(activeDays.toFixed(1))
+                    )
                 );
         }
 
