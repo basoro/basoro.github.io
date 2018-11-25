@@ -20,20 +20,12 @@ externalLink: false
 ---
 
 ### Aplikasi Mobile SIMRS Khanza Versi 2
-<div class="side-by-side">
-    <div class="toleft">
-        <p>Aplikasi Hybrid dengan menggunakan Cordova Phonegap. Untuk cara instalasi silahkan merujuk kesitus resmi YASKI <a href="https://yaski.or.id/detailpost/instalasi-apam-online-simrs-khanza" target="_blank">disini</a>.</p>
-       <p>APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang diperuntukan bagi pasien yang ingin mendaftar online di Rumah Sakit. Syaratnya SIMRS yang digunakan adalah SIMRS Khanza. Silahkan merujuk kesini untuk keterangan lebih lanjut. Selain itu ada fitur aduan jika ada keluhan dan ketidakpuasan terhadap layanan RS.</p>
-        <p>Penggunaan aplikasi sementara ini hanya berlaku bagi Pasien yang telah memiliki No RM.</p>
-        <p>Pendaftaran Online dapat dilakukan dengan memasukkan Nomor Kartu Berobat, Nomro KTP (NIK), Cara Bayar, Pilihan hari dan dokter untuk poli reguler. Dokter yang ditunjuk adalah dokter DPJP (Dokter Penanggung Jawab Pelayanan)</p>
-    </div>
 
-    <div class="toright">
-        <img class="image" src="/assets/images/apam-barabai.png" alt="Alt Text">
-        <figcaption class="caption">APAM Barabai</figcaption>
-    </div>
-</div>
+Aplikasi Hybrid dengan menggunakan Cordova Phonegap. Untuk cara instalasi silahkan merujuk kesitus resmi YASKI <a href="https://yaski.or.id/detailpost/instalasi-apam-online-simrs-khanza" target="_blank">disini</a>.
 
+APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang diperuntukan bagi pasien yang ingin mendaftar online di Rumah Sakit. Syaratnya SIMRS yang digunakan adalah SIMRS Khanza. Silahkan merujuk kesini untuk keterangan lebih lanjut. Selain itu ada fitur aduan jika ada keluhan dan ketidakpuasan terhadap layanan RS.
+
+<img class="image" src="/assets/images/apam-barabai.png" alt="Alt Text">
 
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
