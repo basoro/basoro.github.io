@@ -34,7 +34,6 @@ Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br/><
   
 **PENGALAMAN KERJA**
 
-<br><br>
 Sebagai Dokter Gigi
 <ol>
 <li>2005 &#8211; 2007 : Universitas Jember Medical Center.</li>
