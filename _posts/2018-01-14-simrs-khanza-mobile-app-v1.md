@@ -1,5 +1,5 @@
 ---
-title: ":floppy_disk: SIMRS Khanza Mobile App Versi 1"
+title: ":floppy_disk: Aplikasi Damanhuri"
 layout: post
 commentIssueId: 10 
 date: 2018-07-25 14:13
@@ -13,7 +13,7 @@ image: /assets/images/damanhuri-icon-app.png
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
-description: "Aplikasi Mobile (Android Web View) untuk pasien rawat jalan SIMRS Khanza"
+description: "Aplikasi Mobile (Android Web View) untuk pasien rawat jalan SIMRS Khanza versi 1"
 category: project
 author: basoro
 externalLink: false
