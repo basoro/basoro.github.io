@@ -14,14 +14,18 @@ Semenjak akhir tahun 2002 saya mulai mengenal Slackware, dan tetap menemani kese
 
 **Portfolio**
 
-Untuk portfolio selengkapnya baca Curriculum Vitae saya.
+Untuk portfolio selengkapnya baca <a href="#curriculum-vitae">Curriculum Vitae</a> saya.
 
-### PENYANGKALAN
+### Penyangkalan
 
 Semua yang ada dalam tulisan ini adalah pandangan pribadi saya, tanpa ada muatan-muatan yang mengandung SARA atau mewakili kepentingan-kepentingan institusi lain. Isi dari blog sepenuhnya menjadi tanggung jawab saya. Dikarenakan ini adalah blog, ada mekanisme komentar dan umpan balik maka itu tangggung jawab masing-masing komentator (pengunjung) dan web (pemiliknya) yang melakukan umpan balik. Penggunaan isi blog ini oleh pengunjung atau disebarluaskan juga bukan tanggung jawab saya.
 
-Jika ada hak cipta yang telah saya langgar dikarenakan tulisan-tulisan di blog ini, sudilah mengingatkan saya di halaman kontak.
+Jika ada hak cipta yang telah saya langgar dikarenakan tulisan-tulisan di blog ini, sudilah mengingatkan saya di dentix.id[hapus]@[hapus]gmail.com.
 
+
+### Curriculum Vitae
+
+<section id="curriculum-vitae">
 Nama : Faisol Basoro<br />
 Tempat/Tanggal Lahir : Probolinggo/17 April 1978<br />
 Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hulu Sungai Tengah (Barabai), Kalimantan Selatan<br />
@@ -123,3 +127,4 @@ Ketrampilan Teknik
 <li>Menghargai orisinalitas.</li>
 <li>Masih muda dan dapat diandalkan.</li>
 </ul>
+</section>
