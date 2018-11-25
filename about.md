@@ -32,8 +32,8 @@ Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hu
 e-Mail : dentix.id[hapus]@[hapus]gmail.com <br/>
 Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br/><br/>
   
-**PENGALAMAN KERJA**
-
+#### PENGALAMAN KERJA
+<br>
 Sebagai Dokter Gigi
 <ol>
 <li>2005 &#8211; 2007 : Universitas Jember Medical Center.</li>
@@ -91,7 +91,7 @@ Ketrampilan Teknik
 </ul>
 <br>
 
-**PORTFOLIO**
+#### PORTFOLIO 
 
 <ul>
 <li>Website DokterGigi.com <a href="http://www.doktergigi.com" rel="nofollow">http://www.doktergigi.com</a> (Offline)</li>
@@ -120,7 +120,7 @@ Ketrampilan Teknik
 </ul>
 <br>
 
-**PERSONAL**
+#### PERSONAL 
 
 <ul>
 <li>Mampu bekerja sama sebagai tim.</li>
