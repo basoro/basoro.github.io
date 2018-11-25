@@ -34,7 +34,7 @@ function GetReleases(repo) {
                             .text(release.name)
                         )
                         .append(release.prerelease ? "<div style=\"display:inline;margin-left:10px;\"><span style=\"background-color:red;color:white;border-radius:2px;padding:3px;font-size:11px;\">Pre-release</span></div>" : "")
-                        .append($("<div style=\"font-size:12px;\">")
+                        .append($("<div style=\"margin-top:10px;font-size:12px;\">")
                              .text(release.body)
                         )
                     )
