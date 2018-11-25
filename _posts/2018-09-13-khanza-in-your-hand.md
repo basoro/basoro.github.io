@@ -1,5 +1,5 @@
 ---
-title: ":floppy_disk: Khanza In Your Hand"
+title: ":writing_hand: Khanza In Your Hand"
 layout: post
 commentIssueId: 14 
 date: 2018-11-18 14:13
