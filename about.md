@@ -12,7 +12,7 @@ Sehari-hari saya menggunakan Sistem Operasi GNU/Linux untuk membantu aktifitas k
 
 Semenjak akhir tahun 2002 saya mulai mengenal Slackware, dan tetap menemani keseharian saya sampai dengan tahun 2006. Selama menggunakan Slackware saya sempat mencoba berbagai distribusi linux lainnya diantaranya SUSE, Lindows, Ubuntu, Fedora, Knoppix, Slax dan lain-lainnya. Namun mulai tahun 2007 sampai sekarang, saya menggunakan UBUNTU GNU/Linux sebagai sistem operasi yang saya tanamkan di Laptop dan Komputer saya.
 
-**Portfolio**
+**Portfolio
 
 Untuk portfolio selengkapnya baca <a href="#curriculum-vitae">Curriculum Vitae</a> saya.
 
@@ -32,7 +32,7 @@ Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hu
 e-Mail : dentix.id[hapus]@[hapus]gmail.com <br/>
 Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br/><br/>
   
-#### PENGALAMAN KERJA
+**PENGALAMAN KERJA
 <br>
 Sebagai Dokter Gigi
 <ol>
@@ -91,7 +91,7 @@ Ketrampilan Teknik
 </ul>
 <br>
 
-#### PORTFOLIO 
+**PORTFOLIO 
 
 <ul>
 <li>Website DokterGigi.com <a href="http://www.doktergigi.com" rel="nofollow">http://www.doktergigi.com</a> (Offline)</li>
@@ -120,7 +120,7 @@ Ketrampilan Teknik
 </ul>
 <br>
 
-#### PERSONAL 
+**PERSONAL 
 
 <ul>
 <li>Mampu bekerja sama sebagai tim.</li>
