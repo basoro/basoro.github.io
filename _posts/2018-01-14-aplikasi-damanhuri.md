@@ -13,13 +13,13 @@ image: /assets/images/damanhuri-icon-app.png
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
-description: "Aplikasi Mobile (Android Web View) untuk pasien rawat jalan SIMRS Khanza versi 1"
+description: "Aplikasi Mobile untuk pasien rawat jalan SIMRS Khanza versi 1"
 category: project
 author: basoro
 externalLink: false
 ---
 
-### Aplikasi Mobile (Android Web View) SIMRS Khanza Versi 1
+### Aplikasi Mobile SIMRS Khanza Versi 1
 
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
