@@ -4,8 +4,9 @@ layout: post
 commentIssueId: 14 
 date: 2018-11-18 14:13
 tag:
-- linux
-- centos
+- presentasi
+- seminar
+- rumah sakit
 - simrs
 - khanza
 star: true
