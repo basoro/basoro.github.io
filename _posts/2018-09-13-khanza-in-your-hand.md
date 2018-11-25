@@ -18,4 +18,4 @@ category: project
 author: basoro
 externalLink: false
 ---
-<iframe src="//basoro.id/khanza-dalam-genggaman/index.html" width="560" height="310" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+<iframe src="//basoro.id/khanza-dalam-genggaman/index.html" width="800" height="500" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
