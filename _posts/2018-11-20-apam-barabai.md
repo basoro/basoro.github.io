@@ -8,7 +8,7 @@ tag:
 - centos
 - simrs
 - khanza
-star: true
+#star: true
 image: /assets/images/logo-app.png
 headerImage: true
 projects: true
