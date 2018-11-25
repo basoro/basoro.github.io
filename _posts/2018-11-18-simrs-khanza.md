@@ -35,7 +35,7 @@ Informasi dan panduan bisa dicek di halaman <a href="https://github.com/mas-elkh
       <th>Size</th>
       <th class="none">Count</th>
       <th class="none">Date</th>
-      <th class="none">Active days</th>
+      <th class="none">Days</th>
     </tr>
   </thead>
   <tbody>
