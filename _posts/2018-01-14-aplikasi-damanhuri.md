@@ -8,7 +8,7 @@ tag:
 - centos
 - simrs
 - khanza
-star: true
+#star: true
 image: /assets/images/damanhuri-icon-app.png
 headerImage: true
 projects: true
