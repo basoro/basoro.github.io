@@ -13,7 +13,7 @@ image: /assets/images/logo-app.png
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
-description: "Aplikasi Mobile (Android Web View) untuk pasien rawat jalan SIMRS Khanza versi 2"
+description: "Aplikasi Mobile untuk pasien rawat jalan SIMRS Khanza versi 2"
 category: project
 author: basoro
 externalLink: false
