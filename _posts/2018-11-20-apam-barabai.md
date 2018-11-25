@@ -28,6 +28,8 @@ APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang 
 
 <img src="/assets/images/apam-barabai.png" style="display:block;margin-left:auto;margin-right:auto;" alt="APAM Barabai" />
 
+Silahkan download source code dibawah ini.
+
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
   <thead>
