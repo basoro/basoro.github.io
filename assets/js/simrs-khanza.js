@@ -35,7 +35,7 @@ function GetReleases(repo) {
                         )
                         .append(release.prerelease ? "<div style=\"display:inline;margin-left:10px;\"><span style=\"background-color:red;color:white;border-radius:2px;padding:3px;font-size:11px;\">Pre-release</span></div>" : "<div style=\"display:inline;margin-left:10px;\"><span style=\"background-color:white;color:green;border:1px solid green;border-radius:2px;padding:3px;font-size:11px;\">Final Release</span></div>")
                         .append($("<div style=\"margin-top:10px;font-size:12px;\">")
-                             .text(release.body.replace("\r\n","\n"))
+                             .text(release.body.replace("\r\n","%0D%0A"))
                         )
                     )
                     .append($("<td>")
