@@ -25,13 +25,14 @@ Jika ada hak cipta yang telah saya langgar dikarenakan tulisan-tulisan di blog i
 
 ### Curriculum Vitae
 
-<section id="curriculum-vitae">
-Nama : Faisol Basoro
-Tempat/Tanggal Lahir : Probolinggo/17 April 1978 
-Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hulu Sungai Tengah (Barabai), Kalimantan Selatan 
-e-Mail : dentix.id[hapus]@[hapus]gmail.com 
-Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a>
-
+<section id="curriculum-vitae"> 
+  Nama : Faisol Basoro 
+  Tempat/Tanggal Lahir : Probolinggo/17 April 1978  
+  Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hulu Sungai Tengah (Barabai), Kalimantan Selatan 
+  e-Mail : dentix.id[hapus]@[hapus]gmail.com 
+  Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a>
+  
+  
 **PENGALAMAN KERJA**
 <br><br>
 Sebagai Dokter Gigi
