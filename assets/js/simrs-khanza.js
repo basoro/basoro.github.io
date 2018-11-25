@@ -26,6 +26,7 @@ function GetReleases(repo) {
             var updatedAt = moment(asset.updated_at);
             var activeDays = previousUpdatedAt.diff(updatedAt, "days", true);
             previousUpdatedAt = updatedAt;
+            body = body.replace("\n","\\n")
             $(".table-downloads tbody")
                 .append($("<tr>")
                     .append($("<td>")
