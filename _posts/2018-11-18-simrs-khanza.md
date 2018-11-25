@@ -16,7 +16,7 @@ hidden: true # don't count this post in blog pagination
 description: "SIMRS Khanza"
 category: project
 author: basoro
-externalLink: false
+#externalLink: false
 ---
 
 SIMRS Khanza adalah Software Menejemen Rumah Sakit, Klinik, Puskesmas yang gratis dan boleh digunakan siapa saja tanpa dikenai
