@@ -19,8 +19,7 @@ author: basoro
 externalLink: false
 ---
 
-## APAM Barabai
-Aplikasi Mobile (Android Web View) SIMRS Khanza Versi 2
+### Aplikasi Mobile (Android Web View) SIMRS Khanza Versi 2
 
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
