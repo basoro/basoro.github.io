@@ -13,7 +13,7 @@ Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hu
 e-Mail : dentix.id@gmail.com<br />
 Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br /><br>
 
-**PENGALAMAN KERJA**
+### PENGALAMAN KERJA
 <br><br>
 Sebagai Dokter Gigi
 <ol>
@@ -71,7 +71,8 @@ Ketrampilan Teknik
 <li>Mensetup beberapa service server seperti webserver, sms gateway, database server, proxy squid, mail server, PHP scripting.</li>
 </ul>
 <br>
-**PORTFOLIO**
+
+### PORTFOLIO 
 <ul>
 <li>Website DokterGigi.com <a href="http://www.doktergigi.com" rel="nofollow">http://www.doktergigi.com</a> (Offline)</li>
 <li>Website WartaTimur.com <a href="http://www.wartatimur.com" rel="nofollow">http://www.wartatimur.com</a> (Offline)</li>
@@ -98,7 +99,8 @@ Ketrampilan Teknik
 <li>Konsultan Server dan Jaringan Dinas Infokom Kabupaten Hulu Sungai Tengah.</li>
 </ul>
 <br>
-**PERSONAL**
+
+### PERSONAL 
 <ul>
 <li>Mampu bekerja sama sebagai tim.</li>
 <li>Menyenangi berdiskusi dengan programmer atau linuxer diseluruh dunia melalui Forum/Mailinglist.</li>
