@@ -1,1 +1,2 @@
-# basoro.github.io
+# Basoro.ID
+Github Pages for https://basoro.id
