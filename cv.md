@@ -15,7 +15,7 @@ Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br />
 
 ### PENGALAMAN KERJA
 <br>
-Sebagai Dokter Gigi
+**Sebagai Dokter Gigi**
 <ol>
 <li>2005 &#8211; 2007 : Universitas Jember Medical Center.</li>
 <li>2007 &#8211; 2008 : Puskesmas Permata Intan, Kabupaten Murung Raya, Kalimantan Tengah.</li>
@@ -28,7 +28,7 @@ Sebagai Dokter Gigi
 <li>2017 &#8211; Sekarang : RSUD H. Damanhuri Barabai, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
 </ol>
 <br>
-Sebagai Freelancer
+**Sebagai Freelancer**
 <ol>
 <li>2002 – 2008 : Pengerjaan website DokterGigi.com (offline).</li>
 <li>2002 – 2004 : Pengerjaan Website cakra-unggul.com (offline).</li>
@@ -52,7 +52,7 @@ Sebagai Freelancer
 <li>2015 : Kontrak kerja di Kabupaten Hulu Sungai Tengah sebagai penyedia layanan SMS Gateway dan APP Quick Count.</li>
 </ol>
 <br>
-Keterampilan Komputer
+**Keterampilan Komputer**
 <ul>
 <li>OS : Mac OSX, GNU/Linux, Windows All Version.</li>
 <li>Jaringan dan Database: Webserver (Apache, Nginx, Lightspeed), Database (MySQL, MariaDB, FlatDB), FTP, DNS, SAMBA.<br />
@@ -60,7 +60,7 @@ Pemrograman Web dan Scripting : HTML, Javascript, PHP, Shell scripting (bash)</l
 <li>Software : MS Office, OpenOffice.org, KDE, Gnome, XFCE, LXDE, DWM, Window Maker, Gimp, Inkscape, Macromedia Dreamweaver, Macromedia Flash, Adobe Photoshop, Corel Draw.</li>
 </ul>
 <br>
-Ketrampilan Teknik
+**Ketrampilan Teknik**
 <ul>
 <li>Mampu merakit PC</li>
 <li>Maintenance PC.</li>
