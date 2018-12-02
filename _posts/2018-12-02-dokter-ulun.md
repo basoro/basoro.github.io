@@ -2,13 +2,17 @@
 title: "Dokter Ulun"
 layout: post
 date: 2018-12-02 14:13
+star: true
 tag:
 - linux
 - ubuntu
 image: /assets/images/dr_ulun.png
 headerImage: true
+projects: true
+hidden: true # don't count this post in blog pagination
 category: project
 author: basoro
+externalLink: false
 description: "Aplikasi e-Dokter untuk SIMRS Khanza"
 ---
 
