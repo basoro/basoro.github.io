@@ -20,6 +20,8 @@ description: "Aplikasi e-Dokter untuk SIMRS Khanza"
 
 Dokter Ulun (baca: <b>Duktur Unlin</b>). Aplikasi yang diperuntukan bagi dokter yang bekerja di RSUD H. Damanhuri dalam pelayanan. Syaratnya SIMRS yang digunakan adalah SIMRS Khanza. Silahkan merujuk <a href="https://basoro.id/simrs-khanza/">kesini</a> untuk keterangan lebih lanjut. 
 
+<img src="/assets/images/dokter_ulun.png" style="display:block;margin-left:auto;margin-right:auto;" alt="Dokter Ulun" />
+
 Silahkan download source code dibawah ini.
 
 <h3>Last releases<span class="total-downloads"></span></h3>
