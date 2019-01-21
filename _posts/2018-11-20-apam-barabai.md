@@ -264,6 +264,7 @@ body {
     position: relative
 }
 </style>
+</head>
 <body>
       <div class="docs-demo-device docs-demo-device-ios">
         <div class="docs-demo-device-buttons"><a class="active" data-theme="ios">iOS</a><a data-theme="md">Android</a></div>
@@ -279,7 +280,7 @@ body {
       </div>
       <div class="docs-content">
         <div class="with-device" style="height:100vh !important;">
-          <h2 data-device-preview="https://basoro.io/apam/index.html"></h2>
+          <h2 data-device-preview="https://basoro.id/apam/index.html"></h2>
         </div>
       </div>
   <script src="//cdn.framework7.io/js/jquery-1.11.0.min.js"></script>
