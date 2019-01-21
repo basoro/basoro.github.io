@@ -4,8 +4,8 @@ const apiUrl = 'https://pasien.rshdbarabai.com/pasien-rest/'; // API Server URL
 const startDate = -1; // Start date of day for registration
 const endDate = 7; // End date of day for registration
 
-var theme = 'ios';
-if (location.href.indexOf('theme=md') >= 0) theme = 'md';
+var theme = 'md';
+if (location.href.indexOf('theme=ios') >= 0) theme = 'ios';
 
 // Dom7
 var $$ = Dom7;
