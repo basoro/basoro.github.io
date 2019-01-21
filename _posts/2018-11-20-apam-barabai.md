@@ -29,6 +29,19 @@ APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang 
 <!--<img src="/assets/images/apam-barabai.png" style="display:block;margin-left:auto;margin-right:auto;" alt="APAM Barabai" />-->
 
 <style>
+@import 'https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700';
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    line-height: 1.75;
+    background: #fff;
+    min-width: 800px;
+    -webkit-font-smoothing: antialiased
+}
 .docs-demo-device {
     position: absolute;
     right: 20px;
@@ -251,6 +264,8 @@ APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang 
     position: relative
 }
 </style>
+</head>
+<body>
       <div class="docs-demo-device docs-demo-device-ios">
         <div class="docs-demo-device-buttons"><a class="active" data-theme="ios">iOS</a><a data-theme="md">Android</a></div>
         <div class="docs-demo-device-iframe">
@@ -367,6 +382,7 @@ APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang 
 
     })();
   </script>
+</body>
 
 Silahkan download source code dibawah ini.
 
