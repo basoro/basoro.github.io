@@ -264,8 +264,6 @@ body {
     position: relative
 }
 </style>
-</head>
-<body>
       <div class="docs-demo-device docs-demo-device-ios">
         <div class="docs-demo-device-buttons"><a class="active" data-theme="ios">iOS</a><a data-theme="md">Android</a></div>
         <div class="docs-demo-device-iframe">
@@ -382,7 +380,6 @@ body {
 
     })();
   </script>
-</body>
 
 Silahkan download source code dibawah ini.
 
