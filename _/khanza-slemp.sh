@@ -221,7 +221,7 @@ END
 cat > /var/www/panel/index.php <<END
 <h1>Simple LEMP Panel</h1><br>
 (Linux Engine-X MySQL PHP)<br>
-<a href="filemanager.php" target="_blank">Tiny Filemanager</a> |
+<a href="filemanager.php?p=" target="_blank">Tiny Filemanager</a> |
 <a href="phpminiadmin.php" target="_blank">PHP Mini MySQL Admin</a> |
 <a href="http://<?php echo \$_SERVER['SERVER_ADDR']; ?>/webapps/">Webapps</a> |
 <a href="http://<?php echo \$_SERVER['SERVER_ADDR']; ?>/SIMRS-Khanza.zip">Download SIMRS-Khanza</a>
