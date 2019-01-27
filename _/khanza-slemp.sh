@@ -275,7 +275,7 @@ svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/webapp
 svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/dist
 mv dist SIMRS-Khanza
 svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/suara
-mv suara SIMRS-Khanza/
+cp -a suara/* SIMRS-Khanza/suara/
 svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/KhanzaAntrianLoket.jar
 mv KhanzaAntrianLoket.jar SIMRS-Khanza/antrianloket.jar
 svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianPoli/dist/KhanzaAntrianPoli.jar
@@ -285,6 +285,7 @@ mv KhanzaHMSAnjungan.jar SIMRS-Khanza/anjunganmandiri.jar
 svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaPengenkripsiTeks/dist/KhanzaPengenkripsiTeks.jar
 mv KhanzaPengenkripsiTeks.jar SIMRS-Khanza/pengenkripsiteks.jar
 zip -r SIMRS-Khanza.zip SIMRS-Khanza
+rm -rf suara
 rm -rf SIMRS-Khanza
 
 curl -o sik.sql https://raw.githubusercontent.com/mas-elkhanza/SIMRS-Khanza/master/sik.sql
