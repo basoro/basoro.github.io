@@ -2,10 +2,8 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
-#备份网站
 Backup_Site()
 {
-    #准备必要信息
 	startTime=`date +%s`
 	myDate=`date +"%Y%m%d_%H%M%S"`
 	zipName=${1}_${myDate}.zip
@@ -17,7 +15,7 @@ Backup_Site()
 	
 	if [ "$pid" == '' ];then
 		endDate=`date +"%Y-%m-%d %H:%M:%S"`
-		log="网站[$1]不存在!"
+		log="Website [$1] does not exist!"
 		echo "★[$endDate] $log"
 		echo '----------------------------------------------------------------------------'
 		exit
@@ -27,39 +25,35 @@ Backup_Site()
 		mkdir -p $backupDir
 	fi
 	
-	#取目录名称
 	oldIFS=$IFS
 	IFS=/
 	nameArr=($sitePath)
 	pathName=${nameArr[@]: -1};
 	IFS=$oldIFS
 	
-	#压缩
 	cd $sitePath
 	cd ..
 	zip -r $fileName $pathName > /dev/null
 	
 	if [ ! -f $fileName ];then
 		endDate=`date +"%Y-%m-%d %H:%M:%S"`
-		log="网站[$1]备份失败!"
+		log="Website [$1] backup failed!"
 		echo "★[$endDate] $log"
 		echo '----------------------------------------------------------------------------'
 		exit
 	fi
 	
-	#记录日志
 	endDate=`date +"%Y-%m-%d %H:%M:%S"`
 	endTime=`date +%s`
 	((outTime=($endTime-$startTime)))
 	
-	log="网站[$1]备份成功,用时[$outTime]秒"
+	log="Website [$1] backup success, time [$outTime] seconds"
 	$Sql_Exec -e "INSERT INTO  bt_backup(type,name,pid,filename,addtime) VALUES(0,'$zipName',$pid,'$fileName','$endDate')"
-	$Sql_Exec -e "INSERT INTO  bt_logs(type,log,addtime) VALUES('计划任务','$log','$endDate')"
+	$Sql_Exec -e "INSERT INTO  bt_logs(type,log,addtime) VALUES('Scheduled Tasks','$log','$endDate')"
 	echo "★[$endDate] $log"
-	echo "|---保留最新的[$2]份备份"
-	echo "|---文件名:$fileName"
+	echo "|---Keep the latest [$2] backups"
+	echo "|---File name : $fileName"
 	
-	#清理多余备份
 	tmp=`$Sql_Exec -e "SELECT COUNT(*) FROM bt_backup WHERE type=0 AND pid=$pid"`;
 	count=`echo $tmp|awk '{print $2}'`
 	((sum=($count-$2)))
@@ -74,7 +68,7 @@ Backup_Site()
 			if [ -f $s ];then
 				rm -f $s
 			fi
-			echo "|---已清理过期备份文件：$s"
+			echo "|---The expired backup file has been cleaned up ：$s"
 			$Sql_Exec -e "DELETE FROM bt_backup WHERE filename='$s'" > /dev/null
 		done
 		IFS=$oldIFS
@@ -83,10 +77,8 @@ Backup_Site()
 	echo '----------------------------------------------------------------------------'
 }
 
-#备份数据库
 Backup_Database()
 {
-	#准备必要信息
 	startTime=`date +%s`
 	mysqlRoot=`echo $select |grep mysql_root|awk '{print $3}'`
 	myDate=`date +"%Y%m%d_%H%M%S"`
@@ -98,7 +90,7 @@ Backup_Database()
 	
 	if [ "$pid" == '' ];then
 		endDate=`date +"%Y-%m-%d %H:%M:%S"`
-		log="数据库[$1]不存在!"
+		log="Database [$1] does not exist!"
 		echo "★[$endDate] $log"
 		echo '----------------------------------------------------------------------------'
 		exit
@@ -117,7 +109,6 @@ Backup_Database()
 		sed -i "s#password=.*#password=$mysqlRoot#" /etc/my.cnf
 	fi
 	
-	#导出数据库
 	cd $backupDir
 	/www/server/mysql/bin/mysqldump -uroot -p$mysqlRoot -R $1 > $sqlName
 	
@@ -129,29 +120,26 @@ Backup_Database()
 	
 	if [ ! -f $sqlName ];then
 		endDate=`date +"%Y-%m-%d %H:%M:%S"`
-		log="数据库[$1]备份失败!"
+		log="Database [$1] backup failed!"
 		echo "★[$endDate] $log"
 		echo '----------------------------------------------------------------------------'
 		exit
 	fi
 	
-	#压缩
 	zip -r $zipName $sqlName > /dev/null
 	rm -f $sqlName
 	
-	#记录日志
 	endDate=`date +"%Y-%m-%d %H:%M:%S"`
 	endTime=`date +%s`
 	((outTime=($endTime-$startTime)))
 	fileName=$backupDir/$zipName
-	log="数据库[$1]备份成功,用时[$outTime]秒"
+	log="Database [$1] backup succeeded, using [$outTime] seconds"
 	$Sql_Exec -e "INSERT INTO  bt_backup(type,name,pid,filename,addtime) VALUES(1,'$zipName',$pid,'$fileName','$endDate')" > /dev/null
 	$Sql_Exec -e "INSERT INTO  bt_logs(type,log,addtime) VALUES('计划任务','$log','$endDate')" > /dev/null
 	echo "★[$endDate] $log"
-	echo "|---保留最新的[$2]份备份"
-	echo "|---文件名:$fileName"
+	echo "|---Keep the latest [$2] backups"
+	echo "|---File name : $fileName"
 	
-	#清理多余备份
 	tmp=`$Sql_Exec -e "SELECT COUNT(*) FROM bt_backup WHERE type=1 AND pid=$pid"`;
 	count=`echo $tmp|awk '{print $2}'`
 	((sum=($count-$2)))
@@ -166,7 +154,7 @@ Backup_Database()
 			if [ -f $s ];then
 				rm -f $s
 			fi
-			echo "|---已清理过期备份文件：$s"
+			echo "|---The expired backup file has been cleaned up ：$s"
 			$Sql_Exec -e "DELETE FROM bt_backup WHERE filename='$s'" > /dev/null
 		done
 		IFS=$oldIFS
@@ -175,7 +163,6 @@ Backup_Database()
 }
 
 
-#准备基础信息
 action=$1
 name=$2
 num=$3
