@@ -1,0 +1,416 @@
+#!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+arg1=$1
+arg2=$2
+_start()
+{
+	echo "Starting CloudWebServer..."
+	/etc/init.d/nginx start
+	/etc/init.d/mysqld start
+	/etc/init.d/php-fpm start
+}
+_stop()
+{
+	echo "Stoping CloudWebServer..."
+	/etc/init.d/nginx stop
+	/etc/init.d/mysqld stop
+	/etc/init.d/php-fpm-52 stop
+	/etc/init.d/php-fpm-53 stop
+	/etc/init.d/php-fpm-54 stop
+	/etc/init.d/php-fpm-55 stop
+	/etc/init.d/php-fpm-56 stop
+	/etc/init.d/php-fpm-70 stop
+}
+_reload()
+{
+	echo "Reload CloudWebServer..."
+	/etc/init.d/nginx reload
+	/etc/init.d/mysqld reload
+	/etc/init.d/php-fpm-52 reload
+	/etc/init.d/php-fpm-53 reload
+	/etc/init.d/php-fpm-54 reload
+	/etc/init.d/php-fpm-55 reload
+	/etc/init.d/php-fpm-56 reload
+	/etc/init.d/php-fpm-70 reload
+}
+_kill()
+{
+    echo "Kill nginx,php-fpm,mysql process..."
+    killall php-fpm
+    killall nginx
+    killall mysqld
+    echo "done."
+}
+_status()
+{
+    /etc/init.d/nginx status
+    /etc/init.d/mysql status
+    /etc/init.d/php-fpm status
+}
+_vhost()
+{
+    case "$1" in
+    [aA][dD][dD])
+        add_vhost
+    ;;
+    [dD][eE][lL])
+        del_vhost
+    ;;
+    [eE][xX][iI][tT])
+        exit 1
+    ;;
+    *)
+        echo "Usage: cloud vhost {add|del}"
+        exit 1
+    ;;
+esac
+}
+_mysql()
+{
+    case "$1" in
+    [aA][dD][dD])
+        check_database
+        add_database
+    ;;
+    [dD][eE][lL])
+		check_database
+        del_database
+    ;;
+    [eE][xX][iI][tT])
+        exit 1
+    ;;
+    *)
+        echo "Usage: cloud mysql {add|del}"
+        exit 1
+    ;;
+esac
+}
+_ftp()
+{
+    case "$1" in
+    [aA][dD][dD])
+        add_ftp
+    ;;
+    [lL][iI][sS][tT])
+        list_ftp
+    ;;
+    [dD][eE][lL])
+        del_ftp
+    ;;
+    [eE][xX][iI][tT])
+        exit 1
+    ;;
+    *)
+        echo "Usage: cloud ftp {add|list|del}"
+        exit 1
+    ;;
+esac
+}
+
+add_vhost()
+{
+	while [ "$domain" == '' ]
+	do
+		read -p "请输入主域名(Please enter domain(example: www.domain.com)): " domain
+	done
+	if [ -f "/www/server/nginx/conf/vhost/${domain}.conf" ];then
+		echo "==============================="
+        echo "站点已存在!(${domain} is exist!)"
+        echo "==============================="
+		exit 1
+	fi
+	read -p "绑定其它域名,多个请用空格隔开(Please enter domain(example: www.domain.com domain.com)): " order_domain
+	read -p "请输入网站根目录(Please enter the directory for the domain(Default: /www/wwwroot/${domain})): " vhost_path
+	if [ "${vhost_path}" == '' ];then
+		vhost_path="/www/wwwroot/${domain}"
+	fi
+	if [ ! -d "${vhost_path}" ];then
+		mkdir -p ${vhost_path}
+		chown -R www:www ${vhost_path}
+		chmod -R 755 ${vhost_path}
+	fi
+	
+	vphp=`cat /www/server/php/version.pl`
+	if [ "${vphp}" == "ALL" ];then
+		while [ "${vphp}" == "ALL" ]
+		do
+			echo '=======================================================';
+			echo '1) PHP-5.2';
+			echo '2) PHP-5.3';
+			echo '3) PHP-5.4';
+			echo '4) PHP-5.5';
+			echo '5) PHP-5.6';
+			echo '6) PHP-7.0';
+			echo '请选择PHP版本.';
+			read -p "Plese select to add php version(1-6): " php;
+			echo '=======================================================';
+			
+			case "${php}" in
+				'1')
+					vphp='52'
+					;;
+				'2')
+					vphp='53'
+					;;
+				'3')
+					vphp='54'
+					;;
+				'4')
+					vphp='55'
+					;;
+				'5')
+					vphp='56'
+					;;
+				'6')
+					vphp='70'
+					;;
+				*)
+					vphp='ALL'
+					;;
+			esac
+			
+			if [ ! -d "/www/server/php/${vphp}" ];then
+				echo "php-$vphp 没有安装,其它选择其它版本!"
+				echo "php-$vphp not install,Plese select other version!"
+				vphp='ALL';
+			fi
+		done
+		
+	fi
+	echo "open_basedir=${vhost_path}:/tmp/:/proc/" > ${vhost_path}/.user.ini
+	echo "" > /www/server/nginx/conf/rewrite/${domain}.conf
+	chown root:root ${vhost_path}/.user.ini
+	chmod 644 ${vhost_path}/.user.ini
+	cat > /www/server/nginx/conf/vhost/${domain}.conf<<EOF
+server
+    {
+        listen 80;
+        server_name ${domain} ${order_domain};
+        index index.html index.htm index.php default.php default.htm default.html;
+        root /www/wwwroot/${domain};
+        #error_page 404/404.html;
+        include enable-php-${vphp}.conf;
+        include rewrite/${domain}.conf;
+        location /nginx_status
+        {
+            stub_status on;
+            access_log   off;
+        }
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+        {
+            expires      30d;
+        }
+        location ~ .*\.(js|css)?$
+        {
+            expires      12h;
+        }
+        location ~ /\.
+        {
+            deny all;
+        }
+        access_log  /www/wwwlogs/${domain}.log;
+    }
+EOF
+
+	if [ ! -f "${vhost_path}/index.html" ] && [ ! -f "${vhost_path}/index.php" ];then
+		wget -O $vhost_path/index.html http://soft.zun.gd/linux/index.html
+		chown www:www $vhost_path/index.html
+		chmod 755 $vhost_path/index.html
+	fi
+	/etc/init.d/nginx reload
+	echo "站点添加成功!(done.)"
+}
+
+del_vhost()
+{
+	while [ "$domain" == '' ]
+	do
+		read -p "请输入主域名(Please enter domain(example: www.zun.com)): " domain
+	done
+	if [ ! -f "/www/server/nginx/conf/vhost/${domain}.conf" ];then
+		echo "指定网站不存在!(Website does not exist!)";
+		exit 1
+	fi
+	rm -f /www/server/nginx/conf/vhost/${domain}.conf
+	rm -f /www/server/nginx/conf/rewrite/${domain}.conf
+	/etc/init.d/nginx reload
+	echo "站点删除成功!(done.)"
+}
+
+
+check_database()
+{
+	MySQL_Bin=/www/server/mysql/bin/mysql
+	read -p "输入数据库名称(Enter database name): " database_name
+    if [ "${database_name}" = "" ]; then
+        echo "数据库名称不能为空(Database Name can't be empty!)"
+        exit 1
+    fi
+	if [ "${mysql_root_password}" == '' ];then
+		read -p "请输入管理密码(Please enter password for mysql user root): " mysql_root_password
+	fi
+	if [ "${mysql_root_password}" == ''  ];then
+		echo "管理密码不正确(Error password for root.)"
+		exit 1
+	fi
+}
+
+add_database()
+{
+	
+	if [ "${mysql_password}" == '' ];then
+		read -p "请设置用户密码(Please enter password for mysql user ${database_name}): " mysql_password
+		if [ "${mysql_password}" == '' ];then
+			echo "密码不能为空!(Password can't be empty!)"
+			exit 1
+		fi
+	fi
+	
+	${MySQL_Bin} -uroot -p${mysql_root_password} -e "CREATE USER '${database_name}'@'127.0.0.1' IDENTIFIED BY '${mysql_password}'"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "CREATE USER '${database_name}'@'localhost' IDENTIFIED BY '${mysql_password}'"
+    [ $? -eq 0 ] && echo "用户: ${database_name} 创建成功! (User ${database_name} create Sucessfully.)" || echo "用户创建失败,可能已存在!User ${database_name} already exists!"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "GRANT USAGE ON *.* TO '${database_name}'@'127.0.0.1' IDENTIFIED BY '${mysql_password}'"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "GRANT USAGE ON *.* TO '${database_name}'@'localhost' IDENTIFIED BY '${mysql_password}'"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "CREATE DATABASE ${database_name}"
+    [ $? -eq 0 ] && echo "数据库: ${database_name}创建成功 (Database: ${database_name} create Sucessfully.)" || echo "数据库创建失败,可能已存在! (Database: ${database_name} already exists!)"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "GRANT ALL PRIVILEGES ON ${database_name}.* TO '${database_name}'@'127.0.0.1';"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "GRANT ALL PRIVILEGES ON ${database_name}.* TO '${database_name}'@'localhost';"
+    [ $? -eq 0 ] && echo "GRANT ALL PRIVILEGES ON ${database_name} Sucessfully." || echo "GRANT ALL PRIVILEGES ON ${database_name} failed!"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "FLUSH PRIVILEGES"
+    [ $? -eq 0 ] && echo "权限刷新成功!(FLUSH PRIVILEGES Sucessfully.)" || echo "FLUSH PRIVILEGES failed!"
+}
+
+del_database()
+{
+    if [[ "${database_name}" = "information_schema" || "${database_name}" = "mysql" || "${database_name}" = "performance_schema" ]]; then
+        echo "不能删除MySQL系统数据库!(MySQL System Database can't be delete!)"
+        exit 1
+    fi
+	
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "DROP USER '${database_name}'@'127.0.0.1'"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "DROP USER '${database_name}'@'localhost'"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "DROP DATABASE ${database_name}"
+    [ $? -eq 0 ] && echo "数据库: ${database_name} 已删除!(Database: ${database_name} deleted Sucessfully.)" || echo "${database_name} 删除失败!(Database: ${database_name} not exist!)"
+    ${MySQL_Bin} -uroot -p${mysql_root_password} -e "FLUSH PRIVILEGES"
+    [ $? -eq 0 ] && echo "权限刷新成功!(FLUSH PRIVILEGES Sucessfully.)" || echo "FLUSH PRIVILEGES failed!"
+}
+
+add_ftp()
+{
+	read -p "请输入用户名(Enter ftp name): " ftp_name
+	if [ "${ftp_name}" == '' ];then
+		echo "用户名不能为空!(Ftp Name can't be empty!)"
+        exit 1
+	fi
+	read -p "请输入根目录(Please enter the directory for the ftp(Default: /www/wwwroot/${ftp_name})): " ftp_path
+	if [ "${ftp_path}" == '' ];then
+		ftp_path="/www/wwwroot/${ftp_name}"
+	fi
+	read -p "请设置密码(Please enter password): " ftp_password
+	if [ "${ftp_password}" == '' ];then
+		echo "密码不能为空(Ftp Password can't be empty!)"
+        exit 1
+	fi
+	
+	if [ ! -d "${ftp_path}" ];then
+		mkdir -p ${ftp_path}
+	fi
+	chown -R www:www ${ftp_path}
+	if [ -f "${ftp_path}/.user.ini" ];then
+		chown root:root ${ftp_path}/.user.ini
+		chmod 644 ${ftp_path}/.user.ini
+	fi
+	/www/server/pure-ftpd/bin/pure-pw useradd ${ftp_name} -u www -d ${ftp_path}<<EOF
+${ftp_password}
+${ftp_password}
+EOF
+/www/server/pure-ftpd/bin/pure-pw mkdb /www/server/pure-ftpd/etc/pureftpd.pdb
+echo "FTP用户创建成功!(done.)"
+}
+
+del_ftp()
+{
+	read -p "请输入用户名(Enter ftp name): " ftp_name
+	if [ "${ftp_name}" == '' ];then
+		echo "指定用户不存在(Ftp Name can't be empty!)"
+        exit 1
+	fi
+	/www/server/pure-ftpd/bin/pure-pw userdel ${ftp_name}
+	/www/server/pure-ftpd/bin/pure-pw mkdb /www/server/pure-ftpd/etc/pureftpd.pdb
+	echo "FTP删除成功!(Deleted ${ftp_name} successfully.)"
+}
+
+ftp_pwd()
+{
+	read -p "请输入用户名(Enter ftp name): " ftp_name
+	if [ "${ftp_name}" == '' ];then
+		echo "指定用户不存在(Ftp Name can't be empty!)"
+        exit 1
+	fi
+	read -p "输入新的密码(Enter new password): " ftp_password
+	if [ "${ftp_password}" == '' ];then
+		echo "新密码不能为空(New password can't be empty!)"
+        exit 1
+	fi
+	/www/server/pure-ftpd/bin/pure-pw passwd ${ftp_name}<<EOF
+${ftp_password}
+${ftp_password}
+EOF
+	/www/server/pure-ftpd/bin/pure-pw mkdb /www/server/pure-ftpd/etc/pureftpd.pdb
+	echo "密码更新成功!(done.)"
+}
+
+	case "${arg1}" in
+		start)
+			_start
+			;;
+		stop)
+			_stop
+			;;
+		restart)
+			_stop
+			_start
+			;;
+		reload)
+			_reload
+			;;
+		kill)
+			_kill
+			;;
+		status)
+			_status
+			;;
+		nginx)
+			/etc/init.d/nginx ${arg2}
+			;;
+		mysql)
+			/etc/init.d/mysqld ${arg2}
+			;;
+		pure-ftpd)
+			/etc/init.d/pure-ftpd ${arg2}
+			;;
+		php-fpm)
+			/etc/init.d/php-fpm ${arg2}
+			;;
+		vhost)
+			_vhost ${arg2}
+			;;
+		database)
+			_mysql ${arg2}
+			;;
+		ftp)
+			_ftp ${arg2}
+			;;
+		cloud)
+			/www/server/cloud/cloud ${arg2}
+			;;
+		*)
+			echo "Usage: zun {start|stop|reload|restart|kill|status}"
+			echo "Usage: zun {nginx|mysql|pure-ftpd|php-fpm} {start|stop|reload|restart|kill|status}"
+			echo "Usage: zun vhost {add|del}"
+			echo "Usage: zun database {add|del}"
+			echo "Usage: zun ftp {add|del}"
+			echo "Usage: zun cloud {start|stop|restart}"
+esac
+exit 1
