@@ -1,5 +1,5 @@
 ---
-title: ":writing_hand: Server SIMRS Consideration"
+title: ":writing_hand: Server SIMRS: Minimal Server, Web Panel atau GUI?"
 layout: post
 commentIssueId: 14
 date: 2019-03-21 07:13
@@ -14,7 +14,7 @@ image: /assets/images/slemp.png
 headerImage: true
 projects: true
 hidden: true # don't count this post in blog pagination
-description: "Server SIMRS Consideration"
+description: "Server SIMRS: Minimal Server, Web Panel atau GUI?"
 category: project
 author: basoro
 externalLink: false
