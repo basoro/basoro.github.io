@@ -1,5 +1,5 @@
 ---
-title: ":writing_hand: Server SIMRS: Minimal Server, Web Panel atau GUI?"
+title: ":writing_hand: Minimal Server, Web Panel atau GUI?"
 layout: post
 #commentIssueId: 14
 date: 2019-03-21 07:13
