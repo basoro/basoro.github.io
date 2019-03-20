@@ -1,7 +1,7 @@
 ---
 title: ":writing_hand: Server SIMRS: Minimal Server, Web Panel atau GUI?"
 layout: post
-commentIssueId: 14
+#commentIssueId: 14
 date: 2019-03-21 07:13
 tag:
 - presentasi
