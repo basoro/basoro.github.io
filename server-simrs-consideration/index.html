@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Pelatihan Implementasi SIMRS Khanza</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Server SIMRS</h1>
+						<h3>Minimal Sever, Web Panel atau GUI?</h3>
+					<p>
+						<small>
+							Pelatihan Implementasi SIMRS Khanza, Rumah Sakit Idaman Banjarbaru<br>
+							Kalimantan Selatan, 21 - 23 Maret 2019
+						</small>
+					</p>
+					<p>
+						<small>
+							Oleh: drg. Faisol Basoro
+						</small>
+					</p>
+				</section>
+
+				<section>
+					<h1>Who Am I</h1>
+					<h4>Dentist, Sysadmin or DevOps Engineer?</h4>
+				</section>
+
+<!--				drg. Faisol Basoro, Probolinggo 17 April 1978
+
+				RSUD H. Damanhuri Barabai, Kab. Hulu Sungai Tengah, Kalimantan Selatan.
+				Penyedia layanan SMS Gateway dan APP Quick Count (Jember, Lumajang, Banyuwangi, Murung Raya, Barito Utara, Hulu Sungai Tengah)
+				Mensetup beberapa service server seperti webserver, sms gateway, database server, proxy squid, mail server, PHP & Bash scripting.
+-->
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>drg. Faisol Basoro</h2>
+						<p>Probolinggo, 17 April 1978</p>
+						<p>Lulusan FKG Universitas Jember</p>
+					</section>
+					<section>
+						<h2>RSUD H. Damanhuri Barabai</h2>
+						<p>- Dokter gigi di Klinik rawat jalan.</p>
+						<p>- Kepala Instalasi ICT.</p>
+					</section>
+					<section>
+						<h2>SysAdmin</h2>
+						<p>Mensetup beberapa service server seperti webserver, sms gateway, database server, proxy squid, mail server, PHP & Bash scripting</p>
+					</section>
+					<section>
+						<h2>DevOps Engineer</h2>
+						<p>Penyedia layanan SMS Gateway, Cloud, Web Based, Mobile APPS</p>
+					</section>
+				</section>
+
+				<section>
+					<h1>SIMRS Khanza</h1>
+					<p class="fragment">... Hybrid APPs ...</p>
+					<p class="fragment">... Modern (Multi platform) ...</p>
+					<p class="fragment">... Free and Opensource ...</p>
+				</section>
+
+				<section>
+					<h1>Server SIMRS</h1>
+					<p class="fragment">
+						Fast, Secure, Reliable and Maintainable
+					</p>
+				</section>
+
+				<section>
+					<h2>Setup Server Khanza</h2>
+					<ul>
+						<li class="fragment">Web Server (Apache, Nginx, Litespeed, PHP Built-in or Others)</li>
+						<li class="fragment">Script Processing Languge (PHP, Bash, Python and others)</li>
+						<li class="fragment">Database Server (MySQL)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Consideration</h2>
+					<ul>
+						<li class="fragment">Stack (XAMPP, LAMPP & Other)</li>
+						<li class="fragment">Stand Alone (Packages or Compiled)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>Point of View</h1>
+					<p class="fragment">
+						Minimal Sever, Web Panel atau GUI?
+					</p>
+				</section>
+
+<!--
+Increased stability -- fewer installed features means fewer moving parts which suggests that less can go wrong.
+Lower maintenance -- fewer installed features means less bugs which should translate to fewer software updates that need to be applied to keep your server protected and up to date.
+Less attack surface - fewer parts should mean there's less for attackers to sink their teeth into when they attempt to hack into your infrastructure.
+Smaller hardware requirements - Server Core systems can run efficiently on hardware that has less memory and disk space than would be needed for Server with a GUI installations.
+-->
+
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>I Choose Minimal Server</h2>
+					</section>
+					<section>
+						<h2>Increased stability</h2>
+						<p>Fewer installed features means fewer moving parts which suggests that less can go wrong</p>
+						<p class="fragment hljs"><small>Lebih sedikit fitur yang dipasang berarti lebih sedikit proses di server yang berjalan. Artinya lebih sedikit terjadi kesalahan (sengaja atau tidak).</small></p>
+					</section>
+					<section>
+						<h2>Lower maintenance</h2>
+						<p>Fewer installed features means less bugs which should software updates that need to be applied to keep your server protected and up to date.</p>
+						<p class="fragment hljs"><small>Lebih sedikit fitur yang diinstal berarti lebih sedikit bug. Artinya lebih sedikit pembaruan perangkat lunak yang perlu diterapkan untuk menjaga server terlindungi.</small></p>
+					</section>
+					<section>
+						<h2>Less attack surface</h2>
+						<p>Fewer parts should mean there's less for attackers to hack into your system infrastructure.</p>
+						<p class="fragment hljs"><small>Lebih sedikit bagian, yang berarti lebih sedikit bagi penyerang untuk mencoba meretas infrastruktur keseluruhan.</small></p>
+					</section>
+					<section>
+						<h2>Smaller hardware</h2>
+						<p>Minimal server can run efficiently on hardware that has less memory and disk space than would be needed for Server with a GUI installations.</p>
+						<p class="fragment hljs"><small>Server minimal tanpa GUI dapat berjalan secara efisien pada perangkat keras yang memiliki memori dan ruang disk lebih sedikit daripada yang diperlukan untuk Server dengan instalasi GUI.</small></p>
+					</section>
+				</section>
+
+
+				<section>
+					<h1>It's Hard?</h1>
+					<p class="fragment">
+						Bisa iya.... Bisa tidak....
+					</p>
+				</section>
+
+				<section>
+					<h1>Q & A?</h1>
+				</section>
+
+				<section>
+					<h1>It's Show Time</h1>
+				</section>
+
+				<section>
+					<h1>Terima Kasih</h1>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
