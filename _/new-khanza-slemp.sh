@@ -249,8 +249,7 @@ mv -f /www/server/cloud/dp1.so /lib/dp1.so
 mv -f /www/server/cloud/EThread.so /lib/EThread.so
 rm -f cloud.zip
 
-sed -i 's/php-fpm-71/php-fpm/' /www/server/cloud/cloud
-sed -i 's/71/56/' /www/server/cloud/cloud
+sed -i 's/php-fpm-56/php-fpm/' /www/server/cloud/cloud
 sed -i 's/pkill -9 php-cgi/pkill -9 php-fpm/' /www/server/cloud/cloud
 
 ########################

@@ -5,7 +5,7 @@ Service_Start()
 	if [ "${isRunning}" != "" ];then
 		Service_Stop
 	fi
-		
+
 	#Service_Admin stop
 	service mysqld stop
 	pkill -9 pure-ftpd
@@ -16,20 +16,20 @@ Service_Start()
 	rm -f /www/server/data/*.pid
 	pkill -9 nginx
 	rm -f /www/server/nginx/logs/nginx.pid;
-	pkill -9 httpd
 	pkill -9 php-cgi
-	
+	pkill -9 php-fpm
+
 	rm -f /tmp/php-cgi-*
 	if [ -f "/tmp/cloud.sock" ];then
 		rm -f /tmp/cloud.sock
 	fi
 	nohup /www/server/cloud/yunclient >> /www/server/cloud/logs.pl 2>&1 &
-	
+
 	if [ -f '/var/lock/subsys/mysql' ];then
 		rm -f /var/lock/subsys/mysql
 	fi
 	Service_Admin start
-	echo -e "Service Yunclient Running			\033[32m[OK]\033[0m"
+	echo -e "Service Panel Running			\033[32m[OK]\033[0m"
 }
 
 Service_Start_Centos7()
@@ -42,8 +42,8 @@ Service_Start_Centos7()
 
 Service_Admin()
 {
-	
-	
+
+
 	echo "======================================="
 	if [ -f '/etc/init.d/nginx' ];then
 		service nginx $1
@@ -86,6 +86,13 @@ Service_Admin()
 		fi
 		service php-fpm-71 $1
 	fi
+	if [ -f '/etc/init.d/php-fpm-72' ];then
+		pid='/www/server/php/72/var/run/php-fpm.pid'
+		if [ -f "${pid}" ];then
+			rm -f $pid
+		fi
+		service php-fpm-72 $1
+	fi
 	echo "======================================="
 }
 
@@ -96,7 +103,7 @@ Service_Stop()
 	if [ -f "/tmp/cloud.sock" ];then
 		rm -f /tmp/cloud.sock
 	fi
-	echo -e "Service Yunclient Stoped 			\033[32m[OK]\033[0m"
+	echo -e "Service Panel Stoped 			\033[32m[OK]\033[0m"
 }
 
 Service_Restart()
@@ -112,9 +119,8 @@ case $1 in
         ;;
         'restart') Service_Restart
         ;;
-		'c7start') Service_Start_Centos7
+		    'c7start') Service_Start_Centos7
         ;;
         *) echo "Option {start|stop|restart}"
         ;;
 esac
-
