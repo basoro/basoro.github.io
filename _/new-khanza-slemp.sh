@@ -25,27 +25,7 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir /www
-mkdir /www/wwwroot
-mkdir /www/wwwroot/default
-mkdir /www/wwwlogs
-mkdir /www/server
-mkdir /www/server/panel
-mkdir /www/server/mysql
-mkdir /www/server/mysql/bin
-mkdir /www/server/mysql/lib
-mkdir /www/server/nginx
-mkdir /www/server/nginx/sbin
-mkdir /www/server/nginx/logs
-mkdir /www/server/nginx/conf
-mkdir /www/server/nginx/conf/vhost
-mkdir /www/server/nginx/conf/rewrite
-mkdir /www/server/php
-mkdir /www/server/php/bin
-mkdir /www/server/php/sbin
-mkdir /www/server/php/56
-mkdir /www/server/php/56/var
-mkdir /www/server/php/56/var/run
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/{bin,sbin,56/var/run}}}
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
@@ -73,18 +53,11 @@ yum -y install mysql55w mysql55w-server
 
 yum -y install php56w-fpm php56w-mysql php56w-gd php56w-xml php56w-xmlrpc php56w-pear php56w-mbstring php56w-mcrypt php56w-process
 
-########################################
-# Install Postfix, SyLog-Ng and Cronie #
-########################################
+#####################################################
+# Install Postfix, SyLog-Ng, Cronie and Other Stuff #
+#####################################################
 
-yum -y install postfix syslog-ng cronie
-yum -y install wget
-yum -y install libdbi
-yum -y install libdbi-drivers
-yum -y install libdbi-dbd-mysql
-yum -y install syslog-ng-libdbi
-yum -y install zip unzip
-yum -y install glibc.i686
+yum -y install postfix syslog-ng cronie install wget install libdbi install libdbi-drivers install libdbi-dbd-mysql install syslog-ng-libdbi install zip unzip install glibc.i686
 
 cat > /etc/init.d/panel <<END
 #!/bin/bash
@@ -247,10 +220,10 @@ sed -i 's/post_max_size = 8M/post_max_size = 100M/' /etc/php.ini
 rm -f /etc/init.d/nginx
 wget -O /etc/init.d/nginx basoro.id/downloads/nginx.init -T20
 chmod +x /etc/init.d/nginx
-ln -s /usr/sbin/nginx /www/server/nginx/sbin/nginx
-ln -s /etc/nginx/nginx.conf /www/server/nginx/conf/nginx.conf
-ln -s /etc/nginx/mime.types /www/server/nginx/conf/mime.types
-ln -s /etc/nginx/fastcgi_params /www/server/nginx/conf/fastcgi_params
+ln -sf /usr/sbin/nginx /www/server/nginx/sbin/nginx
+ln -sf /etc/nginx/nginx.conf /www/server/nginx/conf/nginx.conf
+ln -sf /etc/nginx/mime.types /www/server/nginx/conf/mime.types
+ln -sf /etc/nginx/fastcgi_params /www/server/nginx/conf/fastcgi_params
 ln -sf /www/server/nginx/conf/pathinfo.conf /etc/nginx/pathinfo.conf
 ln -sf /www/server/nginx/conf/enable-php-56.conf /etc/nginx/enable-php-56.conf
 ln -s /www/server/nginx/conf/rewrite /etc/nginx/rewrite
