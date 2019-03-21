@@ -293,15 +293,15 @@ server-id	= 1
 expire_logs_days = 10
 
 #default_storage_engine = InnoDB
-#innodb_data_home_dir = ${Data_Path}
-#innodb_data_file_path = ibdata1:10M:autoextend
-#innodb_log_group_home_dir = ${Data_Path}
-#innodb_buffer_pool_size = 8M
-#innodb_additional_mem_pool_size = 1M
-#innodb_log_file_size = 2M
-#innodb_log_buffer_size = 4M
-#innodb_flush_log_at_trx_commit = 1
-#innodb_lock_wait_timeout = 50
+innodb_data_home_dir = /www/server/data
+innodb_data_file_path = ibdata1:10M:autoextend
+innodb_log_group_home_dir = /www/server/data
+innodb_buffer_pool_size = 8M
+innodb_additional_mem_pool_size = 1M
+innodb_log_file_size = 2M
+innodb_log_buffer_size = 4M
+innodb_flush_log_at_trx_commit = 1
+innodb_lock_wait_timeout = 50
 
 [mysqldump]
 quick
