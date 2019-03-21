@@ -57,7 +57,7 @@ yum -y install php56w-fpm php56w-mysql php56w-gd php56w-xml php56w-xmlrpc php56w
 # Install Postfix, SyLog-Ng, Cronie and Other Stuff #
 #####################################################
 
-yum -y install postfix syslog-ng cronie install wget install libdbi install libdbi-drivers install libdbi-dbd-mysql install syslog-ng-libdbi install zip unzip install glibc.i686
+yum -y install postfix syslog-ng cronie wget libdbi libdbi-drivers libdbi-dbd-mysql syslog-ng-libdbi zip unzip glibc.i686
 
 cat > /etc/init.d/panel <<END
 #!/bin/bash
