@@ -237,7 +237,8 @@ ln -sf /usr/sbin/php-fpm /www/server/php/sbin/php-fpm
 ln -sf /var/run/php-fpm/php-fpm.pid /www/server/php/56/var/run/php-fpm.pid
 
 # Install cloud
-wget -c basoro.id/downloads/cloud.zip -T20
+#wget -c basoro.id/downloads/cloud.zip -T20
+wget -c https://raw.githubusercontent.com/basoro/basoro.github.io/master/_/cloud.zip -T20
 unzip -o cloud.zip -d /www/server/ > /dev/null 2>&1
 chmod +x /www/server/cloud/yunclient
 chmod +x /www/server/cloud/cloud
