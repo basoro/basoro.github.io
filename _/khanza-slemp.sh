@@ -79,13 +79,13 @@ yum -y install zip unzip
 
 cat > /etc/my.cnf <<END
 [mysqld]
-default-storage-engine = myisam
+default-storage-engine = InnoDB
 key_buffer_size = 1M
 query_cache_size = 1M
 query_cache_limit = 128k
 max_connections=25
 thread_cache_size=1
-skip-innodb
+#skip-innodb
 query_cache_min_res_unit=0
 tmp_table_size = 1M
 max_heap_table_size = 1M
@@ -155,7 +155,7 @@ http {
     fastcgi_connect_timeout 300;
     fastcgi_send_timeout 300;
     fastcgi_read_timeout 300;
-    
+
     include /etc/nginx/conf.d/*;
 }
 END
