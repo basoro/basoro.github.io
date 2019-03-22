@@ -25,7 +25,7 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/56/{etc,bin,sbin,var/run}}}
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},pure-ftpd/{etc,sbin},php/56/{etc,bin,sbin,var/run}}}
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
@@ -383,11 +383,21 @@ if [ -f "${userINI}" ];then
 fi
 rm -f phpMyAdmin.zip
 
+# Install Pure-Ftpd
+yum -y install pure-ftpd
+ln -sf /usr/sbin/pure-config.pl /www/server/pure-ftpd/sbin/pure-config.pl
+ln -sf /etc/pure-ftpd/pure-ftpd.conf /www/server/pure-ftpd/etc/pure-ftpd.conf 
+
 #start services and configure iptables
-iptables -I INPUT -p tcp --dport 80 -j ACCEPT
-iptables -I INPUT -p tcp --dport 888 -j ACCEPT
-iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 20 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 888 -j ACCEPT
+#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 30000:40000 -j ACCEPT
 service iptables save
+service iptables restart
 chkconfig syslog-ng on
 service syslog-ng start
 chkconfig crond on
@@ -398,6 +408,8 @@ service php-fpm-56 start
 chkconfig php-fpm-56 on
 service mysqld start
 chkconfig mysqld on
+service pure-ftpd start
+chkconfig pure-ftpd on
 service panel start
 
 chown -R www:www /www/wwwroot/default/
