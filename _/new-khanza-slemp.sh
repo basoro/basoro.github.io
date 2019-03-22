@@ -168,14 +168,6 @@ http
 
         server_tokens off;
         access_log off;
-    server {
-        listen 80 default;
-        server_name _;
-        index index.html index.htm index.php;
-        root /www/wwwroot/default;
-        include enable-php-56.conf;
-    }
-
     server{
         listen 888;
         server_name basoro.id;
@@ -185,6 +177,13 @@ http
         #error_page   404   /404.html;
         include enable-php-56.conf;
         access_log  /www/wwwlogs/access.log;
+    }
+    server {
+        listen 80 default;
+        server_name _;
+        index index.html index.htm index.php;
+        root /www/wwwroot/default;
+        include enable-php-56.conf;
     }
     include /www/server/nginx/conf/vhost/*.conf;
 }
