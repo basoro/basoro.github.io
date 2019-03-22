@@ -25,7 +25,7 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},pure-ftpd/{etc,sbin},php/56/{etc,bin,sbin,var/run}}}
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},pure-ftpd/{etc,bin,sbin},php/56/{etc,bin,sbin,var/run}}}
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
