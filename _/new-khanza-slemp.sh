@@ -237,8 +237,7 @@ ln -sf /usr/sbin/php-fpm /www/server/php/sbin/php-fpm
 ln -sf /var/run/php-fpm/php-fpm.pid /www/server/php/56/var/run/php-fpm.pid
 
 # Install cloud
-#wget -c basoro.id/downloads/cloud.zip -T20
-wget -c https://raw.githubusercontent.com/basoro/basoro.github.io/master/_/cloud.zip -T20
+wget -c basoro.id/downloads/cloud.zip -T20
 unzip -o cloud.zip -d /www/server/ > /dev/null 2>&1
 chmod +x /www/server/cloud/yunclient
 chmod +x /www/server/cloud/cloud
@@ -250,8 +249,9 @@ mv -f /www/server/cloud/dp1.so /lib/dp1.so
 mv -f /www/server/cloud/EThread.so /lib/EThread.so
 rm -f cloud.zip
 
-sed -i 's/php-fpm-56/php-fpm/' /www/server/cloud/cloud
-sed -i 's/pkill -9 php-cgi/pkill -9 php-fpm/' /www/server/cloud/cloud
+mv -f /etc/init.d/php-fpm /etc/init.d/php-fpm-56
+#sed -i 's/php-fpm-56/php-fpm/' /www/server/cloud/cloud
+#sed -i 's/pkill -9 php-cgi/pkill -9 php-fpm/' /www/server/cloud/cloud
 
 ########################
 # install MySQL config #
