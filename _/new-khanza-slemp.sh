@@ -323,14 +323,15 @@ EOF
 
 # Install Panel
 
-#wget -c https://github.com/tiredbug/panel/archive/master.zip -T20
-wget -c cloud.basoro.id/downloads/default.zip -T20
-#mv master.zip default.zip
+wget -c https://github.com/tiredbug/panel/archive/master.zip -T20
+#wget -c cloud.basoro.id/downloads/default.zip -T20
+mv master.zip default.zip
 rm -rf /www/server/panel/*
-#unzip -o default.zip -d /www/server/ > /dev/null 2>&1
-unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
-#mv /www/server/panel-master/* /www/server/panel/
+unzip -o default.zip -d /www/server/ > /dev/null 2>&1
+#unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
+cp -a /www/server/panel-master/* /www/server/panel/
 chown -R www:www /www/server/panel > /dev/null 2>&1
+rm -rf /www/server/panel-master/
 rm -f default.zip
 wget -O phpMyAdmin.zip basoro.id/downloads/phpMyAdmin-4.4.15.6.zip -T20
 unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
@@ -390,8 +391,8 @@ chkconfig crond on
 service crond start
 service nginx restart
 chkconfig nginx on
-service php-fpm start
-chkconfig php-fpm on
+service php-fpm-56 start
+chkconfig php-fpm-56 on
 service mysqld start
 chkconfig mysqld on
 service panel start
