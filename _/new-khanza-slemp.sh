@@ -228,6 +228,11 @@ ln -sf /www/server/nginx/conf/enable-php-56.conf /etc/nginx/enable-php-56.conf
 ln -s /www/server/nginx/conf/rewrite /etc/nginx/rewrite
 ln -s /www/server/nginx/conf/key /etc/nginx/key
 
+command="nginx -v"
+nginxv=$( ${command} 2>&1 )
+nginxlocal=$(echo $nginxv | grep -o '[0-9.]*$')
+echo $nginxlocal > /www/server/nginx/version.pl
+
 ln -sf /usr/bin/php /www/server/php/56/bin/php
 ln -sf /usr/bin/phpize /www/server/php/56/bin/phpize
 ln -sf /usr/bin/pear /www/server/php/56/bin/pear
