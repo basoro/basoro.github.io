@@ -385,8 +385,16 @@ rm -f phpMyAdmin.zip
 
 # Install Pure-Ftpd
 yum -y install pure-ftpd
-ln -sf /usr/sbin/pure-config.pl /www/server/pure-ftpd/sbin/pure-config.pl
-ln -sf /etc/pure-ftpd/pure-ftpd.conf /www/server/pure-ftpd/etc/pure-ftpd.conf 
+ln -sf /usr/sbin/pure-* /www/server/pure-ftpd/sbin/
+ln -sf /usr/bin/pure-* /www/server/pure-ftpd/bin/
+touch /etc/pure-ftpd/pureftpd.passwd
+touch /etc/pure-ftpd/pureftpd.pdb
+ln -sf /etc/pure-ftpd/pureftpd.passwd /www/server/pure-ftpd/etc/pureftpd.passwd
+ln -sf /etc/pure-ftpd/pureftpd.pdb /www/server/pure-ftpd/etc/pureftpd.pdb
+rm -f /etc/pure-ftpd/pure-ftpd.conf 
+wget -O /etc/pure-ftpd/pure-ftpd.conf https://basoro.id/downloads/pure-ftpd.conf
+sed -i "s@/usr/local@/www/server@g" /usr/sbin/pure-config.pl 
+echo "1.0.30" > /www/server/pure-ftpd/version.pl
 
 #start services and configure iptables
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 20 -j ACCEPT
