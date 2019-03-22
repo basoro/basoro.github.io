@@ -25,7 +25,7 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/{bin,sbin,56/var/run}}}
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/56/{bin,sbin,var/run}}}
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
@@ -229,11 +229,11 @@ ln -sf /www/server/nginx/conf/enable-php-56.conf /etc/nginx/enable-php-56.conf
 ln -s /www/server/nginx/conf/rewrite /etc/nginx/rewrite
 ln -s /www/server/nginx/conf/key /etc/nginx/key
 
-ln -sf /usr/bin/php /www/server/php/bin/php
-ln -sf /usr/bin/phpize /www/server/php/bin/phpize
-ln -sf /usr/bin/pear /www/server/php/bin/pear
-ln -sf /usr/bin/pecl /www/server/php/bin/pecl
-ln -sf /usr/sbin/php-fpm /www/server/php/sbin/php-fpm
+ln -sf /usr/bin/php /www/server/php/56/bin/php
+ln -sf /usr/bin/phpize /www/server/php/56/bin/phpize
+ln -sf /usr/bin/pear /www/server/php/56/bin/pear
+ln -sf /usr/bin/pecl /www/server/php/56/bin/pecl
+ln -sf /usr/sbin/php-fpm /www/server/php/56/sbin/php-fpm
 ln -sf /var/run/php-fpm/php-fpm.pid /www/server/php/56/var/run/php-fpm.pid
 
 # Install cloud
