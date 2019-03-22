@@ -25,7 +25,7 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/56/{bin,sbin,var/run}}}
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},pure-ftpd/{etc,sbin},php/56/{bin,sbin,var/run}}}
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
@@ -357,6 +357,8 @@ ln -sf /usr/bin/mysqld_safe /www/server/mysql/bin/mysqld_safe
 ln -sf /usr/bin/mysqlcheck /www/server/mysql/bin/mysqlcheck
 ln -s /usr/lib64/mysql/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so
 ln -s /usr/lib64/mysql/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so.18
+ln -sf /var/lib/mysql/mysql.sock /tmp/mysql.sock
+echo "5.5.54" > /www/server/mysql/version.pl
 /etc/init.d/mysqld start
 sleep 5
 /usr/bin/mysqladmin -u root password 'root'
@@ -380,7 +382,13 @@ if [ -f "${userINI}" ];then
 fi
 rm -f phpMyAdmin.zip
 
+# Install Pure-Ftpd
+yum -y install pure-ftpd
+ln -sf /usr/sbin/pure-config.pl /www/server/pure-ftpd/sbin/pure-config.pl
+ln -sf /etc/pure-ftpd/pure-ftpd.conf /www/server/pure-ftpd/etc/pure-ftpd.conf 
+
 #start services and configure iptables
+iptables -I INPUT -p tcp --dport 20 -j ACCEPT
 iptables -I INPUT -p tcp --dport 80 -j ACCEPT
 iptables -I INPUT -p tcp --dport 888 -j ACCEPT
 iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
@@ -395,6 +403,8 @@ service php-fpm-56 start
 chkconfig php-fpm-56 on
 service mysqld start
 chkconfig mysqld on
+service pure-ftpd start
+chkconfig pure-ftpd on
 service panel start
 
 chown -R www:www /www/wwwroot/default/
