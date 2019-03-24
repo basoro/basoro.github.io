@@ -397,6 +397,7 @@ ln -sf /etc/pure-ftpd/pureftpd.passwd /www/server/pure-ftpd/etc/pureftpd.passwd
 ln -sf /etc/pure-ftpd/pureftpd.pdb /www/server/pure-ftpd/etc/pureftpd.pdb
 rm -f /etc/pure-ftpd/pure-ftpd.conf
 wget -O /etc/pure-ftpd/pure-ftpd.conf https://basoro.id/downloads/pure-ftpd.conf
+ln -sf /etc/pure-ftpd/pure-ftpd.conf /www/server/pure-ftpd/etc/pure-ftpd.conf
 sed -i "s@/usr/local@/www/server@g" /usr/sbin/pure-config.pl
 echo "1.0.30" > /www/server/pure-ftpd/version.pl
 
