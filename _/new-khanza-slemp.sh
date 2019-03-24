@@ -273,7 +273,7 @@ socket		= /var/lib/mysql/mysql.sock
 port		= 3306
 socket		= /var/lib/mysql/mysql.sock
 datadir = /www/server/data
-default_storage_engine = MyISAM
+#default_storage_engine = MyISAM
 #skip-external-locking
 loose-skip-innodb
 key_buffer_size = 16M
@@ -298,7 +298,7 @@ binlog_format=mixed
 server-id	= 1
 expire_logs_days = 10
 
-#default_storage_engine = InnoDB
+default_storage_engine = InnoDB
 innodb_data_home_dir = /www/server/data
 innodb_data_file_path = ibdata1:10M:autoextend
 innodb_log_group_home_dir = /www/server/data
@@ -395,9 +395,9 @@ touch /etc/pure-ftpd/pureftpd.passwd
 touch /etc/pure-ftpd/pureftpd.pdb
 ln -sf /etc/pure-ftpd/pureftpd.passwd /www/server/pure-ftpd/etc/pureftpd.passwd
 ln -sf /etc/pure-ftpd/pureftpd.pdb /www/server/pure-ftpd/etc/pureftpd.pdb
-rm -f /etc/pure-ftpd/pure-ftpd.conf 
+rm -f /etc/pure-ftpd/pure-ftpd.conf
 wget -O /etc/pure-ftpd/pure-ftpd.conf https://basoro.id/downloads/pure-ftpd.conf
-sed -i "s@/usr/local@/www/server@g" /usr/sbin/pure-config.pl 
+sed -i "s@/usr/local@/www/server@g" /usr/sbin/pure-config.pl
 echo "1.0.30" > /www/server/pure-ftpd/version.pl
 
 #start services and configure iptables
