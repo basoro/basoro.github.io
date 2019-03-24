@@ -275,7 +275,7 @@ socket		= /var/lib/mysql/mysql.sock
 datadir = /www/server/data
 #default_storage_engine = MyISAM
 #skip-external-locking
-loose-skip-innodb
+#loose-skip-innodb
 key_buffer_size = 16M
 max_allowed_packet = 1M
 table_open_cache = 64
