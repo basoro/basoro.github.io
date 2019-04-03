@@ -407,7 +407,7 @@ iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 888 -j ACCEPT
-#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 30000:40000 -j ACCEPT
 service iptables save
 service iptables restart
