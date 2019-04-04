@@ -330,16 +330,11 @@ EOF
 
 yum -y install svn
 
-wget -c https://github.com/tiredbug/panel/archive/master.zip -T20
-#wget -c cloud.basoro.id/downloads/default.zip -T20
-mv master.zip default.zip
+svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
 rm -rf /www/server/panel/*
-unzip -o default.zip -d /www/server/ > /dev/null 2>&1
-#unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
-cp -a /www/server/panel-master/* /www/server/panel/
+cp -a slemp-khanza/* /www/server/panel/
 chown -R www:www /www/server/panel > /dev/null 2>&1
-rm -rf /www/server/panel-master/
-rm -f default.zip
+rm -rf slemp-khanza/
 wget -O phpMyAdmin.zip basoro.id/downloads/phpMyAdmin-4.4.15.6.zip -T20
 unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
 dates=`date`
