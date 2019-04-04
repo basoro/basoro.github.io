@@ -443,7 +443,7 @@ rm -rf SIMRS-Khanza
 
 curl -o sik.sql https://raw.githubusercontent.com/mas-elkhanza/SIMRS-Khanza/master/sik.sql
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "create database sik"
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "sik < sik.sql"
+/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} sik < sik.sql
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "grant all privileges on sik.* to 'sik'@'%' identified by ''";
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "flush privileges"
 service mysqld restart
