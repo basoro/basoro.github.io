@@ -425,6 +425,34 @@ service pure-ftpd start
 chkconfig pure-ftpd on
 service panel start
 
+yum -y install svn
+
+cd /www/wwwroot/default/
+
+svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/webapps
+svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/dist
+mv dist SIMRS-Khanza
+svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/suara
+cp -a suara/* SIMRS-Khanza/suara/
+svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/KhanzaAntrianLoket.jar
+mv KhanzaAntrianLoket.jar SIMRS-Khanza/antrianloket.jar
+svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianPoli/dist/KhanzaAntrianPoli.jar
+mv KhanzaAntrianPoli.jar SIMRS-Khanza/antrianpoli.jar
+svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaHMSAnjungan/dist/KhanzaHMSAnjungan.jar
+mv KhanzaHMSAnjungan.jar SIMRS-Khanza/anjunganmandiri.jar
+svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaPengenkripsiTeks/dist/KhanzaPengenkripsiTeks.jar
+mv KhanzaPengenkripsiTeks.jar SIMRS-Khanza/pengenkripsiteks.jar
+zip -r SIMRS-Khanza.zip SIMRS-Khanza
+rm -rf suara
+rm -rf SIMRS-Khanza
+
+curl -o sik.sql https://raw.githubusercontent.com/mas-elkhanza/SIMRS-Khanza/master/sik.sql
+/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "create database sik"
+/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "sik < sik.sql"
+/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "grant all privileges on sik.* to 'sik'@'%' identified by ''";
+/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "flush privileges"
+service mysqld restart
+
 chown -R www:www /www/wwwroot/default/
 chown -R www:www /www/server/panel/
 
