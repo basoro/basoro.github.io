@@ -328,6 +328,8 @@ EOF
 
 # Install Panel
 
+yum -y install svn
+
 wget -c https://github.com/tiredbug/panel/archive/master.zip -T20
 #wget -c cloud.basoro.id/downloads/default.zip -T20
 mv master.zip default.zip
@@ -424,8 +426,6 @@ chkconfig mysqld on
 service pure-ftpd start
 chkconfig pure-ftpd on
 service panel start
-
-yum -y install svn
 
 cd /www/wwwroot/default/
 
