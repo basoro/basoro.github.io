@@ -1,0 +1,278 @@
+			<div class="main-content">
+				<div class="container-fluid">
+					<div class="pos-ser">
+						<div class="position">
+							<a href="/index.php">Home</a>/<span>System security</span>
+						</div>
+						<div class="search">
+							<form target="hid" onsubmit='getLogs(1,$("#SearchValue").prop("value"))'>
+								<input type="text" id="SearchValue" class="ser-text" placeholder="Search log" />
+								<button type="button" class="ser-sub"onclick='getLogs(1,$("#SearchValue").prop("value"))'></button>
+							</form>
+							<iframe name='hid' id="hid" style="display:none"></iframe>
+						</div>
+					</div>
+					<div class="safe container-fluid" style="overflow: hidden; margin-bottom: 15px;">
+						<div class="safe-screen pull-left">
+							<form>
+								<div class="ss-text">
+									<em>Enable SSH</em>
+									<div class='ssh-item'>
+										<input class='btswitch btswitch-ios' id='sshswitch' type='checkbox' <?php if($ssh['status'] == 'true') echo 'checked'; ?>>
+										<label class='btswitch-btn' for='sshswitch' onclick="SetMstscStatus()"></label>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="safe-port pull-left" style="margin:0 80px">
+								<div class="ss-text">
+									<em>SSH port</em>
+									<input type="text" class="sp-text" id="mstscPort" value="<?php echo trim($ssh['port']); ?>" <?php if($ssh['status'] != 'true') echo 'title="Please enable SSH if you need to change" disabled'; ?> >
+								</div>
+								<div class="ss-text">
+									<button onclick='mstsc($("#mstscPort").prop("value"))' class="btn btn-default btn-sm" type="button" <?php if($ssh['status'] != 'true') echo 'disabled'; ?> >Change</button>
+								</div>
+						</div>
+						<div class="safe-port pull-left">
+							<div class="ss-text">
+								<em>Enable ban ping</em>
+								<div class='ssh-item'>
+									<input class='btswitch btswitch-ios' id='noping' type='checkbox' <?php if($_SESSION['config']['ping'] == 'false') echo 'checked'; ?>>
+									<label class='btswitch-btn' for='noping' onclick="ping()"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="white-black-ip">
+						<div class="black-ip">
+							<div class="def-log">
+								<div class="def-log-title">
+									<h3 class="dlt-h3">
+										Firewall</h3>
+									<input type="text" class="dlt-text" style="width: 60px;" id="AcceptPort" placeholder="Port">
+									<input type="text" class="dlt-text" id="Ps" placeholder="Remarks/Description">
+									<button onclick="AddAcceptPort()" class="btn btn-default btn-sm" type="button">Release</button>
+								</div>
+								<div class="divtable">
+									<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-hover">
+										<thead>
+										<tr>
+											<th>Numbering</th>
+											<th>Port</th>
+											<th>Add time</th>
+											<th>Description</th>
+											<th width="50px" class="text-right">Action</th>
+										</tr>
+										</thead>
+										<tbody id="firewallBody"></tbody>
+									</table>
+									<div class="dataTables_paginate paging_bootstrap pagination">
+										<ul id="firewallPage" class="page"></ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="white-black-ip">
+						<div class="black-ip">
+							<div class="def-log">
+								<div class="def-log-title">
+									<h3 class="dlt-h3">
+										Operation log</h3>
+								</div>
+								<div class="divtable">
+									<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-hover">
+										<thead>
+										<tr>
+											<th>Numbering</th>
+											<th>Operation type</th>
+											<th>Details</th>
+											<th>Operating time</th>
+										</tr>
+										</thead>
+										<tbody id="logsBody"></tbody>
+									</table>
+									<div class="dataTables_paginate paging_bootstrap pagination">
+										<ul id="logsPage" class="page"></ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$( "#spinner1" ).spinner({min:0});
+				$( "#spinner2" ).spinner({min:0});
+				$( "#spinner3" ).spinner({min:0});
+				$('.tacticsNum').mouseover(function(){
+					var titletips = $(this).attr("data-title");
+				    layer.tips(titletips, this, {
+					    tips: [1, '#3c8dbc'],
+					    time:0
+					})
+				})
+				$('.tacticsNum').mouseout(function(){
+					$(".layui-layer-tips").remove();
+				})
+			});
+			ShowAccept(1);
+			function SetMstscStatus(){
+				status = $("#sshswitch").prop("checked")==true?1:0;
+
+				var msg = status==1?'Deactivating the SSH service will also log out all logged in users, continue or not? ':'Are you sure you want to enable the SSH service?';
+				layer.confirm(msg,{title:'Caveat',closeBtn:2},function(index){
+					if(index > 0){
+						layer.msg('Processing……',{icon:16,time:20000});
+						$.get('/firewall.php?action=SetSshStatus&status='+status,function(rdata){
+							layer.closeAll();
+							layer.msg(rdata.msg,{icon:rdata.status?1:2});
+							refresh();
+						})
+					}
+				},function(){
+					if(status == 0){
+						$("#sshswitch").prop("checked",false);
+					}
+					else{
+						$("#sshswitch").prop("checked",true);
+					}
+				})
+			}
+
+			function ping(){
+				status = $("#noping").prop("checked")==true?1:0;
+
+				var msg = status==0?'After banned PING does not affect the normal use of the server, but can not ping the server, you really want to ban PING?':'Unblocking the PING status may result in hackers discovering your server. Do you really want to lift the ban?';
+				layer.confirm(msg,{title:'Whether to ban ping',closeBtn:2},function(index){
+					if(index > 0){
+						layer.msg('Processing……',{icon:16,time:20000});
+						$.get('/firewall.php?action=SetPing&st='+status,function(ret){
+							layer.closeAll();
+							if (ret == true) {
+								if(status == 0){
+									layer.msg('Pingned', {icon: 1});
+								}
+								else{
+									layer.msg('Unblocked Ping', {icon: 1});
+								}
+
+							} else {
+								layer.msg('Connection failure', {icon: 5});
+							}
+						})
+					}
+				},function(){
+					if(status == 1){
+						$("#noping").prop("checked",true);
+					}
+					else{
+						$("#noping").prop("checked",false);
+					}
+				})
+			}
+
+			function ShowAccept(page,search) {
+				search = search == undefined ? '':search;
+				var loadT = layer.load();
+				$.get('/Ajax.php?action=getData&tab=firewall&tojs=ShowAccept&limit=10&p=' + page+"&search="+search, function(data) {
+					layer.close(loadT);
+					var Body = '';
+					for (var i = 0; i < data.data.length; i++) {
+						Body += "<tr>\
+										<td><em class='dlt-num'>" + data.data[i].id + "</em></td>\
+										<td>" + data.data[i].port + "</td>\
+										<td>" + data.data[i].addtime + "</td>\
+										<td>" + data.data[i].ps + "</td>\
+										<td class='text-right'><a href='javascript:;' class='link' onclick=\"DelAcceptPort(" + data.data[i].id + ",'" + data.data[i].port + "')\">Delete</a></td>\
+									</tr>";
+					}
+					$("#firewallBody").html(Body);
+					$("#firewallPage").html(data.page);
+				})
+			}
+
+			function AddAcceptPort(){
+				var port = $("#AcceptPort").val();
+				var ps = $("#Ps").val();
+				if(isNaN(port) == true || port < 1 || port >= 65535){
+					layer.msg("Please fill in the correct port!",{icon:2});
+					$("#AcceptPort").focus();
+					return;
+				}
+
+				if(ps.length < 1){
+					layer.msg("Remarks/description can not be empty!",{icon:2});
+					$("#Ps").focus();
+					return;
+				}
+				layer.load();
+				$.get('/firewall.php?action=AddAcceptPort&port='+port+"&ps="+ps,function(rdata){
+					layer.closeAll();
+					if(rdata.status == true || rdata.status == 'true'){
+						layer.msg("Successfully released: "+port+" port!",{icon:1});
+						ShowAccept(1);
+					}else{
+						layer.msg('Firewall connection failed, please check if it is enabled Firewalld',{icon:2});
+					}
+
+					$("#AcceptPort").attr('value',"");
+					$("#Ps").attr('value',"");
+				})
+
+			}
+
+			function DelAcceptPort(id, port) {
+				if(port == '888'){
+					layer.msg("Sorry, you can't delete the dedicated port of the WEB panel.!", {icon: 5});
+					return;
+				}
+				layer.confirm("You really want to delete "+port+" Is the port released?", {
+					title: 'Delete port execution',
+					closeBtn:2
+				}, function(index) {
+					if (index > 0) {
+						var loadT = layer.load({
+							shade: true,
+							shadeClose: false
+						});
+						$.get("/firewall.php?action=DelAcceptPort&id=" + id + "&port=" + port, function(ret) {
+							if (ret.status == true || ret.status == "true") {
+								layer.msg("Successfully deleted", {
+									icon: 1
+								});
+								ShowAccept(1);
+							} else {
+								layer.msg("Failed to delete!", {
+									icon: 5
+								});
+							}
+							layer.close(loadT);
+						});
+					}
+				});
+			}
+		</script>
+		<script type="text/javascript">
+		getLogs();
+		function getLogs(page,search) {
+			search = search == undefined ? '':search;
+			var loadT = layer.load();
+			$.get('/Ajax.php?action=getData&tab=logs&tojs=getLogs&limit=10&p=' + page+"&search="+search, function(data) {
+				layer.close(loadT);
+				var Body = '';
+				for (var i = 0; i < data.data.length; i++) {
+					Body += "<tr>\
+									<td><em class='dlt-num'>" + data.data[i].id + "</em></td>\
+									<td>" + data.data[i].type + "</td>\
+									<td>" + data.data[i].log + "</td>\
+									<td>" + data.data[i].addtime + "</td>\
+								</tr>";
+				}
+				$("#logsBody").html(Body);
+				$("#logsPage").html(data.page);
+			})
+		}
+		</script>

@@ -1,0 +1,529 @@
+<div class="main-content">
+		<div class="container-fluid">
+			<div class="pos-ser">
+				<div class="position">
+					<a href="/index.php">Home</a>/<span><?php echo $_SESSION['serverip']; ?></span>/<span>System settings</span>
+				</div>
+				<!--
+				<div class="search">
+					<form target="hid" onsubmit='getWeb(1,$("#SearchValue").prop("value"))'>
+						<input type="text" id="SearchValue" class="ser-text" />
+						<button type="button" class="ser-sub"onclick='getWeb(1,$("#SearchValue").prop("value"))'></button>
+					</form>
+				</div>
+				-->
+			</div>
+			<div class="safe container-fluid btsetting" style="overflow: hidden; margin-bottom: 15px;">
+				<div class="safe-port pull-left">
+					<div class="ss-text">
+						<em>Close panel</em>
+						<div class='ssh-item'>
+							<input class='btswitch btswitch-ios' id='closePl' type='checkbox'>
+							<label class='btswitch-btn' for='closePl' onclick='ClosePanel()'></label>
+						</div>
+					</div>
+					<div class="ss-text">
+						<em>Automatic update</em>
+						<div class='ssh-item'>
+							<input class='btswitch btswitch-ios' id='autoUpdate' type='checkbox' <?php if($Panel['auto']){ echo 'checked';}else{echo '';} ?>>
+							<label class='btswitch-btn' for='autoUpdate' onclick="SetPanelAutoUpload()"></label>
+						</div>
+					</div>
+					<div class="ss-text">
+						<em>Domain access only</em>
+						<div class='ssh-item'>
+							<input class='btswitch btswitch-ios' id='SetPanelLimit' type='checkbox' <?php if($Panel['limit']){ echo 'checked';}else{echo '';} ?>>
+							<label class='btswitch-btn' for='SetPanelLimit' onclick="SetPanelLimit()"></label>
+						</div>
+					</div>
+					<div class="ss-text" style="margin-right:0">
+						<em>Panel SSL</em>
+						<div class='ssh-item'>
+							<input class='btswitch btswitch-ios' id='SetPanelSSL' type='checkbox' <?php if($Panel['ssl']){ echo 'checked';}else{echo '';} ?>>
+							<label class='btswitch-btn' for='SetPanelSSL' onclick="SetPanelSSL()"></label>
+						</div>
+						<?php if($Panel['ssl']){ ?>
+						<a href="javascript:SetPanelSSLCRT();" class="btn btn-info btn-sm" style="margin-left:30px">Edit certificate</a>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+			<div class="setbox">
+				<div class="s-title">
+					<h3>Setting</h3>
+				</div>
+				<div class="setting-con">
+					<form id="set-Config">
+						<p><span class="set-tit">Alias</span><input name="panel_name" class="inputtxt" type="text" value="<?php echo $Panel['panel_name']; ?>"></p>
+						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
+						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
+						<p><span class="set-tit">Site directory</span><input name="sites_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['sites_path']; ?>"></p>
+						<p><span class="set-tit">Backup directory</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>
+						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
+						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
+						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
+					</form>
+					<div class="set-submit">Save</div>
+				</div>
+			</div>
+			<div class="setbox">
+				<div class="s-title">
+					<h3>All Software</h3>
+				</div>
+				<div class="setting-con">
+					<div class="divtable">
+						<table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-hover">
+							<thead>
+								<tr>
+									<th>Install Software</th>
+									<th>Installation Location</th>
+									<th>Configuration</th>
+									<th>Status</th>
+									<th width="90" style="text-align: right;">Action</th>
+								</tr>
+							</thead>
+							<tbody id="tjBody">
+								<tr>
+									<td><?php echo $ConfigInfo['web']['type'].$ConfigInfo['web']['version']; ?> </td>
+									<td><a href="javascript:openPath('/www/server/<?php echo $ConfigInfo['web']['type']; ?>');">/www/server/<?php echo $ConfigInfo['web']['type']; ?></a></td>
+									<td><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','reload');">Reload</a>
+										<?php if($_SESSION['server_type'] == 'nginx'){ ?>
+											 | <a class="link"><input id="defaultSite" name="defaultSite" type="checkbox" onchange="SetDefaultSite();" style="vertical-align: -2px; margin-right: 3px; margin-left: 1px;" <?php if($Panel['defaultSite']){ echo 'checked';}else{echo '';} ?> /><label style="font-weight:normal" for="defaultSite">Enable anti-malware resolution</label></a>
+										<?php } ?>
+									</td>
+									<td><span class="ico-start glyphicon glyphicon-play"></span></td>
+									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','restart');">Restart</a>
+								</tr>
+								<tr>
+									<td>MySQL <?php echo $ConfigInfo['mysql']['version']; ?></td>
+									<td><a href="javascript:openPath('/www/server/mysql');">/www/server/mysql</a></td>
+									<td><a class="link" href="javascript:GetConfigFile('mysql');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
+									<td><span class="<?php if($ConfigInfo['mysql']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
+									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('mysqld','restart');">Restart</a>
+										<?php if($ConfigInfo['mysql']['status']){ ?>
+											<!-- | <a class="link" href="javascript:ServiceAdmin('mysqld','stop');">停止</a></td>-->
+										<?php }else{ ?>
+											<a class="link" href="javascript:ServiceAdmin('mysqld','start');">Start</a></td>
+										<?php } ?>
+								</tr>
+								<tr>
+									<td>Pure-Ftpd <?php echo $ConfigInfo['pure-ftpd']['version']; ?> </td>
+									<td><a href="javascript:openPath('/www/server/pure-ftpd');">/www/server/pure-ftpd</a></td>
+									<td><a class="link" href="javascript:GetConfigFile('pure-ftpd');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('pure-ftpd','reload');">Reload</a></td>
+									<td><span class="<?php if($ConfigInfo['pure-ftpd']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
+									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('pure-ftpd','restart');">Restart</a> |
+										<?php if($ConfigInfo['pure-ftpd']['status']){ ?>
+											<a class="link" href="javascript:ServiceAdmin('pure-ftpd','stop');">stop</a></td>
+										<?php }else{ ?>
+											<a class="link" href="javascript:ServiceAdmin('pure-ftpd','start');">Start</a></td>
+										<?php } ?>
+								</tr>
+								<?php foreach($ConfigInfo['php'] as $key=>$value){ if(!$value['setup']) continue; ?>
+								<tr>
+									<td>PHP version:<?php echo $key; ?> </td>
+									<td><a href="javascript:openPath('/www/server/php/<?php echo $key; ?>');">/www/server/php/<?php echo $key; ?></a></td>
+									<td>
+										<a class="link" href="javascript:GetConfigFile('<?php echo $key; ?>');">Modify</a> |
+										<a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','reload');">Overload</a> |
+										<a class="link"><label style="font-weight:normal"><input name="PATH_INFO" type="checkbox" onchange="SetPathInfo('<?php echo $key; ?>','<?php if(!$value['pathinfo']){echo 'off';}else{echo 'on';}  ?>');" style="vertical-align: -2px; margin-right: 3px; margin-left: 1px;" <?php if(!$value['pathinfo']){ echo 'checked';}else{echo '';} ?> />PATH_INFO</label></a> |
+										<a class="link" href="javascript:SetPHPMaxSize('<?php echo $key; ?>','<?php echo $value['max']; ?>');">Upload limit (<?php echo $value['max']; ?>M)</a>
+										 | <a class="link" href="javascript:SetPHPMaxTime('<?php echo $key; ?>','<?php echo $value['maxTime']; ?>');">time out (<?php echo $value['maxTime']; ?> second)</a>
+										 | <a class="link" href="javascript:SetFpmConfig('<?php echo $key; ?>');">Performance adjustment</a>
+									</td>
+									<td><span class="<?php if($value['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
+									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','restart');">Restart</a>
+								</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	setCookie('serverType','<?php echo $_SESSION["server_type"]; ?>');
+	//Verify port format
+	$(function(){
+		$("#banport").keyup(function(){
+			var text = $(this).val();
+			if(isNaN(text)){
+				text = text.substring(0,text.length-1);
+				$(this).val(text);
+			}
+		})
+	});
+
+
+	//Close panel
+	function ClosePanel(){
+		layer.confirm('Closing the panel will prevent you from accessing the panel ,Do you really want to close the SLEMP Linux Panel?',{title:'Close panel',closeBtn:2}, function() {
+			$.get('/config.php?action=ClosePanel',function(rdata){
+				layer.msg(rdata.msg,{icon:rdata.status?1:5});
+			});
+		},function(){
+			$("#closePl").prop("checked",false);
+		});
+	}
+
+	//Performance adjustment
+	function SetFpmConfig(version,action){
+		if(action == 1){
+			var max_children = Number($("input[name='max_children']").val());
+			var start_servers = Number($("input[name='start_servers']").val());
+			var min_spare_servers = Number($("input[name='min_spare_servers']").val());
+			var max_spare_servers = Number($("input[name='max_spare_servers']").val());
+			if(max_children < max_spare_servers){
+				layer.msg('max_spare_servers not greater than max_children',{icon:5});
+				return;
+			}
+
+			if(min_spare_servers > start_servers) {
+				layer.msg('min_spare_servers not greater than start_servers',{icon:5});
+				return;
+			}
+
+			if(max_spare_servers < min_spare_servers){
+				layer.msg('min_spare_servers not greater than max_spare_servers',{icon:5});
+				return;
+			}
+
+			if(max_children < start_servers){
+				layer.msg('start_servers not greater than max_children',{icon:5});
+				return;
+			}
+
+			if(max_children < 1 || start_servers < 1 || min_spare_servers < 1 || max_spare_servers < 1){
+				layer.msg('The configuration value cannot be less than 1',{icon:5});
+				return;
+			}
+
+			var data = 'version='+version+'&max_children='+max_children+'&start_servers='+start_servers+'&min_spare_servers='+min_spare_servers+'&max_spare_servers='+max_spare_servers;
+			layer.msg('Processing...',{icon:16,time:0});
+			$.post('/config.php?action=SetFpmConfig',data,function(rdata){
+				layer.closeAll();
+				layer.msg(rdata.msg,{icon:rdata.status?1:5});
+			}).error(function(){
+				layer.closeAll();
+				layer.msg('Successful setup!',{icon:1});
+			});
+			return;
+		}
+
+		$.get('/config.php?action=GetFpmConfig&version='+version,function(rdata){
+
+			var limitList = "<option value='0'>Customize</option>"
+							+"<option value='1' "+(rdata.max_children==30?'selected':'')+">30 concurrent</option>"
+							+"<option value='2' "+(rdata.max_children==50?'selected':'')+">50 concurrent</option>"
+							+"<option value='3' "+(rdata.max_children==100?'selected':'')+">100 concurrent</option>"
+							+"<option value='4' "+(rdata.max_children==200?'selected':'')+">200 concurrent</option>"
+							+"<option value='5' "+(rdata.max_children==300?'selected':'')+">300 concurrent</option>"
+							+"<option value='6' "+(rdata.max_children==500?'selected':'')+">500 concurrent</option>"
+							+"<option value='7' "+(rdata.max_children==1000?'selected':'')+">1000 concurrent</option>"
+			var body="<div class='zun-form-new bingfa'>"
+							+"<p><span class='span_tit'>Concurrency plan ：</span><select name='limit' style='width:90px'>"+limitList+"</select></p>"
+						    +"<p><span class='span_tit'>max_children：</span><input style='width: 90px;' type='number' name='max_children' value='"+rdata.max_children+"' />  *The maximum number of child processes allowed to be created</p>"
+						    +"<p><span class='span_tit'>start_servers：</span><input style='width: 90px;' type='number' name='start_servers' value='"+rdata.start_servers+"' />  *Number of starting processes (number of initial processes after service startup)</p>"
+						    +"<p><span class='span_tit'>min_spare_servers：</span><input style='width: 90px;' type='number' name='min_spare_servers' value='"+rdata.min_spare_servers+"' />   *Minimum number of idle processes (number of reserved processes after cleaning up idle processes)</p>"
+						    +"<p><span class='span_tit'>max_spare_servers：</span><input style='width: 90px;' type='number' name='max_spare_servers' value='"+rdata.max_spare_servers+"' />   *Maximum number of idle processes (starts cleaning when the idle process reaches this value)</p>"
+					    +'<div class="submit-btn">'
+							+'<button type="button" class="btn btn-danger btn-sm btn-title" onclick="layer.closeAll()">cancel</button>'
+							+"<button class='btn btn-info btn-sm btn-title' onclick=\"SetFpmConfig('"+version+"',1)\">Preservation</button>"
+						+'</div>'
+				    +"</div>"
+
+			layer.open({
+				type: 1,
+				shift: 5,
+				closeBtn: 2,
+				area: '560px', //宽高
+				title: 'PHP-'+version+' Performance adjustment',
+				content: body
+				});
+
+			$("select[name='limit']").change(function(){
+						var type = $(this).val();
+						var max_children = rdata.max_children;
+						var start_servers = rdata.start_servers;
+						var min_spare_servers = rdata.min_spare_servers;
+						var max_spare_servers = rdata.max_spare_servers;
+						switch(type){
+							case '1':
+								max_children = 30;
+								start_servers = 5;
+								min_spare_servers = 5;
+								max_spare_servers = 20;
+								break;
+							case '2':
+								max_children = 50;
+								start_servers = 15;
+								min_spare_servers = 15;
+								max_spare_servers = 35;
+								break;
+							case '3':
+								max_children = 100;
+								start_servers = 20;
+								min_spare_servers = 20;
+								max_spare_servers = 70;
+								break;
+							case '4':
+								max_children = 200;
+								start_servers = 25;
+								min_spare_servers = 25;
+								max_spare_servers = 150;
+								break;
+							case '5':
+								max_children = 300;
+								start_servers = 30;
+								min_spare_servers = 30;
+								max_spare_servers = 180;
+								break;
+							case '6':
+								max_children = 500;
+								start_servers = 35;
+								min_spare_servers = 35;
+								max_spare_servers = 250;
+								break;
+							case '7':
+								max_children = 1000;
+								start_servers = 40;
+								min_spare_servers = 40;
+								max_spare_servers = 300;
+								break;
+						}
+
+						$("input[name='max_children']").val(max_children);
+						$("input[name='start_servers']").val(start_servers);
+						$("input[name='min_spare_servers']").val(min_spare_servers);
+						$("input[name='max_spare_servers']").val(max_spare_servers);
+					});
+		});
+	}
+
+	//Set PATHINFO
+	function SetPathInfo(version,type){
+		layer.msg('Processing..',{icon:16,time:0});
+		$.get('/config.php?action=SetPathInfo&version='+version+'&type='+type,function(rdata){
+			layer.closeAll();
+			layer.msg(rdata.msg,{icon:1});
+			$.get('/config.php?action=ServiceAdmin&name='+getCookie('serverType')+'&type=reload',function(){});
+			setTimeout(function(){
+				window.location.reload();
+			},3000);
+		}).error(function(){
+			layer.closeAll();
+			layer.msg('Successful operation!',{icon:1});
+			setTimeout(function(){
+				window.location.reload();
+			},3000);
+		});
+	}
+
+	//Set PHP upload limit
+	function SetPHPMaxSize(version,max){
+		if(max == 'submit'){
+			max = $("#max").val();
+			layer.msg('Saving data...',{icon:16,time:0});
+			$.get('/config.php?action=SetPHPMaxSize&version='+version+'&max='+max,function(rdata){
+				layer.closeAll();
+				layer.msg(rdata.msg,{icon:1});
+				setTimeout(function(){
+					window.location.reload();
+				},3000);
+			}).error(function(){
+				layer.closeAll();
+				layer.msg('Successful setup!',{icon:1});
+				setTimeout(function(){
+					window.location.reload();
+				},3000);
+			});
+
+			return;
+		}
+		layer.open({
+		type: 1,
+		shift: 5,
+		closeBtn: 2,
+		area: '320px', //Width Height
+		title: 'Modify PHP-'+version+' Upload size limit (M)',
+		content: '<form class="zun-form-new">\
+					<div class="line noborder">\
+					<input type="text" class="form-control" name="Name" id="max" value="'+max+'" placeholder="Upload size limit (MB)" />\
+					</div>\
+					<div class="submit-btn">\
+					<button type="button" class="btn btn-danger btn-sm btn-title" onclick="layer.closeAll()">cancel</button>\
+					<button type="button" class="btn btn-info btn-sm btn-title" onclick="SetPHPMaxSize(\''+version+'\',\'submit\')">determine</button>\
+					</div>\
+				</form>'
+		});
+	}
+
+	//Set PHP timeout
+	function SetPHPMaxTime(version,max){
+		if(max == 'submit'){
+			max = $("#max").val();
+			layer.msg('Saving data...',{icon:16,time:0});
+			$.get('/config.php?action=SetPHPMaxTime&version='+version+'&time='+max,function(rdata){
+				layer.closeAll();
+				layer.msg(rdata.msg,{icon:rdata.status?1:5});
+				$.get('/config.php?action=ServiceAdmin&name=php-fpm-'+version+'&type=reload',function(){});
+
+				setTimeout(function(){
+					window.location.reload();
+				},3000);
+			}).error(function(){
+				layer.closeAll();
+				layer.msg('Successful setup!',{icon:1});
+				setTimeout(function(){
+					window.location.reload();
+				},3000);
+			});
+
+			return;
+		}
+		layer.open({
+		type: 1,
+		shift: 5,
+		closeBtn: 2,
+		area: '320px', 
+		title: 'Modify PHP-'+version+' script timeout limit (seconds)',
+		content: '<form class="zun-form-new">\
+					<div class="line noborder">\
+					<input type="text" class="form-control" name="Name" id="max" value="'+max+'" placeholder="Script timeout limit (seconds)" />\
+					</div>\
+					<div class="submit-btn">\
+					<button type="button" class="btn btn-danger btn-sm btn-title" onclick="layer.closeAll()">Cancel</button>\
+					<button type="button" class="btn btn-info btn-sm btn-title" onclick="SetPHPMaxTime(\''+version+'\',\'submit\')">Submit</button>\
+					</div>\
+				</form>'
+		});
+	}
+
+	$(".set-submit").click(function(){
+		var data = $("#set-Config").serialize();
+		layer.msg('Saving data...',{icon:16,time:0});
+		$.post('/config.php?action=SaveConfig',data,function(rdata){
+			layer.closeAll();
+			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+			if(rdata.status){
+				$.get('/config.php?action=ServiceAdmin&name='+getCookie('serverType')+'&type=reload',function(){});
+				setTimeout(function(){
+					window.location.href = rdata.type+rdata.domain+':'+rdata.port+rdata.script_name;
+				},2000);
+			}
+		});
+
+	});
+
+	//Set anti-malware resolution
+	function SetDefaultSite(){
+		$.get('/config.php?action=SetDefaultSite',function(rdata){
+			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+		});
+	}
+
+	//Settings panel SSL
+	function SetPanelSSL(){
+		loadT = layer.msg('Setting up...',{icon:16,time:0})
+		$.get('/config.php?action=SetPanelSSL',function(rdata){
+			layer.close(loadT)
+			layer.msg(rdata.msg,{icon:rdata.status?1:5})
+			if(rdata.status){
+				setTimeout(function(){
+					window.location.href = rdata.type+rdata.domain+':'+rdata.port+rdata.script_name;
+				},2000)
+			}
+		});
+	}
+
+	//Edit panel certificate
+	function SetPanelSSLCRT(){
+		$.get('site.php?action=GetSSL&siteName=default',function(rdata){
+			if(rdata.key == false) rdata.key = '';
+			if(rdata.csr == false) rdata.csr = '';
+			var mykeyhtml = '<div class="ssl-type-con" style="padding:10px 0 20px 20px;"><div class="myKeyCon">'
+								+ '<div class="ssl-con-key">Key (KEY)<br><textarea id="key">'+rdata.key+'</textarea></div>'
+								+ '<div class="ssl-con-key">Certificate (CRT/PEM/CSR)<br><textarea id="csr">'+rdata.csr+'</textarea></div>'
+								+ '<div class="ssl-btn"><button class="btn btn-info btn-sm" onclick="SaveSSL(\'default\');">Preservation</button></div>'
+								+ '<div class="ssl-info"><p>To use third-party SSL, paste your KEY and CRT content on top and save it.</p></div>'
+							+ '</div></div>';
+
+			layer.open({
+				type: 1,
+				shift: 5,
+				closeBtn: 2,
+				area: '520px', //Width Height
+				title: 'Modify the panel SSL certificate',
+				content: mykeyhtml
+			});
+		});
+	}
+
+
+	//Save SSL
+	function SaveSSL(siteName){
+		var data = 'type=1&siteName='+siteName+'&key='+encodeURIComponent($("#key").val().replace(/\+/g,'(Bt.cn)'))+'&csr='+encodeURIComponent($("#csr").val().replace(/\+/g,'(Bt.cn)'));
+		var loadT = layer.msg('Saving...',{icon:16,time:20000})
+		$.post('site.php?action=SetSSL',data,function(rdata){
+			layer.close(loadT);
+			layer.msg(rdata.msg,{icon:rdata.status?1:5,time:rdata.status?3000:10000});
+		});
+	}
+
+	//restriction of visit
+	function SetPanelLimit(){
+		var st = $("#SetPanelLimit").prop("checked");
+		var mmsg = $("#SetPanelLimit").prop("checked")?"Cancel domain access panel only" : "Open the domain-only access panel and will not be able to access via IP";
+		layer.confirm(mmsg,{title:'caveat',closeBtn:2},function(){
+			layer.msg('Setting up...',{icon:16,time:0});
+			$.get('/config.php?action=SetPanelLimit',function(rdata){
+				layer.closeAll();
+				layer.msg(rdata.msg,{icon:rdata.status?1:2});
+				refresh();
+			})
+		},function(){
+			if(st){
+				$("#SetPanelLimit").prop("checked",true);
+			}
+			else{
+				$("#SetPanelLimit").prop("checked",false);
+			}
+		})
+	}
+
+	//Set up automatic updates
+	function SetPanelAutoUpload(){
+		loadT = layer.msg('Setting up...',{icon:16,time:0})
+		$.get('/config.php?action=SetPanelAutoUpload',function(rdata){
+			layer.close(loadT)
+			layer.msg(rdata.msg,{icon:rdata.status?1:5})
+		});
+	}
+
+	Date.prototype.format = function(format)
+	{
+		 var o = {
+		 "M+" : this.getMonth()+1, //month
+		 "d+" : this.getDate(),    //day
+		 "h+" : this.getHours(),   //hour
+		 "m+" : this.getMinutes(), //minute
+		 "s+" : this.getSeconds(), //second
+		 "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+		 "S" : this.getMilliseconds() //millisecond
+		 }
+		 if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+		 (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+		 for(var k in o)if(new RegExp("("+ k +")").test(format))
+		 format = format.replace(RegExp.$1,
+		 RegExp.$1.length==1 ? o[k] :
+		 ("00"+ o[k]).substr((""+ o[k]).length));
+		 return format;
+	}
+
+	//Timestamp to format date
+	function getLocalTime(tm) {
+		return new Date(parseInt(tm.toString().substr(0,10) * 1000)).format("yyyy/MM/dd hh:mm:ss");
+	}
+
+</script>

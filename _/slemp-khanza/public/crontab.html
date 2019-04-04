@@ -1,0 +1,503 @@
+<div class="main-content">
+		<div class="container-fluid">
+			<div class="pos-ser">
+				<div class="position">
+					<a href="/index.php">Home</a>/<span>Scheduled Tasks</span>
+				</div>
+				<div class="search">
+					<form target="hid" onsubmit='getWeb(1,$("#SearchValue").prop("value"))'>
+						<input type="text" id="SearchValue" class="ser-text" />
+						<button type="button" class="ser-sub"onclick='getWeb(1,$("#SearchValue").prop("value"))'></button>
+					</form>
+				</div>
+			</div>
+			<div class="setbox">
+				<div class="s-title">
+					<h3>Add a scheduled task</h3>
+				</div>
+				<div class="setting-con">
+						<div class="row plan">
+							<span class="typename">Type</span>
+							<div class="dropdown planjs">
+							  <button class="btn btn-default dropdown-toggle" type="button" id="excode" data-toggle="dropdown" style="width:auto">
+								<b val='toShell'>Shell script</b>
+								<span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu" role="menu" aria-labelledby="excode">
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="toShell">Shell script</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="toFile">Script file</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="site">Backup website</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="database">backup database</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="logs">Log cutting</a></li>
+							  </ul>
+							</div>
+							<div id="implement"></div>
+						</div>
+						<div class="row plan">
+							<span class="typename">Name</span>
+							<div class="planname"><input type="text" name="name"></div>
+						</div>
+						<div class="row plan">
+							<span class="typename">Cycle</span>
+							<div class="dropdown plancycle">
+							  <button class="btn btn-default dropdown-toggle" type="button" id="cycle" data-toggle="dropdown" style="width:94px">
+								<b val="week">Weekly</b>
+								<span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu" role="menu" aria-labelledby="cycle">
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="day">Daily</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="day-n">N Days</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="hour">Hourly</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="hour-n">N Hours</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="minute-n">N Minutes</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="week">Weekly</a></li>
+								<li><a role="menuitem" tabindex="-1" href="javascript:;" value="month">Monthly</a></li>
+							  </ul>
+							</div>
+							<div id="ptime"></div>
+						</div>
+						<div class="row plan">
+							<div class="plan-submit" onclick="planAdd()">Add Task</div>
+						</div>
+				</div>
+				<form id="set-Config" action="/crontab.php?action=AddCrontab" enctype="multipart/form-data" method="post" style="display: none;">
+					<input type="text" name="name" value="" />
+					<input type="text" name="type" value="" />
+					<input type="number" name="where1" value="" />
+					<input type="number" name="hour" value="" />
+					<input type="number" name="minute" value="" />
+					<input type="text" name="week" value="" />
+					<input type="text" name="sType" value="" />
+					<textarea name='sBody'></textarea>
+					<input id="sFile" type="file" name="sFile" value="" />
+					<input id="sName" type="text" name="sName" value="" />
+					<input id="backupTo" type="text" name="backupTo" value="localhost" />
+					<input type="number" name="save" value="" />
+					<input type="submit" />
+				</form>
+			</div>
+			<div class="setbox">
+				<div class="s-title">
+					<h3>Task list</h3>
+				</div>
+				<div class="setting-con divtable">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Task Name</th>
+								<th>Period</th>
+								<th>Time of Execution</th>
+								<th>Time of Appending</th>
+								<th width="190">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($cronData as $value){ ?>
+								<tr>
+									<td><?php echo $value['name']; ?></td>
+									<td><?php echo $value['type']; ?></td>
+									<td><?php echo $value['cycle']; ?></td>
+									<td><?php echo $value['addtime']; ?></td>
+									<td><a href="javascript:OnlineEditFile(0,'/www/server/cron/<?php echo $value['echo']; ?>');" class="link">script</a> | <a href="javascript:GetLogs(<?php echo $value['id']; ?>);" class="link">Log</a> | <a href="javascript:planDel(<?php echo $value['id']; ?>,'<?php echo $value["name"]; ?>');" class="link">delete</a></td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	setCookie('serverType','<?php echo $_SESSION["server_type"]; ?>');
+	toWeek();
+	toHour();
+	toMinute();
+	toShell();
+
+	var status = '<?php echo $_SESSION["crontab"]["status"]; ?>';
+	if(status != ''){
+		layer.msg("<?php echo $_SESSION['crontab']['msg']; ?>",{icon:status=='true'?1:5});
+	}
+
+	<?php unset($_SESSION["crontab"]); ?>
+	var num = 0;
+
+
+	//View task log
+	function GetLogs(id){
+		layer.msg('Retrieving...',{icon:16,time:0});
+		$.get('/crontab.php?action=GetLogs&id='+id,function(rdata){
+			layer.closeAll();
+			if(!rdata.status) {
+				layer.msg(rdata.msg,{icon:5});
+				return;
+			};
+			layer.open({
+				type:1,
+				title:'Task execution log',
+				area: ['60%','500px'],
+				shadeClose:false,
+				closeBtn:2,
+				content:'<div class="setchmod zun-form-new" style="padding-top: 0px;">'
+						+'<pre style="overflow: auto; border: 0px none; padding: 15px; margin: 0px; height: 410px; background-color: rgb(255, 255, 255);">'+rdata.msg+'</pre>'
+						+'<div class="submit-btn" style="margin-top: 0px;">'
+						+'<button type="button" class="btn btn-info btn-sm btn-title" onclick="CloseLogs('+id+')">Empty</button>'
+						+'<button type="button" class="btn btn-danger btn-sm btn-title" onclick="layer.closeAll()">Shut down</button>'
+					    +'</div>'
+						+'</div>'
+			});
+		});
+	}
+
+
+	//Empty the log
+	function CloseLogs(id){
+		layer.msg('Processing...',{icon:16,time:0});
+		$.get('/crontab.php?action=DelLogs&id='+id,function(rdata){
+			layer.closeAll();
+			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+		});
+	}
+
+
+	//delete
+	function planDel(id,name){
+		layer.open({
+			type: 1,
+		    title: "Delete scheduled task["+name+"]",
+		    area: '350px',
+		    closeBtn: 2,
+		    shadeClose: true,
+		    content:"<div class='zun-form-new webDelete'>\
+		    	<p>Are you sure you want to delete this task?</p>\
+				<div class='vcode'>Calculation results:<span class='text'></span>=<input type='text' id='vcodeResult' value=''></div>\
+		    	<div class='submit-btn' style='margin-top:15px'>\
+					<button type='button' id='web_end_time' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>cancel</button>\
+			        <button type='button' id='web_del_send' class='btn btn-info btn-sm btn-title'  onclick=\"ftpall('"+id+"')\">submit</button>\
+		        </div>\
+		    </div>"
+		});
+		randomSum();
+	}
+
+	//Randomly generated verification calculation
+	function randomSum(){
+		var a = Math.round(Math.random()*9+1);
+		var b = Math.round(Math.random()*9+1);
+		var sum = '';
+		sum = a + b;
+		$(".vcode .text").text(a+' + '+b);
+		setCookie("vcodesum",sum);
+		$("#vcodeResult").focus().keyup(function(e){
+			if(e.keyCode == 13) $("#web_del_send").click();
+		});
+	}
+	//Delete operation
+	function ftpall(id){
+		var sum = $("#vcodeResult").val();
+		if(sum == undefined || sum ==''){
+			layer.msg("Enter the calculation result, otherwise it cannot be deleted");
+			return;
+		}
+		else{
+			window.location.href = "/crontab.php?action=DelCrontab&id="+id;
+		}
+	}
+
+
+
+	//submit
+	function planAdd(){
+		var name = $(".planname input[name='name']").val();
+		if(name == ''){
+			$(".planname input[name='name']").focus();
+			layer.msg('Task name cannot be empty!',{icon:5});
+			return;
+		}
+		$("#set-Config input[name='name']").val(name);
+
+		var type = $(".plancycle").find("b").attr("val");
+		$("#set-Config input[name='type']").val(type);
+
+		var where1 = $("#ptime input[name='where1']").val();
+		var is1;
+		var is2 = 1;
+		switch(type){
+			case 'day-n':
+				is1=31;
+				break;
+			case 'hour-n':
+				is1=23;
+				break;
+			case 'minute-n':
+				is1=59;
+				break;
+			case 'month':
+				is1=31;
+				break;
+
+		}
+
+		if(where1 > is1 || where1 < is2){
+			$("#ptime input[name='where1']").focus();
+			layer.msg('Form is not valid, please re-enter!',{icon:5});
+			return;
+		}
+
+		$("#set-Config input[name='where1']").val(where1);
+
+		var hour = $("#ptime input[name='hour']").val();
+		if(hour > 23 || hour < 0){
+			$("#ptime input[name='hour']").focus();
+			layer.msg('The hour value is illegal!',{icon:5});
+			return;
+		}
+		$("#set-Config input[name='hour']").val(hour);
+		var minute = $("#ptime input[name='minute']").val();
+		if(minute > 59 || minute < 0){
+			$("#ptime input[name='minute']").focus();
+			layer.msg('Minute value is illegal!',{icon:5});
+			return;
+		}
+		$("#set-Config input[name='minute']").val(minute);
+
+		var save = $("#save").val();
+
+
+		$("#set-Config input[name='save']").val(save);
+
+		$("#set-Config input[name='week']").val($(".planweek").find("b").attr("val"));
+		var sType = $(".planjs").find("b").attr("val");
+		var sBody = $("#implement textarea[name='sBody']").val();
+
+		if(sType == 'toFile'){
+			if($("#viewfile").val() == ''){
+				layer.msg('Please select a script file!',{icon:5});
+				return;
+			}
+		}else{
+			if(sBody == ''){
+				$("#implement textarea[name='sBody']").focus();
+				layer.msg('Script code cannot be empty!',{icon:5});
+				return;
+			}
+		}
+
+		$("#set-Config input[name='sType']").val(sType);
+		$("#set-Config textarea[name='sBody']").val(sBody);
+
+		var sName = $("#sName").attr("val");
+
+		if(sType == 'site' || sType == 'database'){
+			var backupTo = $(".planBackupTo").find("b").attr("val");
+			$("#backupTo").val(backupTo);
+		}
+
+
+		$("#set-Config input[name='sName']").val(sName);
+		$("#set-Config").submit();
+
+	}
+
+	$(".dropdown ul li a").click(function(){
+		var txt = $(this).text();
+		var type = $(this).attr("value");
+		$(this).parents(".dropdown").find("button b").text(txt).attr("val",type);
+		switch(type){
+			case 'day':
+				closeOpt();
+				toHour();
+				toMinute();
+				break;
+			case 'day-n':
+				closeOpt();
+				toWhere1('day');
+				toHour();
+				toMinute();
+				break;
+			case 'hour':
+				closeOpt();
+				toMinute();
+				break;
+			case 'hour-n':
+				closeOpt();
+				toWhere1('hour');
+				toMinute();
+				break;
+			case 'minute-n':
+				closeOpt();
+				toWhere1('minute');
+				break;
+			case 'week':
+				closeOpt();
+				toWeek();
+				toHour();
+				toMinute();
+				break;
+			case 'month':
+				closeOpt();
+				toWhere1('day');
+				toHour();
+				toMinute();
+				break;
+			case 'toFile':
+				toFile();
+				break;
+			case 'toShell':
+				toShell();
+				break;
+			case 'site':
+				toBackup('sites');
+				break;
+			case 'database':
+				toBackup('databases');
+				break;
+			case 'logs':
+				toBackup('logs');
+				break;
+		}
+	})
+
+
+	//Backup
+	function toBackup(type){
+		var sMsg = "";
+		switch(type){
+			case 'sites':
+				sMsg = 'Backup website';
+				sType = "sites";
+				break;
+			case 'databases':
+				sMsg = 'Backup database';
+				sType = "databases";
+				break;
+			case 'logs':
+				sMsg = 'Cutting log';
+				sType = "sites";
+				break;
+		}
+		$.get('/crontab.php?action=GetDataList&type='+sType,function(rdata){
+			$(".planname input[name='name']").attr('readonly','true').css({"background-color":"#f6f6f6","color":"#666"});
+			var sOpt = "";
+
+			for(var i=0;i<rdata.length;i++){
+				if(i==0){
+					$(".planname input[name='name']").val(sMsg+'['+rdata[i].name+']');
+				}
+				sOpt += '<li><a role="menuitem" tabindex="-1" href="javascript:;" value="'+rdata[i].name+'">'+rdata[i].name+'['+rdata[i].ps+']</a></li>';
+			}
+
+			var sBody = '<div class="dropdown">\
+						  <button class="btn btn-default dropdown-toggle" type="button" id="backdata" data-toggle="dropdown" style="width:auto">\
+							<b id="sName" val="'+rdata[0].name+'">'+rdata[0].name+'['+rdata[0].ps+']</b> <span class="caret"></span>\
+						  </button>\
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="backdata">'+sOpt+'</ul>\
+						</div>\
+						<div class="textname">Backup to</div>\
+						<div class="dropdown planBackupTo">\
+						  <button class="btn btn-default dropdown-toggle" type="button" id="excode" data-toggle="dropdown" style="width:auto;">\
+							<b val="localhost">Server disk</b> <span class="caret"></span>\
+						  </button>\
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="excode">\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="localhost">Server disk</a></li>\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="qiniu">Cloud</a></li>\
+						  </ul>\
+						</div>\
+						<div class="textname">Keep up to date</div><div class="plan_hms">\
+						<span><input type="number" name="save" id="save" value="3" maxlength="4" max="100" min="1"></span>\
+						<span class="name">Share</span>\
+						</div>';
+			$("#implement").html(sBody);
+			getselectname();
+			$(".dropdown ul li a").click(function(){
+				var sName = $("#sName").attr("val");
+				if(!sName) return;
+				$(".planname input[name='name']").val(sMsg+'['+sName+']');
+			});
+		});
+	}
+
+
+	//Drop-down menu name
+	function getselectname(){
+		$(".dropdown ul li a").click(function(){
+			var txt = $(this).text();
+			var type = $(this).attr("value");
+			$(this).parents(".dropdown").find("button b").text(txt).attr("val",type);
+		});
+	}
+	//Clean up
+	function closeOpt(){
+		$("#ptime").html('');
+	}
+	//week
+	function toWeek(){
+		var mBody = '<div class="dropdown planweek">\
+						  <button class="btn btn-default dropdown-toggle" type="button" id="excode" data-toggle="dropdown">\
+							<b val="1">Monday</b> <span class="caret"></span>\
+						  </button>\
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="excode">\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="1">Monday</a></li>\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="2">Tuesday</a></li>\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="3">Wednesday</a></li>\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="4">Thursday</a></li>\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="5">Friday</a></li>\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="6">Saturday</a></li>\
+							<li><a role="menuitem" tabindex="-1" href="javascript:;" value="0">Sunday</a></li>\
+						  </ul>\
+						</div>';
+		$("#ptime").html(mBody);
+		getselectname()
+	}
+	//Designation 1
+	function toWhere1(ix){
+		var mBody ='<div class="plan_hms">\
+						<span><input type="number" name="where1" value="3" maxlength="2" max="31" min="0"></span>\
+						<span class="name">'+ix+'</span>\
+						</div>';
+		$("#ptime").append(mBody);
+	}
+	//hour
+	function toHour(){
+		var mBody = '<div class="plan_hms">\
+						<span><input type="number" name="hour" value="1" maxlength="2" max="23" min="0"></span>\
+						<span class="name">hour</span>\
+						</div>';
+		$("#ptime").append(mBody);
+	}
+
+	//minute
+	function toMinute(){
+		var mBody = '<div class="plan_hms">\
+						<span><input type="number" name="minute" value="30" maxlength="2" max="59" min="0"></span>\
+						<span class="name">minute</span>\
+						</div>';
+		$("#ptime").append(mBody);
+
+	}
+
+	//From file
+	function toFile(){
+		var tBody = '<input type="text" value="" name="file" id="viewfile" onclick="fileupload()" readonly="true">\
+					<button class="btn btn-default" onclick="fileupload()">Upload</button>';
+		$("#implement").html(tBody);
+		$(".planname input[name='name']").removeAttr('readonly style').val("");
+	}
+
+	//From the script
+	function toShell(){
+		var tBody = "<textarea class='txtsjs' name='sBody'></textarea>";
+		$("#implement").html(tBody);
+		$(".planname input[name='name']").removeAttr('readonly style').val("");
+	}
+	//Upload
+	function fileupload(){
+		$("#sFile").change(function(){
+			$("#viewfile").val($("#sFile").val());
+		});
+		$("#sFile").click();
+	}
+
+
+</script>

@@ -1,0 +1,316 @@
+<div class="main-content">
+		<div class="container-fluid">
+			<div class="pos-ser">
+				<div class="position">
+					<a href="">Home</a>/<span>Database Management</span>
+				</div>
+				<div class="search">
+					<form target="hid" onsubmit='getData(1,$("#SearchValue").prop("value"))'>
+						<input type="text" id="SearchValue" class="ser-text" placeholder="Search database" />
+						<button type="button" class="ser-sub"onclick='getData(1,$("#SearchValue").prop("value"))'></button>
+					</form>
+					<iframe name='hid' id="hid" style="display:none"></iframe>
+				</div>
+			</div>
+			<div class="safe">
+					<button onclick="DataAdd(0)" title="Add database" class="btn btn-info btn-sm" type="button" style="margin-right: 5px;">Add Database</button>
+					<button onclick="DataSetuppwd(0)" title="Set administrator password" class="btn btn-default btn-sm" type="button" style="margin-right: 5px;">Root Password</button>
+					<button onclick="AdminDatabase('','root','<?php echo $_SESSION['mysql_root']; ?>')" title="Open phpMyadmin" class="btn btn-default btn-sm" type="button" style="margin-right: 5px;">phpMyAdmin</button>
+					<div class="divtable">
+						<table class="table table-hover" width="100%" border="0" cellpadding="0" cellspacing="0">
+							<thead>
+							<tr>
+								<th width='30px'><input type="checkbox" id="setBox"></th>
+                                <th>DB Name</th>
+                                <th>Username</th>
+                                <th width="15%">Password</th>
+                                <th>Package file</th>
+                                <th width="15%">Remarks</th>
+                                <th width="260px" class="text-right">Action</th>
+							</tr>
+							</thead>
+							<tbody id="DataBody"></tbody>
+						</table>
+						<div class="dataTables_paginate paging_bootstrap pagination">
+							<span class="sync" onclick="SyncToDatabases(1)" title="Synchronize the selected database to the server">Sync</span>
+							<span class="sync" onclick="SyncToDatabases(0)" title="Synchronize all databases to the server">Synch All</span>
+							<span class="sync" onclick="SyncGetDatabases()">Obtained</span>
+							<ul id="DataPage" class="page"></ul>
+						</div>
+					</div>
+			</div>
+			<form id="toPHPMyAdmin" action="/<?php echo $_SESSION['phpmyadminDirName']; ?>/index.php" method="post" style="display: none;"  target="_blank">
+				<input type="text" name="pma_username" id="pma_username" value="" />
+				<input type="password" name="pma_password" id="pma_password" value="" />
+				<input type="text" name="db" id="db" value="" />
+			</form>
+		</div>
+	</div>
+</div>
+		<script type="text/javascript" src="/public/js/data.js"></script>
+
+		<script type="text/javascript">
+			setCookie('uploadSize','<?php echo intval(ini_get("upload_max_filesize"))*1024*1024; ?>');
+			getData(1);
+			//Reload MySQL configuration
+			function ReloadMySQL(){
+				layer.msg('Reloaded MySQL configuration!',{icon:1});
+				$.get('database.php?action=ReloadMySQL',function(rdata){});
+			}
+
+			Date.prototype.format = function(format)
+			{
+				 var o = {
+				 "M+" : this.getMonth()+1, //month
+				 "d+" : this.getDate(),    //day
+				 "h+" : this.getHours(),   //hour
+				 "m+" : this.getMinutes(), //minute
+				 "s+" : this.getSeconds(), //second
+				 "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+				 "S" : this.getMilliseconds() //millisecond
+				 }
+				 if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+				 (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+				 for(var k in o)if(new RegExp("("+ k +")").test(format))
+				 format = format.replace(RegExp.$1,
+				 RegExp.$1.length==1 ? o[k] :
+				 ("00"+ o[k]).substr((""+ o[k]).length));
+				 return format;
+			}
+			//Timestamp to format date
+			function getLocalTime(tm) {
+				return new Date(parseInt(tm) * 1000).format("yyyy/MM/dd hh:mm:ss");
+			}
+
+
+			//Take the extension
+			function GetExtName(fileName,oext){
+				var extArr = fileName.split(".");
+				var exts = ['conf','sh','cnf','pl','so','passwd','cshrc','deny','cache','init','po','ext2','ext3','ext4','i686','img','gz','efi','old','pid','lock','frm','opt','err','MYI','MYD','CSM'];
+				var extLastName = extArr[extArr.length - 1];
+				if(oext) return extLastName;
+				if(extArr.length<2 || extLastName.length>5 || extLastName.length < 2){
+					return "file";
+				}
+				for(var i=0; i<exts.length; i++){
+					if(exts[i]==extLastName){
+						return "file";
+					}
+				}
+				return extLastName;
+			}
+
+			//Import database
+			function InputDatabase(name){
+				var path = "<?php echo $_SESSION['config']['backup_path']; ?>/database";
+				$.post('/Ajax.php?action=GetDir','path='+path,function(rdata){
+					var Body = '';
+					for (var i = 0; i < rdata.FILES.length; i++) {
+						if(rdata.FILES[i] == null) continue;
+						var fmp = rdata.FILES[i].split(";");
+						var ext = GetExtName(fmp[0],true);
+
+						if(ext != 'sql' && ext != 'zip' && ext != 'gz' && ext != 'tgz') continue;
+						Body += "<tr>\
+									<td class='column-name'><span class='ico ico-"+ext+"'></span><a class='text'>" + fmp[0] + "</a></td>\
+									<td>" + ((fmp[2].length > 11)?fmp[2]:getLocalTime(fmp[2])) + "</td>\
+									<td>" + (ToSize(fmp[1])) + "</td>\
+									<td class='editmenu'>\
+										<a class='link' href='javascript:;' onclick=\"RecoveryData('" + rdata.PATH +"/"+ fmp[0] + "','"+name+"')\">Import</a>\
+									</span></td>\
+								</tr>";
+					}
+					layer.open({
+							type: 1,
+							skin: 'demo-class',
+							area: '600px',
+							title: 'Import data from a file',
+							closeBtn: 2,
+							shift: 5,
+							shadeClose: false,
+							content: '<div style="padding:10px">'
+										+'<button class="btn btn-default btn-sm" onclick="UploadFiles(\''+name+'\')">Upload from local</button>'
+										+'<div class="divtable" style="max-height:300px; overflow:auto">'
+											+'<table class="table table-hover">'
+												+'<thead>'
+													+'<tr>'
+														+'<th>File name</th>'
+														+'<th>Change the time</th>'
+														+'<th>Size</th>'
+														+'<th>Action</th>'
+													+'</tr>'
+												+'</thead>'
+												+'<tbody>'+Body+'</tbody>'
+											+'</table>'
+										+'</div>'
+										+'<ul class="help-info-text">'
+										   +'<li>Only sql, zip (tar.gz|gz|tgz)</li>'
+										   +'<li>Zip, tar.gz compression package structure: test.zip or test.tar.gz compression package, must contain test.sql</li>'
+										+'</ul>'
+									+'</div>'
+					});
+				});
+			}
+
+
+			//upload files
+			function UploadFiles(name){
+				var path = "<?php echo $_SESSION['config']['backup_path']; ?>/database/";
+				var index = layer.open({
+					type:1,
+					closeBtn: 2,
+					title:'Upload files --- <span style="color:red;">Please upload sql or zip or tar or gzip archives, max. '+ToSize(getCookie('uploadSize'))+'</span>',
+					area: ['500px','500px'],
+					shadeClose:false,
+					content:'<div class="fileUploadDiv"><input type="hidden" id="input-val" value="'+path+'" />\
+							<input type="file" id="file_input"  multiple="true" autocomplete="off" />\
+							<button type="button"  id="opt" autocomplete="off">Add Files</button>\
+							<button type="button" id="up" autocomplete="off" >Start upload</button>\
+							<span id="totalProgress" style="float:right;"></span>\
+							<button type="button" id="filesClose" autocomplete="off">Close</button>\
+							<ul id="up_box"></ul></div>'
+				});
+				$("#filesClose").click(function(){
+					layer.closeAll();
+					InputDatabase(name);
+				});
+				UploadStart(true);
+			}
+
+
+			//Set access rights
+			function SetDatabaseAccess(dataName,action){
+				if(action == 1){
+					var access = $("#dataAccess").val();
+					if(access == 'ip') access = $("input[name=address]").val();
+					layer.msg('Processing...',{icon:16,time:0});
+					$.post('/database.php?action=SetDatabaseAccess','name='+dataName+'&access='+access,function(rdata){
+						layer.closeAll();
+						layer.msg(rdata.msg,{icon:rdata.status?1:5});
+					});
+					return;
+				}
+
+
+				$.get('/database.php?action=GetDatabaseAccess&name='+dataName,function(rdata){
+					if(rdata == null){
+						layer.msg('This database cannot modify access rights!',{icon:5});
+						return;
+					}
+					layer.open({
+						type: 1,
+						skin: 'demo-class',
+						area: '480px',
+						title: 'Set database permissions ['+dataName+']',
+						closeBtn: 2,
+						shift: 5,
+						shadeClose: false,
+						content: "<form class='zun-form-new' id='DatabaseAccess'>\
+				                        <div class='line'>\
+										<label><span>Access Permission</span></label>\
+										<div class='info-r'>\
+										<select id='dataAccess' style='width:100px;'>\
+											<option value='127.0.0.1' "+(rdata.Host == '127.0.0.1'?'selected':'')+">Local server</option>\
+											<option value='%' "+(rdata.Host == '%'?'selected':'')+">Everyone</option>\
+											<option value='ip' "+((rdata.Host != '127.0.0.1' && rdata.Host != '%')?'selected':'')+">Specify IP</option>\
+										</select>\
+										<input type='text' name='address' placeholder='Please enter the IP address allowed to access' value='"+rdata.Host+"' style='width:230px;"+((rdata.Host != '127.0.0.1' && rdata.Host != '%')?'':'display:none;')+"' />\
+										</div>\
+										</div>\
+				                        <div class='submit-btn'>\
+											<button type='button' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>Cancel</button>\
+									        <button type='button' class='btn btn-info btn-sm btn-title' onclick=\"SetDatabaseAccess('"+dataName+"',1)\" >OK</button>\
+								        </div>\
+								      </form>"
+					});
+
+					$("#dataAccess").change(function(){
+						var access = $(this).val();
+						if(access == 'ip'){
+							$("input[name=address]").show().val('');
+						}else{
+							$("input[name=address]").hide();
+						}
+					});
+				});
+			}
+
+			//Sync to database
+			function SyncToDatabases(type){
+				//Pick object
+				var el = document.getElementsByTagName('input');
+				var len = el.length;
+				var data='';
+				var a = '';
+				var count = 0;
+				//Construct POST data
+				for(var i=0;i<len;i++){
+					if(el[i].checked == true && el[i].value != 'on'){
+						data += a+count+'='+el[i].value;
+						a = '&';
+						count++;
+					}
+				}
+
+				var loadT = layer.msg('Syncing...',{icon:16,time:0});
+				$.post('/database.php?action=SyncToDatabases&type='+type,data,function(rdata){
+					layer.close(loadT);
+					layer.msg(rdata.msg,{icon:rdata.status?1:5});
+				});
+			}
+
+			//Obtained from the database
+			function SyncGetDatabases(){
+				var loadT = layer.msg('Syncing...',{icon:16,time:0});
+				$.get('/database.php?action=SyncGetDatabases',function(rdata){
+					layer.close(loadT);
+					getData(1);
+					layer.msg(rdata.msg,{icon:rdata.status?1:5});
+				});
+			}
+
+			/**
+			 * Select all
+			 */
+			$("#setBox").click(function() {
+				if ($(this).prop("checked")) {
+					$("input[name=id]").prop("checked", true);
+				} else {
+					$("input[name=id]").prop("checked", false);
+				}
+			});
+
+
+			//Management database
+			function AdminDatabase(name,username,password){
+				$("#db").val(name);
+				$("#pma_username").val(username);
+				$("#pma_password").val(password);
+				$("#toPHPMyAdmin").submit();
+			}
+
+			$(".safe .tipstitle").mouseover(function(){
+			var title = $(this).attr("data-title");
+		    layer.tips(title, this, {
+			    tips: [1, '#3c8dbc'],
+			    time:0
+			})
+			}).mouseout(function(){
+				$(".layui-layer-tips").remove();
+			})
+			$(".btn-more").hover(function(){
+				$(this).addClass("open");
+			},function(){
+				$(this).removeClass("open");
+			});
+
+			var opens = getCookie('openPHPmyadmin');
+			if(open != 'yes'){
+				$.get('/<?php echo $_SESSION["phpmyadminDirName"]; ?>/index.php',function(rdata){
+					setCookie('openPHPmyadmin','yes');
+				});
+			}
+
+</script>
+<script src="/public/js/upload.js"></script>
+<script src="/public/js/ajax.js"></script>

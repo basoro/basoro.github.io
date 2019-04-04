@@ -1,0 +1,20 @@
+<div class="header">
+  	<div class="logo pull-left">
+		<span><?php echo $_SESSION['product']; ?></span>
+	</div>
+	<span id="defaultPath" style="display: none;"><?php echo $_SESSION['config']['sites_path']; ?></span>
+	<ul class="menu pull-right">
+		<li> <a class="menu_home" href="/index.php">Home</a></li>
+		<li><a class="menu_web" href="/site.php">Web</a></li>
+		<li><a class="menu_ftp" href="/ftp.php">FTP</a></li>
+		<li><a class="menu_data" href="/database.php">Database</a></li>
+		<li><a class="menu_firewall" href="/firewall.php">Security</a></li>
+		<li><a class="menu_day" href="/crontab.php">Cron</a></li>
+		<li><a class="menu_folder" href="/files.php">Files</a></li>
+		<li><a class="menu_set" href="/config.php">Settings</a></li>
+		<!--<li><a href="javascript:setPassword();" title="Modify user password">Password</a></li>-->
+		<li><a class="menu_exit" href="javascript:;" id="dologin"><i class="icon-bell-off"></i><em>Logout</em></a></li>
+	</ul>
+</div>
+<div class="bt-warp">
+<div id="container" class="container-fluid">

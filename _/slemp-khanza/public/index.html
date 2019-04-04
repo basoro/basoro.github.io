@@ -1,0 +1,547 @@
+<div class="main-content">
+			<div class="container-fluid">
+				<div class="pos-ser">
+					<div class="position">
+						<a href="/index.php">Home</a>/<span>Server Status</span>
+					</div>
+				</div>
+				<div class="system-info">
+					<div class="tips">
+						System: <span id="info"> Getting</span>&#12288;&#12288;&#12288;Uninterrupted operation: <span id="running"> Getting</span><button onclick="ReBoot()" class="btn btn-info btn-xs" style="vertical-align:1px;margin-left:10px">Safe restart</button>
+						<span style="position:relative;left: 50px;">
+							Version: <span id="btversion" onclick="openLog()"><?php echo @$_SESSION['info-n'];?></span>
+						</span>
+					</div>
+					<div class="list-serve">
+					<ul class="row">
+						<li class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+							<div class="serve-box">
+								<h3>Web</h3>
+								<div class="server-box-right">
+									<h4><?php echo @$_SESSION['server_count']['sites']; ?></h4>
+									<p>Add and manage sites on the server here</p>
+									<div class="sbr-btn">
+										<a href="/site.php">Manage</a>|<a href="javascript:;" onclick="webAdd(0)">Add</a>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+							<div class="serve-box">
+								<h3>FTP</h3>
+								<div class="server-box-right">
+									<h4><?php echo @$_SESSION['server_count']['ftps']; ?></h4>
+									<p>Add and manage FTP on the server here</p>
+									<div class="sbr-btn">
+										<a href="/ftp.php">Manage</a>|<a href="javascript:;" onclick="ftpAdd(0)">Add</a>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+							<div class="serve-box">
+								<h3>DB</h3>
+								<div class="server-box-right">
+									<h4><?php echo @$_SESSION['server_count']['databases']; ?></h4>
+									<p>Add and manage databases on the server here</p>
+									<div class="sbr-btn">
+										<a href="/database.php">Manage</a>|<a href="javascript:;" onclick="DataAdd(0)">Add</a>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				</div>
+				<div class="server">
+					<div class="s-title">
+						<h3>Server usage</h3>
+						<a class="ref" href="javascript:;" onclick="getInfo()">Refresh</a>
+					</div>
+					<div class="server-circle">
+						<ul class="row">
+							<li class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+								<h3>CPU usage</h3>
+								<div class="circle">
+									<div class="pie_left">
+										<div class="left"></div>
+									</div>
+									<div class="pie_right">
+										<div class="right"></div>
+									</div>
+									<div class="mask"><span id="state">0</span>%</div>
+								</div>
+								<h4 id="core">Getting</h4>
+							</li>
+							<li class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+								<h3>Memory usage</h3>
+								<div class="circle">
+									<div class="pie_left">
+										<div class="left"></div>
+									</div>
+									<div class="pie_right">
+										<div class="right"></div>
+									</div>
+									<div class="mask"><span id="left">0</span>%</div>
+								</div>
+								<h4 id="memory">Getting</h4>
+							</li>
+							<?php foreach($Disk as $value){ ?>
+								<li class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+									<h3><?php echo $value['分区']; ?></h3>
+									<div class="circle">
+										<div class="pie_left">
+											<div class="left"></div>
+										</div>
+										<div class="pie_right">
+											<div class="right"></div>
+										</div>
+										<div class="mask"><span><?php echo $value['使用率']; ?></span>%</div>
+									</div>
+									<h4><?php echo $value['可用空间'].'/'.$value['总容量']; ?>(GB)</h4>
+								</li>
+							<?php } ?>
+						</ul>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="bw">
+						<div class="bg">
+						<div class="bw-title">Network traffic</div>
+						<div class="bw-info">
+							<ul>
+								<li class="bi-line"><span>Upload speed</span><a id="upSpeed">Getting</a></li>
+								<li class="bi-line"><span>Download speed</span><a id="downSpeed">Getting</a></li>
+								<li><span>Total Upload</span><a id="upAll">Getting</a></li>
+								<li><span>Total Download</span><a id="downAll">Getting</a></li>
+							</ul>
+						</div>
+						<div id="NetImg" style="width:98%;height:330px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="bw zun-updata">
+					<div class="bg">
+					<div class="bw-title">Items
+						<div class="pull-right phpinfo" style="display:none;">
+							<span>Panel currently uses PHP version</span>
+							<select id="phpinfo" style="vertical-align:-1px; height:22px">
+								<option>PHP-5.4</option>
+							</select>
+							<button onclick="SetPanelPHPVersion()" class="btn btn-info btn-xs">Switch</button>
+						</div>
+					</div>
+					<div class="setting-con" style="padding:0; height:442px; overflow:auto">
+						<div class="divtable" style="margin-top:0">
+							<table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-hover" style="border-left:0;border-top:0;border-right:0;">
+								<thead>
+									<tr>
+										<th style="padding-left:17px">Install software</th>
+										<th>Configuration</th>
+										<th>Status</th>
+										<th width="90" style="text-align: right;padding-right:18px">Action</th>
+									</tr>
+								</thead>
+								<tbody id="tjBody">
+									<tr>
+										<td style="padding-left:18px"><?php echo $ConfigInfo['web']['type'].$ConfigInfo['web']['version']; ?> </td>
+										<td><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Config</a> |
+											<a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','reload');">Reload</a>
+											<?php if($_SESSION['server_type'] == 'nginx'){ ?>
+											 | <a class="link" href="javascript:GetNginxStatus();">Status</a></td>
+											<?php } ?>
+										</td>
+										<td><span class="ico-start glyphicon glyphicon-play"></span></td>
+										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','restart');">Restart</a>
+									</tr>
+									<tr>
+										<td style="padding-left:18px">MySQL <?php echo $ConfigInfo['mysql']['version']; ?></td>
+										<td><a class="link" href="javascript:GetConfigFile('mysql');">Config</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
+										<td><span class="<?php if($ConfigInfo['mysql']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
+										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('mysqld','restart');">Restart</a>
+											<?php if($ConfigInfo['mysql']['status']){ ?>
+												<!-- | <a class="link" href="javascript:ServiceAdmin('mysqld','stop');">停止</a></td>-->
+											<?php }else{ ?>
+												 | <a class="link" href="javascript:ServiceAdmin('mysqld','start');">Start</a></td>
+											<?php } ?>
+									</tr>
+									<tr>
+										<td style="padding-left:18px">Pure-Ftpd <?php echo $ConfigInfo['pure-ftpd']['version']; ?> </td>
+										<td><a class="link" href="javascript:GetConfigFile('pure-ftpd');">Config</a> | <a class="link" href="javascript:ServiceAdmin('pure-ftpd','reload');">Reload</a></td>
+										<td><span class="<?php if($ConfigInfo['pure-ftpd']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
+										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('pure-ftpd','restart');">Restart</a>
+											<?php if($ConfigInfo['pure-ftpd']['status']){ ?>
+												<!-- <a class="link" href="javascript:ServiceAdmin('pure-ftpd','stop');">Stop</a></td> -->
+											<?php }else{ ?>
+												<a class="link" href="javascript:ServiceAdmin('pure-ftpd','start');">Start</a></td>
+											<?php } ?>
+									</tr>
+									<?php foreach($ConfigInfo['php'] as $key=>$value){ if(!$value['setup']) continue; ?>
+									<tr>
+										<td style="padding-left:18px">PHP version：<?php echo $key; ?> </td>
+										<td><a class="link" href="javascript:GetConfigFile('<?php echo $key; ?>');">Config</a>
+											<?php if(strpos($ConfigInfo['web']['version'],'2.2.3') === false){ ?>
+											 | <a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','reload');">Reload</a> |
+											<a class="link" href="javascript:GetPHPStatus('<?php echo $key; ?>');">Status</a></td>
+										<td><span class="<?php if($value['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
+										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','restart');">Restart</a>
+											<?php if($value['status']){ ?>
+												 <!-- | <a class="link" href="javascript:stopPHP('<?php echo $key; ?>');">Stop</a></td> -->
+											<?php }else{ ?>
+												 | <a class="link" href="javascript:startPHP('<?php echo $key; ?>');">Start</a></td>
+											<?php } ?>
+
+											<?php }else{ ?>
+												<td>php_mod</td>
+												<td></td>
+											<?php } ?>
+									</tr>
+									<?php } ?>
+									<tr>
+										<td style="padding-left:18px">Log file</td>
+										<td><a class="link" href="javascript:openPath('/www/wwwlogs');">/www/wwwlogs</a></td>
+										<td id="logSize"></td>
+										<td style="text-align: right;padding-right:18px"><a class="link"  href="javascript:CloseLogs();">Empty</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script type="text/javascript" src="/public/js/highcharts.js"></script>
+		<script type="text/javascript" src="/public/js/web.js"></script>
+		<script type="text/javascript" src="/public/js/ftp.js"></script>
+		<script type="text/javascript" src="/public/js/data.js"></script>
+		<script type="text/javascript" src="/public/js/server.js"></script>
+		<script type="text/javascript">
+			setCookie('phpmodel','<?php echo $_SESSION["phpmodel"]; ?>');
+			setCookie('serverType','<?php echo $_SESSION["server_type"]; ?>');
+			setCookie('uploadSize','<?php echo intval(ini_get("upload_max_filesize"))*1024*1024; ?>');
+			checkConfig();
+			function checkConfig(){
+				$.get('/config.php?action=ServiceAdmin&name='+getCookie('serverType')+'&type=test',function(rdata){
+					if(rdata.status) return;
+					layer.open({
+						type:1,
+						title:'Detected configuration file error!',
+						area: '600px',
+						shadeClose:false,
+						closeBtn:2,
+						content:'<div class="setchmod zun-form-new">'
+								+'<p style="padding: 0 20px 10px;line-height: 24px;">'+rdata.msg+'</p>'
+								+'<p style="font-weight:bold;margin-left: 24px;margin-top: 20px;">note:</p><ul style="padding: 0 20px 10px;margin-top: 3px;" class="help-info-text">'
+								+'============================================================================'
+								+'<li>Please exclude the configuration file error according to the above error message.！</li>'
+								+'<li>If the configuration file is wrong, the site and domain name you added will not take effect!</li>'
+								+'<li>Do not restart the nginx server until the configuration error is corrected. This will cause your web service to fail to start!</li>'
+								+'</ul>'
+								+'<div class="submit-btn">'
+								+'<button type="button" class="btn btn-danger btn-sm btn-title" onclick="layer.closeAll()">Got it</button>'
+							    +'</div>'
+								+'</div>'
+					});
+				});
+			}
+
+
+			function getInfo() {
+				var loadT = layer.load({
+					shade: true,
+					shadeClose: false
+				});
+				$.get("/Ajax.php?action=GetSystemTotal", function(info) {
+					$("#memory").html(parseInt((info.memTotal-info.memRealUsed))+'/'+info.memTotal+' (MB)');
+					$("#left").html(Math.floor(info.memRealUsed / (info.memTotal / 100)));
+					$("#info").html(info.system);
+					$("#running").html(info.time);
+					$("#core").html(info.cpuNum + " Core");
+					$("#state").html(info.cpuRealUsed);
+					layer.close(loadT);
+					setImg();
+				});
+			}
+
+			getInfo();
+
+			function getNet(){
+				var up;
+				var down;
+				$.ajax({
+					type:"get",
+					url:"/Ajax.php?action=GetNetTotal",
+					async:true,
+					success:function(net){
+						$("#InterfaceSpeed").html("Interface rate: 1.0Gbps");
+						$("#upSpeed").html(net.up+ ' KB');
+						$("#downSpeed").html(net.down+' KB');
+						$("#downAll").html(net.downTotal);
+						$("#upAll").html(net.upTotal);
+						$("#state").html(net.cpuinfo.used);
+						setCookie("upNet",net.up);
+						setCookie("downNet",net.down);
+					}
+				});
+				//var result = Number(getCookie("upNet"));
+				//return result;
+			}
+
+			$(document).ready(function() {
+				Highcharts.setOptions({
+					global: {
+						useUTC: false
+					}
+				});
+
+				var chart;
+				$('#NetImg').highcharts({
+					chart: {
+						type: 'areaspline',
+						animation: Highcharts.svg, // don't animate in old IE
+						//marginRight: 10,
+						events: {
+							load: function() {
+								var series = this.series[0];
+								var series1 = this.series[1];
+
+								setInterval(function() {
+									getNet();
+									var x = (new Date()).getTime(),
+										y = Number(getCookie("upNet")),
+										z = Number(getCookie("downNet"));
+									series1.addPoint([x, z], true, true);
+									series.addPoint([x, y], true, true);
+								}, 3000);
+							}
+						}
+					},
+					colors: ['#ff8c00','#1e90ff'],
+					title: {
+						text: 'Interface traffic in real time',
+						style: {"color":"#666"}
+					},
+					xAxis: {
+						type: 'datetime',
+						tickPixelInterval: 100,
+						gridLineColor: '#eeeeee',
+						gridLineWidth: 1
+					},
+					yAxis: {
+						title: {
+							text: 'bandwidth KB/S',
+							style: {"color":"#666"}
+						},
+						plotLines: [{
+							value: 0,
+							width: 0,
+							color: '#eeeeee'
+						}],
+						gridLineDashStyle:'Dash',
+						gridLineColor: '#ddd',
+						gridLineWidth: 1
+					},
+					tooltip: {
+						shared: true,
+						borderColor:"#cccccc"
+					},
+					plotOptions: {
+						areaspline: {
+							fillOpacity: 0.46
+						}
+					},
+					legend: {
+						borderWidth: 0
+					},
+					series: [{
+						name: 'Upstream',
+						marker:{
+							radius: 0,
+							lineColor: "#ff8c00",
+							lineWidth:2
+						},
+						data: (function() {
+							var data = [],
+								time = (new Date()).getTime(),
+								i;
+							for (i = -16; i <= 0; i++){
+								data.push({
+									x: time + i * 1000,
+									y: null
+								});
+							}
+							return data;
+						})()
+					},{
+						name: 'Downstream',
+						marker:{
+							radius: 0,
+							lineColor: "#1e90ff",
+							lineWidth:1
+						},
+						data: (function() {
+							var data1 = [],
+								time1 = (new Date()).getTime(),
+								i;
+							for (i = -16; i <= 0; i++){
+								data1.push({
+									x: time1 + i * 1000,
+									z: null
+								});
+							}
+							return data1;
+						})()
+					}]
+				});
+			});
+
+			function setImg() {
+				$('.circle').each(function(index, el) {
+					var num = $(this).find('span').text() * 3.6;
+					if (num <= 180) {
+						$(this).find('.left').css('transform', "rotate(0deg)");
+						$(this).find('.right').css('transform', "rotate(" + num + "deg)");
+					} else {
+						$(this).find('.right').css('transform', "rotate(180deg)");
+						$(this).find('.left').css('transform', "rotate(" + (num - 180) + "deg)");
+					};
+				});
+
+			}
+			setImg();
+
+			$(function(){
+				$.get('index.php?action=update',function(rdata){
+					if(rdata.status == false) return;
+					if(rdata.version != undefined){
+						$("#toUpdate").html('<a href="javascript:updateMsg();">Update immediately</a>');
+						return;
+					}
+					layer.msg(rdata.msg,{icon:1});
+				});
+			});
+
+			function checkUpdate(){
+				var loadT = layer.msg('Getting version information...',{icon:16,time:0});
+				$.get('index.php?action=update&check=true',function(rdata){
+					layer.close(loadT);
+					layer.msg(rdata.msg,{icon:1});
+					if(rdata.version != undefined) updateMsg();
+				});
+			}
+
+
+			function updateMsg(){
+				//window.open("");
+				$.get('index.php?action=update',function(rdata){
+					layer.open({
+						type:1,
+						title:'Upgrade to['+rdata.version+']',
+						area: '400px',
+						shadeClose:false,
+						closeBtn:2,
+						content:'<div class="setchmod zun-form-new">'
+								+'<p style="padding: 0 20px 10px;line-height: 24px;">'+rdata.updateMsg+'</p>'
+								+'<div class="submit-btn">'
+								+'<button type="button" class="btn btn-danger btn-sm btn-title" onclick="layer.closeAll()">Cancel</button>'
+								+'<button type="button" class="btn btn-info btn-sm btn-title" onclick="updateVersion(\''+rdata.version+'\')" >Upgrade</button>'
+							    +'</div>'
+								+'</div>'
+					});
+				});
+			}
+
+			function updateVersion(version){
+				var loadT = layer.msg('Upgrading panel..',{icon:16,time:10000});
+				$.get('index.php?action=update&toUpdate=yes',function(rdata){
+					layer.closeAll();
+					layer.msg(rdata.msg,{icon:rdata.status?1:5});
+					if(rdata.status){
+						$("#btversion").html(version);
+						$("#toUpdate").html('<a href="javascript:checkUpdate();">Check for updates</a>');
+					}
+				});
+			}
+
+			function openLog(){
+				layer.open({
+				type: 1,
+				area: ['682px','462px'],
+				title: 'New version update',
+				closeBtn: 2,
+				shift: 5,
+				shadeClose: false,
+				content: '<div class="DrawRecordCon"></div>'
+				});
+				var loadT = layer.msg('Retrieving...',{icon:16,time:0})
+				$.get('/index.php?action=getUpdateLogs',function(rdata){
+					layer.close(loadT);
+					var body = '';
+					for(var i=0;i<rdata.length;i++){
+						body += '<div class="DrawRecord DrawRecordlist">\
+								<div class="DrawRecordL">'+rdata[i].addtime+'<i></i></div>\
+								<div class="DrawRecordR">\
+									<h3>'+rdata[i].title+'</h3>\
+									<p>'+rdata[i].body+'</p>\
+								</div>\
+							</div>'
+					}
+					$(".DrawRecordCon").html(body);
+				});
+			}
+
+			function CloseLogs(){
+				$.get('Ajax.php?action=CloseLogs',function(rdata){
+					$("#logSize").html(rdata);
+					layer.msg('Cleaned up!',{icon:1});
+				});
+			}
+
+			$(function(){
+				$.get('Ajax.php?action=GetDirSize&path=/www/wwwlogs',function(rdata){
+					$("#logSize").html(rdata);
+				});
+
+				$.get('/site.php?action=GetPHPVersion',function(rdata){
+					var php_version='';
+					var nowphpinfo = '<?php echo PHP_VERSION; ?>';
+					nowphpinfo  = nowphpinfo.replace(/\./g,'');
+					nowphpinfo  = nowphpinfo.substr(0,2);
+					for(var i=rdata.length-1;i>=0;i--){
+						if(rdata[i].version == nowphpinfo){
+							php_version += "<option value='"+rdata[i].version+"' selected='true'>"+rdata[i].name+"</option>";
+						}
+						else{
+							php_version += "<option value='"+rdata[i].version+"'>"+rdata[i].name+"</option>";
+						}
+					}
+					$("#phpinfo").html(php_version);
+				});
+			});
+
+			function SetPanelPHPVersion(){
+				var version = $("#phpinfo").val();
+				$.get('/index.php?action=SetPanelPHPVersion&version='+version,function(rdata){
+					layer.msg(rdata.msg,{icon:1});
+				}).error(function(){
+					layer.msg('Switched',{icon:5});
+				});
+			}
+
+			function ReBoot(){
+				layer.confirm('Note：<br>If your server is a container，please cancel!',{title:'Safe restart',closeBtn:2},function(){
+					layer.msg('Processing...',{icon:16,time:0});
+					$.get('/index.php?action=ReBoot',function(rdata){
+						layer.closeAll();
+						layer.msg(rdata.msg,{icon:1});
+					}).error(function(){
+						layer.msg('Restarting server，Please wait a few minutes before refreshing the page!',{icon:1});
+					});
+				});
+			}
+
+		</script>
