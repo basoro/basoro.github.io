@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Install Panel
-
 cd /tmp/
 svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
 rm -rf /tmp/slemp-khanza/conf

@@ -4,12 +4,12 @@ include_once './Common.php';
 
 function oneKeyAdd(){
 	$data = json_decode(stripcslashes($_POST['webname']),true);
-	if(!$data) ajax_return(array('status'=>false,'code'=>500,'msg'=>'表单不合法，请重新填写'));
-	if(checkMainPath($_POST['path'])) ajax_return(array('status'=>false,'code'=>501,'msg'=>'不能以系统关键目录作为站点目录'));
+	if(!$data) ajax_return(array('status'=>false,'code'=>500,'msg'=>'The form is illegal, please re-fill'));
+	if(checkMainPath($_POST['path'])) ajax_return(array('status'=>false,'code'=>501,'msg'=>'Cannot use system key directory as site directory'));
 
 	$MainDomain = explode(":",$data['domain']);
 	$reg = "/^([\w\-\*]{1,100}\.){1,4}(\w{1,10}|\w{1,10}\.\w{1,10})$/";
-	if(!preg_match($reg, trim($MainDomain[0]))) ajax_return(array('status'=>false,'code'=>501,'msg'=>'主域名格式不正确'));
+	if(!preg_match($reg, trim($MainDomain[0]))) ajax_return(array('status'=>false,'code'=>501,'msg'=>'The primary domain name is not in the correct format'));
 	$_POST['webname'] =  $MainDomain[0];
 	$_POST['port'] = empty($_POST['port'])?'80':$_POST['port'];
 	$result = AddSite(true);
@@ -27,7 +27,6 @@ function oneKeyAdd(){
 	ajax_return($result);
 }
 
-//批量添加域名
 function oneKeyAddDomain(){
 	$domain = @explode(',',I('domain'));
 	$i = 0;
@@ -48,30 +47,29 @@ function oneKeyAddDomain(){
 	ajax_return($i);
 }
 
-//生成证书
 function SetSSL(){
 	$type = I('type');
 	$siteName = I('siteName');
 	$dn = array(
-   	 	"countryName" 			=> 'CN',
-   	 	"stateOrProvinceName"	=> 'GuangDong',
-   	 	"localityName" 			=> 'Dongguan',
-  	 	"organizationName" 		=>	'bt.cn',
-    	"organizationalUnitName" => 'BT-WebPanel',
+   	 	"countryName" 			=> 'ID',
+   	 	"stateOrProvinceName"	=> 'Kalimantan Selatan',
+   	 	"localityName" 			=> 'Barabai',
+  	 	"organizationName" 		=>	'Basoro.ID',
+    	"organizationalUnitName" => 'SLEMP Panel',
     	"commonName" 			=> I('domain'),
-    	"emailAddress" 			=> 'ssltest@bt.cn'
+    	"emailAddress" 			=> 'dentix.id@gmail.com'
  	);
-	$numberofdays = 3650;     				//有效时长
+	$numberofdays = 3650;
 	$path =   "/www/server/".$_SESSION['server_type']."/conf/key/{$siteName}";
 	if(!file_exists($path)){
 		SendSocket("FileAdmin|AddDir|" . $path);
 	}
-	$csrpath = $path."/key.csr";				//生成证书路径
-	$keypath = $path."/key.key"; 				//密钥文件路径
+	$csrpath = $path."/key.csr";
+	$keypath = $path."/key.key";
 
 	if($type == 1){
-		if(strpos($_POST['key'],'CERTIFICATE')) returnJson(false, '秘钥错误，请检查!');
-		if(strpos($_POST['csr'],'KEY')) returnJson(false, '证书错误，请检查!');
+		if(strpos($_POST['key'],'CERTIFICATE')) returnJson(false, 'The key is wrong, please check!');
+		if(strpos($_POST['csr'],'KEY')) returnJson(false, 'Certificate error, please check!');
 		SendSocket('ExecShell|\\cp -a '.$keypath.' /tmp/backup1.conf');
 		file_put_contents('/tmp/read.tmp', str_replace('(Bt.cn)','+',$_POST['key']));
 		SendSocket("FileAdmin|SaveFile|" . $keypath);
@@ -89,14 +87,13 @@ function SetSSL(){
 			SendSocket('ExecShell|\\cp -a /tmp/backup2.conf '.$csrpath);
 			SendSocket("FileAdmin|ChmodFile|" . $keypath . '|root');
 			SendSocket("FileAdmin|ChmodFile|" . $csrpath . '|root');
-			returnJson(false,'证书错误: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
+			returnJson(false,'Certificate error: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
 		}
 
 		serviceWebReload();
-		returnJson(true,'证书已保存!');
+		returnJson(true,'The certificate has been saved!');
 	}
 
-	//生成证书
 	$privkey = openssl_pkey_new();
 	$csr = openssl_csr_new($dn, $privkey);
 	$sscert = openssl_csr_sign($csr, null, $privkey, $numberofdays);
@@ -107,12 +104,11 @@ function SetSSL(){
 	SendSocket("FileAdmin|SaveFile|" . $keypath);
 	file_put_contents('/tmp/read.tmp', $csrkey);
 	SendSocket("FileAdmin|SaveFile|" . $csrpath);
-	$data = array('status'=>true,'msg'=>'证书已生成!','key'=>$privatekey,'csr'=>$csrkey);
+	$data = array('status'=>true,'msg'=>'Certificate has been generated!','key'=>$privatekey,'csr'=>$csrkey);
 	serviceWebReload();
 	ajax_return($data);
 }
 
-//添加SSL配置
 function SetSSLConf(){
 	$siteName = I('siteName');
 	$file = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$siteName.'.conf';
@@ -122,7 +118,7 @@ function SetSSLConf(){
 		$onSSL = ($nginxVersion == '1.8.1' || $nginxVersion == '-Tengine2.1.2' || $nginxVersion == '-Tengine2.2.0') ? '':"";
 		$sslStr = "#error_page 404/404.html;{$onSSL}\n		ssl_certificate      	key/$siteName/key.csr;\n		ssl_certificate_key  key/$siteName/key.key;\n	if (\$server_port !~ 443){\n			rewrite ^/.*\$ https://\$host\$uri;\n		}\n		error_page 497  https://\$host\$uri;\n";
 		if(strpos($conf,'ssl_certificate')){
-			returnJson(true,'SSL开启成功!');
+			returnJson(true,'SSL is successfully turned on!');
 		}
 
 		$conf = str_replace('#error_page 404/404.html;',$sslStr,$conf);
@@ -144,7 +140,7 @@ function SetSSLConf(){
 		if($isError !== true){
 			SendSocket('ExecShell|\\cp -a /tmp/backup.conf '.$file);
 			SendSocket("FileAdmin|ChmodFile|" . $file . '|root');
-			returnJson(false,'配置文件错误: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
+			returnJson(false,'Configuration file error: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
 		}
 
 		$sql = M('firewall');
@@ -153,14 +149,13 @@ function SetSSLConf(){
 			$data = array('port'=>'443','ps'=>'https','addtime'=>date('Y-m-d H:i:s'));
 			$sql->add($data);
 		}
-		WriteLogs('网站管理', '网站['.$siteName.']开启SSL成功!');
-		returnJson(true,'SSL开启成功!');
+		WriteLogs('Website management', 'website ['.$siteName.'] Enable SSL successfully!');
+		returnJson(true,'SSL is successfully turned on!');
 	}
-	returnJson(false,'SSL开启失败!');
+	returnJson(false,'SSL open failed!');
 
 }
 
-//清理SSL配置
 function CloseSSLConf(){
 	$siteName = I('siteName');
 	$file = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$siteName.'.conf';
@@ -183,13 +178,12 @@ function CloseSSLConf(){
 
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
         $result = SendSocket("FileAdmin|SaveFile|" . $file);
-        WriteLogs('网站管理', '网站['.$siteName.']关闭SSL成功!');
-        returnJson(true,'SSL已关闭!');
+        WriteLogs('Website management', 'website ['.$siteName.'] turn off SSL successfully!');
+        returnJson(true,'SSL is off!');
     }
-    returnJson(false,'关闭失败!');
+    returnJson(false,'Closing failure!');
 }
 
-//取SSL状态
 function GetSSL(){
 	$siteName = I('siteName');
 	$path =   "/www/server/".$_SESSION['server_type']."/conf/key/{$siteName}";
@@ -205,7 +199,6 @@ function GetSSL(){
 	ajax_return(array('status'=>$status,'domain'=>$domains,'key'=>$key,'csr'=>$csr));
 }
 
-//启动站点
 function SiteStart(){
 	$Path = '/www/server/'.$_SESSION['server_type'].'/stop';
 	$Path2= '/www/nginx/stop';
@@ -230,12 +223,11 @@ function SiteStart(){
 	returnSocket($data);
 }
 
-//停止站点
 function SiteStop(){
 	$path = '/www/server/'.$_SESSION['server_type'].'/stop';
 	if(!file_exists($path)){
 		SendSocket("FileAdmin|AddDir|" . $path);
-		$html = file_get_contents('http://125.88.182.172:5880/conf/stop.html');
+		$html = file_get_contents('https://basoro.id/downloads/stop.html');
 		file_put_contents($path.'/index.html', $html);
 	}
 	$file = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$_GET['name'].'.conf';
@@ -247,13 +239,12 @@ function SiteStop(){
 		$result = SendSocket("FileAdmin|SaveFile|".$file);
 	}
 	if($result['status']){
-		M('sites')->where("id='$id'")->setField('status','已停止');
+		M('sites')->where("id='$id'")->setField('status','stopped');
 		serviceWebReload();
 	}
 	returnSocket($result);
 }
 
-//添加站点
 function AddSite($own = false){
 	$webname 	= str_replace(' ','',I('post.webname'));
 	$webdir 	= GetPathStr(str_replace(' ','',I('post.path')));
@@ -261,15 +252,15 @@ function AddSite($own = false){
 	$domain 	= str_replace(' ','',I('post.domain'));
 	$version 	= str_replace(' ','',I('post.version'));
 
-	if(strlen($version) < 2) returnJson(false,'PHP版本号不能为空!');
+	if(strlen($version) < 2) returnJson(false,'PHP version number cannot be empty!');
 
-	if(!isset($webname)) returnJson(false,'参数不正确!');
+	if(!isset($webname)) returnJson(false,'The parameter is incorrect!');
 	if($domain == '')	$domain = $webname;
 
 	$SQL = M('sites');
-	//是否重复
+
 	if($SQL->where("name='$webname'")->getCount()){
-		returnJson(false,'您添加的站点已存在!');
+		returnJson(false,'The site you added already exists!');
 	}
 	if($_SESSION['server_type'] == 'nginx'){
 		$conf=<<<EOT
@@ -306,25 +297,21 @@ EOT;
 		if($status['status']){
 			SendSocket("FileAdmin|AddDir|" . $webdir);
 			if(!file_exists('./conf/defaultDoc.html')){
-				file_put_contents('./conf/defaultDoc.html',file_get_contents('https://cloud.basoro.id/defaultDoc.html'));
+				file_put_contents('./conf/defaultDoc.html',file_get_contents('https://basoro.id/downloads/defaultDoc.html'));
 			}
 			if(!file_exists('./conf/404.html')){
-				file_put_contents('./conf/404.html',file_get_contents('https://cloud.basoro.id/error/404.html'));
+				file_put_contents('./conf/404.html',file_get_contents('https://basoro.id/downloads/404.html'));
 			}
-
-
 
 
 			if($_SESSION['server_type'] == 'nginx'){
 				if(!file_exists('./conf/502.html')){
-					file_put_contents('./conf/502.html',file_get_contents('https://cloud.basoro.id/error/502.html'));
+					file_put_contents('./conf/502.html',file_get_contents('https://basoro.id/downloads/502.html'));
 				}
 				file_put_contents($webdir.'/502.html', file_get_contents('./conf/502.html'));
 				if(!file_exists('/www/server/nginx/conf/rewrite')) SendSocket("FileAdmin|AddDir|/www/server/nginx/conf/rewrite");
 				SendSocket("FileAdmin|AddFile|/www/server/nginx/conf/rewrite/{$webname}.conf");
 
-			}else{
-				if(!file_exists($webdir.'/.htaccess')) file_put_contents($webdir.'/.htaccess', ' ');
 			}
 
 			file_put_contents($webdir.'/index.html', file_get_contents('./conf/defaultDoc.html'));
@@ -338,9 +325,8 @@ EOT;
 		}
 	}
 
-	//检查处理结果
 	if (!$status['status']){
-		$result = array('status'=>false,'code'=>-1,'msg'=>(isset($status['msg'])?$status['msg']:'连接服务器接口失败!'));
+		$result = array('status'=>false,'code'=>-1,'msg'=>(isset($status['msg'])?$status['msg']:'Connection server interface failed!'));
 		if($own){
 			return $result;
 		}
@@ -348,28 +334,26 @@ EOT;
 	}
 
 
-	//添加FTP
 	if (I('post.ftp')=='true'){
 		$ftppassword = I('post.ftppassword');
 		$ftpusername = trim(I('post.ftpuser'));
-		$ftpstatus = SendSocket("FTP|add|{$ftpusername}|{$ftppassword}|{$webdir}|1|读写|500|500");
+		$ftpstatus = SendSocket("FTP|add|{$ftpusername}|{$ftppassword}|{$webdir}|1|Read and write|500|500");
 		if(@$ftpstatus['status'] == 'true'){
 			$data = array(
 				'name' 		=> $ftpusername,
 				'password' 	=> $ftppassword,
 				'path' 		=> $webdir,
 				'status' 	=> 1,
-				'ps' 		=> "网站：{$webname} 的FTP帐户"
+				'ps' 		=> "website: {$webname} FTP account"
 			);
 			M('ftps')->add($data);
 			$_SESSION['server_count']['ftps']++;
-			WriteLogs('FTP管理', "添加FTP[$ftpusername]成功!");
+			WriteLogs('FTP management', "Add FTP [$ftpusername] success!");
 		}
 		$retuls = array('status'=>true,'in_ftp'=>true,'ftpUserName'=>$ftpusername,'ftpPassword'=>$ftppassword,'ftpUrl'=>'ftp://'.$_SESSION['serverip'].':'.$_SESSION['port']);
 	}else{
 		$retuls = array('status'=>true,'in_ftp'=>false);
 	}
-	//添加数据库
 	if(I('post.sql') != 'false'){
 		$retuls['sql'] = AddSql();
 	}
@@ -378,19 +362,18 @@ EOT;
 		'name'		=> $webname,
 		'path' 		=> $webdir,
 		'domain' 	=> $domain.':'.$port,
-		'ps'	=> ($ps == '')? '填写备注':$ps,
+		'ps'	=> ($ps == '')? 'Fill in the note':$ps,
 		'status' => "running"
 	);
 	$_POST['id'] = $SQL->add($data);
 	$_SESSION['server_count']['sites']++;
-	WriteLogs('网站管理', '添加网站['.$webname.']成功!');
+	WriteLogs('Website management', 'Add website ['.$webname.'] success!');
 	if($own){
 		return $retuls;
 	}
 	ajax_return($retuls);
 }
 
-//处理路径
 function GetPathStr($path){
 	$len = strlen($path);
 	if(substr($path,$len-1, 1) == '/'){
@@ -399,26 +382,21 @@ function GetPathStr($path){
 	return $path;
 }
 
-//取流量限制值
 function GetLimitNet(){
 	$id = I('id');
 
-	//取回配置文件
 	$siteName = M('sites')->where("id='$id'")->getField('name');
 	$filename = '/www/server/nginx/conf/vhost/'.$siteName.'.conf';
 
-	//站点总并发
 	$conf = file_get_contents($filename);
 	$rep = "/\s+limit_conn\s+perserver\s+([0-9]+);/";
 	preg_match($rep, $conf,$tmp);
 	$data['perserver'] = intval($tmp[1]);
 
-	//IP并发限制
 	$rep = "/\s+limit_conn\s+perip\s+([0-9]+);/";
 	preg_match($rep, $conf,$tmp);
 	$data['perip'] = intval($tmp[1]);
 
-	//请求并发限制
 	$rep = "/\s+limit_rate\s+([0-9]+)\w+;/";
 	preg_match($rep, $conf,$tmp);
 	$data['limit_rate'] = intval($tmp[1]);
@@ -426,21 +404,18 @@ function GetLimitNet(){
 	ajax_return($data);
 }
 
-//设置流量限制
 function SetLimitNet(){
-	if($_SESSION['server_type'] != 'nginx') returnJson(false, '流量限制当前仅支持Nginx环境');
+	if($_SESSION['server_type'] != 'nginx') returnJson(false, 'Traffic restrictions currently only support Nginx environments');
 
 	$id = I('id');
 	$perserver = 'limit_conn perserver '.I('perserver','','intval').';';
 	$perip = 'limit_conn perip '.I('perip','','intval').';';
 	$limit_rate = 'limit_rate '.I('limit_rate','','intval').'k;';
 
-	//取回配置文件
 	$siteName = M('sites')->where("id=$id")->getField('name');
 	$filename = '/www/server/nginx/conf/vhost/'.$siteName.'.conf';
 	$conf = file_get_contents($filename);
 
-	//设置共享内存
 	$oldLimit = '/www/server/nginx/conf/vhost/limit.conf';
 	if(file_exists($oldLimit)) SendSocket("FileAdmin|DelFile|".$oldLimit);
 	$limit = '/www/server/nginx/conf/nginx.conf';
@@ -451,15 +426,13 @@ function SetLimitNet(){
 	SendSocket("FileAdmin|SaveFile|".$limit);
 
 	if(strpos($conf,'limit_conn perserver') !== false){
-		//替换总并发
+
 		$rep = "/limit_conn\s+perserver\s+([0-9]+);/";
 		$conf = preg_replace($rep,$perserver,$conf);
 
-		//替换IP并发限制
 		$rep = "/limit_conn\s+perip\s+([0-9]+);/";
 		$conf = preg_replace($rep,$perip,$conf);
 
-		//替换请求流量限制
 		$rep = "/limit_rate\s+([0-9]+)\w+;/";
 		$conf = preg_replace($rep,$limit_rate,$conf);
 	}else{
@@ -476,41 +449,38 @@ function SetLimitNet(){
 		if($isError !== true){
 			SendSocket('FileAdmin|CopyFile|/tmp/backup.conf|'.$filename);
 			SendSocket("FileAdmin|ChmodFile|" . $filename . '|root');
-			returnJson(false,'配置文件错误: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
+			returnJson(false,'Configuration file error: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
 		}
 		serviceWebReload();
-		returnJson(true, '设置成功!');
+		returnJson(true, 'Successful setup!');
 	}
 
-	returnJson(false, '保存失败!');
+	returnJson(false, 'Save failed!');
 }
 
-//关闭流量限制
 function CloseLimitNet(){
 	$id = I('id');
-	//取回配置文件
+
 	$siteName = M('sites')->where("id=$id")->getField('name');
 	$filename = '/www/server/nginx/conf/vhost/'.$siteName.'.conf';
 	$conf = file_get_contents($filename);
-	//清理总并发
+
 	$rep = "/\s+limit_conn\s+perserver\s+([0-9]+);/";
 	$conf = preg_replace($rep,'',$conf);
 
-	//清理IP并发限制
 	$rep = "/\s+limit_conn\s+perip\s+([0-9]+);/";
 	$conf = preg_replace($rep,'',$conf);
 
-	//清理请求流量限制
 	$rep = "/\s+limit_rate\s+([0-9]+)\w+;/";
 	$conf = preg_replace($rep,'',$conf);
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
 		SendSocket("FileAdmin|SaveFile|" . $filename);
 		serviceWebReload();
-		returnJson(true, '已关闭流量限制!');
+		returnJson(true, 'Traffic limit has been turned off!');
 	}
-	returnJson(false, '保存失败!');
+	returnJson(false, 'Save failed!');
 }
-//取301配置状态
+
 function Get301Status(){
 	$siteName = I('siteName');
 
@@ -521,13 +491,6 @@ function Get301Status(){
 		$rep = "/host.+\^((\w+\.)+\w+)/";
 		preg_match($rep, $tmp,$src);
 		$src[0] = $src[1];
-	}else{
-		$sitePath = M('sites')->where("name='$siteName'")->getField('path');
-		$tmp = file_get_contents($sitePath.'/.htaccess');
-		$rep = "/RewriteRule\s+.+\s+((http|https)\:\/\/.+)\s+\[/";
-		preg_match($rep, $tmp,$arr);
-		$rep = "\^(\w+\.)+\w+\s+\[NC";
-		preg_match($rep, $tmp,$src);
 	}
 	$result['src'] = str_replace("'", '', $src[0]);
 	$result['domain'] = M('sites')->where("name='$siteName'")->getField('domain');
@@ -537,14 +500,13 @@ function Get301Status(){
 	ajax_return($result);
 }
 
-//设置301配置
 function Set301Status(){
 	$siteName = I('siteName');
 	$srcDomain = I('srcDomain');
 	$toDomain = I('toDomain');
 	$type = I('type');
 	$rep = "/(http|https)\:\/\/[\w-_\.]+.+/";
-	if(!preg_match($rep, $toDomain))	returnJson(false,'Url地址不正确!');
+	if(!preg_match($rep, $toDomain))	returnJson(false,'Url address is incorrect!');
 	if($_SESSION['server_type'] == 'nginx'){
 		if($srcDomain == 'all'){
 			$conf301 = "\t#301-START\n\t\treturn 301 $toDomain;\n\t\t#301-END";
@@ -560,16 +522,6 @@ function Set301Status(){
 			$rep = "/\s+#301-START(.|\n)+#301-END/";
 			$conf = preg_replace($rep, '', $conf);
 		}
-
-	}else{
-		$sitePath = M('sites')->where("name='$siteName'")->getField('path');
-		if($srcDomain == 'all'){
-			$conf301 = "RewriteEngine on\nRewriteRule ^(.*)\$ $toDomain [L,R=301]";
-		}else{
-			$conf301 = "RewriteEngine on\nRewriteCond %{HTTP_HOST} ^$srcDomain [NC]\nRewriteRule ^(.*)$ $toDomain [L,R=301]";
-		}
-		$conf = ($type == '1')?$conf301:' ';
-		$filename = $sitePath.'/.htaccess';
 	}
 
 
@@ -583,20 +535,19 @@ function Set301Status(){
 		if($isError !== true){
 			SendSocket('FileAdmin|CopyFile|/tmp/backup.conf|'.$filename);
 			SendSocket("FileAdmin|ChmodFile|" . $filename . '|root');
-			returnJson(false,'配置文件错误: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
+			returnJson(false,'Configuration file error: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
 		}
 		serviceWebReload();
-		returnJson(true,'操作成功!');
+		returnJson(true,'Successful operation!');
 	}
-	returnJson(false,'操作失败!');
+	returnJson(false,'Operation failed!');
 }
 
-//添加数据库
 function AddSql(){
 	$data_name = trim(I('post.datauser'));
 	$datapwd = trim(I('post.datapassword'));
 	if($data_name == 'root' || $data_name == 'mysql' || $data_name == 'test' || strlen($data_name) < 3){
-		$result['dataName'] = '数据库名称非法!';
+		$result['dataName'] = 'Illegal database name!';
 		return $result;
 	}
 	if(strlen($data_name) > 16) return false;
@@ -624,7 +575,7 @@ function AddSql(){
 	}
 	$result = SqlExec("create database $data_name DEFAULT CHARACTER SET $codeing COLLATE $codeStr");
 	if(strpos($result,"using password:")){
-		$result['dataName'] = '数据库管理密码错误!';
+		$result['dataName'] = 'Database management password error!';
 		return $result;
 	}
 
@@ -642,12 +593,11 @@ function AddSql(){
 		'ps' 		=> 'Website: '.$_POST['webname'].' database'
 	);
 	$SQL->add($data);
-	WriteLogs('数据库管理', '添加数据库['.$data_name.']成功!');
+	WriteLogs('Database management', 'Add database ['.$data_name.'] success!');
 	$retuls = array('dataName'=>$data_name,'dataUser'=>$data_name,'password'=>$datapwd);
 	return $retuls;
 }
 
-//删除网站
 function DeleteSite(){
 	$id = I('get.id');
 	$path = isset($_GET['path'])?M('sites')->where("id='$id'")->getField('path'):'';
@@ -666,7 +616,7 @@ function DeleteSite(){
 	if($ret){
 		M('sites')->where("id='$id'")->delete();
 		M('binding')->where("pid='$id'")->delete();
-		WriteLogs('网站管理', "删除网站[".I('get.webname').']成功!');
+		WriteLogs('Website management', "Delete website [".I('get.webname').'] success!');
 		if(isset($_GET['data'])){
 			DeleteDatabase();
 		}
@@ -675,21 +625,20 @@ function DeleteSite(){
 		}
 		ajax_return(true);
 	}else{
-		WriteLogs('网站管理', "删除网站[".I('get.webname').']失败!');
+		WriteLogs('Website management', "Delete website [".I('get.webname').'] failure!');
 		ajax_return(false);
 	}
 }
 
-//删除同名Ftpd
 function DeleteFtp(){
 	$webname = $_GET['webname'];
 	$SQL = M('ftps');
 	$ftpData = $SQL->where("ps like '%$webname%'")->find();
 	$username = $ftpData['name'];
-	$ret = SendSocket('FTP|delete|'.$username.'|否|');
+	$ret = SendSocket('FTP|delete|'.$username.'|no|');
 	if($ret['status'] == 'true'){
 		$SQL->where("id='".$ftpData['id']."'")->delete();
-		WriteLogs('FTP管理', '删除FTP['.$username.']成功!');
+		WriteLogs('FTP management', 'Delete FTP ['.$username.'] success!');
 		$_SESSION['server_count']['ftps']--;
 		return true;
 	}else{
@@ -697,7 +646,6 @@ function DeleteFtp(){
 	}
 }
 
-//删除同名数据库
 function DeleteDatabase(){
 	$webname = $_GET['webname'];
 	$SQL = M('databases');
@@ -712,16 +660,15 @@ function DeleteDatabase(){
 	SqlExec("drop user '".$find['name']."'@'".$find['accept']."'");
 	SqlExec("flush privileges");
 	$SQL->where("id='".$find['id']."'")->delete();
-	WriteLogs('数据库管理','删除数据库['.$find['name'].']成功!');
+	WriteLogs('Database management','Delete database ['.$find['name'].'] success!');
 	return true;
 }
 
-//取子目录绑定
 function GetDirBinding(){
 	$id = I('id');
 	$count = SqlQuery("select COUNT(TABLE_NAME) from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA='bt_default' and TABLE_NAME='bt_binding'");
 	if(intval($count['COUNT(TABLE_NAME)']) == 0){
-		$sql = "CREATE TABLE bt_default.bt_binding( `id` int(11) unsigned NOT NULL AUTO_INCREMENT, `pid` int(11) unsigned DEFAULT '0' COMMENT '网站标识', `domain` varchar(64) DEFAULT '' COMMENT '绑定域名', `path` varchar(128) DEFAULT NULL COMMENT '绑定根目录', `port` int(7) unsigned DEFAULT '80' COMMENT '端口', `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间', PRIMARY KEY (`id`),INDEX(`pid`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+		$sql = "CREATE TABLE bt_default.bt_binding( `id` int(11) unsigned NOT NULL AUTO_INCREMENT, `pid` int(11) unsigned DEFAULT '0', `domain` varchar(64) DEFAULT '', `path` varchar(128) DEFAULT NULL, `port` int(7) unsigned DEFAULT '80', `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`),INDEX(`pid`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 		SqlExec($sql);
 	}
 
@@ -740,7 +687,6 @@ function GetDirBinding(){
 	ajax_return($data);
 }
 
-//转换数组字符编码
 function mult_iconv($in_charset,$out_charset,$data)
 {
     if(substr($out_charset,-8)=='//IGNORE'){
@@ -771,18 +717,17 @@ function mult_iconv($in_charset,$out_charset,$data)
     return $rtn;
 }
 
-//添加子目录绑定
 function AddDirBinding(){
 	$id = I('id');
 	$tmp = explode(':',I('domain'));
 	$domain = $tmp[0];
 	$port = ($tmp[1] == '')?80:$tmp[1];
 	$dirName = I('dirName');
-	if(!$dirName) returnJson(false, '目录不能为空!');
+	if(!$dirName) returnJson(false, 'Directory cannot be empty!');
 	$siteInfo = M('sites')->where("id='$id'")->find();
 	$webdir = $siteInfo['path'].'/'.$dirName;
 	$sql = M('binding');
-	if($sql->where("domain='$domain'")->getCount()) returnJson(false, '请不要重复绑定域名!');
+	if($sql->where("domain='$domain'")->getCount()) returnJson(false, 'Please do not double-bind the domain name!');
 	$filename = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$siteInfo['name'].'.conf';
 	$conf = file_get_contents($filename);
 
@@ -828,7 +773,7 @@ EOT;
 		if($isError !== true){
 			SendSocket('FileAdmin|CopyFile|/tmp/backup.conf|'.$filename);
 			SendSocket("FileAdmin|ChmodFile|" . $filename . '|root');
-			returnJson(false,'配置文件错误: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
+			returnJson(false,'Configuration file error: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
 		}
 		$data = array(
 			'pid'		=>	$id,
@@ -841,9 +786,9 @@ EOT;
 		ajax_return($result);
 	}
 
-	returnJson(false, '添加失败');
+	returnJson(false, 'add failed');
 }
-//取子目录Rewrite
+
 function GetDirRewrite(){
 	$id = I('id','','intval');
 	$find = M('binding')->where("id=$id")->find();
@@ -874,7 +819,7 @@ function GetDirRewrite(){
 
 	ajax_return($data);
 }
-//删除目录绑定
+
 function DelDirBinding(){
 	$id = I('id');
 	$binding = M('binding')->where("id='$id'")->find();
@@ -893,18 +838,9 @@ function DelDirBinding(){
 	}
 }
 
-/**
- * 添加域名
- * @param Int $_POST['id'] 网站ID
- * @param Int $_POST['new_domain'] 新域名
- * @param Int $_POST['name'] 网站名称
- * @param Int $_POST['port'] 绑定端口
- * @return bool
- */
 function AddDomain($own=false){
 	$_POST['port'] = $_POST['port'] == ""?'80':intval($_POST['port']);
 	$_POST['new_domain'] = trim($_POST['new_domain']);
-	//检查域名是否存在
 	$SQL = M('sites');
 	$id=intval($_POST['id']);
 	if($SQL->where("domain like '".$_POST['new_domain'].":%' OR domain like '%,".$_POST['new_domain'].":%'")->getCount()){
@@ -925,7 +861,6 @@ function AddDomain($own=false){
 			$conf = str_replace($tmp[0],$newServerName,$conf);
 		}
 
-		//添加端口
 		$rep = "/listen\s+([0-9]+);/";
 		preg_match_all($rep,$conf,$tmp);
 		if(!in_array(''.$_POST['port'],$tmp[1])){
@@ -933,7 +868,6 @@ function AddDomain($own=false){
 		}
 	}
 
-	//保存配置文件
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
 		SendSocket('FileAdmin|CopyFile|'.$file.'|/tmp/backup.conf');
 		$result = SendSocket("FileAdmin|SaveFile|" . $file);
@@ -944,18 +878,17 @@ function AddDomain($own=false){
 		if($isError !== true){
 			SendSocket('FileAdmin|CopyFile|/tmp/backup.conf|'.$file);
 			SendSocket("FileAdmin|ChmodFile|" . $file . '|root');
-			returnJson(false,'配置文件错误: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
+			returnJson(false,'Configuration file error: <br><a style="color:red;">'.str_replace("\n",'<br>',$isError).'</a>');
 		}
 		if($result['status']){
 			$find = $SQL->where("id='$id'")->find();
-			//是否存在
 			$domains = explode(',',$find['domain']);
 			if(!in_array($_POST['new_domain'].':'.$_POST['port'],$domains)){
 				$domain = $find['domain'].','.$_POST['new_domain'].':'.$_POST['port'];
 				$SQL->where("id='$id'")->setField('domain',$domain);
 			}
 			serviceWebReload();
-			WriteLogs('网站管理', '网站['.$_POST['webname'].']添加域名['.$_POST['new_domain'].']成功!');
+			WriteLogs('Website management', 'website ['.$_POST['webname'].'] add domain name ['.$_POST['new_domain'].'] success!');
 			if($own) return true;
 			ajax_return(true);
 		}
@@ -967,29 +900,24 @@ function AddDomain($own=false){
 	ajax_return(false);
 }
 
-/**
- * 删除域名
- */
 function DeleteDomain(){
 	$SQL = M('sites');
 	$id=$_GET['id'];
 	$find = $SQL->where("id='$id'")->find();
 	$domain = explode(',',$find['domain']);
 	$domain_count = count($domain);
-	if($domain_count == 1) returnJson(false,'最后一个域名不能删除');
+	if($domain_count == 1) returnJson(false,'The last domain name cannot be deleted');
 
 	if($_SESSION['server_type'] == 'nginx'){
 		$file = '/www/server/nginx/conf/vhost/'.$_GET['webname'].'.conf';
 		$conf = file_get_contents($file);
 
-		//删除域名
 		$rep = "/server_name\s+(.+);$/m";
 		preg_match($rep,$conf,$tmp);
 		$newServerName = str_replace(' '.$_GET['domain'].';',';',$tmp[0]);
 		$newServerName = str_replace(' '.$_GET['domain'].' ',' ',$newServerName);
 		$conf = str_replace($tmp[0],$newServerName,$conf);
 
-		//删除端口
 		$port = I('port','','intval');
 		$rep = "/listen\s+([0-9]+);/";
 		preg_match_all($rep,$conf,$tmp);
@@ -999,7 +927,6 @@ function DeleteDomain(){
 		}
 	}
 
-	//保存配置
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
 		$result = SendSocket("FileAdmin|SaveFile|" . $file);
 		if($result['status']){
@@ -1019,16 +946,15 @@ function DeleteDomain(){
 			}
 
 			$SQL->where("id='$id'")->setField('domain',$new_domain);
-			WriteLogs('网站管理', '网站['.I('get.webname').']删除域名['.I('get.domain').']成功!');
+			WriteLogs('Website management', 'website ['.I('get.webname').'] delete domain name ['.I('get.domain').'] success!');
 			serviceWebReload();
 			ajax_return($result);
 		}
 	}
-	WriteLogs('网站管理', '网站['.I('get.webname').']删除域名['.I('get.domain').']失败!');
+	WriteLogs('Website management', 'website ['.I('get.webname').'] delete domain name ['.I('get.domain').'] failure!');
 	ajax_return($result);
 }
 
-//检查端口
 function checkPort($domains,$port){
 	$n = 0;
 	foreach($domains as $value){
@@ -1043,77 +969,58 @@ function checkPort($domains,$port){
 	return false;
 }
 
-/**
- * 文件解压(GET/POST)
- * @param int id 网站标识
- * @param string files 文件名
- * @return array
- */
 function FilesZip(){
 	$id = I('id');
 	$files = I('files');
 
 	if($files == ''){
-		ajax_return(array('status'=>false,'code'=>-4,'msg'=>'文件名不能为空'));
+		ajax_return(array('status'=>false,'code'=>-4,'msg'=>'File name cannot be empty'));
 	}
 	$tmp = explode('.', $files);
 	$num = count($tmp);
 	if($num < 2){
-		ajax_return(array('status'=>false,'code'=>-2,'msg'=>'必需有文件后缀'));
+		ajax_return(array('status'=>false,'code'=>-2,'msg'=>'Must have file suffix'));
 	}
 	$exp = strtolower($tmp[$num-1]);
 	if( $exp != 'zip' && $exp != 'gz'){
-		ajax_return(array('status'=>false,'code'=>-3,'msg'=>'当前只支持zip或tar.gz格式的压缩文件'));
+		ajax_return(array('status'=>false,'code'=>-3,'msg'=>'Currently only compressed files in zip or tar.gz format are supported.'));
 	}
 
-	//取站点根目录
 	$path = M('sites')->where("id='$id'")->getField('path');
 	$files = $path.'/'.$files;
 
-	//发送命令
 	$exec = "FileAdmin|UnZipFile|" . $files . '|' . $path . '|' . (($exp=='zip')?'0':'1');
 	$result = SendSocket($exec);
 
-	//返回
 	if($result['status'] == 'true'){
-		WriteLogs("网站管理", "在线解压[$files]成功!");
-		$data = array('status'=>true,'code'=>1,'msg'=>'操作成功');
+		WriteLogs("Website management", "Online decompression [$files] success!");
+		$data = array('status'=>true,'code'=>1,'msg'=>'Successful operation');
 	}else{
 		$data = array('status'=>false,'code'=>-1,'msg'=>$result['msg']);
 	}
 	ajax_return($data);
 }
 
-/**
- * 取默认文档
- */
 function GetIndex(){
 	$id = I('id');
 	$Index = M('sites')->where("id=$id")->getField('index');
 	exit($Index);
 }
 
-/**
- * 设置默认文档(GET)
- * @param int id 网站标识
- * @param string Index 默认文档多个以分号隔开
- * @return json
- */
 function SetIndex(){
 	$id = I('id');
 	if(!strstr($_GET['Index'], '.')){
-		ajax_return(array('status'=>false,'msg'=>'输入格式不正确!'));
+		ajax_return(array('status'=>false,'msg'=>'Input format is incorrect!'));
 	};
 
 	$Index = str_replace(' ', '',$_GET['Index']);
 	$Index = str_replace(',,', ',',$_GET['Index']);
 
 	if(strlen($Index) < 3){
-		ajax_return(array('status'=>false,'msg'=>'默认文档不能为空!'));
+		ajax_return(array('status'=>false,'msg'=>'Default document cannot be empty!'));
 	}
 
 	$Name = M('sites')->where("id=$id")->getField('name');
-	//准备指令
 	$Index_L = str_replace(",", " ", $Index);
 	$file = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$Name.'.conf';
 
@@ -1121,9 +1028,6 @@ function SetIndex(){
 	if($_SESSION['server_type'] == 'nginx'){
 		$rep = "/\s+index\s+.+;/";
 		$conf = preg_replace($rep,"\n	index ".$Index_L.";",$conf);
-	}else{
-		$rep = "/DirectoryIndex\s+.+\n/m";
-		$conf = preg_replace($rep,'DirectoryIndex '.$Index_L."\n",$conf);
 	}
 
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
@@ -1133,34 +1037,27 @@ function SetIndex(){
 
 
 	M('sites')->where("id='$id'")->save(array('index'=>$Index));
-	WriteLogs('网站管理', '设置默认文档成功!');
+	WriteLogs('Website management', 'Set the default document successfully!');
 	ajax_return($data);
 }
 
-//修改物理路径
 function SetPath(){
 	$id = I('id','',int);
 
 	$Path = GetPathStr($_POST['path']);
 	if($Path == "" || $id == 0){
-		returnJson(false,  "目录不能为空");
+		returnJson(false,  "Directory cannot be empty");
 	}
 
-	if(checkMainPath($path))returnJson(false,  "不能使用系统关键目录作为网站目录!");
+	if(checkMainPath($path))returnJson(false,  "Cannot use system key directory as website directory!");
 
 	$SiteFind = M("sites")->where("id='$id'")->find();
-	if($SiteFind["path"] == $Path) returnJson(false,  "与原路径一致，无需修改");
+	if($SiteFind["path"] == $Path) returnJson(false,  "Consistent with the original path, no need to modify");
 	$Name = $SiteFind['name'];
 	$file = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$Name.'.conf';
 	if($_SESSION['server_type'] == 'nginx'){
 		$conf = file_get_contents($file);
 		$conf = str_replace($SiteFind['path'],$Path , $conf);
-	}else{
-		$conf = file_get_contents($file);
-		$rep = "/DocumentRoot\s+.+\n/m";
-		$conf = preg_replace($rep,'DocumentRoot "'.$Path."\"\n",$conf);
-		$rep = "/<Directory\s+.+\n/m";
-		$conf = preg_replace($rep,'<Directory "'.$Path."\">\n",$conf);
 	}
 
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
@@ -1170,13 +1067,12 @@ function SetPath(){
 	if($data['status'] == "true"){
 		serviceWebReload();
 		M("sites")->where("`id`='$id'")->setField('path',$Path);
-		WriteLogs('网站管理', '修改网站['.$Name.']物理路径成功!');
-		returnJson(true,  "修改成功");
+		WriteLogs('Website management', 'Modify website ['.$Name.'] physical path succeeded!');
+		returnJson(true,  "Successfully modified");
 	}
 	returnJson(false,  $data['msg']);
 }
 
-//打包
 function ToBackup(){
 	$id = I('id');
 	$find = M('sites')->where("id=$id")->find();
@@ -1194,25 +1090,23 @@ function ToBackup(){
 		'size'	=>	0,
 		'addtime'	=>	date('Y-m-d H:i:s'));
 	$sql->add($data);
-	WriteLogs('网站管理', '备份网站['.$find['name'].']成功!');
-	returnJson(true, '备份成功!');
+	WriteLogs('Website management', 'Backup website ['.$find['name'].'] success!');
+	returnJson(true, 'Backup success!');
 }
 
-//删除备份文件
 function DelBackup(){
 	$id = I('id');
 	$where = "id=$id";
 	$filename = M('backup')->where($where)->getField('filename');
 	$result = SendSocket("FileAdmin|DelFile|$filename");
 	if($result['status'] == true || empty($result['msg']) == true){
-		WriteLogs('网站管理', '删除网站备份['.$filename.']成功!');
+		WriteLogs('Website management', 'Delete website backup ['.$filename.'] success!');
 		M('backup')->where($where)->delete();
 	}
-	$result['msg'] = isset($result['msg'])?$result['msg'] :'文件不存在!';
+	$result['msg'] = isset($result['msg'])?$result['msg'] :'File does not exist!';
 	returnSocket($result);
 }
 
-//取PHP负载状态
 function GetPHPStatus(){
 	$version = I('version');
 	$url = "http://127.0.0.1/phpfpm_{$version}_status?json";
@@ -1221,13 +1115,11 @@ function GetPHPStatus(){
 	ajax_return($result);
 }
 
-//取伪静态规则应用列表
 function GetRewriteList(){
 	$rewriteList['rewrite'] = explode(',', file_get_contents(dirname(__FILE__).'/rewrite/'.$_SESSION['server_type'].'/list.txt'));
 	ajax_return($rewriteList);
 }
 
-//取已安装PHP版本
 function GetPHPVersion(){
 	$phpVersions = array('52','53','54','55','56','70','71');
 	$data = array();
@@ -1252,7 +1144,6 @@ function GetPHPVersion(){
 	ajax_return($data);
 }
 
-//取指定站点的PHP版本
 function GetSitePHPVersion(){
 	$siteName = I('siteName');
 	$conf = file_get_contents('/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$siteName.'.conf');
@@ -1262,7 +1153,6 @@ function GetSitePHPVersion(){
 	ajax_return($tmp[1]);
 }
 
-//设置指定站点的PHP版本
 function SetPHPVersion(){
 	$siteName = I('siteName');
 	$version = I('version');
@@ -1276,41 +1166,37 @@ function SetPHPVersion(){
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
 		$result = SendSocket("FileAdmin|SaveFile|" . $file);
 		serviceWebReload();
-		if($result['status']) WriteLogs("网站管理", "将网站[$siteName]PHP版本切换为[$version]!");
+		if($result['status']) WriteLogs("Website management", "Website [$siteName] The PHP version is switched to [$version]!");
 		ajax_return($result);
 	}
-	ajax_return(array('status' => false, 'msg' => '保存失败!'));
+	ajax_return(array('status' => false, 'msg' => 'Save failed!'));
 }
 
-//是否开启目录防御
 function GetDirUserINI(){
 	$path = I('path');
 	if(file_exists($path.'/.user.ini')){
-		returnJson(true, '已配置防跨站攻击!');
+		returnJson(true, 'Anti-cross-site attack has been configured!');
 	}
-	returnJson(false, '已关闭防跨站攻击!');
+	returnJson(false, 'Anti-cross-site attack has been turned off!');
 }
 
-//设置目录防御
 function SetDirUserINI(){
 	$path = GetPathStr(I('path'));
 	$filename = $path.'/.user.ini';
 	if(file_exists($filename)){
 		SendSocket("ExecShell|chattr -i ".$filename);
 		SendSocket("FileAdmin|DelFile|" . $filename);
-		returnJson(true, '已停用防跨站攻击!');
+		returnJson(true, 'Anti-cross-site attack has been disabled!');
 	}
-
 
 	file_put_contents('/tmp/read.tmp', 'open_basedir='.$path.'/:/tmp/:/proc/');
 	SendSocket("FileAdmin|SaveFile|" . $filename);
 	SendSocket("ExecShell|chmod 644 $filename|$path");
 	SendSocket("ExecShell|chown root.root $filename|$path");
 	SendSocket("ExecShell|chattr +i $filename|$path");
-	returnJson(true, '已启用防跨站攻击!');
+	returnJson(true, 'Anti-cross-site attack is enabled!');
 }
 
-//伪静态转换
 function RewriteConverter(){
 	require_once './class/Rewrite.class.php';
 	$RC = new rewriteConf($_POST['rules']);
@@ -1319,13 +1205,11 @@ function RewriteConverter(){
 	exit($RC->confOk);
 }
 
-//取防盗链设置
 function GetReferer(){
 	$siteName = I('siteName');
 	$filename = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$siteName.'.conf';
 }
 
-//取反向代理
 function GetProxy(){
 	$name = I('name');
 	$file = "/www/server/nginx/conf/vhost/{$name}.conf";
@@ -1340,19 +1224,18 @@ function GetProxy(){
 	ajax_return($data);
 }
 
-//设置反向代理
 function SetProxy(){
 	$name = I('name');
 	$type = I('type');
 	$toDomain = trim(I('toDomain'));
 	$proxyUrl=I('proxyUrl');
 	$rep = "/(http|https)\:\/\/[\w-_\.]+.+/";
-	if(!preg_match($rep, $proxyUrl))	returnJson(false,'Url地址不正确!');
-	if($_SESSION['server_type'] != 'nginx') returnJson(false, '抱歉，反向代理功能暂时只支持Nginx');
+	if(!preg_match($rep, $proxyUrl))	returnJson(false,'Url address is incorrect!');
+	if($_SESSION['server_type'] != 'nginx') returnJson(false, 'Sorry, the reverse proxy feature only supports Nginx for the time being.');
 
 	if($toDomain != '$host'){
 		$rep = "/^([\w\-\*]{1,100}\.){1,4}(\w{1,10}|\w{1,10}\.\w{1,10})$/";
-		if(!preg_match($rep, $toDomain))	returnJson(false,'发送域名格式不正确!');
+		if(!preg_match($rep, $toDomain))	returnJson(false,'Sending domain name format is incorrect!');
 	}
 
 	if(substr($proxyUrl,strlen($proxyUrl)-1,1) == '/') $proxyUrl = substr($proxyUrl,0,strlen($proxyUrl)-1);
@@ -1404,10 +1287,9 @@ EOT;
 		SendSocket("FileAdmin|SaveFile|" . $file);
 	}
 	serviceWebReload();
-	returnJson(true, '操作成功!');
+	returnJson(true, 'Successful operation!');
 }
 
-//检查反向代理配置
 function CheckProxy(){
 	$file = "/www/server/nginx/conf/proxy.conf";
 	if(!file_exists($file)){
@@ -1439,12 +1321,10 @@ EOT;
 	}
 }
 
-//接口动作
 if(isset($_GET['action'])){
 	$_GET['action']();
 	exit;
 }
-
 
 require './public/head.html';
 require './public/menu.html';
