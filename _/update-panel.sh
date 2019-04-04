@@ -2,14 +2,12 @@
 
 # Install Panel
 
-cd ~
-wget -c https://github.com/tiredbug/panel/archive/master.zip -T20
-unzip -o master.zip -d /tmp/ > /dev/null 2>&1 
-rm -rf /tmp/panel-master/conf 
-cp -a /tmp/panel-master/* /www/server/panel/
+cd /tmp/
+svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
+rm -rf /tmp/slemp-khanza/conf
+cp -a /tmp/slemp-khanza/* /www/server/panel/
 chown -R www:www /www/server/panel > /dev/null 2>&1
-rm -rf /tmp/panel-master/
-rm -f master.zip
+rm -rf /tmp/slemp-khanza/
 
 sleep 3
 
