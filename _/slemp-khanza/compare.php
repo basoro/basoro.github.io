@@ -2,29 +2,18 @@
 include_once './Common.php';
 include_once './dbDiff.php';
 
-$dbs_config = array(
-	 array(
-	 	'name' => 'SIK',
-	 	'config' => array(
-	 		'host'		=> 'localhost',
-	 		'user'		=> 'sik',
-	 		'password'	=> 'basoro',
-	 		'name'		=> 'sik'
-	 	)
-	 ),
-   array(
-	 	'name' => 'SIK Github',
-	 	'config' => array(
-	 		'host'		=> 'localhost',
-	 		'user'		=> 'sikgithub',
-	 		'password'	=> 'basoro',
-	 		'name'		=> 'sikgithub'
-	 	)
-	 ),
-);
-
 include_once './public/head.html';
 include_once './public/menu.html';
+
+$dbs = SqlQuery("select * from bt_default.bt_databases where name !='bt_default'");
+$response = array();
+$dbs_config = array();
+foreach ($dbs as $key => $db_config) {
+    $name = $db_config['name'];
+    $user = $db_config['username'];
+    $password = $db_config['password'];
+    $dbs_config[] = array('name' => $name, 'config' => array('host' => 'localhost', 'user' => $user, 'password' => $password, 'name' => $name));
+}
 
 function echo_error($error){
     echo '<p class="error">', $error, '</p>';
@@ -99,6 +88,7 @@ function show_options($dbs_config){
 				<div class="s-title">
 					<h3>Comparing database schemas</h3>
 				</div>
+                                                  <?php //echo '<pre>'; print_r($response); echo '</pre>'; echo json_encode($response, JSON_PRETTY_PRINT);?>
 				<div class="setting-con">
 
             										<?php
