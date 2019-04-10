@@ -237,7 +237,7 @@ nginxv=$( ${command} 2>&1 )
 nginxlocal=$(echo $nginxv | grep -o '[0-9.]*$')
 echo $nginxlocal > /www/server/nginx/version.pl
 
-wget -O /etc/init.d/php-fpm-56 https://gist.githubusercontent.com/pzorn/1762357/raw/97de4084f38f20e4819a22efa29d5c4be9aeafe5/php-fpm
+wget -O /etc/init.d/php-fpm-56 https://basoro.id/downloads/php-fpm.init
 sed -i "s@/var/run/php-fpm.pid@/var/run/php-fpm/php-fpm.pid@g" /etc/init.d/php-fpm-56 
 
 ln -sf /usr/bin/php /www/server/php/56/bin/php
@@ -406,6 +406,7 @@ rm -f /etc/pure-ftpd/pure-ftpd.conf
 wget -O /etc/pure-ftpd/pure-ftpd.conf https://basoro.id/downloads/pure-ftpd.conf
 ln -sf /etc/pure-ftpd/pure-ftpd.conf /www/server/pure-ftpd/etc/pure-ftpd.conf
 sed -i "s@/usr/local@/www/server@g" /usr/sbin/pure-config.pl
+sed -i "s@-f '/etc/init.d/pure-ftpd'@! -f '/etc/init.d/pure-ftpd'@g" /www/server/cloud/cloud
 echo "1.0.47" > /www/server/pure-ftpd/version.pl
 
 #start services and configure iptables
@@ -434,7 +435,6 @@ chkconfig mysqld on
 service pure-ftpd start
 chkconfig pure-ftpd on
 service panel start
-service mysqld restart
 
 cd /www/wwwroot/default/
 
