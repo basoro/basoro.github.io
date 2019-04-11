@@ -4,11 +4,9 @@ export PATH
 
 while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 	do
-		echo "您真的要卸载Linux面板吗?";
 		read -p "Ready You a start the uninstallation?(y/n): " go;
 	done
 	if [ "${go}" == 'n' ];then
-		echo '您选择了取消卸载,退出!';
 		echo 'Your alrea cancel the uninstall.';
 		exit 1;
 	fi
@@ -19,12 +17,12 @@ service nginx stop
 service httpd stop
 service mysqld stop
 service pure-ftpd stop
-service php-fpm-52 stop	
-service php-fpm-53 stop	
-service php-fpm-54 stop	
-service php-fpm-55 stop	
-service php-fpm-56 stop	
-service php-fpm-70 stop	
+service php-fpm-52 stop
+service php-fpm-53 stop
+service php-fpm-54 stop
+service php-fpm-55 stop
+service php-fpm-56 stop
+service php-fpm-70 stop
 
 chkconfig --del yunclient
 chkconfig --del nginx
@@ -65,6 +63,5 @@ rm -rf /usr/local/curl
 rm -rf /usr/include/curl
 
 echo '=======================================================';
-echo '卸载成功!'
 echo 'Uninstall successfully'
 echo '=======================================================';
