@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var repo = GetParameterByName("repo");
     if (!repo) {
-        repo = "basoro/SIMRS-Khanza";
+        repo = "basoro/SIMRS-Khanza-Rilis";
     }
     GetReleases(repo);
 });
