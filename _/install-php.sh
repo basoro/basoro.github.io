@@ -46,6 +46,7 @@ ln -sf ${php_setup_path}/bin/phpize /usr/bin/phpize
 ln -sf ${php_setup_path}/bin/pear /usr/bin/pear
 ln -sf ${php_setup_path}/bin/pecl /usr/bin/pecl
 ln -sf ${php_setup_path}/sbin/php-fpm /usr/bin/php-fpm
+ln -sf /www/server/nginx/conf/enable-php-71.conf /etc/nginx/enable-php-71.conf
 
 echo "Copy new php configure file..."
 mkdir -p ${php_setup_path}/etc
