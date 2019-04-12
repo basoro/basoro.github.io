@@ -137,7 +137,7 @@ function disabledAdmin(name){
 	});
 }
 
-function enableAdmin(name){
+\function enableAdmin(name){
 	var gurl = "/clear/testIng?type=userStatus&status=1&name="+name;
 	$.get(gurl,function(rdata){
 		if(rdata.status == true){
