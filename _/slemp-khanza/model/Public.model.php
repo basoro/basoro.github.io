@@ -122,39 +122,24 @@ function WriteLogs($type,$log){
 	$sqlObject->execute($sql, $param);
 }
 
-/**
- * Ajax方式返回数据到客户端
- * @param mixed $data 要返回的数据
- * @param String $type AJAX返回数据格式
- * @return void
- */
 function ajax_return($data,$type='JSON') {
     switch (strtoupper($type)){
         case 'JSON' :
-            // 返回JSON数据格式到客户端 包含状态信息
             header('Content-Type:application/json; charset=utf-8');
             exit(json_encode($data));
         case 'XML'  :
-            // 返回xml格式数据
             header('Content-Type:text/xml; charset=utf-8');
             exit(xml_encode($data));
         case 'JSONP':
-            // 返回JSON数据格式到客户端 包含状态信息
             header('Content-Type:application/json; charset=utf-8');
             $handler  =   isset($_GET['callback']) ? $_GET['callback'] : 'jsonpReturn';
             exit($handler.'('.json_encode($data).');');
         case 'EVAL' :
-            // 返回可执行的js脚本
             header('Content-Type:text/html; charset=utf-8');
             exit($data);
     }
 }
 
-/**
- * 返回格式化JSON
- * @param bool $status 状态
- * @param string $msg  消息
- */
 function returnJson($status,$msg){
 	$data = array(
 		'status' =>	$status,
@@ -164,21 +149,12 @@ function returnJson($status,$msg){
 	ajax_return($data,isset($_GET['callback'])?'JSONP':'JSON');
 }
 
-/**
- * 直接格式化Socket接口返回数组
- * @param array $data  数组
- */
 function returnSocket($data){
 	$status = ($data['status']=='true' || $data['status']==true)?true:false;
 	returnJson($status,$data['msg']);
 }
 
 
-/**
- * 获取客户端IP地址
- * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
- * @return mixed
- */
 function get_client_ip($type = 0) {
     $type       =  $type ? 1 : 0;
     static $ip  =   NULL;
@@ -193,22 +169,11 @@ function get_client_ip($type = 0) {
     }elseif (isset($_SERVER['REMOTE_ADDR'])) {
         $ip     =   $_SERVER['REMOTE_ADDR'];
     }
-    // IP地址合法验证
     $long = sprintf("%u",ip2long($ip));
     $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
     return $ip[$type];
 }
 
-/**
- * XML编码
- * @param mixed $data 数据
- * @param string $root 根节点名
- * @param string $item 数字索引的子节点名
- * @param string $attr 根节点属性
- * @param string $id   数字索引子节点key转换的属性名
- * @param string $encoding 数据编码
- * @return string
- */
 function xml_encode($data, $root='data', $item='item', $attr='', $id='id', $encoding='utf-8') {
     if(is_array($attr)){
         $_attr = array();
@@ -226,13 +191,6 @@ function xml_encode($data, $root='data', $item='item', $attr='', $id='id', $enco
     return $xml;
 }
 
-/**
- * 数据XML编码
- * @param mixed  $data 数据
- * @param string $item 数字索引时的节点名称
- * @param string $id   数字索引key转换为的属性名
- * @return string
- */
 function data_to_xml($data, $item='item', $id='id') {
     $xml = $attr = '';
     foreach ($data as $key => $val) {
@@ -247,31 +205,16 @@ function data_to_xml($data, $item='item', $id='id') {
     return $xml;
 }
 
-
-/**
- * 获取输入参数 支持过滤和默认值
- * 使用方法:
- * <code>
- * I('id',0); 获取id参数 自动判断get或者post
- * I('post.name','','htmlspecialchars'); 获取$_POST['name']
- * I('get.'); 获取$_GET
- * </code>
- * @param string $name 变量的名称 支持指定类型
- * @param mixed $default 不存在的时候默认值
- * @param mixed $filter 参数过滤方法
- * @param mixed $datas 要获取的额外数据源
- * @return mixed
- */
 function I($name,$default='',$filter=null,$datas=null) {
 	static $_PUT	=	null;
-	if(strpos($name,'/')){ // 指定修饰符
+	if(strpos($name,'/')){
 		list($name,$type) 	=	explode('/',$name,2);
-	}elseif(true){ // 默认强制转换为字符串
+	}elseif(true){
         $type   =   's';
     }
-    if(strpos($name,'.')) { // 指定参数来源
+    if(strpos($name,'.')) {
         list($method,$name) =   explode('.',$name,2);
-    }else{ // 默认为自动判断
+    }else{
         $method =   'param';
     }
     switch(strtolower($method)) {
@@ -330,7 +273,7 @@ function I($name,$default='',$filter=null,$datas=null) {
         default:
             return null;
     }
-    if(''==$name) { // 获取全部变量
+    if(''==$name) {
         $data       =   $input;
         $filters    =   isset($filter)?$filter:'htmlspecialchars';
         if($filters) {
@@ -338,17 +281,16 @@ function I($name,$default='',$filter=null,$datas=null) {
                 $filters    =   explode(',',$filters);
             }
             foreach($filters as $filter){
-                $data   =   array_map_recursive($filter,$data); // 参数过滤
+                $data   =   array_map_recursive($filter,$data);
             }
         }
-    }elseif(isset($input[$name])) { // 取值操作
+    }elseif(isset($input[$name])) {
         $data       =   $input[$name];
         $filters    =   isset($filter)?$filter:'htmlspecialchars';
         if($filters) {
             if(is_string($filters)){
                 if(0 === strpos($filters,'/')){
                     if(1 !== preg_match($filters,(string)$data)){
-                        // 支持正则验证
                         return   isset($default) ? $default : null;
                     }
                 }else{
@@ -361,7 +303,7 @@ function I($name,$default='',$filter=null,$datas=null) {
             if(is_array($filters)){
                 foreach($filters as $filter){
                     if(function_exists($filter)) {
-                        $data   =   is_array($data) ? array_map_recursive($filter,$data) : $filter($data); // 参数过滤
+                        $data   =   is_array($data) ? array_map_recursive($filter,$data) : $filter($data);
                     }else{
                         $data   =   filter_var($data,is_int($filter) ? $filter : filter_id($filter));
                         if(false === $data) {
@@ -373,38 +315,30 @@ function I($name,$default='',$filter=null,$datas=null) {
         }
         if(!empty($type)){
         	switch(strtolower($type)){
-        		case 'a':	// 数组
+        		case 'a':
         			$data 	=	(array)$data;
         			break;
-        		case 'd':	// 数字
+        		case 'd':
         			$data 	=	(int)$data;
         			break;
-        		case 'f':	// 浮点
+        		case 'f':
         			$data 	=	(float)$data;
         			break;
-        		case 'b':	// 布尔
+        		case 'b':
         			$data 	=	(boolean)$data;
         			break;
-                case 's':   // 字符串
+                case 's':
                 default:
                     $data   =   (string)$data;
         	}
         }
-    }else{ // 变量默认值
+    }else{
         $data       =    isset($default)?$default:null;
     }
     is_array($data) && array_walk_recursive($data,'my_filter');
     return $data;
 }
 
-/**
- * 加密解密
- * @param String $string 欲处理的文本
- * @param String $operation 选项，DECODE.解密   ENCODE.加密
- * @param String $key 密码文本
- * @param Int $expiry 到期时间(秒)
- * @return String 返回处理后的文本
- */
 function RCode($string, $operation, $key = 'a002601', $expiry = 0) {
 	 $ckey_length = 0;
 	 $key = md5($key ? $key : md5(AUTHKEY.$_SERVER['HTTP_USER_AGENT']));
@@ -439,12 +373,6 @@ function RCode($string, $operation, $key = 'a002601', $expiry = 0) {
 	 }
 }
 
-
-/**
- * 发送套接字
- * @param string $data
- * @return string
- */
 function SendSocket($data,$rcv=30,$snd=5)
 {
 	$port_tmp = '/tmp/bt_port.pl';
@@ -456,7 +384,6 @@ function SendSocket($data,$rcv=30,$snd=5)
 
 	$address = '127.0.0.1';
 
-	//创建 TCP/IP socket
 	$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 	socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array("sec"=>$rcv, "usec"=>0 ));
 	socket_set_option($socket,SOL_SOCKET,SO_SNDTIMEO,array("sec"=>$snd, "usec"=>0 ));
@@ -471,17 +398,15 @@ function SendSocket($data,$rcv=30,$snd=5)
 	$keyPath='/www/server/cloud/tmp';
 	$keyName=md5(time().rand(1111,9999)).'.key';
 	file_put_contents($keyPath.'/'.$keyName,time());
-	$data .= '|||'.$keyName;	//通配
+	$data .= '|||'.$keyName;
 	socket_write($socket, $data, strlen($data));
 	$out = '';
 	$rend = '';
-	//接收服务器返回
 	while ($out = socket_read($socket, 2048)) {
 	    $rend .= $out;
 	}
 	socket_close($socket);
 
-	//处理编码
 	$str = @iconv("GBK","UTF-8//IGNORE",$rend);
 	$text = str_replace('\\', '\\\\', $str);
 	$text = str_replace("\0", '', $text);
@@ -491,9 +416,8 @@ function SendSocket($data,$rcv=30,$snd=5)
 
 
 function my_filter(&$value){
-	// TODO 其他安全过滤
+	// TODO
 
-	// 过滤查询特殊字符
     if(preg_match('/^(EXP|NEQ|GT|EGT|LT|ELT|OR|XOR|LIKE|NOTLIKE|NOT BETWEEN|NOTBETWEEN|BETWEEN|NOTIN|NOT IN|IN)$/i',$value)){
         $value .= ' ';
     }

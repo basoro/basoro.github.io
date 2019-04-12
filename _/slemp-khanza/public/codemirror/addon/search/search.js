@@ -99,7 +99,7 @@
   }
 
   var queryDialog =
-    '搜索: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(回车继续检索下一个)</span><div class="Dialog-close">X</div>';
+    'Search for: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Enter to continue to retrieve the next one)</span><div class="Dialog-close">X</div>';
 
   function startSearch(cm, state, query) {
     state.queryText = query;
@@ -187,9 +187,9 @@
   });}
 
   var replaceQueryDialog =
-    ' <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(支持正则表达式，如： /re/ )</span>';
-  var replacementQueryDialog = '替换为: <input type="text" style="width: 10em" class="CodeMirror-search-field"/>';
-  var doReplaceConfirm = "替换? <button>是</button> <button>否</button> <button>全部</button> <button>取消</button>";
+    ' <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Support for regular expressions such as: /re/ )</span>';
+  var replacementQueryDialog = 'Replace with: <input type="text" style="width: 10em" class="CodeMirror-search-field"/>';
+  var doReplaceConfirm = "Replace? <button>Yes</button> <button>No</button> <button>All</button> <button>Cancel</button>";
 
   function replaceAll(cm, query, text) {
     cm.operation(function() {
@@ -205,11 +205,11 @@
   function replace(cm, all) {
     if (cm.getOption("readOnly")) return;
     var query = cm.getSelection() || getSearchState(cm).lastQuery;
-    var dialogText = all ? "查找:" : "替换:"
+    var dialogText = all ? "Find:" : "Replace:"
     dialog(cm, dialogText + replaceQueryDialog, dialogText, query, function(query) {
       if (!query) return;
       query = parseQuery(query);
-      dialog(cm, replacementQueryDialog, "更换:", "", function(text) {
+      dialog(cm, replacementQueryDialog, "Replace:", "", function(text) {
         text = parseString(text)
         if (all) {
           replaceAll(cm, query, text)
@@ -225,7 +225,7 @@
             }
             cm.setSelection(cursor.from(), cursor.to());
             cm.scrollIntoView({from: cursor.from(), to: cursor.to()});
-            confirmDialog(cm, doReplaceConfirm, "替换?",
+            confirmDialog(cm, doReplaceConfirm, "Replace?",
                           [function() {doReplace(match);}, advance,
                            function() {replaceAll(cm, query, text)}]);
           };
