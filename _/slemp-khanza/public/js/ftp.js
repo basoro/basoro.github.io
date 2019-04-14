@@ -346,13 +346,13 @@ function ftpEditSet(id, username, passwd) {
 					if (rdata == true) {
 						getFtp(1);
 						layer.closeAll();
-						layer.msg('操作成功', {
+						layer.msg('Successful operation', {
 							icon: 1
 						});
 					} else {
 						getFtp(1);
 						layer.closeAll();
-						layer.msg('操作失败', {
+						layer.msg('Operation failed', {
 							icon: 5
 						});
 					}

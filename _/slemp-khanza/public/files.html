@@ -573,7 +573,7 @@ function CreateFile(type, path) {
 function CreateDir(type, path) {
 	if (type == 1) {
 		var dirName = $("#newDirName").val();
-		layer.msg('正在创建...', {
+		layer.msg('Creating...', {
 			icon: 16,
 			time: 10000
 		});
@@ -832,7 +832,7 @@ function ReName(type, fileName) {
 		var path = $("#PathPlace input").val();
 		var newFileName = path + '/' + $("#newFileName").val();
 		var oldFileName = path + '/' + fileName;
-		layer.msg('正在处理...', {
+		layer.msg('Processing...', {
 			icon: 16,
 			time: 10000
 		});

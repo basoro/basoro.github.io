@@ -69,7 +69,6 @@ function StartPHPVersion(){
 	returnJson(false, $filename_backup.'file does not exist!');
 }
 
-//设置面板SSL
 function SetPanelSSL(){
 	$file = $_SESSION['server_type'] == 'nginx' ? '/www/server/nginx/conf/nginx.conf':'';
 	$conf = file_get_contents($file);
@@ -441,7 +440,6 @@ function SetPanelAutoUpload(){
 	returnJson(true, 'Successful operation!');
 }
 
-//关闭面板
 function ClosePanel(){
 	$filename = '/www/server/panel/conf/close.pl';
 	$result = file_put_contents($filename, 'True');
