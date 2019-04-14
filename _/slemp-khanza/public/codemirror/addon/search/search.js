@@ -99,7 +99,7 @@
   }
 
   var queryDialog =
-    '搜索: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(回车继续检索下一个)</span><div class="Dialog-close">X</div>';
+    'Search: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Enter to continue)</span><div class="Dialog-close">X</div>';
 
   function startSearch(cm, state, query) {
     state.queryText = query;
