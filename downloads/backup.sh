@@ -135,7 +135,7 @@ Backup_Database()
 	fileName=$backupDir/$zipName
 	log="Database [$1] backup succeeded, using [$outTime] seconds"
 	$Sql_Exec -e "INSERT INTO  bt_backup(type,name,pid,filename,addtime) VALUES(1,'$zipName',$pid,'$fileName','$endDate')" > /dev/null
-	$Sql_Exec -e "INSERT INTO  bt_logs(type,log,addtime) VALUES('计划任务','$log','$endDate')" > /dev/null
+	$Sql_Exec -e "INSERT INTO  bt_logs(type,log,addtime) VALUES('Scheduled Tasks','$log','$endDate')" > /dev/null
 	echo "★[$endDate] $log"
 	echo "|---Keep the latest [$2] backups"
 	echo "|---File name : $fileName"
