@@ -143,7 +143,7 @@ $Disk = SendSocket("System|disk");
 if(!is_array($Disk)) $Disk = array();
 if(empty($Disk[0])){
 	for($i=1;$i<count($Disk)+1;$i++){
-		$Disk[$i]['Usage rate'] = ceil(($Disk[$i]['Total capacity'] - $Disk[$i]['Available space']) / ($Disk[$i]['Total capacity'] / 100));
+		$Disk[$i]['使用率'] = ceil(($Disk[$i]['总容量'] - $Disk[$i]['可用空间']) / ($Disk[$i]['总容量'] / 100));
 	}
 }
 
