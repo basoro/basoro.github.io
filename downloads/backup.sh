@@ -166,7 +166,7 @@ Backup_Database()
 action=$1
 name=$2
 num=$3
-dbPwd=`cat /www/wwwroot/default/conf/sql.config.php |grep 'DB_PWD'|awk '{print $3}'|sed "s#'##g"|sed "s#,##g"`
+dbPwd=`cat /www/server/panel/conf/sql.config.php |grep 'DB_PWD'|awk '{print $3}'|sed "s#'##g"|sed "s#,##g"`
 dbName='bt_default'
 Sql_Exec="/www/server/mysql/bin/mysql -u$dbName -p$dbPwd --default-character-set=utf8 -D $dbName"
 select=`$Sql_Exec -e "SELECT mysql_root,backup_path FROM bt_config WHERE id=1"`
