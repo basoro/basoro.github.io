@@ -50,20 +50,9 @@ CREATE TABLE `bt_firewall` (
   `ps` varchar(64) DEFAULT NULL,
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-INSERT INTO `bt_firewall` VALUES (2,'80','Website default port','2016-06-27 08:54:39'),(3,'888','WEB panel','2016-06-27 08:55:13'),(4,'21','FTP service','2016-06-27 08:55:28'),(5,'22','SSH remote management service','2016-06-27 08:55:42'),(6,'3306','MySQL service','2016-06-27 08:55:55');
-
-CREATE TABLE `bt_ftps` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL,
-  `password` varchar(128) DEFAULT NULL,
-  `path` varchar(128) DEFAULT NULL,
-  `status` tinyint(3) unsigned DEFAULT '1',
-  `ps` varchar(64) DEFAULT NULL,
-  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+INSERT INTO `bt_firewall` VALUES (1,'80','Website default port','2019-04-27 08:54:39'),(2,'888','WEB panel','2019-04-27 08:55:13'),(2,'22','SSH remote management service','2019-04-27 08:55:42'),(4,'3306','MySQL service','2019-04-27 08:55:55');
 
 CREATE TABLE `bt_logs` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
