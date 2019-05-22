@@ -18,9 +18,9 @@ error_reporting(E_ALL^E_NOTICE^E_WARNING);
 @session_start();
 if(empty($_SESSION['brand'])){
 	session('brand', 'SLEMP');
-	session('product','SLEMP Linux Panel');
-	session('version','1.0');
-	session('info-n',"1.0");
+	session('product','Linux Panel');
+	session('version','');
+	session('info-n','');
 	if(file_exists('./conf/panelName.conf')) session('version',file_get_contents('./conf/panelName.conf'));
 }
 
