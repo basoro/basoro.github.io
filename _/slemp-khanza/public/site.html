@@ -111,7 +111,6 @@ function webEdit(id,website,endTime,addtime){
 	var system = "{$Think.session.system}";
 	var eMenu = '';
 	eMenu = "<p onclick='webPathEdit("+id+")'>Website</p>"
-	+"<p onclick='limitNet("+id+")'>Traffic</p>"
 	+"<p onclick=\"Rewrite('"+website+"')\">Rewrite</p>"
 	+"<p onclick='SetIndexEdit("+id+")'>Default</p>"
 	+"<p onclick=\"ConfigFile('"+website+"')\">Configuration</p>"
@@ -154,103 +153,6 @@ function webEdit(id,website,endTime,addtime){
 	$p.click(function(){
 		$(this).addClass("active").siblings().removeClass("active");
 	});
-}
-
-
-//Traffic restrictions
-function limitNet(id){
-	$.get('site.php?action=GetLimitNet&id='+id,function(rdata){
-		var status_selected = rdata.perserver != 0?'checked':'';
-		if(rdata.perserver == 0){
-			rdata.perserver = 200;
-			rdata.perip = 20;
-			rdata.limit_rate = 512;
-		}
-		var limitList = "<option value='1'>Forum/Blog</option>"
-						+"<option value='2'>Gallery</option>"
-						+"<option value='3'>Downloads</option>"
-						+"<option value='4'>Marketplace</option>"
-						+"<option value='5'>Portal</option>"
-						+"<option value='6'>Enterprise</option>"
-						+"<option value='7'>Video</option>"
-		var body = "<div class='dirBinding flow'>"
-				+'<p><label style="font-weight:normal"><input type="checkbox" name="status" '+status_selected+' onclick="SaveLimitNet('+id+')" style="width:15px;height:15px;margin-right:5px" />Enable flow control</label></p>'
-				+"<p><span class='span_tit'>Restriction plan: </span><select name='limit' style='width:90px'>"+limitList+"</select></p>"
-					+"<p><span class='span_tit'>Concurrency restrictions: </span><input style='width: 90px;' type='number' name='perserver' value='"+rdata.perserver+"' />  *Limit the maximum number of concurrent sites at the current site</p>"
-					+"<p><span class='span_tit'>Single IP limit: </span><input style='width: 90px;' type='number' name='perip' value='"+rdata.perip+"' />  *Limit the maximum number of concurrent IP accesses</p>"
-					+"<p><span class='span_tit'>Traffic restrictions: </span><input style='width: 90px;' type='number' name='limit_rate' value='"+rdata.limit_rate+"' />   *Limit the maximum traffic limit per request (in KB)</p>"
-					+"<button class='btn btn-info btn-sm' onclick='SaveLimitNet("+id+",1)' style='margin-top:8px; margin-left:3px'>Preservation</button>"
-					+"</div>"
-			$("#webEdit-con").html(body);
-
-			$("select[name='limit']").change(function(){
-				var type = $(this).val();
-				var perserver = 200;
-				var perip = 20;
-				var limit_rate = 512;
-				switch(type){
-					case '1':
-						perserver = 300;
-						perip = 25;
-						limit_rate = 320;
-						break;
-					case '2':
-						perserver = 200;
-						perip = 10;
-						limit_rate = 1024;
-						break;
-					case '3':
-						perserver = 50;
-						perip = 3;
-						limit_rate = 2048;
-						break;
-					case '4':
-						perserver = 500;
-						perip = 10;
-						limit_rate = 2048;
-						break;
-					case '5':
-						perserver = 400;
-						perip = 15;
-						limit_rate = 1024;
-						break;
-					case '6':
-						perserver = 50;
-						perip = 10;
-						limit_rate = 512;
-						break;
-					case '7':
-						perserver = 150;
-						perip = 4;
-						limit_rate = 1024;
-						break;
-				}
-
-				$("input[name='perserver']").val(perserver);
-				$("input[name='perip']").val(perip);
-				$("input[name='limit_rate']").val(limit_rate);
-			});
-	});
-}
-
-function SaveLimitNet(id,type){
-	var isChecked = $("input[name='status']").attr('checked');
-	if(isChecked == undefined || type == 1){
-		var data = 'id='+id+'&perserver='+$("input[name='perserver']").val()+'&perip='+$("input[name='perip']").val()+'&limit_rate='+$("input[name='limit_rate']").val();
-		var loadT = layer.msg('正在设置...',{icon:16,time:10000})
-		$.post('site.php?action=SetLimitNet',data,function(rdata){
-			layer.close(loadT);
-			limitNet(id);
-			layer.msg(rdata.msg,{icon:rdata.status?1:5});
-		});
-	}else{
-		var loadT = layer.msg('Setting up...',{icon:16,time:10000})
-		$.get('site.php?action=CloseLimitNet&id='+id,function(rdata){
-			layer.close(loadT);
-			limitNet(id);
-			layer.msg(rdata.msg,{icon:rdata.status?1:5});
-		});
-	}
 }
 
 function SetDirRewrite(id){
