@@ -86,7 +86,7 @@ if($_SESSION['status'] != 1 || isset($_SESSION['system']) == true) {
 		<div class="main">
 		<?php if($_SESSION['status'] != 1){ ?>
 		<div class="warp">
-			<div class="title"><?php echo $_SESSION['product']; ?></div>
+			<div class="title"><?php echo $_SESSION['brand']; ?> <?php echo $_SESSION['product']; ?></div>
 			<form class="form" action="/install.php?action=Install" method="post">
 				<fieldset>
 					<legend>Administrator settings</legend>
