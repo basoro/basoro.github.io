@@ -106,18 +106,6 @@
 											<a class="link" href="javascript:ServiceAdmin('mysqld','start');">Start</a></td>
 										<?php } ?>
 								</tr>
-								<tr>
-									<td>Pure-Ftpd <?php echo $ConfigInfo['pure-ftpd']['version']; ?> </td>
-									<td><a href="javascript:openPath('/www/server/pure-ftpd');">/www/server/pure-ftpd</a></td>
-									<td><a class="link" href="javascript:GetConfigFile('pure-ftpd');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('pure-ftpd','reload');">Reload</a></td>
-									<td><span class="<?php if($ConfigInfo['pure-ftpd']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
-									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('pure-ftpd','restart');">Restart</a> |
-										<?php if($ConfigInfo['pure-ftpd']['status']){ ?>
-											<a class="link" href="javascript:ServiceAdmin('pure-ftpd','stop');">stop</a></td>
-										<?php }else{ ?>
-											<a class="link" href="javascript:ServiceAdmin('pure-ftpd','start');">Start</a></td>
-										<?php } ?>
-								</tr>
 								<?php foreach($ConfigInfo['php'] as $key=>$value){ if(!$value['setup']) continue; ?>
 								<tr>
 									<td>PHP version:<?php echo $key; ?> </td>
