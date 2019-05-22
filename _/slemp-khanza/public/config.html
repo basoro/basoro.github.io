@@ -4,49 +4,6 @@
 				<div class="position">
 					<a href="/index.php">Home</a>/<span><?php echo $_SESSION['serverip']; ?></span>/<span>System settings</span>
 				</div>
-				<!--
-				<div class="search">
-					<form target="hid" onsubmit='getWeb(1,$("#SearchValue").prop("value"))'>
-						<input type="text" id="SearchValue" class="ser-text" />
-						<button type="button" class="ser-sub"onclick='getWeb(1,$("#SearchValue").prop("value"))'></button>
-					</form>
-				</div>
-				-->
-			</div>
-			<div class="safe container-fluid btsetting" style="overflow: hidden; margin-bottom: 15px;">
-				<div class="safe-port pull-left">
-					<div class="ss-text">
-						<em>Close panel</em>
-						<div class='ssh-item'>
-							<input class='btswitch btswitch-ios' id='closePl' type='checkbox'>
-							<label class='btswitch-btn' for='closePl' onclick='ClosePanel()'></label>
-						</div>
-					</div>
-					<div class="ss-text">
-						<em>Automatic update</em>
-						<div class='ssh-item'>
-							<input class='btswitch btswitch-ios' id='autoUpdate' type='checkbox' <?php if($Panel['auto']){ echo 'checked';}else{echo '';} ?>>
-							<label class='btswitch-btn' for='autoUpdate' onclick="SetPanelAutoUpload()"></label>
-						</div>
-					</div>
-					<div class="ss-text">
-						<em>Domain access only</em>
-						<div class='ssh-item'>
-							<input class='btswitch btswitch-ios' id='SetPanelLimit' type='checkbox' <?php if($Panel['limit']){ echo 'checked';}else{echo '';} ?>>
-							<label class='btswitch-btn' for='SetPanelLimit' onclick="SetPanelLimit()"></label>
-						</div>
-					</div>
-					<div class="ss-text" style="margin-right:0">
-						<em>Panel SSL</em>
-						<div class='ssh-item'>
-							<input class='btswitch btswitch-ios' id='SetPanelSSL' type='checkbox' <?php if($Panel['ssl']){ echo 'checked';}else{echo '';} ?>>
-							<label class='btswitch-btn' for='SetPanelSSL' onclick="SetPanelSSL()"></label>
-						</div>
-						<?php if($Panel['ssl']){ ?>
-						<a href="javascript:SetPanelSSLCRT();" class="btn btn-info btn-sm" style="margin-left:30px">Edit certificate</a>
-						<?php } ?>
-					</div>
-				</div>
 			</div>
 			<div class="setbox">
 				<div class="s-title">
@@ -58,7 +15,7 @@
 						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
 						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
 						<p><span class="set-tit">Site directory</span><input name="sites_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['sites_path']; ?>"></p>
-						<p><span class="set-tit">Backup directory</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>
+						<p><span class="set-tit">Backup</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>
 						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
 						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
 						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
