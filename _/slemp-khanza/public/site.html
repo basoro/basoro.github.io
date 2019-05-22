@@ -110,15 +110,13 @@ function SetIndexList(id){
 function webEdit(id,website,endTime,addtime){
 	var system = "{$Think.session.system}";
 	var eMenu = '';
-	eMenu = "<p onclick='DirBinding("+id+")'>Subdirectory</p>"
-	+"<p onclick='webPathEdit("+id+")'>Website</p>"
+	eMenu = "<p onclick='webPathEdit("+id+")'>Website</p>"
 	+"<p onclick='limitNet("+id+")'>Traffic</p>"
 	+"<p onclick=\"Rewrite('"+website+"')\">Rewrite</p>"
 	+"<p onclick='SetIndexEdit("+id+")'>Default</p>"
 	+"<p onclick=\"ConfigFile('"+website+"')\">Configuration</p>"
 	+"<p onclick=\"SetSSL('"+website+"')\">SSL</p>"
 	+"<p onclick=\"PHPVersion('"+website+"')\">PHP version</p>"
-	+"<p onclick=\"To301('"+website+"')\">301 redirect</p>"
 	+"<p onclick=\"Proxy('"+website+"')\">Proxy</p>";
 	layer.open({
 		type: 1,
@@ -255,33 +253,6 @@ function SaveLimitNet(id,type){
 	}
 }
 
-function DirBinding(id){
-	$.get('/site.php?action=GetDirBinding&id='+id,function(rdata){
-		var echoHtml = '';
-		for(var i=0;i<rdata.binding.length;i++){
-			echoHtml += "<tr><td>"+rdata.binding[i].domain+"</td><td>"+rdata.binding[i].port+"</td><td>"+rdata.binding[i].path+"</td><td class='text-right'><a class='link' href='javascript:SetDirRewrite("+rdata.binding[i].id+");'>Pseudo-static</a> | <a class='link' href='javascript:DelBinding("+rdata.binding[i].id+","+id+");'>Delete</a></td></tr>";
-		}
-
-		var dirList = '';
-		for(var n=0;n<rdata.dirs.length;n++){
-			dirList += "<option value='"+rdata.dirs[n]+"'>"+rdata.dirs[n]+"</option>";
-		}
-
-		var body = "<div class='dirBinding'>"
-				 +"Domain name:<input type='text' name='domain' />"
-				 +"Subdirectory:<select name='dirName'>"+dirList+"</select>"
-				 +"<button class='btn btn-info btn-sm' onclick='AddDirBinding("+id+")'>Add to</button>"
-				 +"</div>"
-				 +"<div class='divtable' style='width:96%;margin:0 auto'><table class='table table-hover' width='100%' style='margin-bottom:0'>"
-				 +"<thead><tr><th>Domain name</th><th width='70'>Port</th><th width='100'>Subdirectory</th><th width='100' class='text-right'>Operating</th></tr></thead>"
-				 +"<tbody id='checkDomain'>" + echoHtml + "</tbody>"
-				 +"</table></div>"
-
-		$("#webEdit-con").html(body);
-	})
-
-}
-
 function SetDirRewrite(id){
 	$.get('site.php?action=GetDirRewrite&id='+id,function(rdata){
 		if(!rdata.status){
@@ -327,31 +298,6 @@ function ShowRewrite(rdata){
 	});
 }
 
-function AddDirBinding(id){
-	var domain = $("input[name='domain']").val();
-	var dirName = $("select[name='dirName']").val();
-	if(domain == '' || dirName == '' || dirName == null){
-		layer.msg('Domain name and subdirectory name cannot be empty!',{icon:5});
-		return;
-	}
-
-	var data = 'id='+id+'&domain='+domain+'&dirName='+dirName
-	$.post('site.php?action=AddDirBinding',data,function(rdata){
-		DirBinding(id);
-		layer.msg(rdata.msg,{icon:rdata.status?1:5});
-	});
-
-}
-
-function DelBinding(id,siteId){
-	layer.confirm('Do you really want to delete this subdirectory binding?',{icon:3,closeBtn:2},function(){
-		$.get('site.php?action=DelDirBinding&id='+id,function(rdata){
-			DirBinding(siteId);
-			layer.msg(rdata.msg,{icon:rdata.status?1:5});
-		});
-	});
-}
-
 function Proxy(siteName,type){
 	if(type == 1){
 		type = $("input[name='status']").attr('checked')?'0':'1';
@@ -381,43 +327,6 @@ function Proxy(siteName,type){
 				 +'<li>The target Url must be accessible, otherwise it will be directly 502</li>'
 				 +'<li>By default, all domain name accesses of this site will be delivered to the target server. Please ensure that the target server has the domain name bound.</li>'
 				 +'<li>If you are a passive agent, please fill in the domain name of the target site at the domain name.</li>'
-				 +'</ul>'
-				 +"</div>";
-			$("#webEdit-con").html(body);
-	});
-}
-
-function To301(siteName,type){
-	if(type == 1){
-		type = $("input[name='status']").attr('checked')?'0':'1';
-		toUrl = $("input[name='toUrl']").val();
-		srcDomain = $("select[name='srcDomain']").val();
-		var data = 'siteName='+siteName+'&type='+type+'&toDomain='+toUrl+'&srcDomain='+srcDomain;
-		$.post('site.php?action=Set301Status',data,function(rdata){
-			To301(siteName);
-			layer.msg(rdata.msg,{icon:rdata.status?1:5});
-		});
-		return;
-	}
-	$.get('site.php?action=Get301Status&siteName='+siteName,function(rdata){
-		var domain_tmp = rdata.domain.split(',');
-		var domains = '';
-		var selected = '';
-		for(var i=0;i<domain_tmp.length;i++){
-			var tmp = domain_tmp[i].split(':');
-			if(tmp[0] == rdata.src) selected = 'selected';
-			domains += "<option value='"+tmp[0]+"' "+selected+">"+tmp[0]+"</option>";
-		}
-
-		if(rdata.url == null) rdata.url = '';
-		var status_selected = rdata.status?'checked':'';
-		var body = "<div style='margin: 10px 15px;'>"
-				 +"<p style='margin-bottom:8px'><span>Access domain</span><select name='srcDomain' style='margin-left: 5px;width: 380px;height: 30px;margin-right:10px;'><option value='all'>Whole station</option>"+domains+"</select></p>"
-				 +"<p style='margin-bottom:8px'><span>Target URL</span><input type='text' name='toUrl' value='"+rdata.url+"' style='margin-left: 5px;width: 380px;height: 30px;margin-right:10px;' placeholder='Please fill in the full URL, Example：http://www.test.com' /></p>"
-				 +'<label style="font-weight:normal"><input type="checkbox" name="status" '+status_selected+' onclick="To301(\''+siteName+'\',1)" style="width:15px;height:15px;" />Enable 301</label>'
-				 +'<ul class="help-info-text">'
-				 +'<li>选择[整站]Please do not set the target URL to the domain name under the same site..</li>'
-				 +'<li>The 301 redirect configuration will override the pseudo-static rule. Please add the pseudo-static rule after setting 301..</li>'
 				 +'</ul>'
 				 +"</div>";
 			$("#webEdit-con").html(body);
