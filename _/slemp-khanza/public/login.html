@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<title><?php echo $_SESSION['product']; ?> <?php echo $_SESSION['version']; ?></title>
+<title><?php echo $_SESSION['brand']; ?> <?php echo $_SESSION['product']; ?></title>
 <link rel="stylesheet" type="text/css" href="public/css/reset.css">
 <link rel="stylesheet" type="text/css" href="/public/css/login.css">
 
@@ -17,7 +17,7 @@
 <div class="main">
 <div class="login">
 	<form class="loginform" method="post" action="/login.php">
-	<div class="rlogo"><?php echo $_SESSION['product']; ?> <?php echo $_SESSION['version']; ?></div>
+	<div class="rlogo"><?php echo $_SESSION['brand']; ?> <?php echo $_SESSION['product']; ?></div>
 	<div class="line"><input class="inputtxt" value="" name="username" datatype="*" nullmsg="Please fill in the username" errormsg="wrong format" placeholder="Username" type="text"><div class="Validform_checktip"></div></div>
 	<div class="line"><input class="inputtxt" name="password" value="" datatype="*" nullmsg="Please fill in the password" errormsg="Please fill in the password" placeholder="Password" type="password"><div class="Validform_checktip"></div></div>
 	<div style="color: red;margin-bottom: 13px;margin-top: -11px;<?php if(@$_SESSION['error'] == '') echo 'display:none' ?>"><?php echo @$_SESSION['error']; ?></div>
