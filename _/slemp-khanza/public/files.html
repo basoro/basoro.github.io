@@ -997,13 +997,13 @@ function UploadFiles(){
 	layer.open({
 		type:1,
 		closeBtn: 2,
-		title:'Ppload files --- <span style="color:red;">Note: Current maximum allowable single file '+ToSize(getCookie('uploadSize'))+'</span>',
+		title:'Upload files --- <span style="color:red;">Note: Maximum size '+ToSize(getCookie('uploadSize'))+'</span>',
 		area: ['500px','500px'],
 		shadeClose:false,
 		content:'<div class="fileUploadDiv"><input type="hidden" id="input-val" value="'+path+'" />\
 				<input type="file" id="file_input"  multiple="true" autocomplete="off" />\
-				<button type="button"  id="opt" autocomplete="off">Ddd files</button>\
-				<button type="button" id="up" autocomplete="off" >Start upload</button>\
+				<button type="button"  id="opt" autocomplete="off">Add files</button>\
+				<button type="button" id="up" autocomplete="off" >Start</button>\
 				<span id="totalProgress" style="float:right;"></span>\
 				<button type="button" id="filesClose" autocomplete="off" onClick="layer.closeAll()" >Close</button>\
 				<ul id="up_box"></ul></div>'
