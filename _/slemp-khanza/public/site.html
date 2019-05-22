@@ -338,7 +338,7 @@ function SaveSSL(siteName){
 function PHPVersion(siteName){
 	$.get('/site.php?action=GetSitePHPVersion&siteName='+siteName,function(version){
 		$.get('/site.php?action=GetPHPVersion',function(rdata){
-			var versionSelect = "<div class='webEdit-box padding-10'><div class='line'><label>Choose PHP version</label><div class='info-r'><select id='phpVersion' name='phpVersion' style='width:110px'>";
+			var versionSelect = "<div class='webEdit-box padding-10'><div class='line'><label>PHP version</label><div class='info-r'><select id='phpVersion' name='phpVersion' style='width:110px'>";
 			var optionSelect = '';
 			for(var i=0;i<rdata.length;i++){
 				optionSelect = version == rdata[i].version?'selected':'';
