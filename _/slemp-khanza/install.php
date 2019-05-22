@@ -113,7 +113,7 @@ if($_SESSION['status'] != 1 || isset($_SESSION['system']) == true) {
 		</div>
 		<?php } ?>
 		</div>
-		<div class="copyright">Copyright © 2014 - <?php echo date('Y'); ?>  <a style="color:#3498DB;" href="https://ataaka.basoro.id" target="_blank">Ataaka</a>. All Rights Reserved</div>
+		<div class="copyright">Copyright © 2018 - <?php echo date('Y'); ?>  <a style="color:#3498DB;" href="https://ataaka.basoro.id" target="_blank">Ataaka</a>. All Rights Reserved</div>
 		<script>
 			var main = $(".main");
 			$(window).resize(function () {
