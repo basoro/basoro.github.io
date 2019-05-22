@@ -129,7 +129,6 @@ function ReBoot(){
 
 function Totals(){
 	$count['sites'] = intval(getCount('sites'));
-	$count['ftps'] = intval(getCount('ftps'));
 	$count['databases'] = intval(getCount('databases'));
 	return $count;
 }
