@@ -26,7 +26,7 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},pure-ftpd/{etc,bin,sbin},php/56/{etc,bin,sbin,var/run}}}
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/56/{etc,bin,sbin,var/run}}}
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
@@ -394,32 +394,14 @@ if [ -f "${userINI}" ];then
 fi
 rm -f phpMyAdmin.zip
 
-# Install Pure-Ftpd
-yum -y install pure-ftpd
-ln -sf /usr/sbin/pure-* /www/server/pure-ftpd/sbin/
-ln -sf /usr/bin/pure-* /www/server/pure-ftpd/bin/
-touch /etc/pure-ftpd/pureftpd.passwd
-touch /etc/pure-ftpd/pureftpd.pdb
-ln -sf /etc/pure-ftpd/pureftpd.passwd /www/server/pure-ftpd/etc/pureftpd.passwd
-ln -sf /etc/pure-ftpd/pureftpd.pdb /www/server/pure-ftpd/etc/pureftpd.pdb
-rm -f /etc/pure-ftpd/pure-ftpd.conf
-wget -O /etc/pure-ftpd/pure-ftpd.conf https://basoro.id/downloads/pure-ftpd.conf
-ln -sf /etc/pure-ftpd/pure-ftpd.conf /www/server/pure-ftpd/etc/pure-ftpd.conf
-sed -i "s@/usr/local@/www/server@g" /usr/sbin/pure-config.pl
-sed -i "s@-f '/etc/init.d/pure-ftpd'@! -f '/etc/init.d/pure-ftpd'@g" /www/server/cloud/cloud
-echo "1.0.47" > /www/server/pure-ftpd/version.pl
-
 #start services and configure iptables
 yum -y install firewalld
 systemctl enable firewalld
 systemctl start firewalld
-firewall-cmd --permanent --zone=public --add-port=20/tcp
-firewall-cmd --permanent --zone=public --add-port=21/tcp
 firewall-cmd --permanent --zone=public --add-port=22/tcp
 firewall-cmd --permanent --zone=public --add-port=80/tcp
 firewall-cmd --permanent --zone=public --add-port=888/tcp
 firewall-cmd --permanent --zone=public --add-port=3306/tcp
-firewall-cmd --permanent --zone=public --add-port=30000-40000/tcp
 firewall-cmd --reload
 
 chkconfig syslog-ng on
@@ -432,36 +414,7 @@ service php-fpm start
 chkconfig php-fpm on
 service mysqld start
 chkconfig mysqld on
-service pure-ftpd start
-chkconfig pure-ftpd on
 service panel start
-
-cd /www/wwwroot/default/
-
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/webapps
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/dist
-mv dist SIMRS-Khanza
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/suara
-cp -a suara/* SIMRS-Khanza/suara/
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/KhanzaAntrianLoket.jar
-mv KhanzaAntrianLoket.jar SIMRS-Khanza/antrianloket.jar
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianPoli/dist/KhanzaAntrianPoli.jar
-mv KhanzaAntrianPoli.jar SIMRS-Khanza/antrianpoli.jar
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaHMSAnjungan/dist/KhanzaHMSAnjungan.jar
-mv KhanzaHMSAnjungan.jar SIMRS-Khanza/anjunganmandiri.jar
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaPengenkripsiTeks/dist/KhanzaPengenkripsiTeks.jar
-mv KhanzaPengenkripsiTeks.jar SIMRS-Khanza/pengenkripsiteks.jar
-zip -r SIMRS-Khanza.zip SIMRS-Khanza
-rm -rf suara
-rm -rf SIMRS-Khanza
-
-curl -o sik.sql https://raw.githubusercontent.com/mas-elkhanza/SIMRS-Khanza/master/sik.sql
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "create database sik"
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} sik < sik.sql
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "grant all privileges on sik.* to 'sik'@'%' identified by ''";
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "flush privileges"
-service mysqld restart
-#systemctl restart mysqld
 
 chown -R www:www /www/wwwroot/default/
 chown -R www:www /www/server/panel/
