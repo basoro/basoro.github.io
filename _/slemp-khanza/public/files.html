@@ -997,7 +997,7 @@ function UploadFiles(){
 	layer.open({
 		type:1,
 		closeBtn: 2,
-		title:'Upload files --- <span style="color:red;">Note: Maximum size '+ToSize(getCookie('uploadSize'))+'</span>',
+		title:'Upload files --- <span style="color:red;">Note: Maximum single file size '+ToSize(getCookie('uploadSize'))+'</span>',
 		area: ['500px','500px'],
 		shadeClose:false,
 		content:'<div class="fileUploadDiv"><input type="hidden" id="input-val" value="'+path+'" />\
