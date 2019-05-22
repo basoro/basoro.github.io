@@ -140,7 +140,7 @@ function webAdd(type) {
 
 	$.get('/site.php?action=GetPHPVersion',function(rdata){
 		var defaultPath = $("#defaultPath").html();
-		var php_version = "<div class='line'><label><span>PHP version</span></label><select name='version' id='c_k3' style='width:100px'>";
+		var php_version = "<div class='line'><label><span>PHP</span></label><select name='version' id='c_k3' style='width:100px'>";
 		for(var i=rdata.length-1;i>=0;i--){
             php_version += "<option value='"+rdata[i].version+"'>"+rdata[i].name+"</option>";
         }
@@ -155,38 +155,21 @@ function webAdd(type) {
 			shadeClose: false,
 			content: "<form class='zun-form-new' id='addweb'>\
 						<div class='line'>\
-		                    <label><span>Domain name</span></label>\
+		                    <label><span>Domain</span></label>\
 		                    <div class='info-r'>\
 								<textarea id='mainDomain' name='webname'/></textarea>\
 							</div>\
 						</div>\
 	                    <div class='line'>\
-	                    <label><span>Remarks</span></label>\
+	                    <label><span>Description</span></label>\
 	                    <div class='info-r'>\
 	                    	<input id='Wbeizhu' type='text' name='bak' placeholder='Website note' style='width:398px' />\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
-	                    <label><span>Root directory</span></label>\
+	                    <label><span>Directory</span></label>\
 	                    <div class='info-r'>\
 	                    	<input id='inputPath' type='text' name='path' value='"+defaultPath+"/' placeholder='Website root directory' style='width:398px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
-	                    </div>\
-	                    </div>\
-	                    <div class='line'>\
-	                    	<label><span>FTP</span></label>\
-	                    	<div class='info-r'>\
-	                    	<select name='ftp' id='c_k1' style='width:100px'>\
-		                    	<option value='true'>Create</option>\
-		                    	<option value='false' selected>Not created</option>\
-		                    </select>\
-		                    </div>\
-	                    </div>\
-	                    <div class='line' id='ftpss'>\
-	                    <label><span>FTP settings</span></label>\
-	                    <div class='info-r'>\
-		                    <div class='userpassword'><span>Username: <input id='ftp-user' type='text' name='ftpuser' value='' style='width:150px' /></span>\
-		                    <span class='last'>Password: <input id='ftp-password' type='text' name='ftppassword' value=''  style='width:150px' /></span></div>\
-		                    <p>While creating the site, create a corresponding FTP account for the site, and the FTP directory points to the directory where the site is located.</p>\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
@@ -203,7 +186,7 @@ function webAdd(type) {
 		                    </select>\
 	                    </div>\
 	                    <div class='line' id='datass'>\
-	                    <label><span>Database settings</span></label>\
+	                    <label><span>Settings</span></label>\
 	                    <div class='info-r'>\
 		                    <div class='userpassword'><span>Username: <input id='data-user' type='text' name='datauser' value=''  style='width:150px' /></span>\
 		                    <span class='last'>Password: <input id='data-password' type='text' name='datapassword' value=''  style='width:150px' /></span></div>\
