@@ -217,30 +217,44 @@ rm -rf /etc/nginx/conf.d/*
 if [ "${php_version}" = "54" ];then
   www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
   ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "55" ];then
   www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
   ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "56" ];then
   www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
   ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "70" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "71" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "72" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "73" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 
 cat > ${www_conf} <<END
@@ -265,10 +279,6 @@ php_admin_flag[log_errors] = on
 php_admin_value[upload_max_filesize] = 32M
 END
 
-#ln -sf /opt/remi/php${php_version}/root/etc/php.ini /etc/php.ini
-#sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /etc/php.ini
-sed -i 's/post_max_size = 8M/post_max_size = 100M/' /etc/php.ini
-
 rm -f /etc/init.d/nginx
 wget -O /etc/init.d/nginx basoro.id/downloads/nginx.init -T20
 chmod +x /etc/init.d/nginx
@@ -286,21 +296,13 @@ nginxv=$( ${command} 2>&1 )
 nginxlocal=$(echo $nginxv | grep -o '[0-9.]*$')
 echo $nginxlocal > /www/server/nginx/version.pl
 
-#rm -f /etc/init.d/php${php_version}-php-fpm
-#wget -O /etc/init.d/php-fpm-${php_version} https://basoro.id/downloads/php-fpm.init
-#sed -i "s@/var/run/php-fpm-${php_version}.pid@/var/run/php-fpm/php-fpm-${php_version}.pid@g" /etc/init.d/php-fpm-${php_version}
-
 ln -sf /opt/remi/php${php_version}/root/usr/bin/php /www/server/php/${php_version}/bin/php
 ln -sf /opt/remi/php${php_version}/root/usr/bin/phpize /www/server/php/${php_version}/bin/phpize
 ln -sf /opt/remi/php${php_version}/root/usr/bin/pear /www/server/php/${php_version}/bin/pear
 ln -sf /opt/remi/php${php_version}/root/usr/bin/pecl /www/server/php/${php_version}/bin/pecl
 ln -sf /opt/remi/php${php_version}/root/usr/sbin/php-fpm /www/server/php/${php_version}/sbin/php-fpm
-#ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
-#ln -sf /var/run/php-fpm/php-fpm-${php_version}.pid /www/server/php/${php_version}/var/run/php-fpm.pid
 mv /etc/init.d/php${php_version}-php-fpm /etc/init.d/php-fpm-${php_version}
 chmod +x /etc/init.d/php-fpm-${php_version}
-sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /etc/php.ini
-sed -i 's/post_max_size = 8M/post_max_size = 100M/' /etc/php.ini
 
 #################
 # Install cloud #
@@ -423,10 +425,6 @@ service panel start
 
 chown -R www:www /www/wwwroot/default/
 chown -R www:www /www/server/panel/
-
-#Fix Sessions:
-#mkdir /var/lib/php/session
-#chmod 777 /var/lib/php/session
 
 sleep 3
 
