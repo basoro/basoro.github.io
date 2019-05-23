@@ -301,12 +301,14 @@ ln -sf /opt/remi/php${php_version}/root/usr/bin/phpize /www/server/php/${php_ver
 ln -sf /opt/remi/php${php_version}/root/usr/bin/pear /www/server/php/${php_version}/bin/pear
 ln -sf /opt/remi/php${php_version}/root/usr/bin/pecl /www/server/php/${php_version}/bin/pecl
 ln -sf /opt/remi/php${php_version}/root/usr/sbin/php-fpm /www/server/php/${php_version}/sbin/php-fpm 
-if [ -f '/usr/lib/systemd/system/php${php_version}-php-fpm.service' ];then 
+if [ -f "/usr/lib/systemd/system/php${php_version}-php-fpm.service" ];then 
   sed -i 's/PrivateTmp=true/PrivateTmp=false/' /usr/lib/systemd/system/php${php_version}-php-fpm.service 
   systemctl daemon-reload
+  service php${php_version}-php-fpm start
 else 
   mv /etc/init.d/php${php_version}-php-fpm /etc/init.d/php-fpm-${php_version}
   chmod +x /etc/init.d/php-fpm-${php_version}
+  /etc/init.d/php-fpm-${php_version} start
 fi
 
 #################
