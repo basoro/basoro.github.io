@@ -157,7 +157,7 @@ function GetConfigInfo(){
 	}
 	$data = $_SESSION['config'];
 
-	$phpVersions = array('52','53','54','55','56','70','71');
+	$phpVersions = array('54','55','56','70','71','72','73');
 
 	foreach($phpVersions as $val){
 		$data['php'][$val]['setup'] = file_exists('/www/server/php/'.$val.'/bin/php');
