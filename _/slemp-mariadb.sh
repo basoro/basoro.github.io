@@ -308,7 +308,7 @@ sed -i 's/post_max_size = 8M/post_max_size = 100M/' /etc/php.ini
 
 svn export --force https://github.com/basoro/basoro.github.io/trunk/_/cloud/
 mv cloud/ /www/server/
-chmod +x /www/server/cloud/yunclient
+chmod +x /www/server/cloud/slemp
 chmod +x /www/server/cloud/cloud
 mv -f /www/server/cloud/sock.so /lib/sock.so
 mv -f /www/server/cloud/spec.so /lib/spec.so
