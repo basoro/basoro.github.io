@@ -43,14 +43,12 @@
 	</div>
 </div>
 </div>
-<script type="text/javascript" src="/public/js/ftp.js"></script>
 <script type="text/javascript" src="/public/js/web.js"></script>
 <script type="text/javascript">
 getWeb(1);
 setCookie('serverip','<?php echo $_SESSION["serverip"]; ?>');
 setCookie('iplist','<?php echo $_SESSION["iplist"]; ?>');
 setCookie('serverType','<?php echo $_SESSION["server_type"]; ?>');
-//设置默认文档
 function SetIndex(id){
 	var quanju = (id==undefined)?"Global Settings":"This site";
 	var data=id==undefined?"":"id="+id;
