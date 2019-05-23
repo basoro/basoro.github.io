@@ -52,7 +52,7 @@
 									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','restart');">Restart</a>
 								</tr>
 								<tr>
-									<td>MySQL <?php echo $ConfigInfo['mysql']['version']; ?></td>
+									<td>MySQL (MariaDB) <?php echo $ConfigInfo['mysql']['version']; ?></td>
 									<td><a href="javascript:openPath('/www/server/mysql');">/www/server/mysql</a></td>
 									<td><a class="link" href="javascript:GetConfigFile('mysql');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
 									<td><span class="<?php if($ConfigInfo['mysql']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
