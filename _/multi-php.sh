@@ -20,30 +20,44 @@ END
 if [ "${php_version}" = "54" ];then
   www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
   ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "55" ];then
   www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
   ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "56" ];then
   www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
   ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "70" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "71" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "72" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 if [ "${php_version}" = "73" ];then
   www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
   ln -sf /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
+  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 
 cat > ${www_conf} <<END
