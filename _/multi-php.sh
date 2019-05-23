@@ -75,3 +75,4 @@ ln -sf /opt/remi/php${php_version}/root/usr/bin/pecl /www/server/php/${php_versi
 ln -sf /opt/remi/php${php_version}/root/usr/sbin/php-fpm /www/server/php/${php_version}/sbin/php-fpm 
 mv /etc/init.d/php${php_version}-php-fpm /etc/init.d/php-fpm-${php_version}
 chmod +x /etc/init.d/php-fpm-${php_version}
+/etc/init.d/php-fpm-${php_version} start
