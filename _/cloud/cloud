@@ -28,14 +28,6 @@ Service_Start()
 	echo -e "Service Panel Running			\033[32m[OK]\033[0m"
 }
 
-Service_Start_Centos7()
-{
-	if [ -f "/tmp/cloud.sock" ];then
-		rm -f /tmp/cloud.sock
-	fi
-	nohup /www/server/cloud/yunclient >> /www/server/cloud/logs.pl 2>&1 &
-}
-
 Service_Admin()
 {
 
@@ -57,25 +49,16 @@ Service_Admin()
 		service php-fpm-56 $1
 	fi
 	if [ -f '/etc/init.d/php-fpm-70' ];then
-		pid='/www/server/php/70/var/run/php-fpm.pid'
-		if [ -f "${pid}" ];then
-			rm -f $pid
-		fi
 		service php-fpm-70 $1
 	fi
 	if [ -f '/etc/init.d/php-fpm-71' ];then
-		pid='/www/server/php/71/var/run/php-fpm.pid'
-		if [ -f "${pid}" ];then
-			rm -f $pid
-		fi
 		service php-fpm-71 $1
 	fi
 	if [ -f '/etc/init.d/php-fpm-72' ];then
-		pid='/www/server/php/72/var/run/php-fpm.pid'
-		if [ -f "${pid}" ];then
-			rm -f $pid
-		fi
 		service php-fpm-72 $1
+	fi
+	if [ -f '/etc/init.d/php-fpm-73' ];then
+		service php-fpm-73 $1
 	fi
 	echo "======================================="
 }
@@ -102,8 +85,6 @@ case $1 in
         'stop') Service_Stop
         ;;
         'restart') Service_Restart
-        ;;
-		    'c7start') Service_Start_Centos7
         ;;
         *) echo "Option {start|stop|restart}"
         ;;
