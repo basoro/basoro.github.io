@@ -53,7 +53,6 @@ function Install(){
 	$_SESSION['status'] = 1;
 	unset($_SESSION['system']);
 	$itype = '';
-	if(file_exists('/www/server/type.pl')) $itype = '[RPM]';
 }
 checkInstall();
 
