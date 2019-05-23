@@ -97,7 +97,7 @@ if($_SESSION['status'] != 1 || isset($_SESSION['system']) == true) {
 				<fieldset style="display: none;">
 					<legend>Path setting</legend>
 					<p><span class="tit">Backup file path</span><input type="text" name="backup_path" value="<?php echo $config['backup_path']; ?>"/> *Site and database packaging backup file storage path</p>
-					<p><span class="tit">Site creation path</span><input type="text" name="sites_path" value="<?php echo $config['sites_path']; ?>"/> *Site and default path when FTP is created</p>
+					<p><span class="tit">Site creation path</span><input type="text" name="sites_path" value="<?php echo $config['sites_path']; ?>"/> *Site and default path</p>
 				</fieldset>
 				<fieldset style="display: none;">
 					<legend>MySQL</legend>
