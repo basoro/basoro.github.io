@@ -14,61 +14,41 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="glyphicon glyphicon-hdd"></i></span>
-
             <div class="info-box-content">
               <span class="info-box-text">Operating System</span>
               <span class="info-box-number" id="info">Getting</span>
             </div>
-            <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
         </div>
-        <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-time"></i></span>
-
             <div class="info-box-content">
               <span class="info-box-text">Server Uptime</span>
               <span class="info-box-number" id="running"></span>
             </div>
-            <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
         </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
-
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-globe"></i></span>
-
             <div class="info-box-content">
               <span class="info-box-text">Websites</span>
               <span class="info-box-number"><?php echo @$_SESSION['server_count']['sites']; ?></span>
             </div>
-            <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
         </div>
-        <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="glyphicon glyphicon-tasks"></i></span>
-
             <div class="info-box-content">
               <span class="info-box-text">Databases</span>
               <span class="info-box-number"><?php echo @$_SESSION['server_count']['databases']; ?></span>
             </div>
-            <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
         </div>
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
                     </div>
 				</div>
 				<div class="server">
@@ -78,7 +58,7 @@
 					<div class="server-circle">
 						<ul class="row">
 							<li class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
-								<h3>CPU usage</h3>
+								<h3>CPU</h3>
 								<div class="circle">
 									<div class="pie_left">
 										<div class="left"></div>
@@ -91,7 +71,7 @@
 								<h4 id="core">Getting</h4>
 							</li>
 							<li class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
-								<h3>Memory usage</h3>
+								<h3>RAM</h3>
 								<div class="circle">
 									<div class="pie_left">
 										<div class="left"></div>
