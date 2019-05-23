@@ -78,7 +78,7 @@ yum -y install php${php_version}-php-common php${php_version}-php-fpm php${php_v
 # Install Postfix, SyLog-Ng, Cronie and Other Stuff #
 #####################################################
 
-yum -y install postfix syslog-ng cronie wget libdbi libdbi-drivers libdbi-dbd-mysql syslog-ng-libdbi zip unzip glibc.i686
+yum -y install svn postfix syslog-ng cronie wget libdbi libdbi-drivers libdbi-dbd-mysql syslog-ng-libdbi zip unzip glibc.i686
 
 cat > /etc/init.d/panel <<END
 #!/bin/bash
@@ -306,8 +306,8 @@ sed -i 's/post_max_size = 8M/post_max_size = 100M/' /etc/php.ini
 # Install cloud #
 #################
 
-wget -c basoro.id/downloads/cloud.zip -T20
-unzip -o cloud.zip -d /www/server/ > /dev/null 2>&1
+svn export --force https://github.com/basoro/basoro.github.io/trunk/_/cloud/
+mv cloud/ /www/server/
 chmod +x /www/server/cloud/yunclient
 chmod +x /www/server/cloud/cloud
 mv -f /www/server/cloud/sock.so /lib/sock.so
@@ -316,14 +316,10 @@ mv -f /www/server/cloud/krnln.so /lib/krnln.so
 mv -f /www/server/cloud/iconv.so /lib/iconv.so
 mv -f /www/server/cloud/dp1.so /lib/dp1.so
 mv -f /www/server/cloud/EThread.so /lib/EThread.so
-#sed -i "s@-f '/etc/init.d/mysqld'@! -f '/etc/init.d/mysqld'@g" /www/server/cloud/cloud
-rm -f cloud.zip
 
 #################
 # Install Panel #
 #################
-
-yum -y install svn
 
 svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
 rm -rf /www/server/panel/*
