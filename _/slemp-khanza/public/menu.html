@@ -1,19 +1,26 @@
-<div class="header">
-  	<div class="logo pull-left">
-		<span><?php echo $_SESSION['product']; ?></span>
-	</div>
-	<span id="defaultPath" style="display: none;"><?php echo $_SESSION['config']['sites_path']; ?></span>
-	<ul class="menu pull-right">
-		<li> <a class="menu_home" href="/index.php">Home</a></li>
-		<li><a class="menu_web" href="/site.php">Web</a></li>
-		<li><a class="menu_data" href="/database.php">Database</a></li>
-		<li><a class="menu_compare" href="/compare.php">dbDiff</a></li>
-		<li><a class="menu_firewall" href="/firewall.php">Security</a></li>
-		<li><a class="menu_day" href="/crontab.php">Cron</a></li>
-		<li><a class="menu_folder" href="/files.php">Files</a></li>
-		<li><a class="menu_set" href="/config.php">Settings</a></li>
-		<li><a class="menu_exit" href="javascript:;" id="dologin"><i class="icon-bell-off"></i><em>Logout</em></a></li>
-	</ul>
-</div>
+<nav class="navbar navbar-default" style="background-color:#3498DB;border:0;margin-bottom:0;border-radius:0;">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="index.php" style="color:#fff;"><?php echo $_SESSION['product']; ?></a>
+  </div>
+  <span id="defaultPath" style="display: none;"><?php echo $_SESSION['config']['sites_path']; ?></span>
+  <div id="navbar" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav navbar-right">
+		<li> <a class="menu_home" href="/index.php" style="color:#fff;font-size:14px">Home</a></li>
+		<li><a class="menu_web" href="/site.php" style="color:#fff;font-size:14px">Web</a></li>
+		<li><a class="menu_data" href="/database.php" style="color:#fff;font-size:14px">Database</a></li>
+		<li><a class="menu_firewall" href="/firewall.php" style="color:#fff;font-size:14px">Security</a></li>
+		<li><a class="menu_day" href="/crontab.php" style="color:#fff;font-size:14px">Cron</a></li>
+		<li><a class="menu_folder" href="/files.php" style="color:#fff;font-size:14px">Files</a></li>
+		<li><a class="menu_set" href="/config.php" style="color:#fff;font-size:14px">Settings</a></li>
+		<li><a class="menu_exit" href="javascript:;" id="dologin" style="color:#fff;font-size:14px">Logout</a></li>
+    </ul>
+  </div><!--/.nav-collapse -->
+</nav>  
 <div class="bt-warp">
 <div id="container" class="container-fluid">
