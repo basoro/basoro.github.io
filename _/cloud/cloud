@@ -41,42 +41,44 @@ Service_Admin()
 	fi
 	if [ -f '/etc/init.d/php-fpm-54' ];then
 		service php-fpm-54 $1
-        if [ -f ' /usr/lib/systemd/system/php54-php-fpm.service' ];then
+	fi
+        if [ -f '/usr/lib/systemd/system/php54-php-fpm.service' ];then
                 service php54-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-55' ];then
 		service php-fpm-55 $1
-        if [ -f ' /usr/lib/systemd/system/php55-php-fpm.service' ];then
+	fi
+        if [ -f '/usr/lib/systemd/system/php55-php-fpm.service' ];then
                 service php55-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-56' ];then
 		service php-fpm-56 $1
 	fi
-        if [ -f ' /usr/lib/systemd/system/php56-php-fpm.service' ];then
+        if [ -f '/usr/lib/systemd/system/php56-php-fpm.service' ];then
                 service php56-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-70' ];then
 		service php-fpm-70 $1
 	fi
-        if [ -f ' /usr/lib/systemd/system/php70-php-fpm.service' ];then
+        if [ -f '/usr/lib/systemd/system/php70-php-fpm.service' ];then
                 service php70-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-71' ];then
 		service php-fpm-71 $1
 	fi
-        if [ -f ' /usr/lib/systemd/system/php71-php-fpm.service' ];then
+        if [ -f '/usr/lib/systemd/system/php71-php-fpm.service' ];then
                 service php71-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-72' ];then
 		service php-fpm-72 $1
 	fi
-        if [ -f ' /usr/lib/systemd/system/php72-php-fpm.service' ];then
+        if [ -f '/usr/lib/systemd/system/php72-php-fpm.service' ];then
                 service php72-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-73' ];then
 		service php-fpm-73 $1
 	fi
-        if [ -f ' /usr/lib/systemd/system/php73-php-fpm.service' ];then
+        if [ -f '/usr/lib/systemd/system/php73-php-fpm.service' ];then
                 service php73-php-fpm $1		
 	fi
 	echo "======================================="
