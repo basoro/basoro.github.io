@@ -41,24 +41,38 @@ Service_Admin()
 	fi
 	if [ -f '/etc/init.d/php-fpm-54' ];then
 		service php-fpm-54 $1
+        else
+                service php54-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-55' ];then
 		service php-fpm-55 $1
+        else
+                service php55-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-56' ];then
 		service php-fpm-56 $1
+        else
+                service php56-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-70' ];then
 		service php-fpm-70 $1
+        else
+                service php70-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-71' ];then
 		service php-fpm-71 $1
+        else
+                service php71-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-72' ];then
 		service php-fpm-72 $1
+        else
+                service php72-php-fpm $1		
 	fi
 	if [ -f '/etc/init.d/php-fpm-73' ];then
 		service php-fpm-73 $1
+        else
+                service php73-php-fpm $1		
 	fi
 	echo "======================================="
 }
