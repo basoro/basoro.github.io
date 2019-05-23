@@ -1,4 +1,4 @@
-
+/* bt 主题css */
 body,html{
 	height:100%;
 	background-color:#404040;
@@ -352,11 +352,6 @@ ul.sub li.current a,ul.sub li a:hover {
     margin-left: 40px;
     position: relative;
 }
-/**/
-/*
- * Component: Info Box
- * -------------------
- */
 .info-box {
   display: block;
   min-height: 90px;
@@ -422,18 +417,23 @@ ul.sub li.current a,ul.sub li a:hover {
   display: block;
 }
 .bg-red {
+  color: #ffffff;
   background-color: #dd4b39 !important;
 }
 .bg-yellow {
+  color: #ffffff;
   background-color: #f39c12 !important;
 }
 .bg-aqua {
+  color: #ffffff;
   background-color: #00c0ef !important;
 }
 .bg-blue {
+  color: #ffffff;
   background-color: #0073b7 !important;
 }
 .bg-green {
+  color: #ffffff;
   background-color: #00a65a !important;
 }
 .server {
