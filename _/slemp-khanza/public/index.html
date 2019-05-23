@@ -7,36 +7,69 @@
 				</div>
 				<div class="system-info">
 					<div class="tips">
-						System: <span id="info"> Getting</span>&#12288;&#12288;&#12288;Uptime: <span id="running"> Getting</span>
+						System Info
 					</div>
-					<div class="list-serve">
-					<ul class="row">
-						<li class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
-							<div class="serve-box">
-								<h3>Web</h3>
-								<div class="server-box-right">
-									<h4><?php echo @$_SESSION['server_count']['sites']; ?></h4>
-									<p>Add and manage sites on the server here</p>
-									<div class="sbr-btn">
-										<a href="/site.php">Manage</a>|<a href="javascript:;" onclick="webAdd(0)">Add</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
-							<div class="serve-box">
-								<h3>DB</h3>
-								<div class="server-box-right">
-									<h4><?php echo @$_SESSION['server_count']['databases']; ?></h4>
-									<p>Add and manage databases on the server here</p>
-									<div class="sbr-btn">
-										<a href="/database.php">Manage</a>|<a href="javascript:;" onclick="DataAdd(0)">Add</a>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
+					<div class="list-serve" style="padding:0 15px;">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Operating System</span>
+              <span class="info-box-number" id="info">Getting</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Server Uptime</span>
+              <span class="info-box-number" id="running"></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Websites</span>
+              <span class="info-box-number"><?php echo @$_SESSION['server_count']['sites']; ?></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Databases</span>
+              <span class="info-box-number"><?php echo @$_SESSION['server_count']['databases']; ?></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+                    </div>
 				</div>
 				<div class="server">
 					<div class="tips">
