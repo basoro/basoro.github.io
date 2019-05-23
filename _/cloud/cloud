@@ -1,7 +1,7 @@
 #!/bin/sh
 Service_Start()
 {
-	isRunning=`ps aux |grep yunclient|grep 'www'`
+	isRunning=`ps aux |grep slemp|grep 'www'`
 	if [ "${isRunning}" != "" ];then
 		Service_Stop
 	fi
@@ -19,7 +19,7 @@ Service_Start()
 	if [ -f "/tmp/cloud.sock" ];then
 		rm -f /tmp/cloud.sock
 	fi
-	nohup /www/server/cloud/yunclient >> /www/server/cloud/logs.pl 2>&1 &
+	nohup /www/server/cloud/slemp >> /www/server/cloud/logs.pl 2>&1 &
 
 	if [ -f '/var/lock/subsys/mysql' ];then
 		rm -f /var/lock/subsys/mysql
@@ -65,7 +65,7 @@ Service_Admin()
 
 Service_Stop()
 {
-	pid=`ps aux | grep yunclient |grep 'www'|awk '{print $2}'`
+	pid=`ps aux | grep slemp |grep 'www'|awk '{print $2}'`
 	kill -9 $pid
 	if [ -f "/tmp/cloud.sock" ];then
 		rm -f /tmp/cloud.sock
