@@ -17,6 +17,8 @@ location ~ [^/]\.php(/|$)
 }
 END
 
+ln -sf /www/server/nginx/conf/enable-php-${php_version}.conf /etc/nginx/enable-php-${php_version}.conf
+
 if [ "${php_version}" = "54" ];then
   www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
   ln -sf /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
