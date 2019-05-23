@@ -1121,7 +1121,7 @@ function GetRewriteList(){
 }
 
 function GetPHPVersion(){
-	$phpVersions = array('52','53','54','55','56','70','71');
+	$phpVersions = array('54','55','56','70','71','72','73');
 	$data = array();
 	$i = 0;
 	$httpdVersion = "";
