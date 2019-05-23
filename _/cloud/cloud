@@ -6,7 +6,7 @@ Service_Start()
 		Service_Stop
 	fi
 
-	Service_Admin stop
+	Service_Admin stop 
 	service mysql stop
 	pkill -9 mysql
 	rm -f /www/server/data/*.pid
