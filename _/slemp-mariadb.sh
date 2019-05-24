@@ -288,6 +288,7 @@ ln -sf /etc/nginx/nginx.conf /www/server/nginx/conf/nginx.conf
 ln -sf /etc/nginx/mime.types /www/server/nginx/conf/mime.types
 ln -sf /etc/nginx/fastcgi_params /www/server/nginx/conf/fastcgi_params
 ln -sf /www/server/nginx/conf/pathinfo.conf /etc/nginx/pathinfo.conf
+ln -sf /www/server/nginx/conf/proxy.conf /etc/nginx/proxy.conf
 ln -sf /www/server/nginx/conf/enable-php-${php_version}.conf /etc/nginx/enable-php-${php_version}.conf
 ln -s /www/server/nginx/conf/rewrite /etc/nginx/rewrite
 ln -s /www/server/nginx/conf/key /etc/nginx/key
