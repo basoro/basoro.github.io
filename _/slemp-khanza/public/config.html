@@ -14,27 +14,51 @@
 				<div class="setting-con">					
 					<form id="set-Config" class="form-horizontal">
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">Alias</label>
+							<label class="col-sm-2 control-label">Alias</label>
 							<div class="col-sm-10">
 								<input type="text" name="panel_name" class="form-control" value="<?php echo $Panel['panel_name']; ?>">
 							</div>
 						</div>
-						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
-						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
-						<p><span class="set-tit">Site directory</span><input name="sites_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['sites_path']; ?>"></p>
-						<p><span class="set-tit">Backup</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>
-						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
-						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
-						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+							<label class="col-sm-2 control-label">Panel port</label>
 							<div class="col-sm-10">
-								<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+								<input type="text" name="port" class="form-control" value="<?php echo $Panel['port']; ?>">
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-2 control-label">Binding domain</label>
+							<div class="col-sm-10">
+								<input type="text" name="domain" class="form-control" value="<?php echo $Panel['domain']; ?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Site directory</label>
+							<div class="col-sm-10">
+								<input type="text" name="sites_path" class="form-control" value="<?php echo $Panel['sites_path']; ?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Backup directory</label>
+							<div class="col-sm-10">
+								<input type="text" name="backup_path" class="form-control" value="<?php echo $Panel['backup_path']; ?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Server IP</label>
+							<div class="col-sm-10">
+								<input type="text" name="ip" class="form-control" value="<?php echo $_SESSION['iplist']; ?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Panel username</label>
+							<div class="col-sm-10">
+								<input type="text" name="username_" class="form-control disable" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span>
+							</div>
+						</div>
+						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
+						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default set-submit">Sign in</button>
+								<button type="submit" class="btn btn-info set-submit">Save</button>
 							</div>
 						</div>
 					</form>
