@@ -7,7 +7,9 @@ Install_SLEMP()
 # disable selinux #
 ###################
 setenforce 0
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+if [ -f "/etc/selinux/config" ];then                                       
+ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+fi
 
 startTime=`date +%s`
 
@@ -520,5 +522,3 @@ if [ "${go}" == 'n' ];then
   exit 1;
 fi
 Install_SLEMP
-#echo '=======================================================';
-#echo "php-$vphp successful"
