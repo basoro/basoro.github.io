@@ -32,9 +32,9 @@
 						<table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-hover">
 							<thead>
 								<tr>
-									<th>Install Software</th>
-									<th>Installation Location</th>
-									<th>Configuration</th>
+									<th>Software</th>
+									<th class="visible-lg visible-md visible-sm">Installation Location</th>
+									<th class="visible-lg visible-md visible-sm">Configuration</th>
 									<th>Status</th>
 									<th width="90" style="text-align: right;">Action</th>
 								</tr>
@@ -42,19 +42,19 @@
 							<tbody id="tjBody">
 								<tr>
 									<td><?php echo $ConfigInfo['web']['type'].$ConfigInfo['web']['version']; ?> </td>
-									<td><a href="javascript:openPath('/www/server/<?php echo $ConfigInfo['web']['type']; ?>');">/www/server/<?php echo $ConfigInfo['web']['type']; ?></a></td>
+									<td class="visible-lg visible-md visible-sm"><a href="javascript:openPath('/www/server/<?php echo $ConfigInfo['web']['type']; ?>');">/www/server/<?php echo $ConfigInfo['web']['type']; ?></a></td>
 									<td><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','reload');">Reload</a>
 										<?php if($_SESSION['server_type'] == 'nginx'){ ?>
 											 | <a class="link"><input id="defaultSite" name="defaultSite" type="checkbox" onchange="SetDefaultSite();" style="vertical-align: -2px; margin-right: 3px; margin-left: 1px;" <?php if($Panel['defaultSite']){ echo 'checked';}else{echo '';} ?> /><label style="font-weight:normal" for="defaultSite">Enable anti-malware resolution</label></a>
 										<?php } ?>
 									</td>
-									<td><span class="ico-start glyphicon glyphicon-play"></span></td>
+									<td class="visible-lg visible-md visible-sm"><span class="ico-start glyphicon glyphicon-play"></span></td>
 									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','restart');">Restart</a>
 								</tr>
 								<tr>
 									<td>MariaDB <?php echo $ConfigInfo['mysql']['version']; ?></td>
-									<td><a href="javascript:openPath('/www/server/mysql');">/www/server/mysql</a></td>
-									<td><a class="link" href="javascript:GetConfigFile('mysql');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
+									<td class="visible-lg visible-md visible-sm"><a href="javascript:openPath('/www/server/mysql');">/www/server/mysql</a></td>
+									<td class="visible-lg visible-md visible-sm"><a class="link" href="javascript:GetConfigFile('mysql');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
 									<td><span class="<?php if($ConfigInfo['mysql']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
 									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('mysqld','restart');">Restart</a>
 										<?php if($ConfigInfo['mysql']['status']){ ?>
@@ -66,8 +66,8 @@
 								<?php foreach($ConfigInfo['php'] as $key=>$value){ if(!$value['setup']) continue; ?>
 								<tr>
 									<td>PHP version:<?php echo $key; ?> </td>
-									<td><a href="javascript:openPath('/www/server/php/<?php echo $key; ?>');">/www/server/php/<?php echo $key; ?></a></td>
-									<td>
+									<td class="visible-lg visible-md visible-sm"><a href="javascript:openPath('/www/server/php/<?php echo $key; ?>');">/www/server/php/<?php echo $key; ?></a></td>
+									<td class="visible-lg visible-md visible-sm">
 										<a class="link" href="javascript:GetConfigFile('<?php echo $key; ?>');">Modify</a> |
 										<a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','reload');">Overload</a> |
 										<a class="link"><label style="font-weight:normal"><input name="PATH_INFO" type="checkbox" onchange="SetPathInfo('<?php echo $key; ?>','<?php if(!$value['pathinfo']){echo 'off';}else{echo 'on';}  ?>');" style="vertical-align: -2px; margin-right: 3px; margin-left: 1px;" <?php if(!$value['pathinfo']){ echo 'checked';}else{echo '';} ?> />PATH_INFO</label></a> |
