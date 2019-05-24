@@ -45,8 +45,13 @@
 								<input name="backup_path" class="inputtxt form-control" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>">
 							</div>
 						</div>
-						<p><span class="set-tit">Backup</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>						
-						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label">Server IP</label>
+							<div class="col-sm-10 col-sm-4">
+								<input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>">
+								<span id="helpBlock" class="help-block">Please set the current server IP</span>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">Panel username</label>
 							<div class="col-sm-10 col-sm-4">
