@@ -48,7 +48,7 @@
 											 | <a class="link"><input id="defaultSite" name="defaultSite" type="checkbox" onchange="SetDefaultSite();" style="vertical-align: -2px; margin-right: 3px; margin-left: 1px;" <?php if($Panel['defaultSite']){ echo 'checked';}else{echo '';} ?> /><label style="font-weight:normal" for="defaultSite">Enable anti-malware resolution</label></a>
 										<?php } ?>
 									</td>
-									<td class="visible-lg visible-md visible-sm"><span class="ico-start glyphicon glyphicon-play"></span></td>
+									<td><span class="ico-start glyphicon glyphicon-play"></span></td>
 									<td style="text-align: right;"><a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','restart');">Restart</a>
 								</tr>
 								<tr>
