@@ -1649,7 +1649,7 @@ textarea:active,
 	border-radius: 3px;
 	width: 100px;
 	height: 40px;
-	line-height: 40px;
+	line-height: 20px;
 	text-align: center;
 	color: #fff;
 	cursor: pointer;
