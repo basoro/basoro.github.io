@@ -52,7 +52,7 @@ CREATE TABLE `bt_firewall` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-INSERT INTO `bt_firewall` VALUES (1,'80','Website default port','2019-04-27 08:54:39'),(2,'888','WEB panel','2019-04-27 08:55:13'),(3,'22','SSH remote management service','2019-04-27 08:55:42'),(4,'3306','MySQL service','2019-04-27 08:55:55');
+INSERT INTO `bt_firewall` VALUES (1,'80','Website default port','2019-04-27 08:54:39'),(2,'888','WEB panel','2019-04-27 08:55:13'),(3,'22','SSH remote management service','2019-04-27 08:55:42');
 
 CREATE TABLE `bt_logs` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
