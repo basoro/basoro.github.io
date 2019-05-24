@@ -1,13 +1,13 @@
 #!/bin/bash
 
+Install_SLEMP() 
+{
+
 ###################
 # disable selinux #
 ###################
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-
-Install_SLEMP() 
-{
 
 startTime=`date +%s`
 
