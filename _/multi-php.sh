@@ -1,7 +1,7 @@
 #!/bin/bash
 
-php_version='71'
-
+Install_PHP() 
+{
 mkdir -pv /www/server/php/${php_version}/{etc,bin,sbin,var/run}
 
 yum -y install php${php_version}-php-common php${php_version}-php-fpm php${php_version}-php-process php${php_version}-php-mysql php${php_version}-php-pecl-memcache php${php_version}-php-pecl-memcached php${php_version}-php-gd php${php_version}-php-mbstring php${php_version}-php-mcrypt php${php_version}-php-xml php${php_version}-php-pecl-apc php${php_version}-php-cli php${php_version}-php-pear php${php_version}-php-pdo
@@ -98,3 +98,59 @@ else
   chmod +x /etc/init.d/php-fpm-${php_version}
   /etc/init.d/php-fpm-${php_version} start
 fi
+}
+
+echo '=======================================================';
+echo '1) PHP-5.2';
+echo '2) PHP-5.3';
+echo '3) PHP-5.4';
+echo "4) PHP-5.5";
+echo "5) PHP-5.6";
+echo "6) PHP-7.0";
+echo "7) PHP-7.1";
+read -p "Plese select to add php version(1-7): " php;
+echo '=======================================================';
+
+case "${php}" in
+  '1')
+    vphp='5.2'
+    php_version='52'
+    ;;
+  '2')
+    vphp='5.3'
+    php_version='53'
+    ;;
+  '3')
+    vphp='5.4'
+    php_version='54'
+    ;;
+  '4')
+    vphp='5.5'
+    php_version='55'
+    ;;
+  '5')
+    vphp='5.6'
+    php_version='56'
+    ;;
+  '6')
+    vphp='7.0'
+    php_version='70'
+    ;;
+  '7')
+    vphp='7.1'
+    php_version='71'
+    ;;
+esac
+
+while [ "$go" != 'y' ] && [ "$go" != 'n' ]
+  do
+    read -p "Ready You a start the PHP-$vphp installation?(y/n): " go;
+done
+if [ "${go}" == 'n' ];then
+  echo 'Your alrea cancel the install.';
+  exit 1;
+fi
+Install_PHP
+echo '=======================================================';
+echo "php-$vphp successful"
+
