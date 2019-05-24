@@ -135,7 +135,7 @@
 								<thead>
 									<tr>
 										<th style="padding-left:17px">Install software</th>
-										<th>Configuration</th>
+										<th class="hidden-xs">Configuration</th>
 										<th>Status</th>
 										<th width="90" style="text-align: right;padding-right:18px">Action</th>
 									</tr>
@@ -143,7 +143,7 @@
 								<tbody id="tjBody">
 									<tr>
 										<td style="padding-left:18px"><?php echo $ConfigInfo['web']['type'].$ConfigInfo['web']['version']; ?> </td>
-										<td><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Config</a> |
+										<td class="hidden-xs"><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Config</a> |
 											<a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','reload');">Reload</a>
 											<?php if($_SESSION['server_type'] == 'nginx'){ ?>
 											 | <a class="link" href="javascript:GetNginxStatus();">Status</a></td>
@@ -154,7 +154,7 @@
 									</tr>
 									<tr>
 										<td style="padding-left:18px">MySQL (MariaDB <?php echo $ConfigInfo['mysql']['version']; ?>)</td>
-										<td><a class="link" href="javascript:GetConfigFile('mysql');">Config</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
+										<td class="hidden-xs"><a class="link" href="javascript:GetConfigFile('mysql');">Config</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
 										<td><span class="<?php if($ConfigInfo['mysql']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
 										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('mysqld','restart');">Restart</a>
 											<?php if($ConfigInfo['mysql']['status']){ ?>
@@ -166,7 +166,7 @@
 									<?php foreach($ConfigInfo['php'] as $key=>$value){ if(!$value['setup']) continue; ?>
 									<tr>
 										<td style="padding-left:18px">PHP version：<?php echo $key; ?> </td>
-										<td><a class="link" href="javascript:GetConfigFile('<?php echo $key; ?>');">Config</a>
+										<td class="hidden-xs"><a class="link" href="javascript:GetConfigFile('<?php echo $key; ?>');">Config</a>
 											<?php if(strpos($ConfigInfo['web']['version'],'2.2.3') === false){ ?>
 											 | <a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','reload');">Reload</a> |
 											<a class="link" href="javascript:GetPHPStatus('<?php echo $key; ?>');">Status</a></td>
@@ -186,7 +186,7 @@
 									<?php } ?>
 									<tr>
 										<td style="padding-left:18px">Log file</td>
-										<td><a class="link" href="javascript:openPath('/www/wwwlogs');">/www/wwwlogs</a></td>
+										<td class="hidden-xs"><a class="link" href="javascript:openPath('/www/wwwlogs');">/www/wwwlogs</a></td>
 										<td id="logSize"></td>
 										<td style="text-align: right;padding-right:18px"><a class="link"  href="javascript:CloseLogs();">Empty</a></td>
 									</tr>
