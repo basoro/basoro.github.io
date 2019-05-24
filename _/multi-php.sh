@@ -101,44 +101,46 @@ fi
 }
 
 echo '=======================================================';
-echo '1) PHP-5.2';
-echo '2) PHP-5.3';
-echo '3) PHP-5.4';
-echo "4) PHP-5.5";
-echo "5) PHP-5.6";
-echo "6) PHP-7.0";
-echo "7) PHP-7.1";
+echo 'Your select to install:'
+echo '=======================================================';
+echo '1) PHP-5.4';
+echo '2) PHP-5.5';
+echo '3) PHP-5.6';
+echo "4) PHP-7.0";
+echo "5) PHP-7.1";
+echo "6) PHP-7.2";
+echo "7) PHP-7.3";
 read -p "Plese select to add php version(1-7): " php;
 echo '=======================================================';
 
 case "${php}" in
   '1')
-    vphp='5.2'
-    php_version='52'
-    ;;
-  '2')
-    vphp='5.3'
-    php_version='53'
-    ;;
-  '3')
     vphp='5.4'
     php_version='54'
     ;;
-  '4')
+  '2')
     vphp='5.5'
     php_version='55'
     ;;
-  '5')
+  '3')
     vphp='5.6'
     php_version='56'
     ;;
-  '6')
+  '4')
     vphp='7.0'
     php_version='70'
     ;;
-  '7')
+  '5')
     vphp='7.1'
     php_version='71'
+    ;;
+  '6')
+    vphp='7.2'
+    php_version='72'
+    ;;
+  '7')
+    vphp='7.3'
+    php_version='73'
     ;;
 esac
 
