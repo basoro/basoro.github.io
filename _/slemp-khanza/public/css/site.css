@@ -1649,12 +1649,12 @@ textarea:active,
 	background-color: #3498DB;
 	border-radius: 3px;
 	width: 100px;
-	height: 30px;
-	line-height: 30px;
+	height: 20px;
+	line-height: 20px;
 	text-align: center;
 	color: #fff;
 	cursor: pointer;
-	margin: 20px 0 10px 100px;
+	margin: 20px 0 10px 0px;
 }
 /*footer*/
 .footer {
