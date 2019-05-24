@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# Setting
-centos='6'
-php_version='54'
-
 ###################
 # disable selinux #
 ###################
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+
+Install_SLEMP() 
+{
 
 startTime=`date +%s`
 
@@ -437,7 +436,7 @@ sleep 3
 
 cd ~
 
-clear
+#clear
 echo
 echo
 echo "====================================="
@@ -455,3 +454,70 @@ echo
 echo
 echo
 exit
+}
+
+isCentos7=`cat /etc/redhat-release | grep 7\..* | grep -i centos`
+
+if [ "${isCentos7}" != '' ];then
+  centos='7'
+else
+  centos='6'
+fi
+
+echo 'Your select to install:'
+echo '-------------------------------------------------------'
+echo 'Web Server: Nginx';
+echo 'Database: MariaDB';
+echo '-------------------------------------------------------'
+echo '1) PHP-5.2';
+echo '2) PHP-5.3';
+echo '3) PHP-5.4';
+echo "4) PHP-5.5";
+echo "5) PHP-5.6";
+echo "6) PHP-7.0";
+echo "7) PHP-7.1";
+read -p "Plese select to add php version(1-7): " php;
+echo '=======================================================';
+
+case "${php}" in
+  '1')
+    vphp='5.2'
+    php_version='52'
+    ;;
+  '2')
+    vphp='5.3'
+    php_version='53'
+    ;;
+  '3')
+    vphp='5.4'
+    php_version='54'
+    ;;
+  '4')
+    vphp='5.5'
+    php_version='55'
+    ;;
+  '5')
+    vphp='5.6'
+    php_version='56'
+    ;;
+  '6')
+    vphp='7.0'
+    php_version='70'
+    ;;
+  '7')
+    vphp='7.1'
+    php_version='71'
+    ;;
+esac
+
+while [ "$go" != 'y' ] && [ "$go" != 'n' ]
+  do
+    read -p "About to install at /www, Ready you a start with the PHP-$vphp installation?(y/n): " go;
+done
+if [ "${go}" == 'n' ];then
+  echo 'Your alrea cancel the install.';
+  exit 1;
+fi
+Install_SLEMP
+#echo '=======================================================';
+#echo "php-$vphp successful"
