@@ -31,7 +31,13 @@
 						<p><span class="set-tit">Backup</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>						
 						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
 						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
-						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Panel password</label>
+							<div class="col-sm-10">
+								<input name="password_" class="inputtxt form-control disable" type="text" value="******" disabled>
+								<span class="input-group-addon" onclick="setPassword()">edit</span>
+							</div>
+						</div>
 					</form>
 					<div class="set-submit">Save</div>
 				</div>
