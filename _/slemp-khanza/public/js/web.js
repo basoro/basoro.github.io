@@ -148,7 +148,7 @@ function webAdd(type) {
 		var index = layer.open({
 			type: 1,
 			skin: 'demo-class',
-			area: '560px',
+			area: '350px',
 			title: 'Add website',
 			closeBtn: 2,
 			shift: 0,
@@ -163,13 +163,13 @@ function webAdd(type) {
 	                    <div class='line'>\
 	                    <label><span>Description</span></label>\
 	                    <div class='info-r'>\
-	                    	<input id='Wbeizhu' type='text' name='bak' placeholder='Website note' style='width:398px' />\
+	                    	<input id='Wbeizhu' type='text' name='bak' placeholder='Website note' style='width:200px' />\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
 	                    <label><span>Directory</span></label>\
 	                    <div class='info-r'>\
-	                    	<input id='inputPath' type='text' name='path' value='"+defaultPath+"/' placeholder='Website root directory' style='width:398px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
+	                    	<input id='inputPath' type='text' name='path' value='"+defaultPath+"/' placeholder='Website root directory' style='width:200px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
