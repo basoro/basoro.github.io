@@ -1,4 +1,3 @@
-/* bt 主题css */
 body,html{
 	height:100%;
 	background-color:#404040;
@@ -1649,8 +1648,8 @@ textarea:active,
 	background-color: #3498DB;
 	border-radius: 3px;
 	width: 100px;
-	height: 20px;
-	line-height: 20px;
+	height: 40px;
+	line-height: 40px;
 	text-align: center;
 	color: #fff;
 	cursor: pointer;
