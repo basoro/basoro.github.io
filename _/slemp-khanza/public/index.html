@@ -36,6 +36,12 @@
             <div class="info-box-content">
               <span class="info-box-text">Websites</span>
               <span class="info-box-number"><?php echo @$_SESSION['server_count']['sites']; ?></span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="info-box-text">
+               <a href="/site.php">Manage</a> | <a href="javascript:;" onclick="webAdd(0)">Add</a>
+              </span>
             </div>
           </div>
         </div>
@@ -45,6 +51,12 @@
             <div class="info-box-content">
               <span class="info-box-text">Databases</span>
               <span class="info-box-number"><?php echo @$_SESSION['server_count']['databases']; ?></span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="info-box-text">
+               <a href="/database.php">Manage</a> | <a href="javascript:;" onclick="DataAdd(0)">Add</a>
+              </span>
             </div>
           </div>
         </div>
