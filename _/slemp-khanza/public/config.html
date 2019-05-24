@@ -17,14 +17,14 @@
 						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
 						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Site directory</label>
-							<div class="col-sm-10">
+							<label class="col-sm-2 col-lg-2 control-label">Site directory</label>
+							<div class="col-sm-10 col-lg-4">
 								<input name="sites_path" class="inputtxt form-control" type="text" value="<?php echo $ConfigInfo['sites_path']; ?>">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Backup directory</label>
-							<div class="col-sm-10">
+							<label class="col-sm-2 col-sm-2 control-label">Backup directory</label>
+							<div class="col-sm-10 col-sm-4">
 								<input name="backup_path" class="inputtxt form-control" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>">
 							</div>
 						</div>
@@ -32,11 +32,11 @@
 						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
 						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Panel password</label>
-							<div class="col-sm-10">
+							<label class="col-sm-2 col-sm-2 control-label">Panel password</label>
+							<div class="col-sm-10 col-sm-4">
 								<div class="input-group">
 									<input name="password_" class="inputtxt form-control disable" type="text" value="******" disabled>
-									<span class="input-group-addon" onclick="setPassword()">edit</span>
+									<span class="input-group-addon bg-success" onclick="setPassword()">edit</span>
 								</div>
 							</div>
 						</div>
