@@ -5,6 +5,30 @@
 					<a href="/index.php">Home</a>/<span><?php echo $_SESSION['serverip']; ?></span>/<span>System settings</span>
 				</div>
 			</div>
+
+			
+			<div class="setbox">
+				<div class="s-title">
+					<h3>Setting</h3>
+				</div>
+				<div class="setting-con">
+					<form id="set-Config">
+						<p><span class="set-tit">Alias</span><input name="panel_name" class="inputtxt" type="text" value="<?php echo $Panel['panel_name']; ?>"></p>
+						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
+						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
+						<p><span class="set-tit">Site directory</span><input name="sites_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['sites_path']; ?>"></p>
+						<p><span class="set-tit">Backup</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>
+						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
+						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
+						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
+					</form>
+					<div class="set-submit">Save</div>
+				</div>
+			</div>
+			<div class="setbox">
+				<div class="s-title">
+					<h3>All Software</h3>
+				</div>
 <form class="form-horizontal">
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
@@ -33,29 +57,6 @@
     </div>
   </div>
 </form>
-			
-			<div class="setbox">
-				<div class="s-title">
-					<h3>Setting</h3>
-				</div>
-				<div class="setting-con">
-					<form id="set-Config">
-						<p><span class="set-tit">Alias</span><input name="panel_name" class="inputtxt" type="text" value="<?php echo $Panel['panel_name']; ?>"></p>
-						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
-						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
-						<p><span class="set-tit">Site directory</span><input name="sites_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['sites_path']; ?>"></p>
-						<p><span class="set-tit">Backup</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>
-						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
-						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
-						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
-					</form>
-					<div class="set-submit">Save</div>
-				</div>
-			</div>
-			<div class="setbox">
-				<div class="s-title">
-					<h3>All Software</h3>
-				</div>
 				<div class="setting-con">
 					<div class="divtable">
 						<table width="100%" cellspacing="0" cellpadding="0" border="0" class="table table-hover">
