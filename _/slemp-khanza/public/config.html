@@ -13,8 +13,19 @@
 				</div>
 				<div class="setting-con">					
 					<form id="set-Config" class="form-horizontal">
-						<p><span class="set-tit">Alias</span><input name="panel_name" class="inputtxt" type="text" value="<?php echo $Panel['panel_name']; ?>"></p>
-						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
+						<div class="form-group">
+							<label class="col-sm-2 col-lg-2 control-label">Alias</label>
+							<div class="col-sm-10 col-lg-4">
+								<input name="panel_name" class="inputtxt form-control" type="number" value="<?php echo $Panel['panel_name']; ?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 col-lg-2 control-label">Panel port</label>
+							<div class="col-sm-10 col-lg-4">
+								<input id="banport" name="port" class="inputtxt form-control" type="number" value="<?php echo $Panel['domain']; ?>" maxlength="4">
+								<span id="helpBlock" class="help-block">Range limited: 888 - 9999</span>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-2 col-lg-2 control-label">Binding domain</label>
 							<div class="col-sm-10 col-lg-4">
@@ -36,7 +47,15 @@
 						</div>
 						<p><span class="set-tit">Backup</span><input name="backup_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['backup_path']; ?>"></p>						
 						<p><span class="set-tit">Server IP</span><input name="ip" class="inputtxt" type="text" value="<?php echo $_SESSION['iplist']; ?>"><span class="set-info">Please set the current server IP</span></p>
-						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label">Panel username</label>
+							<div class="col-sm-10 col-sm-4">
+								<div class="input-group">
+									<input name="username_" class="inputtxt form-control disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled>
+									<span class="input-group-addon text-success" onclick="setUserName()">edit</span>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">Panel password</label>
 							<div class="col-sm-10 col-sm-4">
