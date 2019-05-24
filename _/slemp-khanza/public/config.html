@@ -43,7 +43,7 @@
 								<tr>
 									<td><?php echo $ConfigInfo['web']['type'].$ConfigInfo['web']['version']; ?> </td>
 									<td class="visible-lg visible-md visible-sm"><a href="javascript:openPath('/www/server/<?php echo $ConfigInfo['web']['type']; ?>');">/www/server/<?php echo $ConfigInfo['web']['type']; ?></a></td>
-									<td><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','reload');">Reload</a>
+									<td class="visible-lg visible-md visible-sm"><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','reload');">Reload</a>
 										<?php if($_SESSION['server_type'] == 'nginx'){ ?>
 											 | <a class="link"><input id="defaultSite" name="defaultSite" type="checkbox" onchange="SetDefaultSite();" style="vertical-align: -2px; margin-right: 3px; margin-left: 1px;" <?php if($Panel['defaultSite']){ echo 'checked';}else{echo '';} ?> /><label style="font-weight:normal" for="defaultSite">Enable anti-malware resolution</label></a>
 										<?php } ?>
