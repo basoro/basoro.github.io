@@ -14,12 +14,11 @@
 				<div class="setting-con">					
 					<form id="set-Config" class="form-horizontal">
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+							<label for="inputEmail3" class="col-sm-2 control-label">Alias</label>
 							<div class="col-sm-10">
-								<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+								<input type="text" name="panel_name" class="form-control" value="<?php echo $Panel['panel_name']; ?>">
 							</div>
 						</div>
-						<p><span class="set-tit">Alias</span><input name="panel_name" class="inputtxt" type="text" value="<?php echo $Panel['panel_name']; ?>"></p>
 						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
 						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
 						<p><span class="set-tit">Site directory</span><input name="sites_path" class="inputtxt" type="text" value="<?php echo $ConfigInfo['sites_path']; ?>"></p>
@@ -28,12 +27,17 @@
 						<p><span class="set-tit">Panel user</span><input name="username_" class="inputtxt disable" type="text" value="<?php echo $_SESSION['username']; ?>" disabled><span class="modify btn btn-xs btn-info" onclick="setUserName()">edit</span></p>
 						<p><span class="set-tit">Panel password</span><input name="password_" class="inputtxt disable" type="text" value="******" disabled><span class="modify btn btn-xs btn-info" onclick="setPassword()">edit</span></p>
 						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+							</div>
+						</div>
+						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Sign in</button>
+								<button type="submit" class="btn btn-default set-submit">Sign in</button>
 							</div>
 						</div>
 					</form>
-					<div class="set-submit">Save</div>
 				</div>
 			</div>
 			<div class="setbox">
