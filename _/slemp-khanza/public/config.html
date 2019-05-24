@@ -15,7 +15,13 @@
 					<form id="set-Config" class="form-horizontal">
 						<p><span class="set-tit">Alias</span><input name="panel_name" class="inputtxt" type="text" value="<?php echo $Panel['panel_name']; ?>"></p>
 						<p><span class="set-tit">Panel port</span><input id="banport" name="port" class="inputtxt" type="numner" value="<?php echo $Panel['port']; ?>" maxlength="4"><span class="set-info">Range limited: 888 - 9999</span></p>
-						<p><span class="set-tit">Binding domain</span><input name="domain" class="inputtxt" type="text" value="<?php echo $Panel['domain']; ?>"><span class="set-info">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span></p>
+						<div class="form-group">
+							<label class="col-sm-2 col-lg-2 control-label">Binding domain</label>
+							<div class="col-sm-10 col-lg-4">
+								<input name="domain" class="inputtxt form-control" type="text" value="<?php echo $Panel['domain']; ?>">
+								<span id="helpBlock" class="help-block">Bind a domain name to the panel. Note: Once you enable domain-only access, you can only access the panel through the domain name.</span>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-2 col-lg-2 control-label">Site directory</label>
 							<div class="col-sm-10 col-lg-4">
