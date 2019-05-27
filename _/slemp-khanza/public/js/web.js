@@ -167,26 +167,9 @@ function webAdd(type) {
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
-	                    <label><span>Root directory</span></label>\
+	                    <label><span>Directory</span></label>\
 	                    <div class='info-r'>\
 	                    	<input id='inputPath' type='text' name='path' value='"+defaultPath+"/' placeholder='Website root directory' style='width:398px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
-	                    </div>\
-	                    </div>\
-	                    <div class='line'>\
-	                    	<label><span>FTP</span></label>\
-	                    	<div class='info-r'>\
-	                    	<select name='ftp' id='c_k1' style='width:100px'>\
-		                    	<option value='true'>Create</option>\
-		                    	<option value='false' selected>Not created</option>\
-		                    </select>\
-		                    </div>\
-	                    </div>\
-	                    <div class='line' id='ftpss'>\
-	                    <label><span>FTP settings</span></label>\
-	                    <div class='info-r'>\
-		                    <div class='userpassword'><span>Username: <input id='ftp-user' type='text' name='ftpuser' value='' style='width:150px' /></span>\
-		                    <span class='last'>Password: <input id='ftp-password' type='text' name='ftppassword' value=''  style='width:150px' /></span></div>\
-		                    <p>While creating the site, create a corresponding FTP account for the site, and the FTP directory points to the directory where the site is located.</p>\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
