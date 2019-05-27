@@ -363,7 +363,7 @@ ln -sf /usr/bin/mysqlcheck /www/server/mysql/bin/mysqlcheck
 ln -s /usr/lib64/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so
 ln -s /usr/lib64/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so.18
 ln -sf /var/lib/mysql/mysql.sock /tmp/mysql.sock
-echo "10.3.15" > /www/server/mysql/version.pl
+echo "MariDB 10.3.15" > /www/server/mysql/version.pl
 service mysql start
 sleep 5
 ln -s /var/lib/mysql /www/server/data
