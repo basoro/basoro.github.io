@@ -25,7 +25,7 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},pure-ftpd/{etc,bin,sbin},php/56/{etc,bin,sbin,var/run}}}
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/56/{etc,bin,sbin,var/run}}}
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
@@ -273,7 +273,7 @@ socket		= /var/lib/mysql/mysql.sock
 port		= 3306
 socket		= /var/lib/mysql/mysql.sock
 datadir = /www/server/data
-#default_storage_engine = MyISAM
+default_storage_engine = MyISAM
 #skip-external-locking
 #loose-skip-innodb
 key_buffer_size = 16M
@@ -298,7 +298,7 @@ binlog_format=mixed
 server-id	= 1
 expire_logs_days = 10
 
-default_storage_engine = InnoDB
+#default_storage_engine = InnoDB
 innodb_data_home_dir = /www/server/data
 innodb_data_file_path = ibdata1:10M:autoextend
 innodb_log_group_home_dir = /www/server/data
@@ -330,11 +330,11 @@ EOF
 
 yum -y install svn
 
+
 svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
-rm -rf /www/server/panel/*
 cp -a slemp-khanza/* /www/server/panel/
-chown -R www:www /www/server/panel > /dev/null 2>&1
 rm -rf slemp-khanza/
+chown -R www:www /www/server/panel > /dev/null 2>&1
 wget -O phpMyAdmin.zip basoro.id/downloads/phpMyAdmin-4.4.15.6.zip -T20
 unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
 dates=`date`
@@ -384,28 +384,15 @@ if [ -f "${userINI}" ];then
 fi
 rm -f phpMyAdmin.zip
 
-# Install Pure-Ftpd
-yum -y install pure-ftpd
-ln -sf /usr/sbin/pure-* /www/server/pure-ftpd/sbin/
-ln -sf /usr/bin/pure-* /www/server/pure-ftpd/bin/
-touch /etc/pure-ftpd/pureftpd.passwd
-touch /etc/pure-ftpd/pureftpd.pdb
-ln -sf /etc/pure-ftpd/pureftpd.passwd /www/server/pure-ftpd/etc/pureftpd.passwd
-ln -sf /etc/pure-ftpd/pureftpd.pdb /www/server/pure-ftpd/etc/pureftpd.pdb
-rm -f /etc/pure-ftpd/pure-ftpd.conf
-wget -O /etc/pure-ftpd/pure-ftpd.conf https://basoro.id/downloads/pure-ftpd.conf
-ln -sf /etc/pure-ftpd/pure-ftpd.conf /www/server/pure-ftpd/etc/pure-ftpd.conf
-sed -i "s@/usr/local@/www/server@g" /usr/sbin/pure-config.pl
-echo "1.0.30" > /www/server/pure-ftpd/version.pl
 
 #start services and configure iptables
-iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 20 -j ACCEPT
-iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT
+#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 20 -j ACCEPT
+#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 888 -j ACCEPT
-iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
-iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 30000:40000 -j ACCEPT
+#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 30000:40000 -j ACCEPT
 service iptables save
 service iptables restart
 chkconfig syslog-ng on
@@ -418,34 +405,8 @@ service php-fpm-56 start
 chkconfig php-fpm-56 on
 service mysqld start
 chkconfig mysqld on
-service pure-ftpd start
-chkconfig pure-ftpd on
 service panel start
 
-cd /www/wwwroot/default/
-
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/webapps
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/dist
-mv dist SIMRS-Khanza
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/suara
-cp -a suara/* SIMRS-Khanza/suara/
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianLoket/dist/KhanzaAntrianLoket.jar
-mv KhanzaAntrianLoket.jar SIMRS-Khanza/antrianloket.jar
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaAntrianPoli/dist/KhanzaAntrianPoli.jar
-mv KhanzaAntrianPoli.jar SIMRS-Khanza/antrianpoli.jar
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaHMSAnjungan/dist/KhanzaHMSAnjungan.jar
-mv KhanzaHMSAnjungan.jar SIMRS-Khanza/anjunganmandiri.jar
-svn export --force https://github.com/mas-elkhanza/SIMRS-Khanza.git/trunk/KhanzaPengenkripsiTeks/dist/KhanzaPengenkripsiTeks.jar
-mv KhanzaPengenkripsiTeks.jar SIMRS-Khanza/pengenkripsiteks.jar
-zip -r SIMRS-Khanza.zip SIMRS-Khanza
-rm -rf suara
-rm -rf SIMRS-Khanza
-
-curl -o sik.sql https://raw.githubusercontent.com/mas-elkhanza/SIMRS-Khanza/master/sik.sql
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "create database sik"
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} sik < sik.sql
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "grant all privileges on sik.* to 'sik'@'%' identified by ''";
-/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "flush privileges"
 service mysqld restart
 
 chown -R www:www /www/wwwroot/default/
