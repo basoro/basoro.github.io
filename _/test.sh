@@ -253,7 +253,7 @@ if [ "${php_version}" = "73" ];then
   sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
 fi
 
-wget -O /usr/local/ioncube/ioncube_loader_lin_${vphp}.so basoro.id/ioncube_loader_lin_${vphp}.so -T 20
+wget -O /usr/local/ioncube/ioncube_loader_lin_${vphp}.so basoro.id/downloads/ioncube_loader_lin_${vphp}.so -T 20
 
 echo "Write Ioncube Loader to php.ini..."
 cat >>/www/server/php/${php_version}/etc/php.ini<<EOF
