@@ -165,7 +165,7 @@
 										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','restart');">Restart</a>
 									</tr>
 									<tr>
-										<td style="padding-left:18px">MySQL <?php echo $ConfigInfo['mysql']['version']; ?></td>
+										<td style="padding-left:18px">MySQL <?php echo $ConfigInfo['mysql']['version']; ?> <?php echo $ConfigInfo['php']['version']; ?></td>
 										<td class="visible-lg visible-md visible-sm"><a class="link" href="javascript:GetConfigFile('mysql');">Config</a> | <a class="link" href="javascript:ServiceAdmin('mysqld','reload');">Reload</a></td>
 										<td><span class="<?php if($ConfigInfo['mysql']['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
 										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('mysqld','restart');">Restart</a>
@@ -185,7 +185,9 @@
 										<td><span class="<?php if($value['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
 										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','restart');">Restart</a>
 											<?php if($value['status']){ ?>
-												 <!-- | <a class="link" href="javascript:stopPHP('<?php echo $key; ?>');">Stop</a></td> -->
+                                                 <?php if($key = $ConfigInfo['php']['version']) { ?>
+                                                 <?php } else { ?> 
+                                                 <?php } ?> 
 											<?php }else{ ?>
 												 | <a class="link" href="javascript:startPHP('<?php echo $key; ?>');">Start</a></td>
 											<?php } ?>
