@@ -257,6 +257,7 @@ wget -O /usr/local/ioncube/ioncube_loader_lin_${vphp}.so basoro.id/downloads/ion
 
 echo "Write Ioncube Loader to php.ini..."
 cat >>/www/server/php/${php_version}/etc/php.ini<<EOF
+
 ;ionCube
 zend_extension = /usr/local/ioncube/ioncube_loader_lin_${vphp}.so
 
