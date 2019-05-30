@@ -172,7 +172,7 @@ function GetConfigInfo(){
 
 	$data['web']['type'] = $_SESSION['server_type'];
 	$data['web']['version'] = file_get_contents('/www/server/'.$_SESSION['server_type'].'/version.pl');
-	$data['php']['version'] = file_get_contents('/www/server/php.pl');
+	$data['php']['version'] = file_get_contents('/www/server/php/default.pl');
 	$data['mysql']['version'] = file_get_contents('/www/server/mysql/version.pl');
 	$data['mysql']['status'] = file_exists('/tmp/mysql.sock');
 	$data['pure-ftpd']['version'] = file_get_contents('/www/server/pure-ftpd/version.pl');
