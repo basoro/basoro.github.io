@@ -38,6 +38,8 @@ Service_Admin()
 	fi
 	if [ -f '/etc/init.d/mysqld' ];then
         	service mysqld $1
+	else
+		service mysqld $1
 	fi
 	if [ -f '/etc/init.d/php-fpm-54' ];then
 		service php-fpm-54 $1
