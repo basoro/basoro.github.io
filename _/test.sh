@@ -428,7 +428,7 @@ ln -s /usr/lib64/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so
 ln -s /usr/lib64/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so.18
 ln -sf /var/lib/mysql/mysql.sock /tmp/mysql.sock
 echo "5.6" > /www/server/mysql/version.pl
-service mysql start
+service mysqld start
 sleep 5
 ln -s /var/lib/mysql /www/server/data
 
@@ -490,8 +490,8 @@ service nginx restart
 chkconfig nginx on
 service php-fpm-${php_version} start
 chkconfig php-fpm-${php_version} on
-service mysql restart
-chkconfig mysql on
+service mysqld restart
+chkconfig mysqld on
 service panel start
 
 chown -R www:www /www/wwwroot/default/
