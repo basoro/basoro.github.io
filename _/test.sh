@@ -211,59 +211,42 @@ rm -rf /etc/nginx/conf.d/*
 
 #install php-fpm config 
 if [ "${php_version}" = "54" ];then
-  www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
-  ln -s /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
+  php_conf="/opt/remi/php${php_version}/root/etc" 
 fi
 if [ "${php_version}" = "55" ];then
-  www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
-  ln -s /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
+  php_conf="/opt/remi/php${php_version}/root/etc" 
 fi
 if [ "${php_version}" = "56" ];then
-  www_conf="/opt/remi/php${php_version}/root/etc/php-fpm.d/www.conf" 
-  ln -s /opt/remi/php${php_version}/root/etc/php.ini /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
+  php_conf="/opt/remi/php${php_version}/root/etc" 
 fi
 if [ "${php_version}" = "70" ];then
-  www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
-  ln -s /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
+  php_conf="/etc/opt/remi/php${php_version}" 
 fi
 if [ "${php_version}" = "71" ];then
-  www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
-  ln -s /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
+  php_conf="/etc/opt/remi/php${php_version}" 
 fi
 if [ "${php_version}" = "72" ];then
-  www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
-  ln -s /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
+  php_conf="/etc/opt/remi/php${php_version}" 
 fi
 if [ "${php_version}" = "73" ];then
-  www_conf="/etc/opt/remi/php${php_version}/php-fpm.d/www.conf" 
-  ln -s /etc/opt/remi/php${php_version}/php.ini /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /www/server/php/${php_version}/etc/php.ini
-  sed -i 's/post_max_size = 8M/post_max_size = 100M/' /www/server/php/${php_version}/etc/php.ini
+  php_conf="/etc/opt/remi/php${php_version}" 
 fi
 
 wget -O /usr/local/ioncube/ioncube_loader_lin_${vphp}.so basoro.id/downloads/ioncube_loader_lin_${vphp}.so -T 20
 
 echo "Write Ioncube Loader to php.ini..."
-cat >>/www/server/php/${php_version}/etc/php.ini<<EOF
+cat >> ${php_conf}/php.ini <<EOF
 
 ;ionCube
 zend_extension = /usr/local/ioncube/ioncube_loader_lin_${vphp}.so
 
 EOF
 
-cat > ${www_conf} <<END
+sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' ${php_conf}/php.ini
+sed -i 's/post_max_size = 8M/post_max_size = 100M/' ${php_conf}/php.ini
+ln -s ${php_conf}/php.ini /www/server/php/${php_version}/etc/php.ini
+
+cat > ${php_conf}/php-fpm.d/www.conf <<END
 [www]
 listen = /tmp/php-cgi-${php_version}.sock
 listen.allowed_clients = 127.0.0.1
