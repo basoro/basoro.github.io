@@ -185,9 +185,9 @@
 										<td><span class="<?php if($value['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
 										<td style="text-align: right;padding-right:18px"><a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','restart');">Restart</a>
 											<?php if($value['status']){ ?>
-                                                 <?php if($key = $ConfigInfo['php']['version']) { ?>
-                                                 <?php } else { ?> 
-                                                 <?php } ?> 
+												 <?php if($key != $ConfigInfo['php']['version']) { ?>
+												 	 | <a class="link" href="javascript:stopPHP('<?php echo $key; ?>');">Stop</a></td>
+												 <?php } ?> 
 											<?php }else{ ?>
 												 | <a class="link" href="javascript:startPHP('<?php echo $key; ?>');">Start</a></td>
 											<?php } ?>
