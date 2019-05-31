@@ -4,7 +4,7 @@
 						<div class="position">
 							<a href="/index.php">Home</a>/<span>System security</span>
 						</div>
-						<div class="search">
+						<div class="search visible-lg visible-md visible-sm">
 							<form target="hid" onsubmit='getLogs(1,$("#SearchValue").prop("value"))'>
 								<input type="text" id="SearchValue" class="ser-text" placeholder="Search log" />
 								<button type="button" class="ser-sub"onclick='getLogs(1,$("#SearchValue").prop("value"))'></button>
@@ -12,7 +12,7 @@
 							<iframe name='hid' id="hid" style="display:none"></iframe>
 						</div>
 					</div>
-					<div class="safe container-fluid" style="overflow: hidden; margin-bottom: 15px;">
+					<div class="safe container-fluid visible-lg visible-md visible-sm" style="overflow: hidden; margin-bottom: 15px;">
 						<div class="safe-screen pull-left">
 							<form>
 								<div class="ss-text">
@@ -59,8 +59,8 @@
 										<tr>
 											<th>Numbering</th>
 											<th>Port</th>
-											<th>Add time</th>
-											<th>Description</th>
+											<th class="visible-lg visible-md visible-sm">Add time</th>
+											<th class="visible-lg visible-md visible-sm'>Description</th>
 											<th width="50px" class="text-right">Action</th>
 										</tr>
 										</thead>
