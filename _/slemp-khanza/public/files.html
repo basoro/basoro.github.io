@@ -24,7 +24,7 @@
 						<button class="btn btn-default btn-sm pull-left" onclick="UploadFiles()">Upload</button>
 						<button class="btn btn-default btn-sm pull-left" onclick="DownloadFile()" title='Download file to server' style="margin:0 5px">Download</button>
 						<span id='BarTools'></span>
-						<span id='Batch' class='visible-lg visible-md visible-sm'></span>
+						<span id='Batch'></span>
 						<span id='comlist' class="comlist"></span>
 						<div class="btn-group btn-group-sm pull-right" style="margin-right:5px;">
 						  <button id="set_icon" title="Icon arrangement" type="button" class="btn btn-default">
@@ -209,7 +209,7 @@ function GetFiles(Path) {
 			$("#backBtn").removeAttr("style");
 		}
 		setCookie('Path',rdata.PATH);
-		BarTools += ' <button onclick="javascript:GetFiles(\'' + rdata.PATH + '\');" class="btn btn-default btn-sm glyphicon glyphicon-refresh" title="Refresh"></button>';
+		BarTools += ' <button onclick="javascript:GetFiles(\'' + rdata.PATH + '\');" class="btn btn-default btn-sm glyphicon glyphicon-refresh visible-lg visible-md visible-sm" title="Refresh"></button>';
 		var copyName = getCookie('copyFileName');
 		var cutName = getCookie('cutFileName');
 		var isPaste = (copyName == 'null') ? cutName : copyName;
