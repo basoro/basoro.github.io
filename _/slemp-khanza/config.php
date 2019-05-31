@@ -46,7 +46,9 @@ function StopPHPVersion(){
 	if(file_exists($filename)){
 		SendSocket("ExecShell|service php-fpm-".$version." stop");
 		SendSocket("FileAdmin|MvDirOrFile|" . $filename . '|'.$filename_backup);
-	}
+	} else { 
+        SendSocket("ExecShell|service php".$version."-php-fpm stop");
+    }
 	returnJson(true, 'PHP-'.$version.' terminated!');
 }
 
@@ -64,6 +66,8 @@ function StartPHPVersion(){
 	if(file_exists($filename)){
 		SendSocket("ExecShell|service php-fpm-".$version." start");
 		returnJson(true, 'PHP-'.$version.' activated!');
+	} else { 
+        SendSocket("ExecShell|service php".$version."-php-fpm start");
 	}
 
 	returnJson(false, $filename_backup.'file does not exist!');
