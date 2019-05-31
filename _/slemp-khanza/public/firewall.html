@@ -57,10 +57,10 @@
 									<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-hover">
 										<thead>
 										<tr>
-											<th>Numbering</th>
+											<th>#</th>
 											<th>Port</th>
 											<th class="visible-lg visible-md visible-sm">Add time</th>
-											<th class="visible-lg visible-md visible-sm">Description</th>
+											<th>Description</th>
 											<th width="50px" class="text-right">Action</th>
 										</tr>
 										</thead>
@@ -84,7 +84,7 @@
 									<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-hover">
 										<thead>
 										<tr>
-											<th>Numbering</th>
+											<th>#</th>
 											<th>Operation type</th>
 											<th class="visible-lg visible-md visible-sm">Details</th>
 											<th>Operating time</th>
@@ -185,7 +185,7 @@
 										<td><em class='dlt-num'>" + data.data[i].id + "</em></td>\
 										<td>" + data.data[i].port + "</td>\
 										<td class='visible-lg visible-md visible-sm'>" + data.data[i].addtime + "</td>\
-										<td class='visible-lg visible-md visible-sm'>" + data.data[i].ps + "</td>\
+										<td>" + data.data[i].ps + "</td>\
 										<td class='text-right'><a href='javascript:;' class='link' onclick=\"DelAcceptPort(" + data.data[i].id + ",'" + data.data[i].port + "')\">Delete</a></td>\
 									</tr>";
 					}
