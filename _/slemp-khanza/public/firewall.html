@@ -86,7 +86,7 @@
 										<tr>
 											<th>Numbering</th>
 											<th>Operation type</th>
-											<th>Details</th>
+											<th class="visible-lg visible-md visible-sm">Details</th>
 											<th>Operating time</th>
 										</tr>
 										</thead>
@@ -184,8 +184,8 @@
 						Body += "<tr>\
 										<td><em class='dlt-num'>" + data.data[i].id + "</em></td>\
 										<td>" + data.data[i].port + "</td>\
-										<td>" + data.data[i].addtime + "</td>\
-										<td>" + data.data[i].ps + "</td>\
+										<td class='visible-lg visible-md visible-sm'>" + data.data[i].addtime + "</td>\
+										<td class='visible-lg visible-md visible-sm'>" + data.data[i].ps + "</td>\
 										<td class='text-right'><a href='javascript:;' class='link' onclick=\"DelAcceptPort(" + data.data[i].id + ",'" + data.data[i].port + "')\">Delete</a></td>\
 									</tr>";
 					}
@@ -267,7 +267,7 @@
 					Body += "<tr>\
 									<td><em class='dlt-num'>" + data.data[i].id + "</em></td>\
 									<td>" + data.data[i].type + "</td>\
-									<td>" + data.data[i].log + "</td>\
+									<td class='visible-lg visible-md visible-sm'>" + data.data[i].log + "</td>\
 									<td>" + data.data[i].addtime + "</td>\
 								</tr>";
 				}
