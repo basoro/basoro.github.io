@@ -4,7 +4,7 @@
 				<div class="position">
 					<a href="">Home</a>/<span>Database Management</span>
 				</div>
-				<div class="search">
+				<div class="search visible-lg visible-md visible-sm">
 					<form target="hid" onsubmit='getData(1,$("#SearchValue").prop("value"))'>
 						<input type="text" id="SearchValue" class="ser-text" placeholder="Search database" />
 						<button type="button" class="ser-sub"onclick='getData(1,$("#SearchValue").prop("value"))'></button>
@@ -13,7 +13,7 @@
 				</div>
 			</div>
 			<div class="safe">
-					<button onclick="DataAdd(0)" title="Add database" class="btn btn-info btn-sm" type="button" style="margin-right: 5px;">Add Database</button>
+					<button onclick="DataAdd(0)" title="Add database" class="btn btn-info btn-sm" type="button" style="margin-right: 5px;">Add</button>
 					<button onclick="DataSetuppwd(0)" title="Set administrator password" class="btn btn-default btn-sm" type="button" style="margin-right: 5px;">Root Password</button>
 					<button onclick="AdminDatabase('','root','<?php echo $_SESSION['mysql_root']; ?>')" title="Open phpMyadmin" class="btn btn-default btn-sm" type="button" style="margin-right: 5px;">phpMyAdmin</button>
 					<div class="divtable">
