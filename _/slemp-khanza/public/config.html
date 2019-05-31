@@ -99,7 +99,7 @@
 							</thead>
 							<tbody id="tjBody">
 								<tr>
-									<td><?php echo $ConfigInfo['web']['type'].$ConfigInfo['web']['version']; ?> </td>
+									<td><?php echo $ConfigInfo['web']['type']; ?> <?php echo $ConfigInfo['web']['version']; ?> </td>
 									<td class="visible-lg visible-md visible-sm"><a href="javascript:openPath('/www/server/<?php echo $ConfigInfo['web']['type']; ?>');">/www/server/<?php echo $ConfigInfo['web']['type']; ?></a></td>
 									<td class="visible-lg visible-md visible-sm"><a class="link" href="javascript:GetConfigFile('<?php echo $ConfigInfo['web']['type']; ?>');">Modify</a> | <a class="link" href="javascript:ServiceAdmin('<?php echo $ConfigInfo['web']['type']; ?>','reload');">Reload</a>
 										<?php if($_SESSION['server_type'] == 'nginx'){ ?>
