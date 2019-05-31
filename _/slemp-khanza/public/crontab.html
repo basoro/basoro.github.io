@@ -80,8 +80,8 @@
 							<tr>
 								<th>Task Name</th>
 								<th>Period</th>
-								<th>Time of Execution</th>
-								<th>Time of Appending</th>
+								<th class="visible-lg visible-md visible-sm">Time of Execution</th>
+								<th class="visible-lg visible-md visible-sm">Time of Appending</th>
 								<th width="190">Action</th>
 							</tr>
 						</thead>
@@ -90,8 +90,8 @@
 								<tr>
 									<td><?php echo $value['name']; ?></td>
 									<td><?php echo $value['type']; ?></td>
-									<td><?php echo $value['cycle']; ?></td>
-									<td><?php echo $value['addtime']; ?></td>
+									<td class="visible-lg visible-md visible-sm"><?php echo $value['cycle']; ?></td>
+									<td class="visible-lg visible-md visible-sm"><?php echo $value['addtime']; ?></td>
 									<td><a href="javascript:OnlineEditFile(0,'/www/server/cron/<?php echo $value['echo']; ?>');" class="link">script</a> | <a href="javascript:GetLogs(<?php echo $value['id']; ?>);" class="link">Log</a> | <a href="javascript:planDel(<?php echo $value['id']; ?>,'<?php echo $value["name"]; ?>');" class="link">delete</a></td>
 								</tr>
 							<?php } ?>
