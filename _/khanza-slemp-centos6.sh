@@ -1,31 +1,39 @@
 #!/bin/bash
 
+Install_SLEMP() 
+{
+
 ###################
 # disable selinux #
 ###################
 setenforce 0
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+if [ -f "/etc/selinux/config" ];then                                       
+ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+fi
 
 startTime=`date +%s`
 
 ##############################
 # disable un-needed services #
 ##############################
-service httpd stop
-chkconfig httpd off
-service xinetd stop
-chkconfig xinetd off
-service saslauthd stop
-chkconfig saslauthd off
-service sendmail stop
-chkconfig sendmail off
-service rsyslog stop
+systemctl stop httpd
+systemctl disable httpd
+systemctl stop xinetd
+chkcsystemctl disableonfig xinetd
+systemctl stop saslauthd
+systemctl disable saslauthd
+systemctl stop sendmail
+systemctl disable sendmail Php
+systemctl stop rsyslog
+systemctl disable rsyslog
 
+# add www user
 groupadd www
 useradd -s /sbin/nologin -g www www
 
 #Create directories
-mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/56/{etc,bin,sbin,var/run}}}
+mkdir -pv /www/{wwwroot/default,wwwlogs,server/{panel,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/${php_version}/{etc,bin,sbin,var/run}}}
+mkdir /usr/local/ioncube
 
 #remove all current PHP, MySQL, mailservers, rsyslog.
 yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
@@ -34,14 +42,23 @@ yum -y remove httpd php mysql rsyslog sendmail postfix mysql-libs
 # Add a few repos #
 ###################
 
-# nginx repo
-rpm -Uvh http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm
-
 # epel-release repo
-yum -y install epel-release
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-${centos}.noarch.rpm -y
 
-# php56 repo
-rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
+# remi php repo
+yum install http://rpms.remirepo.net/enterprise/remi-release-${centos}.rpm -y
+
+# nginx repo
+cat > /etc/yum.repos.d/nginx.repo <<END
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/${centos}/\$basearch/
+gpgcheck=0
+enabled=1
+END
+
+# mysql repo
+rpm -Uvh http://repo.mysql.com/mysql-community-release-el${centos}-5.noarch.rpm
 
 ################################
 # Install PHP, NGINX and MySQL #
@@ -49,15 +66,15 @@ rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
 
 yum -y install nginx
 
-yum -y install mysql55w mysql55w-server
+yum -y install mysql mysql-server
 
-yum -y install php56w-fpm php56w-mysql php56w-gd php56w-xml php56w-xmlrpc php56w-pear php56w-mbstring php56w-mcrypt php56w-process
+yum -y install php${php_version}-php-common php${php_version}-php-fpm php${php_version}-php-process php${php_version}-php-mysql php${php_version}-php-pecl-memcache php${php_version}-php-pecl-memcached php${php_version}-php-gd php${php_version}-php-mbstring php${php_version}-php-mcrypt php${php_version}-php-xml php${php_version}-php-pecl-apc php${php_version}-php-cli php${php_version}-php-pear php${php_version}-php-pdo
 
 #####################################################
 # Install Postfix, SyLog-Ng, Cronie and Other Stuff #
 #####################################################
 
-yum -y install postfix syslog-ng cronie wget libdbi libdbi-drivers libdbi-dbd-mysql syslog-ng-libdbi zip unzip glibc.i686
+yum -y install svn postfix syslog-ng cronie wget libdbi libdbi-drivers libdbi-dbd-mysql syslog-ng-libdbi zip unzip glibc.i686
 
 cat > /etc/init.d/panel <<END
 #!/bin/bash
@@ -86,6 +103,7 @@ case "\$1" in
                 ;;
 esac
 END
+
 chmod 755 /etc/init.d/panel
 chkconfig --add panel
 chkconfig --level 2345 panel on
@@ -94,11 +112,11 @@ chkconfig --level 2345 panel on
 # Configure nginx #
 ###################
 
-cat > /www/server/nginx/conf/enable-php-56.conf <<END
+cat > /www/server/nginx/conf/enable-php-${php_version}.conf <<END
 location ~ [^/]\.php(/|$)
 {
     try_files \$uri =404;
-    fastcgi_pass  unix:/tmp/php-cgi-56.sock;
+    fastcgi_pass  unix:/tmp/php-cgi-${php_version}.sock;
     fastcgi_index index.php;
     include /etc/nginx/fastcgi_params;
     include pathinfo.conf;
@@ -175,7 +193,7 @@ http
         root  /www/server/panel;
 
         #error_page   404   /404.html;
-        include enable-php-56.conf;
+        include enable-php-${php_version}.conf;
         access_log  /www/wwwlogs/access.log;
     }
     server {
@@ -183,17 +201,54 @@ http
         server_name _;
         index index.html index.htm index.php;
         root /www/wwwroot/default;
-        include enable-php-56.conf;
+        include enable-php-${php_version}.conf;
     }
     include /www/server/nginx/conf/vhost/*.conf;
 }
 END
-rm /etc/nginx/conf.d/*
 
-#install php-fpm config
-cat > /etc/php-fpm.d/www.conf <<END
+rm -rf /etc/nginx/conf.d/*
+
+#install php-fpm config 
+if [ "${php_version}" = "54" ];then
+  php_conf="/opt/remi/php${php_version}/root/etc" 
+fi
+if [ "${php_version}" = "55" ];then
+  php_conf="/opt/remi/php${php_version}/root/etc" 
+fi
+if [ "${php_version}" = "56" ];then
+  php_conf="/opt/remi/php${php_version}/root/etc" 
+fi
+if [ "${php_version}" = "70" ];then
+  php_conf="/etc/opt/remi/php${php_version}" 
+fi
+if [ "${php_version}" = "71" ];then
+  php_conf="/etc/opt/remi/php${php_version}" 
+fi
+if [ "${php_version}" = "72" ];then
+  php_conf="/etc/opt/remi/php${php_version}" 
+fi
+if [ "${php_version}" = "73" ];then
+  php_conf="/etc/opt/remi/php${php_version}" 
+fi
+
+wget -O /usr/local/ioncube/ioncube_loader_lin_${vphp}.so basoro.id/downloads/ioncube_loader_lin_${vphp}.so -T 20
+
+echo "Write Ioncube Loader to php.ini..."
+cat >> ${php_conf}/php.ini <<EOF
+
+;ionCube
+zend_extension = /usr/local/ioncube/ioncube_loader_lin_${vphp}.so
+
+EOF
+
+sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' ${php_conf}/php.ini
+sed -i 's/post_max_size = 8M/post_max_size = 100M/' ${php_conf}/php.ini
+ln -s ${php_conf}/php.ini /www/server/php/${php_version}/etc/php.ini
+
+cat > ${php_conf}/php-fpm.d/www.conf <<END
 [www]
-listen = /tmp/php-cgi-56.sock
+listen = /tmp/php-cgi-${php_version}.sock
 listen.allowed_clients = 127.0.0.1
 listen.owner = www
 listen.group = www
@@ -213,9 +268,6 @@ php_admin_flag[log_errors] = on
 php_admin_value[upload_max_filesize] = 32M
 END
 
-sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/' /etc/php.ini
-sed -i 's/post_max_size = 8M/post_max_size = 100M/' /etc/php.ini
-
 rm -f /etc/init.d/nginx
 wget -O /etc/init.d/nginx basoro.id/downloads/nginx.init -T20
 chmod +x /etc/init.d/nginx
@@ -224,7 +276,8 @@ ln -sf /etc/nginx/nginx.conf /www/server/nginx/conf/nginx.conf
 ln -sf /etc/nginx/mime.types /www/server/nginx/conf/mime.types
 ln -sf /etc/nginx/fastcgi_params /www/server/nginx/conf/fastcgi_params
 ln -sf /www/server/nginx/conf/pathinfo.conf /etc/nginx/pathinfo.conf
-ln -sf /www/server/nginx/conf/enable-php-56.conf /etc/nginx/enable-php-56.conf
+ln -sf /www/server/nginx/conf/proxy.conf /etc/nginx/proxy.conf
+ln -sf /www/server/nginx/conf/enable-php-${php_version}.conf /etc/nginx/enable-php-${php_version}.conf
 ln -s /www/server/nginx/conf/rewrite /etc/nginx/rewrite
 ln -s /www/server/nginx/conf/key /etc/nginx/key
 
@@ -233,18 +286,29 @@ nginxv=$( ${command} 2>&1 )
 nginxlocal=$(echo $nginxv | grep -o '[0-9.]*$')
 echo $nginxlocal > /www/server/nginx/version.pl
 
-ln -sf /usr/bin/php /www/server/php/56/bin/php
-ln -sf /usr/bin/phpize /www/server/php/56/bin/phpize
-ln -sf /usr/bin/pear /www/server/php/56/bin/pear
-ln -sf /usr/bin/pecl /www/server/php/56/bin/pecl
-ln -sf /usr/sbin/php-fpm /www/server/php/56/sbin/php-fpm
-ln -sf /etc/php.ini /www/server/php/56/etc/php.ini
-ln -sf /var/run/php-fpm/php-fpm.pid /www/server/php/56/var/run/php-fpm.pid
+ln -sf /opt/remi/php${php_version}/root/usr/bin/php /www/server/php/${php_version}/bin/php
+ln -sf /opt/remi/php${php_version}/root/usr/bin/phpize /www/server/php/${php_version}/bin/phpize
+ln -sf /opt/remi/php${php_version}/root/usr/bin/pear /www/server/php/${php_version}/bin/pear
+ln -sf /opt/remi/php${php_version}/root/usr/bin/pecl /www/server/php/${php_version}/bin/pecl
+ln -sf /opt/remi/php${php_version}/root/usr/sbin/php-fpm /www/server/php/${php_version}/sbin/php-fpm 
+if [ -f "/usr/lib/systemd/system/php${php_version}-php-fpm.service" ];then 
+  sed -i 's/PrivateTmp=true/PrivateTmp=false/' /usr/lib/systemd/system/php${php_version}-php-fpm.service 
+  systemctl daemon-reload
+  service php${php_version}-php-fpm start
+else 
+  mv /etc/init.d/php${php_version}-php-fpm /etc/init.d/php-fpm-${php_version}
+  chmod +x /etc/init.d/php-fpm-${php_version}
+  /etc/init.d/php-fpm-${php_version} start
+fi
+echo $php_version > /www/server/default.pl
 
-# Install cloud
-wget -c basoro.id/downloads/cloud.zip -T20
-unzip -o cloud.zip -d /www/server/ > /dev/null 2>&1
-chmod +x /www/server/cloud/yunclient
+#################
+# Install cloud #
+#################
+
+svn export --force https://github.com/basoro/basoro.github.io/trunk/_/cloud/
+mv cloud/ /www/server/
+chmod +x /www/server/cloud/slemp
 chmod +x /www/server/cloud/cloud
 mv -f /www/server/cloud/sock.so /lib/sock.so
 mv -f /www/server/cloud/spec.so /lib/spec.so
@@ -252,11 +316,6 @@ mv -f /www/server/cloud/krnln.so /lib/krnln.so
 mv -f /www/server/cloud/iconv.so /lib/iconv.so
 mv -f /www/server/cloud/dp1.so /lib/dp1.so
 mv -f /www/server/cloud/EThread.so /lib/EThread.so
-rm -f cloud.zip
-
-mv -f /etc/init.d/php-fpm /etc/init.d/php-fpm-56
-#sed -i 's/php-fpm-56/php-fpm/' /www/server/cloud/cloud
-#sed -i 's/pkill -9 php-cgi/pkill -9 php-fpm/' /www/server/cloud/cloud
 
 ########################
 # install MySQL config #
@@ -268,7 +327,6 @@ cat > /etc/my.cnf<<EOF
 #password	= your_password
 port		= 3306
 socket		= /var/lib/mysql/mysql.sock
-
 [mysqld]
 port		= 3306
 socket		= /var/lib/mysql/mysql.sock
@@ -287,17 +345,14 @@ myisam_sort_buffer_size = 8M
 thread_cache_size = 8
 query_cache_size = 8M
 tmp_table_size = 16M
-
 #skip-networking
 max_connections = 500
 max_connect_errors = 100
 open_files_limit = 65535
-
 log-bin=mysql-bin
 binlog_format=mixed
 server-id	= 1
 expire_logs_days = 10
-
 #default_storage_engine = InnoDB
 innodb_data_home_dir = /www/server/data
 innodb_data_file_path = ibdata1:10M:autoextend
@@ -308,35 +363,32 @@ innodb_log_file_size = 2M
 innodb_log_buffer_size = 4M
 innodb_flush_log_at_trx_commit = 1
 innodb_lock_wait_timeout = 50
-
 [mysqldump]
 quick
 max_allowed_packet = 16M
-
 [mysql]
 no-auto-rehash
-
 [myisamchk]
 key_buffer_size = 20M
 sort_buffer_size = 20M
 read_buffer = 2M
 write_buffer = 2M
-
 [mysqlhotcopy]
 interactive-timeout
 EOF
 
-# Install Panel
-
-yum -y install svn
-
+#################
+# Install Panel #
+#################
 
 svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
+rm -rf /www/server/panel/*
 cp -a slemp-khanza/* /www/server/panel/
-rm -rf slemp-khanza/
 chown -R www:www /www/server/panel > /dev/null 2>&1
+rm -rf slemp-khanza/
 wget -O phpMyAdmin.zip basoro.id/downloads/phpMyAdmin-4.4.15.6.zip -T20
 unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
+rm -f phpMyAdmin.zip
 dates=`date`
 pwd=`echo -n $dates|md5sum|cut -d ' ' -f1`
 dpwd=${pwd:0:12}
@@ -357,17 +409,22 @@ ln -sf /usr/bin/mysqldump /www/server/mysql/bin/mysqldump
 ln -sf /usr/bin/myisamchk /www/server/mysql/bin/myisamchk
 ln -sf /usr/bin/mysqld_safe /www/server/mysql/bin/mysqld_safe
 ln -sf /usr/bin/mysqlcheck /www/server/mysql/bin/mysqlcheck
-ln -s /usr/lib64/mysql/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so
-ln -s /usr/lib64/mysql/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so.18
-ln -sf /var/lib/mysql/mysql.sock /tmp/mysql.sock
-echo "5.5.54" > /www/server/mysql/version.pl
-/etc/init.d/mysqld start
+ln -sf /usr/lib64/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so
+ln -sf /usr/lib64/libmysqlclient.so.18 /www/server/mysql/lib/libmysqlclient.so.18
+ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock
+echo "5.6" > /www/server/mysql/version.pl
+service mysqld start
 sleep 5
+ln -s /var/lib/mysql /www/server/data
+
+####################
+# Install Panel DB #
+####################
+
 /usr/bin/mysqladmin -u root password 'root'
 /www/server/mysql/bin/mysql -uroot -proot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${mysqlpwd}')"
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('${mysqlpwd}')"
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "flush privileges"
-
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "create database bt_default"
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "grant select,insert,update,delete,create,drop,alter on bt_default .* to bt_default@localhost identified by '${dpwd}'"
 /www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "flush privileges"
@@ -382,45 +439,54 @@ if [ -f "${userINI}" ];then
   chattr -i $userINI
   rm -f $userINI
 fi
-rm -f phpMyAdmin.zip
+
+###########################
+# start services firewall #
+###########################
+
+if [ -f "/etc/init.d/iptables" ];then
+  iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+  iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+  iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 888 -j ACCEPT
+  service iptables save
+
+  iptables_status=`service iptables status | grep 'not running'`
+  if [ "${iptables_status}" == '' ];then
+    service iptables restart
+  fi
+fi
+
+if [ ! -f "/etc/init.d/iptables" ];then
+  yum install firewalld -y
+  systemctl enable firewalld
+  systemctl start firewalld
+  firewall-cmd --permanent --zone=public --add-port=22/tcp
+  firewall-cmd --permanent --zone=public --add-port=80/tcp
+  firewall-cmd --permanent --zone=public --add-port=888/tcp
+  firewall-cmd --reload
+fi
 
 
-#start services and configure iptables
-#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 20 -j ACCEPT
-#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT
-iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
-iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
-iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 888 -j ACCEPT
-#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
-#iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 30000:40000 -j ACCEPT
-service iptables save
-service iptables restart
 chkconfig syslog-ng on
 service syslog-ng start
 chkconfig crond on
 service crond start
 service nginx restart
 chkconfig nginx on
-service php-fpm-56 start
-chkconfig php-fpm-56 on
-service mysqld start
+service php-fpm-${php_version} start
+chkconfig php-fpm-${php_version} on
+service mysqld restart
 chkconfig mysqld on
 service panel start
 
-service mysqld restart
-
 chown -R www:www /www/wwwroot/default/
 chown -R www:www /www/server/panel/
-
-#Fix Sessions:
-mkdir /var/lib/php/session
-chmod 777 /var/lib/php/session
 
 sleep 3
 
 cd ~
 
-clear
+#clear
 echo
 echo
 echo "====================================="
@@ -438,3 +504,69 @@ echo
 echo
 echo
 exit
+}
+
+isCentos7=`cat /etc/redhat-release | grep 7\..* | grep -i centos`
+
+if [ "${isCentos7}" != '' ];then
+  centos='7'
+else
+  centos='6'
+fi
+
+echo '=======================================================';
+echo 'Your select to install:'
+echo '-------------------------------------------------------'
+echo 'Web Server: Nginx';
+echo 'Database: MySQL';
+echo '-------------------------------------------------------'
+echo '1) PHP-5.4';
+echo '2) PHP-5.5';
+echo '3) PHP-5.6';
+echo "4) PHP-7.0";
+echo "5) PHP-7.1";
+echo "6) PHP-7.2";
+echo "7) PHP-7.3";
+read -p "Plese select to add php version(1-7): " php;
+echo '=======================================================';
+
+case "${php}" in
+  '1')
+    vphp='5.4'
+    php_version='54'
+    ;;
+  '2')
+    vphp='5.5'
+    php_version='55'
+    ;;
+  '3')
+    vphp='5.6'
+    php_version='56'
+    ;;
+  '4')
+    vphp='7.0'
+    php_version='70'
+    ;;
+  '5')
+    vphp='7.1'
+    php_version='71'
+    ;;
+  '6')
+    vphp='7.2'
+    php_version='72'
+    ;;
+  '7')
+    vphp='7.3'
+    php_version='73'
+    ;;
+esac
+
+while [ "$go" != 'y' ] && [ "$go" != 'n' ]
+  do
+    read -p "About to install at /www, Ready you a start with the PHP-$vphp installation?(y/n): " go;
+done
+if [ "${go}" == 'n' ];then
+  echo 'Your alrea cancel the install.';
+  exit 1;
+fi
+Install_SLEMP
