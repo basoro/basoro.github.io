@@ -14,10 +14,10 @@ function getData(page,search) {
 			}
 			Body += "<tr><td><input type='checkbox' name='id' value='"+data.data[i].id+"'>\
 					<td>" + data.data[i].name + "</td>\
-					<td>" + data.data[i].username + "</td>\
-					<td class='relative'><span class='password' data-pw='"+data.data[i].password+"'>**********</span><span class='glyphicon glyphicon-eye-open cursor pw-ico' style='margin-left:10px'></span><span class='ico-copy cursor btcopy' style='margin-left:10px' title='Copy password' data-pw='"+data.data[i].password+"'></span></td>\
-					<td>"+isback+" | <a class='link' href=\"javascript:InputDatabase('"+data.data[i].name+"');\" title='Import database'>Import</a></td>\
-					<td><a class='linkbed' href='javascript:;' data-id='"+data.data[i].id+"'>" + data.data[i].ps + "</a></td>\
+					<td class='visible-lg visible-md visible-sm'>" + data.data[i].username + "</td>\
+					<td class='relative visible-lg visible-md visible-sm'><span class='password' data-pw='"+data.data[i].password+"'>**********</span><span class='glyphicon glyphicon-eye-open cursor pw-ico' style='margin-left:10px'></span><span class='ico-copy cursor btcopy' style='margin-left:10px' title='Copy password' data-pw='"+data.data[i].password+"'></span></td>\
+					<td class='visible-lg visible-md visible-sm'>"+isback+" | <a class='link' href=\"javascript:InputDatabase('"+data.data[i].name+"');\" title='Import database'>Import</a></td>\
+					<td class='visible-lg visible-md visible-sm'><a class='linkbed' href='javascript:;' data-id='"+data.data[i].id+"'>" + data.data[i].ps + "</a></td>\
 					<td style='text-align:right;'>\
 					<a href='javascript:;' class='link' onclick=\"AdminDatabase('"+data.data[i].name+"','"+data.data[i].username+"','"+data.data[i].password+"')\" title='Management database'>Manage</a> | \
 					<a href='javascript:;' class='link' onclick=\"SetDatabaseAccess('"+data.data[i].name+"')\" title='Set access rights'>Permission</a> | \
