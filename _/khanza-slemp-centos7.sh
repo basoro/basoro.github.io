@@ -300,7 +300,7 @@ else
   chmod +x /etc/init.d/php-fpm-${php_version}
   /etc/init.d/php-fpm-${php_version} start
 fi
-echo $php_version > /www/server/default.pl
+echo $php_version > /www/server/php-default.pl
 
 #################
 # Install cloud #
