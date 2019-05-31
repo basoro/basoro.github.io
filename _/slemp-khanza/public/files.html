@@ -101,9 +101,9 @@ function GetFiles(Path) {
 					Body += "<tr class='folderBoxTr' data-path='" + rdata.PATH + "/" + fmp[0] + "' filetype='dir'><td><input type='checkbox' name='id' value='"+fmp[0]+"'></td>\
 						<td class='column-name'><span class='cursor' onclick=\"GetFiles('" + rdata.PATH + "/" + fmp[0] + "')\"><span class='ico ico-folder'></span><a class='text' title='" + fmp[0] + "'>" + cnametext + "</a></span></td>\
 						<td>" + ToSize(fmp[1]) + "</td>\
-						<td>" + getLocalTime(fmp[2]) + "</td>\
-						<td>" + fmp[3] + "</td>\
-						<td>" + fmp[4] + "</td>\
+						<td class='visible-lg visible-md visible-sm'>" + getLocalTime(fmp[2]) + "</td>\
+						<td class='visible-lg visible-md visible-sm'>" + fmp[3] + "</td>\
+						<td class='visible-lg visible-md visible-sm'>" + fmp[4] + "</td>\
 						<td class='editmenu'><span>\
 						<a class='link' href='javascript:;' onclick=\"CopyFile('" + rdata.PATH +"/"+ fmp[0] + "')\">Copy</a> | \
 						<a class='link' href='javascript:;' onclick=\"CutFile('" + rdata.PATH +"/"+ fmp[0]+ "')\">Cut</a> | \
@@ -149,9 +149,9 @@ function GetFiles(Path) {
 			if(getCookie("rank")=="a"){
 				Body += "<tr class='folderBoxTr' data-path='" + rdata.PATH +"/"+ fmp[0] + "' filetype='" + fmp[0] + "'><td><input type='checkbox' name='id' value='"+fmp[0]+"'></td>\
 						<td class='column-name'><span class='ico ico-"+(GetExtName(fmp[0]))+"'></span><a class='text' title='" + fmp[0] + "'>" + cnametext + "</a></td>\
-						<td>" + (ToSize(fmp[1])) + "</td><td>" + ((fmp[2].length > 11)?fmp[2]:getLocalTime(fmp[2])) + "</td>\
-						<td>" + fmp[3] + "</td>\
-						<td>" + fmp[4] + "</td>\
+						<td class='visible-lg visible-md visible-sm'>" + (ToSize(fmp[1])) + "</td><td>" + ((fmp[2].length > 11)?fmp[2]:getLocalTime(fmp[2])) + "</td>\
+						<td class='visible-lg visible-md visible-sm'>" + fmp[3] + "</td>\
+						<td class='visible-lg visible-md visible-sm'>" + fmp[4] + "</td>\
 						<td class='editmenu'>\
 						<span><a class='link' href='javascript:;' onclick=\"CopyFile('" + rdata.PATH +"/"+ fmp[0] + "')\">Copy</a> | \
 						<a class='link' href='javascript:;' onclick=\"CutFile('" + rdata.PATH +"/"+ fmp[0] + "')\">Cut</a> | \
@@ -178,9 +178,9 @@ function GetFiles(Path) {
 									<th width="30"><input type="checkbox" id="setBox" placeholder=""></th>\
 									<th>File Name</th>\
 									<th>Size</th>\
-									<th>Updated</th>\
-									<th>Permission</th>\
-									<th>Owner</th>\
+									<th class="visible-lg visible-md visible-sm">Updated</th>\
+									<th class="visible-lg visible-md visible-sm">Permission</th>\
+									<th class="visible-lg visible-md visible-sm">Owner</th>\
 									<th style="text-align: right;" width="260">Action</th>\
 								</tr>\
 							</thead>\
