@@ -92,7 +92,7 @@ function GetPanelBinding(){
 	if($_SESSION['server_type'] == 'nginx'){
 		$data['defaultSite'] = file_exists('/www/server/nginx/conf/vhost/default.conf')?true:false;
 	}
-	$data['panel_name'] = 'SLEMP Linux Panel';
+	$data['panel_name'] = 'SLEMP Panel';
 	if(file_exists('./conf/panelName.conf')) $data['panel_name'] = file_get_contents('./conf/panelName.conf');
 
 	$data['auto'] = false;
