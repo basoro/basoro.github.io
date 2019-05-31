@@ -8,7 +8,7 @@ if(file_exists($filename) === true){
     <h1>Sorry, the administrator has closed the panel and denied access!</h1>
         <p>Open command: rm -f /www/server/panel/conf/close.pl</p>
     <hr>
-    <address>SLEMP Linux Panel<a href="http://slemp.basoro.io" target="_blank">Request help</a></address>
+    <address>SLEMP Panel<a href="http://slemp.basoro.io" target="_blank">Request help</a></address>
     </body></html>';
 	exit;
 }
