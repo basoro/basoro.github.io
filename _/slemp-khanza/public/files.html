@@ -209,8 +209,8 @@ function GetFiles(Path) {
 			$("#backBtn").removeAttr("style");
 		}
 		setCookie('Path',rdata.PATH);
+    BarTools += ' <button onclick="javascript:ExecShell(\'' + rdata.PATH + '\');" class="btn btn-default btn-sm glyphicon glyphicon-console" title="Console"></button>';
 		BarTools += ' <button onclick="javascript:GetFiles(\'' + rdata.PATH + '\');" class="btn btn-default btn-sm glyphicon glyphicon-refresh" title="Refresh"></button>';
-    BarTools += ' <button onclick="javascript:ExecShell(\'' + rdata.PATH + '\');" class="btn btn-default btn-sm glyphicon glyphicon-console" title="Refresh"></button>';
 		var copyName = getCookie('copyFileName');
 		var cutName = getCookie('cutFileName');
 		var isPaste = (copyName == 'null') ? cutName : copyName;
@@ -1258,4 +1258,3 @@ $("#PathPlace").on("click", function(e){
 </script>
 <script src="/public/js/upload.js"></script>
 <script src="/public/js/ajax.js"></script>
-
