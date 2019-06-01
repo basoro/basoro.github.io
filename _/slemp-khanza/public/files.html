@@ -422,7 +422,7 @@ function Batch(type,access){
 	$.post('files.php?action=SetBatchData',data,function(rdata){
 		layer.close(myloadT);
 		if(type != 3) GetFiles(path);
-		layer.msg(rdata.msg,{icon:1});
+		layer.msg('Files deleted!',{icon:1});
 	});
 }
 
@@ -435,7 +435,7 @@ function BatchPaste(){
 		layer.close(myloadT);
 		setCookie('BatchSelected', null);
 		GetFiles(path);
-		layer.msg(rdata.msg,{icon:1});
+		layer.msg('Paste files successfuly!',{icon:1});
 	});
 }
 
@@ -535,7 +535,7 @@ function CreateFile(type, path) {
 		});
 		$.post('/files.php?action=CreateFile', 'file=' + path + '/' + fileName, function(rdata) {
 			layer.closeAll();
-			layer.msg(rdata.msg, {
+			layer.msg('File created!', {
 				icon: rdata.status ? 1 : 5
 			});
 			GetFiles($("#PathPlace input").val());
@@ -572,7 +572,7 @@ function CreateDir(type, path) {
 		});
 		$.post('/files.php?action=CreateDir', 'dir=' + path + '/' + dirName, function(rdata) {
 			layer.closeAll();
-			layer.msg(rdata.msg, {
+			layer.msg('Directory created!', {
 				icon: rdata.status ? 1 : 5
 			});
 			GetFiles($("#PathPlace input").val());
@@ -726,7 +726,7 @@ function AllDeleteFileSub(data,path){
 			$.post('files.php?action=SetBatchData',data,function(rdata){
 				layer.closeAll();
 				GetFiles(path);
-				layer.msg(rdata.msg,{icon:1});
+				layer.msg('Files deleted!',{icon:1});
 			});
 		}
 		else{
@@ -754,7 +754,7 @@ function DownloadFile(action){
 			layer.closeAll();
 			GetFiles(path);
 			ReloadFiles();
-			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+			layer.msg('File downloaded!',{icon:rdata.status?1:5});
 		});
 		return;
 	}
@@ -831,7 +831,7 @@ function ReName(type, fileName) {
 		});
 		$.post('/files.php?action=MvFile', 'sfile=' + oldFileName + '&dfile=' + newFileName, function(rdata) {
 			layer.closeAll();
-			layer.msg(rdata.msg, {
+			layer.msg('Rename successfuly!', {
 				icon: rdata.status ? 1 : 5
 			});
 			GetFiles(path);
@@ -891,7 +891,7 @@ function PasteFile(fileName) {
 		});
 		$.post('/files.php?action=CopyFile', 'sfile=' + copyName + '&dfile=' + path +'/'+ fileName, function(rdata) {
 			layer.closeAll();
-			layer.msg(rdata.msg, {
+			layer.msg('Copy successfuly!', {
 				icon: rdata.status ? 1 : 5
 			});
 			GetFiles(path);
@@ -908,7 +908,7 @@ function PasteFile(fileName) {
 		});
 		$.post('/files.php?action=MvFile', 'sfile=' + cutName + '&dfile=' + path + '/'+fileName, function(rdata) {
 			layer.closeAll();
-			layer.msg(rdata.msg, {
+			layer.msg('Move successfuly!', {
 				icon: rdata.status ? 1 : 5
 			});
 			GetFiles(path);
@@ -930,7 +930,7 @@ function Zip(dirName) {
 				ReloadFiles();
 				return;
 			}
-			layer.msg(rdata.msg, {icon: rdata.status ? 1 : 5});
+			layer.msg('Compress successfuly!', {icon: rdata.status ? 1 : 5});
 			if(rdata.status) GetFiles(path);
 		});
 	});
@@ -942,7 +942,7 @@ function UnZip(fileName,type) {
 		layer.msg('Unpacking...', {icon: 16,time: 10000});
 		$.post('/files.php?action=UnZip', 'sfile=' + fileName + '&dfile=' + path+'&type='+type, function(rdata) {
 			layer.closeAll();
-			layer.msg(rdata.msg, {icon: rdata.status ? 1 : 5});
+			layer.msg('Unpacking successfuly!', {icon: rdata.status ? 1 : 5});
 			GetFiles(path);
 		});
 	});
@@ -1020,7 +1020,7 @@ function SetChmod(action,fileName){
 		$.post('files.php?action=SetFileAccess',data,function(rdata){
 			layer.close(loadT);
 			if(rdata.status) layer.closeAll();
-			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+			layer.msg('Set permissions successfuly!',{icon:rdata.status?1:5});
 
 		});
 		return;
