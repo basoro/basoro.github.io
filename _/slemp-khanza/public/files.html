@@ -668,7 +668,7 @@ function DeleteDirSub(dirName){
 			});
 			$.post('/files.php?action=DeleteDir', 'dir=' + dirName, function(rdata) {
 				layer.closeAll();
-				layer.msg(rdata.msg, {
+				layer.msg('Directory deleted!', {
 					icon: rdata.status ? 1 : 5
 				});
 				GetFiles($("#PathPlace input").val());
@@ -698,7 +698,7 @@ function DeleteFileSub(fileName){
 			});
 			$.post('/files.php?action=DeleteFile', 'file=' + fileName, function(rdata) {
 				layer.closeAll();
-				layer.msg(rdata.msg, {
+				layer.msg('File deleted!', {
 					icon: rdata.status ? 1 : 5
 				});
 				GetFiles($("#PathPlace input").val());
