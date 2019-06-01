@@ -13,7 +13,7 @@
             return '<input type="' + (1 == a.formType ? "password" : "text") + '" class="layui-layer-input" value="' + (a.value || "") + '">'
         }();
         return layer.open($.extend({
-            btn: ["&#x786E;&#x5B9A;", "&#x53D6;&#x6D88;"],
+            btn: ["Ok", "Cancel"],
             content: e,
             skin: "layui-layer-prompt" + b("prompt"),
             success: function(a) {
@@ -21,7 +21,7 @@
             },
             yes: function(b) {
                 var e = d.val();
-                "" === e ? d.focus() : e.length > (a.maxlength || 500) ? layer.tips("&#x6700;&#x591A;&#x8F93;&#x5165;" + (a.maxlength || 500) + "&#x4E2A;&#x5B57;&#x6570;", d, {
+                "" === e ? d.focus() : e.length > (a.maxlength || 500) ? layer.tips("Maximum input" + (a.maxlength || 500) + "Word count", d, {
                     tips: 1
                 }) : c && c(e, b, d)
             }
@@ -75,7 +75,7 @@
                 i = h.data || [],
                 j = h.start || 0;
             if (f.imgIndex = j + 1, g) {
-                if (0 === i.length) return void layer.msg("&#x6CA1;&#x6709;&#x56FE;&#x7247;")
+                if (0 === i.length) return void layer.msg("No image")
             } else {
                 var k = $(a.photos),
                     l = k.find(a.img || "img");
@@ -150,7 +150,7 @@
                     }
                 }, a))
             }, function() {
-                layer.close(f.loadi), layer.msg("&#x5F53;&#x524D;&#x56FE;&#x7247;&#x5730;&#x5740;&#x5F02;&#x5E38;", {
+                layer.close(f.loadi), layer.msg("The current image address is abnormal.", {
                     time: 2e3
                 }, function() {
                     i.length > 1 && f.imgnext(!0)
