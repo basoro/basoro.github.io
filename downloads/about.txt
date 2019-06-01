@@ -1,0 +1,100 @@
+Introduction: 
+
+Temporarily only support CentOS 5.x / 6.x / 7.x; 
+Contains software: 
+Nginx-Tengine-2.2.0 
+Nginx1.8 - 1.10 
+Apache2.4.20 
+PHP5.2 - 7.1 (optional during installation, support for multi-version coexistence, except php7.0, php7.1 already includes zendloader) 
+MySQL5.5 - 5.7 (optional during installation) 
+Pure-Ftpd 
+phpMyadmin 
+WEB online panel 
+
+System Requirements: 
+Memory: 128M or more, 512M or more recommended 
+Disk: at least 4GB of free disk space 
+Other: Make sure it is a clean operating system, no Apache/Nginx/php/MySQL installed in other environments 
+
+
+
+Function Description: 
+1. View server resource status online; 
+2. One-click construction (including FTP, database establishment, only 1 second); 
+3. Daily management and backup of websites, FTP, and databases; 
+4. Firewall port management; 
+5. SSH service and port management; 
+6. Powerful online file management system, support batch upload, download, file copy, move, delete, online editing, image online preview, directory compression, (zip, tar.gz) decompression function. 
+7. Simple WEB version terminal 
+8. Optional to set up LNMP or LAMP environment 
+9. Support one-click build SSL site 
+
+Installation command (compilation and installation, stable, suitable for production environment, takes a long time, about 30 minutes to 2 hours): 
+Yum -y install screen wget && screen -S bt 
+Wget -O install.sh http://download.bt.cn/src/install.sh && sh install.sh
+Copy code
+
+Installation command (RPM installation, suitable for test experience, fast installation, about 5 minutes): 
+Yum -y install screen wget && screen -S bt 
+Wget -O install.sh http://103.224.251.79:5671/rpm/install.sh && sh install.sh
+Copy code
+
+* Suitable for new Linux servers, do not install Linux servers with other environments. 
+
+Installation Notes: 
+1, you can choose one or more PHP versions to install, if you choose 7 or 8, you can choose the PHP version when creating a website 
+2. If it is not necessary, it is not recommended to install MySQL5.7. 
+3. The integrated environment of this panel is the source installation mode. The installation process may take 40-300 minutes depending on the performance of the server. 
+4. If you have chosen a single PHP version, add the PHP version with the following command if needed: sh /www/server/install.sh add 
+5. If you find that you have selected the wrong MySQL version after compiling, you do not need to reinstall it. You can recompile MySQL by the following command: sh /www/server/install.sh mysql 
+6. If you interrupt SSH during the installation process, you do not need to reinstall after reconnecting. Enter screen -r bt to restore the previous installation process. 
+7, if you want to add plug-ins to PHP or Nginx, you need to use the compiled package, you can find the compiled package in the src directory under the corresponding installation directory. 
+
+Common commands: 
+Nginx service management: service nginx {start|stop|restart|reload} 
+Apache service management: service httpd {start|stop|restart|reload} 
+MySQL service management: service mysqld {start|stop|restart|reload} 
+FTP service management: service pure-ftpd {start|stop|restart} 
+PHP service management: service php-fpm-{52|53|54|55|56|70} {start|stop|restart|reload} 
+Pagoda interface service management: service yunclient {start|stop} 
+
+Integrated WEB panel: 
+We have integrated a very useful set of panels, using the following methods: 
+Panel address: http://{your server IP}: 888 
+Initialization: The first use will require initial configuration. Please follow the prompts to fill in the configuration information. Login: Use the account and password to fill in the initial configuration. Login panel function: website management, FTP management, database management, file management, firewall management 
+Note 1: Since the panel involves file management functions, please initialize the panel immediately after installation, and do not set an overly simple password. 
+Note 2: Although we have protected the system critical directory, it is not recommended to operate the system critical directory. 
+
+
+
+Directory Structure: 
+/www 
+/www/wwwroot site directory 
+/www/wwwroot/default WEB panel directory 
+/www/server/nginx/conf/vhost nginx website configuration directory 
+/www/server/nginx nginx installation directory 
+/www/server/apache/conf/vhost apache website configuration directory 
+/www/server/apache apache installation directory 
+/www/server/mysql mysql installation directory 
+/www/server/php PHP installation directory 
+/www/server/pure-ftpd ftp installation directory 
+/www/server/data database file directory 
+View default information cat /www/server/default.pl 
+
+How to uninstall: 
+Command: sh /www/server/uninstall.sh 
+Warning: All environment packages installed with Pagoda will be uninstalled. The Nginx configuration file, pure-ftpd database, and MySQL database directory will be automatically backed up to /www/backup/oldServer. However, backup integrity is not guaranteed. It is recommended to back up the data before uninstalling. 
+
+How to upgrade the interface program: 
+If you have an older version of the Pagoda Server Management Software installed, you can upgrade the Pagoda Controller with the following command. 
+Wget -O update.sh http://125.88.182.172:5880/src/update.sh && sh update.sh
+Copy code
+
+To add a php version, use the following command (this is the rpm add method): 
+Wget -O install.sh http://103.224.251.79:5671/rpm/install.sh && sh install.sh add
+Copy code
+
+To add another php version or switch to nginx/apache, please see this post: 
+Http://www.bt.cn/bbs/thread-77-1-1.html 
+
+Preview the interface: 
