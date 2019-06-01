@@ -618,7 +618,7 @@ function openPath(path){
 function OnlineEditFile(type, fileName) {
 	if (type == 1) {
 		var path = $("#PathPlace input").val();
-		var data = encodeURIComponent($("#textBody").val().replace(/\+/g,'(__bt@cn__)'));
+		var data = encodeURIComponent($("#textBody").val().replace(/\+/g,'+'));
 		var encoding = $("select[name=encoding]").val();
 		layer.msg('Saving...', {
 			icon: 16,
@@ -626,7 +626,7 @@ function OnlineEditFile(type, fileName) {
 		});
 		$.post('/files.php?action=SaveFileBody', 'data=' + data + '&file=' + fileName+'&encoding='+encoding, function(rdata) {
 			layer.closeAll();
-			layer.msg(rdata.msg, {
+			layer.msg('File saved!', {
 				icon: rdata.status ? 1 : 5
 			});
 		});
@@ -634,14 +634,14 @@ function OnlineEditFile(type, fileName) {
 	}
 	if (type == 2) {
 		var path = $("#PathPlace input").val();
-		var data = encodeURIComponent($("#textBody").val().replace(/\+/g,'(__bt@cn__)'));
+		var data = encodeURIComponent($("#textBody").val().replace(/\+/g,'+'));
 		layer.msg('Saving...', {
 			icon: 16,
 			time: 0
 		});
 		var encoding = $("select[name=encoding]").val();
 		$.post('/files.php?action=SaveFileBody', 'data=' + data + '&file=' + fileName+'&encoding='+encoding, function(rdata) {
-			layer.msg(rdata.msg, {
+			layer.msg('File saved!', {
 				icon: rdata.status ? 1 : 5
 			});
 		});
