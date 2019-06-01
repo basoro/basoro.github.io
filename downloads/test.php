@@ -7,7 +7,7 @@ echo "
 +----------------------------------------------------------------------
 | Copyright (c) 2015-2017 BT-SOFT(http://www.bt.cn) All rights reserved.
 +----------------------------------------------------------------------
-| Tengine-2.2.0/Nginx1.8-1.10/Apache2.4/MySQL5.5-5.7/PHP5.2-7.0/Pure-Ftpd1.0.45
+| Tengine-2.2.0/Nginx1.8-1.10/Apache2.4/MySQL5.5-5.7/PHP5.2-7.0
 +----------------------------------------------------------------------
 | Thanks to Lnmp.org
 +----------------------------------------------------------------------
@@ -60,7 +60,6 @@ php_55='5.5.38'
 php_56='5.6.31'
 php_70='7.0.21'
 php_71='7.1.7'
-pure_ftpd_version='1.0.43'
 mysql_55='5.5.57'
 mysql_56='5.6.36'
 mysql_57='5.7.19'
@@ -349,9 +348,9 @@ Install_PHP_52()
 
     ./buildconf --force
 	if [ "${apacheVersion}" != '2.2.32' ];then
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-mysql=${mysql_dir} --with-pdo-mysql=${mysql_dir} --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-discard-path --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-fastcgi --enable-fpm --enable-force-cgi-redirect --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --with-mime-magic --with-iconv=/usr/local/libiconv
+		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-mysql=${mysql_dir} --with-pdo-mysql=${mysql_dir} --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-discard-path --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-fastcgi --enable-fpm --enable-force-cgi-redirect --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --with-mime-magic --with-iconv=/usr/local/libiconv
 	else
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=${mysql_dir} --with-pdo-mysql=${mysql_dir} --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-discard-path --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --with-mime-magic
+		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=${mysql_dir} --with-pdo-mysql=${mysql_dir} --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-discard-path --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --with-mime-magic
 	fi
 	make ZEND_EXTRA_LIBS='-liconv'
     make install
@@ -460,9 +459,9 @@ Install_PHP_53()
 	wget -O /patch/php-5.3-multipart-form-data.patch ${Download_Url}/src/patch/php-5.3-multipart-form-data.patch -T20
     patch -p1 < /patch/php-5.3-multipart-form-data.patch
 	if [ "${apacheVersion}" != '2.2.32' ];then
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo
+		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo
 	else
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo
+		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo
 	fi
 	make ZEND_EXTRA_LIBS='-liconv'
     make install
@@ -592,9 +591,9 @@ Install_PHP_54()
 	mv php-5.4.45 src
 	cd src
 	if [ "${apacheVersion}" != '2.2.32' ];then
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-intl
+		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-intl
 	else
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-intl --with-xsl
+		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-intl --with-xsl
 	fi
 	make ZEND_EXTRA_LIBS='-liconv'
     make install
@@ -716,7 +715,7 @@ Install_PHP_55()
     tar zxf src.tar.gz
 	mv php-${php_55} src
 	cd src
-	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --enable-intl
+	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --enable-intl
 	make ZEND_EXTRA_LIBS='-liconv'
     make install
 
@@ -844,7 +843,7 @@ Install_PHP_56()
     tar zxf src.tar.gz
 	mv php-${php_56} src
 	cd src
-	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --enable-intl
+	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --enable-intl
 
     make ZEND_EXTRA_LIBS='-liconv'
     make install
@@ -971,7 +970,7 @@ Install_PHP_70()
     tar zxf src.tar.gz
 	mv php-${php_70} src
 	cd src
-	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache
+	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache
     make ZEND_EXTRA_LIBS='-liconv'
     make install
 
@@ -1086,7 +1085,7 @@ Install_PHP_71()
     tar zxf src.tar.gz
 	mv php-${php_71} src
 	cd src
-	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache
+	./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache
     make ZEND_EXTRA_LIBS='-liconv'
     make install
 
@@ -2404,62 +2403,6 @@ fi
 }
 
 
-Install_Pureftpd()
-{
-	cd ${run_path}
-	Setup_Path="/www/server/pure-ftpd"
-	rm -rf ${Setup_Path}
-	rm -f /etc/init.d/pure-ftpd
-	if [ ! -f "pure-ftpd-${pure_ftpd_version}.tar.gz" ];then
-		wget ${Download_Url}/src/pure-ftpd-${pure_ftpd_version}.tar.gz -T20
-	fi
-	tar -zxf pure-ftpd-${pure_ftpd_version}.tar.gz
-	cd pure-ftpd-${pure_ftpd_version}
-
-    echo "Installing pure-ftpd..."
-    ./configure --prefix=${Setup_Path} CFLAGS=-O2 --with-puredb --with-quotas --with-cookie --with-virtualhosts --with-diraliases --with-sysquotas --with-ratios --with-altlog --with-paranoidmsg --with-shadow --with-welcomemsg --with-throttling --with-uploadscript --with-language=english --with-rfc2640 --with-ftpwho
-
-    make && make install
-
-	if [ ! -f "${Setup_Path}/bin/pure-pw" ];then
-		echo '========================================================'
-		echo -e "\033[31mERROR: pure-ftpd installation failed.\033[0m";
-		rm -rf ${Setup_Path}
-	fi
-
-    echo "Copy configure files..."
-    \cp configuration-file/pure-config.pl ${Setup_Path}/sbin/pure-config.pl
-    chmod 755 ${Setup_Path}/sbin/pure-config.pl
-	sed -i "s@/usr/local@/www/server@g" ${Setup_Path}/sbin/pure-config.pl
-
-    mkdir ${Setup_Path}/etc
-	wget -O ${Setup_Path}/etc/pure-ftpd.conf ${Download_Url}/conf/pure-ftpd.conf -T20
-	wget -O /etc/init.d/pure-ftpd ${Download_Url}/init/pureftpd.init -T20
-    chmod +x /etc/init.d/pure-ftpd
-    touch ${Setup_Path}/etc/pureftpd.passwd
-    touch ${Setup_Path}/etc/pureftpd.pdb
-
-    StartUp pureftpd
-
-    cd ${run_path}
-    rm -rf pure-ftpd-${pure_ftpd_version}
-	rm -f pure-ftpd-${pure_ftpd_version}.tar.gz
-
-
-
-    if [[ -s ${Setup_Path}/sbin/pure-config.pl && -s ${Setup_Path}/etc/pure-ftpd.conf && -s /etc/init.d/pure-ftpd ]]; then
-        echo "Starting pureftpd..."
-        /etc/init.d/pure-ftpd start
-		chkconfig --add pure-ftpd
-		chkconfig --level 2345 pure-ftpd off
-		echo "${pure_ftpd_version}" > ${Setup_Path}/version.pl
-    else
-        echo "Pureftpd install failed!"
-    fi
-
-
-}
-
 Install_Yunclient()
 {
 	cd ${run_path}
@@ -2503,29 +2446,29 @@ Install_Yunclient()
 Install_Web()
 {
 	#安装面板
-	if [ ! -f "default.zip" ];then
-		wget -c $Download_Url/src/default.zip -T20
-	fi
+	#if [ ! -f "default.zip" ];then
+	#	wget -c $Download_Url/src/default.zip -T20
+	#fi
 	#rm -rf /www/wwwroot/default/*
 	#unzip -o default.zip -d /www/wwwroot/default/ > /dev/null 2>&1
 	#rm -f /www/wwwroot/default/index.html
 	#chown -R www:www /www/wwwroot/default > /dev/null 2>&1
 	#rm -f default.zip
 	
-	mkdir /www/server/panel
-	unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
-	chown -R www:www /www/server/panel > /dev/null 2>&1
+	#mkdir /www/server/panel
+	#unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
+	#chown -R www:www /www/server/panel > /dev/null 2>&1
 	#rm -f /www/wwwroot/default/index.html
 	#chown -R www:www /www/wwwroot/default > /dev/null 2>&1
 	#rm -f default.zip
 
-	#yum -y install svn
+	yum -y install svn
 
-	#svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
-	#mkdir /www/server/panel
-	#cp -a slemp-khanza/* /www/server/panel/
-	#chown -R www:www /www/server/panel > /dev/null 2>&1
-	#rm -rf slemp-khanza/
+	svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
+	mkdir /www/server/panel
+	cp -a slemp-khanza/* /www/server/panel/
+	chown -R www:www /www/server/panel > /dev/null 2>&1
+	rm -rf slemp-khanza/
 	if [ ! -f "phpMyAdmin.zip" ];then
 		if [ "${vstr}" == '52' ] || [ "${vstr}" == '53' ];then
 			wget -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.0.10.15.zip -T20
@@ -2824,12 +2767,9 @@ esac" > /etc/init.d/yunclient
 
 	service yunclient start
 		if [ -f "/etc/init.d/iptables" ];then
-		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 20 -j ACCEPT
-		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 21 -j ACCEPT
 		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
 		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 888 -j ACCEPT
-		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 30000:40000 -j ACCEPT
 		service iptables save
 
 		iptables_status=`service iptables status | grep 'not running'`
@@ -2843,12 +2783,9 @@ esac" > /etc/init.d/yunclient
 			yum install firewalld -y
 			systemctl enable firewalld
 			systemctl start firewalld
-			firewall-cmd --permanent --zone=public --add-port=20/tcp
-			firewall-cmd --permanent --zone=public --add-port=21/tcp
 			firewall-cmd --permanent --zone=public --add-port=22/tcp
 			firewall-cmd --permanent --zone=public --add-port=80/tcp
 			firewall-cmd --permanent --zone=public --add-port=888/tcp
-			firewall-cmd --permanent --zone=public --add-port=30000-40000/tcp
 			firewall-cmd --reload
 		fi
 	fi
@@ -3047,7 +2984,6 @@ else
 	service httpd reload
 fi
 
-	Install_Pureftpd
 	wget -O /www/server/uninstall.sh $Download_Url/src/uninstall.sh -T20
 	rm -rf /patch
 	rm -f *.gz
@@ -3083,7 +3019,6 @@ Restart_Kill(){
 		service httpd restart
 	fi
 	service mysqld restart
-	service pure-ftpd restart
 	service yunclient start
 	chkconfig --level 2345 yunclient on
 }
