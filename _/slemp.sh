@@ -112,6 +112,61 @@ chkconfig --level 2345 panel on
 # Configure nginx #
 ###################
 
+	cat > /www/server/nginx/conf/vhost/phpfpm_status.conf<<EOF
+server {
+	listen 80;
+	server_name 127.0.0.1;
+	location /nginx_status {
+		allow 127.0.0.1;
+		deny all;
+		stub_status on;
+		access_log off;
+	}
+	location /phpfpm_54_status {
+		allow 127.0.0.1;
+		fastcgi_pass unix:/tmp/php-cgi-54.sock;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
+	}
+	location /phpfpm_55_status {
+		allow 127.0.0.1;
+		fastcgi_pass unix:/tmp/php-cgi-55.sock;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
+	}
+	location /phpfpm_56_status {
+		allow 127.0.0.1;
+		fastcgi_pass unix:/tmp/php-cgi-56.sock;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
+	}
+	location /phpfpm_70_status {
+		allow 127.0.0.1;
+		fastcgi_pass unix:/tmp/php-cgi-70.sock;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
+	}
+	location /phpfpm_71_status {
+		allow 127.0.0.1;
+		fastcgi_pass unix:/tmp/php-cgi-71.sock;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
+	}
+	location /phpfpm_72_status {
+		allow 127.0.0.1;
+		fastcgi_pass unix:/tmp/php-cgi-72.sock;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
+	}
+	location /phpfpm_73_status {
+		allow 127.0.0.1;
+		fastcgi_pass unix:/tmp/php-cgi-73.sock;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
+	}
+}
+EOF
+
 cat > /www/server/nginx/conf/enable-php-${php_version}.conf <<END
 location ~ [^/]\.php(/|$)
 {
@@ -256,7 +311,7 @@ listen.mode = 0666
 user = www
 group = www
 pm = dynamic
-pm.status_path = /phpfpm_status
+pm.status_path = /phpfpm_${php_version}_status
 pm.process_idle_timeout = 3s
 pm.max_children = 50
 pm.start_servers = 10
