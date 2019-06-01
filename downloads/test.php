@@ -2446,29 +2446,27 @@ Install_Yunclient()
 Install_Web()
 {
 	#安装面板
-	#if [ ! -f "default.zip" ];then
-	#	wget -c $Download_Url/src/default.zip -T20
-	#fi
+	if [ ! -f "default.zip" ];then
+		wget -c $Download_Url/src/default.zip -T20
+	fi
 	#rm -rf /www/wwwroot/default/*
 	#unzip -o default.zip -d /www/wwwroot/default/ > /dev/null 2>&1
 	#rm -f /www/wwwroot/default/index.html
 	#chown -R www:www /www/wwwroot/default > /dev/null 2>&1
 	#rm -f default.zip
 	
-	#mkdir /www/server/panel
-	#unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
-	#chown -R www:www /www/server/panel > /dev/null 2>&1
-	#rm -f /www/wwwroot/default/index.html
-	#chown -R www:www /www/wwwroot/default > /dev/null 2>&1
-	#rm -f default.zip
-
-	yum -y install svn
-
-	svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
 	mkdir /www/server/panel
-	cp -a slemp-khanza/* /www/server/panel/
+	unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
 	chown -R www:www /www/server/panel > /dev/null 2>&1
-	rm -rf slemp-khanza/
+	
+	#yum -y install svn
+
+	#svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
+	#mkdir /www/server/panel
+	#cp -a slemp-khanza/* /www/server/panel/
+	#chown -R www:www /www/server/panel > /dev/null 2>&1
+	#rm -rf slemp-khanza/
+	
 	if [ ! -f "phpMyAdmin.zip" ];then
 		if [ "${vstr}" == '52' ] || [ "${vstr}" == '53' ];then
 			wget -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.0.10.15.zip -T20
