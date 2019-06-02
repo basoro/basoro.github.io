@@ -10,7 +10,6 @@ echo "
 | Thanks to Lnmp.org
 +----------------------------------------------------------------------
 "
-#判断是否已经执行安装
 if [ -f "/tmp/bt_lock.pl" ];then
 	echo 'Already in the installation of BT-Panel,Please remove /tmp/bt_lock.pl';
 	exit
@@ -27,21 +26,16 @@ mkdir -p $php_path
 mkdir -p /usr/local/ioncube
 
 cd ${run_path}
-#准备下载节点
 echo '=============================================='
 echo '1) CHINA - Hong Kong'
-echo '2) CHINA - Guangdong'
-echo '3) U.S.A - Los Angeles'
-read -p 'Please select download node (1-3 default:1): ' isUrl;
+echo '2) U.S.A - Los Angeles'
+read -p 'Please select download node (1-2 default:1): ' isUrl;
 
 case "${isUrl}" in
 	'1')
 		Download_Url=http://download.bt.cn
 		;;
 	'2')
-		Download_Url=http://125.88.182.172:5880
-		;;
-	'3')
 		Download_Url=http://128.1.164.196:5880
 		;;
 	*)
@@ -49,7 +43,6 @@ case "${isUrl}" in
 		;;
 esac
 
-#版本
 curl_version='7.53.0'
 nginx_version='1.16.0'
 php_55='5.5.38'
@@ -61,7 +54,6 @@ mysql_56='5.6.36'
 mysql_57='5.7.19'
 alisql_version='5.6.32'
 
-#检查当前环境
 CheckInstall()
 {
 	if [ -f "/usr/bin/mysql" ];then
@@ -91,7 +83,6 @@ CheckDisk()
 	fi
 
 	if [ $diskC -lt 4242880 ] && [ $diskC -gt 0 ];then
-		#echo '错误: 磁盘剩余空间小于4GB,无法安装!'
 		echo 'Disk space is less than 4GB, can not be installed!'
 		rm -f /tmp/bt_lock.pl
 		exit;
@@ -170,6 +161,7 @@ Install_Curl()
 		echo -e "curl_installed" >> /www/server/lib.pl
 	fi
 }
+
 Install_Libiconv()
 {
 	libiconv_status=`cat /www/server/lib.pl | grep libiconv`
@@ -1067,11 +1059,9 @@ Install_MySQL_55(){
 		exit 0;
 	fi
 
-	#创建用户
 	groupadd mysql
 	useradd -s /sbin/nologin -M -g mysql mysql
 
-	#写出配置文件
 	cat > /etc/my.cnf<<EOF
 [client]
 #password	= your_password
@@ -1136,7 +1126,7 @@ interactive-timeout
 EOF
 
 	MySQL_Opt
-	#处理数据目录
+
 	if [ -d "${Data_Path}" ]; then
 		rm -rf ${Data_Path}/*
 		else
@@ -1155,24 +1145,23 @@ EOF
 
 
 
-	#启动服务
     ldconfig
 	#chown mysql:mysql /etc/my.cnf
     ln -sf ${Setup_Path}/lib/mysql /usr/lib/mysql
     ln -sf ${Setup_Path}/include/mysql /usr/include/mysql
 	/etc/init.d/mysqld start
 
-	#设置软链
+
     ln -sf ${Setup_Path}/bin/mysql /usr/bin/mysql
     ln -sf ${Setup_Path}/bin/mysqldump /usr/bin/mysqldump
     ln -sf ${Setup_Path}/bin/myisamchk /usr/bin/myisamchk
     ln -sf ${Setup_Path}/bin/mysqld_safe /usr/bin/mysqld_safe
     ln -sf ${Setup_Path}/bin/mysqlcheck /usr/bin/mysqlcheck
 
-	#设置密码
+
     ${Setup_Path}/bin/mysqladmin -u root password "${mysqlpwd}"
 
-	#添加到服务列表
+
 	chkconfig --add mysqld
 	chkconfig --level 2345 mysqld off
 
@@ -1260,7 +1249,7 @@ Install_MySQL_56()
 {
 	Close_MySQL
 	cd ${run_path}
-	#准备安装
+
 	Setup_Path="/www/server/mysql"
 	Data_Path="/www/server/data"
 
@@ -1400,14 +1389,14 @@ EOF
 EOF
 
 
-	#启动服务
+
     ldconfig
 	chown mysql:mysql /etc/my.cnf
     ln -sf ${Setup_Path}/lib/mysql /usr/lib/mysql
     ln -sf ${Setup_Path}/include/mysql /usr/include/mysql
 	/etc/init.d/mysqld start
 
-	#设置软链
+
     ln -sf ${Setup_Path}/bin/mysql /usr/bin/mysql
     ln -sf ${Setup_Path}/bin/mysqldump /usr/bin/mysqldump
     ln -sf ${Setup_Path}/bin/myisamchk /usr/bin/myisamchk
@@ -1415,10 +1404,10 @@ EOF
     ln -sf ${Setup_Path}/bin/mysqlcheck /usr/bin/mysqlcheck
 
 
-	#设置密码
+
     ${Setup_Path}/bin/mysqladmin -u root password "${mysqlpwd}"
 
-	#添加到服务列表
+
 	chkconfig --add mysqld
 	chkconfig --level 2345 mysqld off
 
@@ -1585,23 +1574,23 @@ EOF
 EOF
 
 
-	#启动服务
+
     ldconfig
     ln -sf ${Setup_Path}/lib/mysql /usr/lib/mysql
     ln -sf ${Setup_Path}/include/mysql /usr/include/mysql
 	/etc/init.d/mysqld start
 
-	#设置软链
+
     ln -sf ${Setup_Path}/bin/mysql /usr/bin/mysql
     ln -sf ${Setup_Path}/bin/mysqldump /usr/bin/mysqldump
     ln -sf ${Setup_Path}/bin/myisamchk /usr/bin/myisamchk
     ln -sf ${Setup_Path}/bin/mysqld_safe /usr/bin/mysqld_safe
     ln -sf ${Setup_Path}/bin/mysqlcheck /usr/bin/mysqlcheck
 
-	#设置密码
+
     ${Setup_Path}/bin/mysqladmin -u root password "${mysqlpwd}"
 
-	#添加到服务列表
+
 	chkconfig --add mysqld
 	chkconfig --level 2345 mysqld off
 
@@ -1759,14 +1748,14 @@ EOF
 EOF
 
 
-	#启动服务
+
     ldconfig
 	chown mysql:mysql /etc/my.cnf
     ln -sf ${Setup_Path}/lib/mysql /usr/lib/mysql
     ln -sf ${Setup_Path}/include/mysql /usr/include/mysql
 	/etc/init.d/mysqld start
 
-	#设置软链
+
     ln -sf ${Setup_Path}/bin/mysql /usr/bin/mysql
     ln -sf ${Setup_Path}/bin/mysqldump /usr/bin/mysqldump
     ln -sf ${Setup_Path}/bin/myisamchk /usr/bin/myisamchk
@@ -1774,10 +1763,10 @@ EOF
     ln -sf ${Setup_Path}/bin/mysqlcheck /usr/bin/mysqlcheck
 
 
-	#设置密码
+
     ${Setup_Path}/bin/mysqladmin -u root password "${mysqlpwd}"
 
-	#添加到服务列表
+
 	chkconfig --add mysqld
 	chkconfig --level 2345 mysqld off
 
@@ -1979,7 +1968,7 @@ fi
 
 
 	MySQL_Opt
-	#设置软链
+
     ln -sf ${Setup_Path}/bin/mysql /usr/bin/mysql
     ln -sf ${Setup_Path}/bin/mysqldump /usr/bin/mysqldump
     ln -sf ${Setup_Path}/bin/myisamchk /usr/bin/myisamchk
@@ -1995,14 +1984,14 @@ fi
 Install_Yunclient()
 {
 	cd ${run_path}
-	#安装命令行
+
 
 	yum install glibc.i686 -y
 	wget -c $Download_Url/src/zun.init -T20
 	mv -f zun.init  /bin/bt
 	chmod 755 /bin/bt
 
-	#安装控制器
+
 	if [ ! -f "cloud.zip" ];then
 		wget -c $Download_Url/cloud.zip -T20
 	fi
@@ -2034,7 +2023,7 @@ Install_Yunclient()
 
 Install_Web()
 {
-	#安装面板
+
 	#if [ ! -f "default.zip" ];then
 	#	wget -c $Download_Url/src/default.zip -T20
 	#fi
@@ -2075,7 +2064,7 @@ Install_Web()
 		fi
 	fi
 
-	#创建默认数据库
+
 	/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "create database bt_default";
 	/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "drop user bt_default@localhost";
 	/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "grant select,insert,update,delete,create,drop,alter on bt_default .* to bt_default@localhost identified by '${dpwd}'";
@@ -2104,7 +2093,6 @@ Select_Install()
 	echo "1) Nginx-${nginx_version}[default]";
 	echo '2) Nginx-1.8.1';
 	echo '3) Tengine-2.2.0';
-	#echo '请选择网站服务器.';
 	read -p "Plese select Web Server(1-3 default:1): " type;
 	echo '=======================================================';
 	echo '1) PHP-5.4[default]';
@@ -2114,7 +2102,7 @@ Select_Install()
 	echo -e "\033[32m5) ALL version\033[0m";
 	echo '6) PHP-7.1 [NEW]';
 
-	#echo '请选择PHP版本.';
+
 	read -p "Plese select php version(1-6 default:1): " php;
 	echo '=======================================================';
 	MemTotal=`free -m | grep Mem | awk '{sum+=$2} END {print sum}'`
@@ -2131,13 +2119,12 @@ Select_Install()
 	else
 		echo -e "\033[31m Memory less than 2GB, hidden MySQL5.7 installation options. \033[0m";
 	fi
-	#echo '请选择MySQL版本';
+
 	read -p 'Plese select mysql version(1-5 default:1): ' mysql;
 	echo '=======================================================';
 	dates=`date`;
 	pwd=`echo -n $dates|md5sum|cut -d ' ' -f1`;
 	pwd=${pwd:0:16};
-	#echo '请输入MySQL管理密码';
 	#read -p "Plese input mysql admin password (default:$pwd): " mysqlpwd;
 	mysqlpwd=$pwd
 	echo '=======================================================';
@@ -2219,29 +2206,21 @@ Select_Install()
 
 
 	echo '======================================================='
-	#echo '您的选择是:'
 	echo 'Your selected results to:'
 	echo '-------------------------------------------------------'
-	#echo '网站服务器'
 	echo 'Web Server: '$type$nginxVersion;
-	#echo 'PHP版本'
 	echo 'PHP version: '$vphp;
-	#echo 'MySQL版本'
 	echo 'MySQL version: '$mysql;
-	#echo 'MySQL密码'
 	echo 'MySQL Password: '$mysqlpwd;
 	echo '-------------------------------------------------------'
-	#echo "预计安装耗时: $setupTime 分钟";
 	echo "Expected installation: $setupTime Minute";
 	echo '======================================================='
 
 	while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 	do
-		#echo '即将安装到/www ,现在开始安装吗?';
 		read -p "About to install /www , Start the installation?(y/n): " go;
 	done
 	if [ "${go}" == 'n' ];then
-		#echo '您选择了取消安装,退出!';
 		echo 'Your alrea cancel the install.';
 		exit 1;
 	fi
@@ -2256,7 +2235,6 @@ Select_Install()
 
 
 
-	#替换YUM源
 	#if [ ! -f "/usr/bin/wget" ];then
 	#	yum install wget -y
 	#fi
@@ -2341,12 +2319,11 @@ esac" > /etc/init.d/yunclient
 	fi
 
 
-	#替换回原来的YUM源
 	#rm -f /etc/yum.repos.d/CentOS-Base.repo
 	#mv /etc/yum.repos.d/CentOS-Base.repo.bak /etc/yum.repos.d/CentOS-Base.repo
 	#yum clean all
 	rm -f /tmp/bt_lock.pl
-	#输出安装结果
+
 	echo "
 DefaultSiteUrl: http://SERVER_IP:888
 MySQLPassword: $mysqlpwd
@@ -2392,7 +2369,6 @@ Start_Install()
 {
 	sed -i "s#SELINUX=enforcing#SELINUX=disabled#" /etc/selinux/config
 
-	#清空YUM缓存
 	yum clean all
 	yum -y remove mysql mysql-devel php nginx httpd
 	rpm -e --nodeps mariadb-libs-*
@@ -2541,7 +2517,6 @@ Install_PHP(){
 	echo "3) PHP-${php-56}";
 	echo "4) PHP-${php-70}";
 	echo "5) PHP-${php-71}";
-	#echo '请选择要添加的PHP版本.';
 	read -p "Plese select to add php version(1-5): " php;
 	echo '=======================================================';
 
@@ -2568,14 +2543,11 @@ Install_PHP(){
 			;;
 	esac
 
-	#echo "环境校验通过!";
 	while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 	do
-		#echo "现在开始安装PHP-$vphp吗?";
 		read -p "Ready You a start the PHP-$vphp installation?(y/n): " go;
 	done
 	if [ "${go}" == 'n' ];then
-		#echo '您选择了取消安装,退出!';
 		echo 'Your alrea cancel the install.';
 		exit 1;
 	fi
@@ -2599,7 +2571,6 @@ Install_PHP(){
 	esac
 	echo "ALL" > /www/server/php/version.pl
 	echo '=======================================================';
-	#echo "php-$vphp 安装成功!"
 	echo "php-$vphp successful"
 }
 
@@ -2635,7 +2606,6 @@ Install_MySQL()
 	else
 		echo -e "\033[31m Memory less than 2GB, hidden MySQL5.7 installation options. \033[0m";
 	fi
-	#echo '请选择MySQL版本';
 	read -p 'Plese select mysql version(1-5 default:1): ' mysql;
 	echo '=======================================================';
 
@@ -2661,17 +2631,14 @@ Install_MySQL()
 			mysql='5.5'
 	esac
 
-	echo "环境校验通过!";
 	echo '=======================================================';
 	dates=`date`;
 	pwd=`echo -n $dates|md5sum|cut -d ' ' -f1`;
 	pwd=${pwd:0:10};
-	#echo '请输入MySQL管理密码';
 	read -p "Plese input mysql admin password (default:$pwd): " mysqlpwd;
 	echo '=======================================================';
 	while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 	do
-		#echo "现在开始安装MySQL-$mysqlv吗?";
 		read -p "Ready You a start the MySQL-$mysql installation?(y/n): " go;
 	done
 	if [ "$go" == 'n' ];then
@@ -2716,14 +2683,12 @@ Install_MySQL()
 	echo "MySQL-$mysql 安装成功!"
 	echo "MySQL-$mysql successful"
 }
-#修复面板
+
 RepWeb()
 {
-	#echo '请输入MySQL管理密码';
 	read -p "Plese input mysql admin password (default:$pwd): " mysqlpwd;
 	while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 	do
-		#echo "现在开始修复WEB吗?";
 		read -p "Ready You a start the WebPanel?(y/n): " go;
 	done
 
