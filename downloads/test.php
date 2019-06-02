@@ -5,7 +5,7 @@ echo "
 +----------------------------------------------------------------------
 | Panel 1.0 FOR CentOS
 +----------------------------------------------------------------------
-| Nginx1.16-1.8/MySQL5.5-5.7/PHP5.2-7.1
+| Nginx1.16-1.8/MySQL5.5-5.7/PHP5.4-7.1
 +----------------------------------------------------------------------
 | Thanks to Lnmp.org
 +----------------------------------------------------------------------
@@ -297,255 +297,6 @@ Set_PHP_FPM_Opt()
         sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 100#" ${php_setup_path}/etc/php-fpm.conf
     fi
 }
-
-Install_PHP_52()
-{
-	cd ${run_path}
-	php_version="52"
-	php_setup_path=${php_path}/${php_version}
-    Export_PHP_Autoconf
-	mkdir -p ${php_setup_path}
-	rm -rf ${php_setup_path}/*
-	cd ${php_setup_path}
-	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${Download_Url}/src/php-5.2.17.tar.gz -T20
-	fi
-    tar zxf src.tar.gz
-	mv php-5.2.17 src
-	rm -rf /patch
-	mkdir -p /patch
-	wget ${Download_Url}/src/php-5.2.17-fpm-0.5.14.diff.gz
-	gzip -cd php-5.2.17-fpm-0.5.14.diff.gz | patch -d src -p1
-
-	wget -O /patch/php-5.2.17-max-input-vars.patch ${Download_Url}/src/patch/php-5.2.17-max-input-vars.patch -T20
-	wget -O /patch/php-5.2.17-xml.patch ${Download_Url}/src/patch/php-5.2.17-xml.patch -T20
-	wget -O /patch/debian_patches_disable_SSLv2_for_openssl_1_0_0.patch ${Download_Url}/src/patch/debian_patches_disable_SSLv2_for_openssl_1_0_0.patch -T20
-	wget -O /patch/php-5.2-multipart-form-data.patch ${Download_Url}/src/patch/php-5.2-multipart-form-data.patch -T20
-	#rm -f php-5.2.17-fpm-0.5.14.diff.gz
-	cd src/
-    patch -p1 < /patch/php-5.2.17-max-input-vars.patch
-    patch -p0 < /patch/php-5.2.17-xml.patch
-    patch -p1 < /patch/debian_patches_disable_SSLv2_for_openssl_1_0_0.patch
-    patch -p1 < /patch/php-5.2-multipart-form-data.patch
-
-	ln -s /usr/lib64/libjpeg.so /usr/lib/libjpeg.so
-	ln -s /usr/lib64/libpng.so /usr/lib/libpng.so
-
-    ./buildconf --force
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-mysql=${mysql_dir} --with-pdo-mysql=${mysql_dir} --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-discard-path --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-fastcgi --enable-fpm --enable-force-cgi-redirect --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --with-mime-magic --with-iconv=/usr/local/libiconv
-	make ZEND_EXTRA_LIBS='-liconv'
-    make install
-
-	if [ ! -f "${php_setup_path}/bin/php" ];then
-		echo '========================================================'
-		echo -e "\033[31mERROR: php-5.2 installation failed.\033[0m";
-		exit 0;
-	fi
-
-
-    mkdir -p ${php_setup_path}/etc
-    \cp php.ini-dist ${php_setup_path}/etc/php.ini
-
-	#安装mysqli
-	sed -i "s@memset(&tm, sizeof(tm), 0)@memset(&tm, 0, sizeof(tm))@" ext/zip/lib/zip_dirent.c
-	cd ext/mysqli/
-	/www/server/php/52/bin/phpize
-	./configure --with-php-config=/www/server/php/52/bin/php-config  --with-mysqli=/www/server/mysql/bin/mysql_config
-	make
-	make install
-	cd ${php_setup_path}
-
-    Ln_PHP_Bin
-
-    # php extensions
-    sed -i "s#extension_dir = \"./\"#extension_dir = \"/www/server/php/52/lib/php/extensions/no-debug-non-zts-20060613/\"\n#" ${php_setup_path}/etc/php.ini
-    sed -i 's#output_buffering =.*#output_buffering = On#' ${php_setup_path}/etc/php.ini
-    sed -i 's/post_max_size =.*/post_max_size = 50M/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/upload_max_filesize =.*/upload_max_filesize = 50M/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/short_open_tag =.*/short_open_tag = On/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/; cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g'${php_setup_path}/etc/php.ini
-    sed -i 's/max_execution_time =.*/max_execution_time = 300/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru/g' ${php_setup_path}/etc/php.ini
-	echo 'extension = mysqli.so' >> ${php_setup_path}/etc/php.ini
-    Pear_Pecl_Set
-
-	mkdir -p /usr/local/zend/php52
-    if [ "${Is_64bit}" == "64" ] ; then
-        wget ${Download_Url}/src/ZendOptimizer-3.3.9-linux-glibc23-x86_64.tar.gz -T20
-        tar zxf ZendOptimizer-3.3.9-linux-glibc23-x86_64.tar.gz
-
-        \cp ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_2_x_comp/ZendOptimizer.so /usr/local/zend/php52/
-		rm -rf ZendOptimizer-3.3.9-linux-glibc23-x86_64
-		#rm -f ZendOptimizer-3.3.9-linux-glibc23-x86_64.tar.gz
-    else
-        wget ${Download_Url}/src/ZendOptimizer-3.3.9-linux-glibc23-i386.tar.gz -T20
-        tar zxf ZendOptimizer-3.3.9-linux-glibc23-i386.tar.gz
-        \cp ZendOptimizer-3.3.9-linux-glibc23-i386/data/5_2_x_comp/ZendOptimizer.so /usr/local/zend/php52/
-		rm -rf ZendOptimizer-3.3.9-linux-glibc23-i386
-		#rm -f ZendOptimizer-3.3.9-linux-glibc23-i386.tar.gz
-    fi
-
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.2.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.2.so -T 20
-
-    cat >>${php_setup_path}/etc/php.ini<<EOF
-
-;eaccelerator
-
-;ionCube
-zend_extension = /usr/local/ioncube/ioncube_loader_lin_5.2.so
-
-[Zend Optimizer]
-zend_optimizer.optimization_level=1
-zend_extension="/usr/local/zend/php52/ZendOptimizer.so"
-
-;xcache
-
-EOF
-
-
-	#Install_Imap
-	#Install_Exif
-
-		rm -f ${php_setup_path}/etc/php-fpm.conf
-		wget -O ${php_setup_path}/etc/php-fpm.conf ${Download_Url}/conf/php-fpm5.2.conf -T20
-		wget -O /etc/init.d/php-fpm-52 ${Download_Url}/init/php_fpm_52.init -T20
-		chmod +x /etc/init.d/php-fpm-52
-		chkconfig --add php-fpm-52
-		chkconfig --level 2345 php-fpm-52 off
-		service php-fpm-52 start
-	#rm -f ${php_setup_path}/src.tar.gz
-}
-
-Install_PHP_53()
-{
-	cd ${run_path}
-	php_version="53"
-	php_setup_path=${php_path}/${php_version}
-	mkdir -p ${php_setup_path}
-	rm -rf ${php_setup_path}/*
-	cd ${php_setup_path}
-	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${Download_Url}/src/php-5.3.29.tar.gz
-	fi
-
-    tar zxf src.tar.gz
-	mv php-5.3.29 src
-	cd src
-
-	rm -rf /patch
-	mkdir -p /patch
-	wget -O /patch/php-5.3-multipart-form-data.patch ${Download_Url}/src/patch/php-5.3-multipart-form-data.patch -T20
-    patch -p1 < /patch/php-5.3-multipart-form-data.patch
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo
-	make ZEND_EXTRA_LIBS='-liconv'
-    make install
-
-	if [ ! -f "${php_setup_path}/bin/php" ];then
-		echo '========================================================'
-		echo -e "\033[31mERROR: php-5.3 installation failed.\033[0m";
-		exit 0;
-	fi
-
-    Ln_PHP_Bin
-
-    echo "Copy new php configure file..."
-    mkdir -p ${php_setup_path}/etc
-    \cp php.ini-production ${php_setup_path}/etc/php.ini
-
-	cd ${run_path}
-    # php extensions
-    echo "Modify php.ini......"
-    sed -i 's/post_max_size =.*/post_max_size = 50M/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/upload_max_filesize =.*/upload_max_filesize = 50M/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/short_open_tag =.*/short_open_tag = On/g'${php_setup_path}/etc/php.ini
-    sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/max_execution_time =.*/max_execution_time = 300/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/register_long_arrays =.*/;register_long_arrays = On/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/magic_quotes_gpc =.*/;magic_quotes_gpc = On/g' ${php_setup_path}/etc/php.ini
-    sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru/g' ${php_setup_path}/etc/php.ini
-    Pear_Pecl_Set
-    Install_Composer
-
-    echo "Install ZendGuardLoader for PHP 5.3..."
-	mkdir -p /usr/local/zend/php53
-    if [ "${Is_64bit}" == "64" ] ; then
-        wget ${Download_Url}/src/ZendGuardLoader-php-5.3-linux-glibc23-x86_64.tar.gz
-        tar zxf ZendGuardLoader-php-5.3-linux-glibc23-x86_64.tar.gz
-        \cp ZendGuardLoader-php-5.3-linux-glibc23-x86_64/php-5.3.x/ZendGuardLoader.so /usr/local/zend/php53/
-		#rm -f ${run_path}/ZendGuardLoader-php-5.3-linux-glibc23-x86_64.tar.gz
-		rm -rf ${run_path}/ZendGuardLoader-php-5.3-linux-glibc23-x86_64
-    else
-        wget ${Download_Url}/src/ZendGuardLoader-php-5.3-linux-glibc23-i386.tar.gz
-        tar zxf ZendGuardLoader-php-5.3-linux-glibc23-i386.tar.gz
-        \cp ZendGuardLoader-php-5.3-linux-glibc23-i386/php-5.3.x/ZendGuardLoader.so /usr/local/zend/php53/
-		rm -rf ZendGuardLoader-php-5.3-linux-glibc23-i386
-		#rm -f ZendGuardLoader-php-5.3-linux-glibc23-i386.tar.gz
-    fi
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.3.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.3.so -T 20
-
-    echo "Write ZendGuardLoader to php.ini..."
-    cat >>${php_setup_path}/etc/php.ini<<EOF
-
-;eaccelerator
-
-;ionCube
-zend_extension = /usr/local/ioncube/ioncube_loader_lin_5.3.so
-
-;opcache
-
-[Zend ZendGuard Loader]
-zend_extension=/usr/local/zend/php53/ZendGuardLoader.so
-zend_loader.enable=1
-zend_loader.disable_licensing=0
-zend_loader.obfuscation_level_support=3
-zend_loader.license_path=
-
-;xcache
-
-EOF
-    cat >${php_setup_path}/etc/php-fpm.conf<<EOF
-[global]
-pid = ${php_setup_path}/var/run/php-fpm.pid
-error_log = ${php_setup_path}/var/log/php-fpm.log
-log_level = notice
-
-[www]
-listen = /tmp/php-cgi-53.sock
-listen.backlog = -1
-listen.allowed_clients = 127.0.0.1
-listen.owner = www
-listen.group = www
-listen.mode = 0666
-user = www
-group = www
-pm = dynamic
-pm.status_path = /phpfpm_53_status
-pm.max_children = 20
-pm.start_servers = 2
-pm.min_spare_servers = 1
-pm.max_spare_servers = 6
-request_terminate_timeout = 100
-request_slowlog_timeout = 30
-slowlog = var/log/slow.log
-EOF
-Set_PHP_FPM_Opt
-
-    \cp ${php_setup_path}/src/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm-53
-	chmod +x /etc/init.d/php-fpm-53
-
-	Install_Intl
-	Install_Fileinfo
-	Install_Imap
-	Install_Exif
-
-	chkconfig --add php-fpm-53
-	chkconfig --level 2345 php-fpm-53 off
-	service php-fpm-53 start
-	#rm -f ${php_setup_path}src.tar.gz
-}
-
 
 Install_PHP_54()
 {
@@ -1198,8 +949,6 @@ Install_Nginx()
     wget -O ${Setup_Path}/conf/nginx.conf ${Download_Url}/conf/nginx.conf -T20
     wget -O ${Setup_Path}/conf/pathinfo.conf ${Download_Url}/conf/pathinfo.conf -T20
     wget -O ${Setup_Path}/conf/enable-php.conf ${Download_Url}/conf/enable-php.conf -T20
-    wget -O ${Setup_Path}/conf/enable-php-52.conf ${Download_Url}/conf/enable-php-52.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-53.conf ${Download_Url}/conf/enable-php-53.conf -T20
 	wget -O ${Setup_Path}/conf/enable-php-54.conf ${Download_Url}/conf/enable-php-54.conf -T20
 	wget -O ${Setup_Path}/conf/enable-php-55.conf ${Download_Url}/conf/enable-php-55.conf -T20
 	wget -O ${Setup_Path}/conf/enable-php-56.conf ${Download_Url}/conf/enable-php-56.conf -T20
@@ -1239,18 +988,6 @@ server {
 		deny all;
 		stub_status on;
 		access_log off;
-	}
-	location /phpfpm_52_status {
-		allow 127.0.0.1;
-		fastcgi_pass unix:/tmp/php-cgi-52.sock;
-		include fastcgi_params;
-		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
-	}
-	location /phpfpm_53_status {
-		allow 127.0.0.1;
-		fastcgi_pass unix:/tmp/php-cgi-53.sock;
-		include fastcgi_params;
-		fastcgi_param SCRIPT_FILENAME \$fastcgi_script_name;
 	}
 	location /phpfpm_54_status {
 		allow 127.0.0.1;
@@ -2320,11 +2057,7 @@ Install_Web()
 	rm -rf slemp-khanza/
 	
 	if [ ! -f "phpMyAdmin.zip" ];then
-		if [ "${vstr}" == '52' ] || [ "${vstr}" == '53' ];then
-			wget -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.0.10.15.zip -T20
-		else
 			wget -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.4.15.6.zip -T20
-		fi
 	fi
 	unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
 	dates=`date`;
@@ -2374,22 +2107,15 @@ Select_Install()
 	#echo '请选择网站服务器.';
 	read -p "Plese select Web Server(1-3 default:1): " type;
 	echo '=======================================================';
-	if [ "${type}" != '4' ];then
-		echo '1) PHP-5.2';
-	fi
-	echo '2) PHP-5.3';
-	echo '3) PHP-5.4[default]';
-	if [ "${type}" != '5' ];then
-		echo '4) PHP-5.5';
-		echo '5) PHP-5.6';
-		echo '6) PHP-7.0';
-		echo -e "\033[32m7) ALL version\033[0m";
-		echo -e "\033[32m8) PHP-5.2/5.3/5.4\033[0m";
-		echo '9) PHP-7.1 [NEW]';
-	fi
+	echo '1) PHP-5.4[default]';
+	echo '2) PHP-5.5';
+	echo '3) PHP-5.6';
+	echo '4) PHP-7.0';
+	echo -e "\033[32m5) ALL version\033[0m";
+	echo '6) PHP-7.1 [NEW]';
 
 	#echo '请选择PHP版本.';
-	read -p "Plese select php version(1-9 default:3): " php;
+	read -p "Plese select php version(1-6 default:1): " php;
 	echo '=======================================================';
 	MemTotal=`free -m | grep Mem | awk '{sum+=$2} END {print sum}'`
 	echo '1) MySQL 5.5[default]'
@@ -2461,42 +2187,28 @@ Select_Install()
 	setupTime='60'
 	case "${php}" in
 		'1')
-			vphp='5.2'
-			vstr='52'
-			;;
-		'2')
-			vphp='5.3'
-			vstr='53'
-			;;
-		'3')
 			vphp='5.4'
 			vstr='54'
 			;;
-		'4')
+		'2')
 			vphp='5.5'
 			vstr='55'
 			;;
-		'5')
+		'3')
 			vphp='5.6'
 			vstr='56'
 			;;
-		'6')
+		'4')
 			vphp='7.0'
 			vstr='70'
 			;;
-		'7')
+		'5')
 			vphp='ALL'
 			setupTime='120'
 			vstr='54'
 			main=0
 			;;
-		'8')
-			vphp='ALL'
-			setupTime='90'
-			vstr='54'
-			main=1
-			;;
-		'9')
+		'6')
 			vphp='7.1'
 			vstr='71'
 			;;
@@ -2668,11 +2380,7 @@ Download_File()
 	#	echo "Download error of default.zip";
 	#	exit 0;
 	#fi
-	if [ "${vstr}" == '52' ] || [ "${vstr}" == '53' ];then
-		wget -c -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.0.10.15.zip -T20
-	else
-		wget -c -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.4.15.6.zip -T20
-	fi
+	wget -c -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.4.15.6.zip -T20
 
 	if [ ! -f "phpMyAdmin.zip" ];then
 		echo "Download error of phpMyAdmin.zip";
@@ -2750,12 +2458,6 @@ Start_Install()
 	ldconfig
 
 	case "${vphp}" in
-		'5.2')
-			Install_PHP_52
-			;;
-		'5.3')
-			Install_PHP_53
-			;;
 		'5.4')
 			Install_PHP_54
 			;;
@@ -2772,26 +2474,14 @@ Start_Install()
 			Install_PHP_71
 			;;
 		'ALL')
-			Install_PHP_52
-			Install_PHP_53
 			Install_PHP_54
-			if [ $main == 0 ];then
-				Install_PHP_55
-				Install_PHP_56
-				Install_PHP_70
-				Install_PHP_71
-			fi
+			Install_PHP_55
+			Install_PHP_56
+			Install_PHP_70
+			Install_PHP_71
 			;;
 	esac
-	if [ -f "/www/server/php/53/bin/php" ];then
-		if [ ! -f "/etc/init.d/php-fpm-53" ];then
-			\cp /etc/init.d/php-fpm-54 /etc/init.d/php-fpm-53
-			sed -i "s@php/54@php/53@g" /etc/init.d/php-fpm-53
-			chkconfig --add php-fpm-53
-			chkconfig --level 2345 php-fpm-53 off
-			service php-fpm-53 start
-		fi
-	fi
+
 	echo "${vphp}" > /www/server/php/version.pl
 
 	if [ "${vphp}" != 'ALL' ];then
@@ -2820,24 +2510,18 @@ fi
 
 Restart_Kill(){
 	if [ "${type}" == 'nginx' ];then
-		service php-fpm-52 stop
-		service php-fpm-53 stop
 		service php-fpm-54 stop
 		service php-fpm-55 stop
 		service php-fpm-56 stop
 		service php-fpm-70 stop
 		service php-fpm-71 stop
 
-		rm -r /tmp/php-cgi-52.sock
-		rm -r /tmp/php-cgi-53.sock
 		rm -r /tmp/php-cgi-54.sock
 		rm -r /tmp/php-cgi-55.sock
 		rm -r /tmp/php-cgi-56.sock
 		rm -r /tmp/php-cgi-70.sock
 		rm -r /tmp/php-cgi-71.sock
 
-		service php-fpm-52 start
-		service php-fpm-53 start
 		service php-fpm-54 start
 		service php-fpm-55 start
 		service php-fpm-56 start
@@ -2852,43 +2536,33 @@ Restart_Kill(){
 
 Install_PHP(){
 	echo '=======================================================';
-	echo '1) PHP-5.2';
-	echo '2) PHP-5.3';
-	echo '3) PHP-5.4';
-	echo "4) PHP-${php-55}";
-	echo "5) PHP-${php-56}";
-	echo "6) PHP-${php-70}";
-	echo "7) PHP-${php-71}";
+	echo '1) PHP-5.4';
+	echo "2) PHP-${php-55}";
+	echo "3) PHP-${php-56}";
+	echo "4) PHP-${php-70}";
+	echo "5) PHP-${php-71}";
 	#echo '请选择要添加的PHP版本.';
-	read -p "Plese select to add php version(1-7): " php;
+	read -p "Plese select to add php version(1-5): " php;
 	echo '=======================================================';
 
 	case "${php}" in
 		'1')
-			vphp='5.2'
-			vstr='52'
-			;;
-		'2')
-			vphp='5.3'
-			vstr='53'
-			;;
-		'3')
 			vphp='5.4'
 			vstr='54'
 			;;
-		'4')
+		'2')
 			vphp='5.5'
 			vstr='55'
 			;;
-		'5')
+		'3')
 			vphp='5.6'
 			vstr='56'
 			;;
-		'6')
+		'4')
 			vphp='7.0'
 			vstr='70'
 			;;
-		'7')
+		'5')
 			vphp='7.1'
 			vstr='71'
 			;;
@@ -2907,12 +2581,6 @@ Install_PHP(){
 	fi
 
 	case "${vphp}" in
-		'5.2')
-			Install_PHP_52
-			;;
-		'5.3')
-			Install_PHP_53
-			;;
 		'5.4')
 			Install_PHP_54
 			;;
@@ -3069,9 +2737,6 @@ RepWeb()
 CheckPHPVersion()
 {
 	PHPVersion=""
-	if [ -d "/www/server/php/53" ];then
-		PHPVersion="53"
-	fi
 	if [ -d "/www/server/php/54" ];then
 		PHPVersion="54"
 	fi
@@ -3180,9 +2845,6 @@ Install_Intl()
 	fi
 
 	case "${php_version}" in
-		'53')
-		extFile='/www/server/php/53/lib/php/extensions/no-debug-non-zts-20090626/intl.so'
-		;;
 		'54')
 		extFile='/www/server/php/54/lib/php/extensions/no-debug-non-zts-20100525/intl.so'
 		;;
@@ -3236,12 +2898,6 @@ Install_Imap()
 	fi
 
 	case "${php_version}" in
-		'52')
-		extFile='imap.so'
-		;;
-		'53')
-		extFile='/www/server/php/53/lib/php/extensions/no-debug-non-zts-20090626/imap.so'
-		;;
 		'54')
 		extFile='/www/server/php/54/lib/php/extensions/no-debug-non-zts-20100525/imap.so'
 		;;
@@ -3331,12 +2987,6 @@ Install_Exif()
 	fi
 
 	case "${php_version}" in
-		'52')
-		extFile='exif.so'
-		;;
-		'53')
-		extFile='/www/server/php/53/lib/php/extensions/no-debug-non-zts-20090626/exif.so'
-		;;
 		'54')
 		extFile='/www/server/php/54/lib/php/extensions/no-debug-non-zts-20100525/exif.so'
 		;;
@@ -3397,9 +3047,6 @@ Install_Fileinfo()
 	fi
 
 	case "${php_version}" in
-		'53')
-		extFile='/www/server/php/53/lib/php/extensions/no-debug-non-zts-20090626/fileinfo.so'
-		;;
 		'54')
 		extFile='/www/server/php/54/lib/php/extensions/no-debug-non-zts-20100525/fileinfo.so'
 		;;
