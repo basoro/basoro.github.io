@@ -2055,8 +2055,8 @@ Install_Web()
 	dpwd=${pwd:0:12};
 	sed -i "s@MYPWD@${dpwd}@" /www/server/panel/conf/sql.config.php
 	cp /www/server/panel/databaseAdmin/config.sample.inc.php /www/server/panel/databaseAdmin/config.inc.php
-	32_secret=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-	sed -i "s#\$cfg['blowfish_secret'] = ''#\$cfg['blowfish_secret'] = '${32_secret}'#" /www/server/panel/databaseAdmin/config.inc.php
+	blowfish_secret=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+	sed -i "s#\$cfg['blowfish_secret'] = ''#\$cfg['blowfish_secret'] = '${blowfish_secret}'#" /www/server/panel/databaseAdmin/config.inc.php
 	phpmyadminExt=${pwd:10:10};
 	mv /www/server/panel/databaseAdmin /www/server/panel/phpmyadmin_$phpmyadminExt
 	chown -R www.www /www/server/panel/phpmyadmin_$phpmyadminExt
