@@ -106,13 +106,6 @@ Install_SendMail()
 	yum -y install sendmail mailx
 }
 
-
-Export_PHP_Autoconf()
-{
-    export PHP_AUTOCONF=/usr/local/autoconf-2.13/bin/autoconf
-    export PHP_AUTOHEADER=/usr/local/autoconf-2.13/bin/autoheader
-}
-
 Ln_PHP_Bin()
 {
     ln -sf ${php_setup_path}/bin/php /usr/bin/php
@@ -131,22 +124,6 @@ Pear_Pecl_Set()
 Install_Composer()
 {
 	echo 'not install composer';
-}
-
-
-Install_Autoconf()
-{
-	cd ${run_path}
-	if [ ! -f "autoconf-2.13.tar.gz" ];then
-		wget ${Download_Url}/src/autoconf-2.13.tar.gz
-	fi
-	tar zxf autoconf-2.13.tar.gz
-	cd autoconf-2.13
-    ./configure --prefix=/usr/local/autoconf-2.13
-    make && make install
-    cd ${run_path}
-    rm -rf autoconf-2.13
-	#rm -f autoconf-2.13.tar.gz
 }
 
 Install_Curl()
