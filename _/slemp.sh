@@ -326,25 +326,25 @@ END
 MemTotal=`free -m | grep Mem | awk '{print  $2}'` 
 
     if [[ ${MemTotal} -gt 1024 && ${MemTotal} -le 2048 ]]; then
-        sed -i "s#pm.max_children.*#pm.max_children = 30#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.start_servers.*#pm.start_servers = 5#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 5#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 30#" ${php_conf}/php-fpm.conf
+        sed -i "s#pm.max_children.*#pm.max_children = 30#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.start_servers.*#pm.start_servers = 5#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 5#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 30#" ${php_conf}/php-fpm.d/www.conf
     elif [[ ${MemTotal} -gt 2048 && ${MemTotal} -le 4096 ]]; then
-        sed -i "s#pm.max_children.*#pm.max_children = 50#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.start_servers.*#pm.start_servers = 10#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 10#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 50#" ${php_conf}/php-fpm.conf
+        sed -i "s#pm.max_children.*#pm.max_children = 50#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.start_servers.*#pm.start_servers = 10#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 10#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 50#" ${php_conf}/php-fpm.d/www.conf
     elif [[ ${MemTotal} -gt 4096 && ${MemTotal} -le 8192 ]]; then
-        sed -i "s#pm.max_children.*#pm.max_children = 80#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.start_servers.*#pm.start_servers = 15#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 15#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 80#" ${php_conf}/php-fpm.conf
+        sed -i "s#pm.max_children.*#pm.max_children = 80#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.start_servers.*#pm.start_servers = 15#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 15#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 80#" ${php_conf}/php-fpm.d/www.conf
     elif [[ ${MemTotal} -gt 8192 ]]; then
-        sed -i "s#pm.max_children.*#pm.max_children = 100#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.start_servers.*#pm.start_servers = 20#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 20#" ${php_conf}/php-fpm.conf
-        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 100#" ${php_conf}/php-fpm.conf
+        sed -i "s#pm.max_children.*#pm.max_children = 100#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.start_servers.*#pm.start_servers = 20#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 20#" ${php_conf}/php-fpm.d/www.conf
+        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 100#" ${php_conf}/php-fpm.d/www.conf
     fi
 
 rm -f /etc/init.d/nginx
