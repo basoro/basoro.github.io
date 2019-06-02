@@ -45,6 +45,7 @@ esac
 
 curl_version='7.53.0'
 nginx_version='1.16.0'
+php_54='5.4.45'
 php_55='5.5.38'
 php_56='5.6.31'
 php_70='7.0.21'
@@ -2492,7 +2493,7 @@ Restart_Kill(){
 
 Install_PHP(){
 	echo '=======================================================';
-	echo '1) PHP-5.4';
+	echo "1) PHP-${php_54}";
 	echo "2) PHP-${php_55}";
 	echo "3) PHP-${php_56}";
 	echo "4) PHP-${php_70}";
