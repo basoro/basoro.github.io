@@ -2053,16 +2053,14 @@ Install_Web()
 	pwd=`echo -n $dates|md5sum|cut -d ' ' -f1`;
 	dpwd=${pwd:0:12};
 	sed -i "s@MYPWD@${dpwd}@" /www/server/panel/conf/sql.config.php
-	sed -i "s#\$cfg['blowfish_secret'] = ''#\$cfg['blowfish_secret'] = 'wwwbtcn'#" /www/server/panel/databaseAdmin/config.sample.inc.php
+	cp /www/server/panel/databaseAdmin/config.sample.inc.php /www/server/panel/databaseAdmin/config.inc.php
+	32_secret=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+	sed -i "s#\$cfg['blowfish_secret'] = ''#\$cfg['blowfish_secret'] = '${32_secret}'#" /www/server/panel/databaseAdmin/config.inc.php
 	phpmyadminExt=${pwd:10:10};
 	mv /www/server/panel/databaseAdmin /www/server/panel/phpmyadmin_$phpmyadminExt
 	chown -R www.www /www/server/panel/phpmyadmin_$phpmyadminExt
 	echo "phpmyadmin_${phpmyadminExt}" > /www/server/cloud/phpmyadminDirName.pl;
-	if [ "${type}" == '' ];then
-		if [ -f "/etc/init.d/nginx" ];then
-			type='nginx';
-		fi
-	fi
+	type='nginx';
 
 
 	/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "create database bt_default";
@@ -2072,9 +2070,6 @@ Install_Web()
 	/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} bt_default < /www/server/panel/database.sql;
 	/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "update bt_default.bt_config set webserver='${type}' where id=1";
 	rm -f /www/server/panel/database.sql;
-	rm -f /www/server/panel/index.html;
-	rm -f /www/server/panel/tz.php;
-	rm -rf /www/server/panel/phpmyadmin;
 	cloud=''
 
 	token=${pwd:0:8};
