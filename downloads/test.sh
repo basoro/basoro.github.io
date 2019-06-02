@@ -2493,10 +2493,10 @@ Restart_Kill(){
 Install_PHP(){
 	echo '=======================================================';
 	echo '1) PHP-5.4';
-	echo "2) PHP-${php-55}";
-	echo "3) PHP-${php-56}";
-	echo "4) PHP-${php-70}";
-	echo "5) PHP-${php-71}";
+	echo "2) PHP-${php_55}";
+	echo "3) PHP-${php_56}";
+	echo "4) PHP-${php_70}";
+	echo "5) PHP-${php_71}";
 	read -p "Plese select to add php version(1-5): " php;
 	echo '=======================================================';
 
@@ -2693,6 +2693,9 @@ CheckPHPVersion()
 	fi
 	if [ -d "/www/server/php/70" ];then
 		PHPVersion="70"
+	fi
+	if [ -d "/www/server/php/71" ];then
+		PHPVersion="71"
 	fi
 	if [ "${PHPVersion}" == '' ];then
 		echo 'Not Install PHP.';
@@ -3023,7 +3026,7 @@ Install_Fileinfo()
 
 
 case $1 in
-	add)
+	php)
 		Install_PHP
 		exit 0;
 		;;
