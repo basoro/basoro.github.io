@@ -216,8 +216,8 @@ function GetDir(){
 		$path = '/';
 		$Disk = SendSocket("System|disk");
 		foreach($Disk as $value){
-				if($value['Partition'] == '/boot' || $value['Partition'] == '') continue;
-				$data['DISK'][] =  array('Span'=>$value['Partition'],'Size'=>$value['Available space']);
+				if($value['分区'] == '/boot' || $value['分区'] == '') continue;
+				$data['DISK'][] =  array('Span'=>$value['分区'],'Size'=>$value['可用空间']);
 		}
 		$data['PATH'] = '/';
 		ajax_return($data);
