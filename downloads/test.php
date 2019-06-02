@@ -2099,8 +2099,7 @@ Select_Install()
 	echo '2) PHP-5.5';
 	echo '3) PHP-5.6';
 	echo '4) PHP-7.0';
-	echo -e "\033[32m5) ALL version\033[0m";
-	echo '6) PHP-7.1 [NEW]';
+	echo '5) PHP-7.1';
 
 
 	read -p "Plese select php version(1-6 default:1): " php;
