@@ -3,11 +3,9 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 echo "
 +----------------------------------------------------------------------
-| Bt-WebPanel 2.8 FOR CentOS
+| Panel 1.0 FOR CentOS
 +----------------------------------------------------------------------
-| Copyright (c) 2015-2017 BT-SOFT(http://www.bt.cn) All rights reserved.
-+----------------------------------------------------------------------
-| Tengine-2.2.0/Nginx1.8-1.10/Apache2.4/MySQL5.5-5.7/PHP5.2-7.0
+| Nginx1.16-1.10/MySQL5.5-5.7/PHP5.2-7.0
 +----------------------------------------------------------------------
 | Thanks to Lnmp.org
 +----------------------------------------------------------------------
@@ -54,8 +52,6 @@ esac
 #版本
 curl_version='7.53.0'
 nginx_version='1.16.0'
-apache_24_version='2.4.25'
-apache_22_version='2.2.32'
 php_55='5.5.38'
 php_56='5.6.31'
 php_70='7.0.21'
@@ -75,11 +71,6 @@ CheckInstall()
 	fi
 	if [ -f "/etc/init.d/nginx" ];then
 		echo 'Has been installed Nginx!'
-		rm -f /tmp/bt_lock.pl
-		exit
-	fi
-	if [ -f "/etc/init.d/httpd" ];then
-		echo 'Has been installed Apache!'
 		rm -f /tmp/bt_lock.pl
 		exit
 	fi
@@ -309,10 +300,6 @@ Set_PHP_FPM_Opt()
 
 Install_PHP_52()
 {
-	if [ "${apacheVersion}" == "${apache_24_version}" ];then
-		rm -rf /www/server/php/52
-		return;
-	fi
 	cd ${run_path}
 	php_version="52"
 	php_setup_path=${php_path}/${php_version}
@@ -327,10 +314,8 @@ Install_PHP_52()
 	mv php-5.2.17 src
 	rm -rf /patch
 	mkdir -p /patch
-	if [ "${apacheVersion}" != '2.2.32' ];then
-		wget ${Download_Url}/src/php-5.2.17-fpm-0.5.14.diff.gz
-		gzip -cd php-5.2.17-fpm-0.5.14.diff.gz | patch -d src -p1
-	fi
+	wget ${Download_Url}/src/php-5.2.17-fpm-0.5.14.diff.gz
+	gzip -cd php-5.2.17-fpm-0.5.14.diff.gz | patch -d src -p1
 
 	wget -O /patch/php-5.2.17-max-input-vars.patch ${Download_Url}/src/patch/php-5.2.17-max-input-vars.patch -T20
 	wget -O /patch/php-5.2.17-xml.patch ${Download_Url}/src/patch/php-5.2.17-xml.patch -T20
@@ -347,11 +332,7 @@ Install_PHP_52()
 	ln -s /usr/lib64/libpng.so /usr/lib/libpng.so
 
     ./buildconf --force
-	if [ "${apacheVersion}" != '2.2.32' ];then
 		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-mysql=${mysql_dir} --with-pdo-mysql=${mysql_dir} --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-discard-path --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-fastcgi --enable-fpm --enable-force-cgi-redirect --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --with-mime-magic --with-iconv=/usr/local/libiconv
-	else
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=${mysql_dir} --with-pdo-mysql=${mysql_dir} --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-discard-path --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --with-mime-magic
-	fi
 	make ZEND_EXTRA_LIBS='-liconv'
     make install
 
@@ -426,7 +407,6 @@ EOF
 	#Install_Imap
 	#Install_Exif
 
-	if [ "${apacheVersion}" != '2.2.32' ];then
 		rm -f ${php_setup_path}/etc/php-fpm.conf
 		wget -O ${php_setup_path}/etc/php-fpm.conf ${Download_Url}/conf/php-fpm5.2.conf -T20
 		wget -O /etc/init.d/php-fpm-52 ${Download_Url}/init/php_fpm_52.init -T20
@@ -434,7 +414,6 @@ EOF
 		chkconfig --add php-fpm-52
 		chkconfig --level 2345 php-fpm-52 off
 		service php-fpm-52 start
-	fi
 	rm -f ${php_setup_path}/src.tar.gz
 }
 
@@ -458,11 +437,7 @@ Install_PHP_53()
 	mkdir -p /patch
 	wget -O /patch/php-5.3-multipart-form-data.patch ${Download_Url}/src/patch/php-5.3-multipart-form-data.patch -T20
     patch -p1 < /patch/php-5.3-multipart-form-data.patch
-	if [ "${apacheVersion}" != '2.2.32' ];then
 		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo
-	else
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo
-	fi
 	make ZEND_EXTRA_LIBS='-liconv'
     make install
 
@@ -530,7 +505,6 @@ zend_loader.license_path=
 ;xcache
 
 EOF
-if [ "${apacheVersion}" != '2.2.32' ];then
     cat >${php_setup_path}/etc/php-fpm.conf<<EOF
 [global]
 pid = ${php_setup_path}/var/run/php-fpm.pid
@@ -569,7 +543,6 @@ Set_PHP_FPM_Opt
 	chkconfig --add php-fpm-53
 	chkconfig --level 2345 php-fpm-53 off
 	service php-fpm-53 start
-fi
 	rm -f ${php_setup_path}src.tar.gz
 }
 
@@ -590,11 +563,7 @@ Install_PHP_54()
     tar zxf src.tar.gz
 	mv php-5.4.45 src
 	cd src
-	if [ "${apacheVersion}" != '2.2.32' ];then
 		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-intl
-	else
-		./configure --prefix=${php_setup_path} --with-config-file-path=${php_setup_path}/etc --with-apxs2=/www/server/apache/bin/apxs --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-intl --with-xsl
-	fi
 	make ZEND_EXTRA_LIBS='-liconv'
     make install
 
@@ -657,7 +626,6 @@ zend_loader.license_path=
 
 EOF
 
-if [ "${apacheVersion}" != '2.2.32' ];then
     cat >${php_setup_path}/etc/php-fpm.conf<<EOF
 [global]
 pid = ${php_setup_path}/var/run/php-fpm.pid
@@ -696,7 +664,6 @@ EOF
 	chkconfig --level 2345 php-fpm-54 off
 	rm -f /tmp/php-cgi-54.sock
 	service php-fpm-54 start
-fi
 	rm -f ${php_setup_path}/src.tar.gz
 }
 
@@ -1332,121 +1299,6 @@ EOF
 	rm -f src.tar.gz
 	service nginx start
 	echo "${nginxVersion}" > ${Setup_Path}/version.pl
-
-}
-
-Install_Apache_24()
-{
-	cd ${run_path}
-    Setup_Path="/www/server/apache"
-	Run_User="www"
-    groupadd ${Run_User}
-    useradd -s /sbin/nologin -g ${Run_User} ${Run_User}
-
-	mkdir -p ${Setup_Path}
-	rm -rf ${Setup_Path}/*
-	rm -f /etc/init.d/httpd
-	cd ${Setup_Path}
-	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.tar.gz ${Download_Url}/src/httpd-${apache_24_version}.tar.gz -T20
-	fi
-	tar -zxvf src.tar.gz
-	mv httpd-${apache_24_version} src
-	cd src/srclib
-	wget ${Download_Url}/src/apr-1.5.2.tar.gz
-	wget ${Download_Url}/src/apr-util-1.5.4.tar.gz
-
-    tar zxf apr-1.5.2.tar.gz
-    tar zxf apr-util-1.5.4.tar.gz
-    mv apr-1.5.2 apr
-    mv apr-util-1.5.4 apr-util
-    cd ..
-    ./configure --prefix=${Setup_Path} --enable-mods-shared=most --enable-headers --enable-mime-magic --enable-proxy --enable-so --enable-rewrite --with-ssl --enable-ssl --enable-deflate --with-pcre --with-included-apr --with-apr-util --enable-mpms-shared=all --with-mpm=prefork --enable-remoteip
-    make && make install
-
-	if [ ! -f "${Setup_Path}/bin/httpd" ];then
-		echo '========================================================'
-		echo -e "\033[31mERROR: apache-${apacheVersion} installation failed.\033[0m";
-		rm -rf ${Setup_Path}
-		exit 0;
-	fi
-
-    mv ${Setup_Path}/conf/httpd.conf ${Setup_Path}/conf/httpd.conf.bak
-
-	wget -O ${Setup_Path}/conf/httpd.conf ${Download_Url}/conf/httpd24.conf
-	wget -O ${Setup_Path}/conf/extra/httpd-vhosts.conf ${Download_Url}/conf/httpd-vhosts.conf
-	wget -O ${Setup_Path}/conf/extra/httpd-default.conf ${Download_Url}/conf/httpd-default.conf
-	wget -O ${Setup_Path}/conf/extra/mod_remoteip.conf ${Download_Url}/conf/mod_remoteip.conf
-
-    mkdir ${Setup_Path}/conf/vhost
-	mkdir -p /www/wwwroot/default
-	mkdir -p /www/wwwlogs
-	chmod -R 755 /www/wwwroot/default
-	chown -R www.www /www/wwwroot/default
-
-	wget -O /www/server/apache/htdocs/index.html ${Download_Url}/error/index.html -T20
-	wget -O /etc/init.d/httpd ${Download_Url}/init/init.d.httpd -T20
-    chmod +x /etc/init.d/httpd
-	chkconfig --add httpd
-	chkconfig --level 2345 httpd off
-	cd ${Setup_Path}
-	rm -f src.tar.gz
-	echo "${apacheVersion}" > ${Setup_Path}/version.pl
-
-}
-
-Install_Apache_22()
-{
-	cd ${run_path}
-    Setup_Path="/www/server/apache"
-	Run_User="www"
-    groupadd ${Run_User}
-    useradd -s /sbin/nologin -g ${Run_User} ${Run_User}
-
-    mkdir -p ${Setup_Path}
-	rm -rf ${Setup_Path}/*
-	rm -f /etc/init.d/httpd
-	cd ${Setup_Path}
-	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.tar.gz ${Download_Url}/src/httpd-${apache_22_version}.tar.gz -T20
-	fi
-	tar -zxvf src.tar.gz
-	mv httpd-${apache_22_version} src
-	cd src
-    ./configure --prefix=${Setup_Path} --enable-mods-shared=most --enable-headers --enable-mime-magic --enable-proxy --enable-so --enable-rewrite --with-ssl --enable-ssl --enable-deflate --enable-suexec --with-included-apr --with-mpm=prefork --with-expat=builtin
-    make && make install
-
-	if [ ! -f "${Setup_Path}/bin/httpd" ];then
-		echo '========================================================'
-		echo -e "\033[31mERROR: apache-${apacheVersion} installation failed.\033[0m";
-		rm -rf ${Setup_Path}
-		exit 0;
-	fi
-
-    mv ${Setup_Path}/conf/httpd.conf ${Setup_Path}/conf/httpd.conf.bak
-	wget -O ${Setup_Path}/conf/httpd.conf ${Download_Url}/conf/httpd22.conf -T20
-	wget -O ${Setup_Path}/conf/extra/httpd-vhosts.conf ${Download_Url}/conf/httpd-vhosts-22.conf -T20
-	wget -O ${Setup_Path}/conf/extra/httpd-default.conf ${Download_Url}/conf/httpd-default.conf -T20
-	wget -O ${Setup_Path}/conf/extra/mod_remoteip.conf ${Download_Url}/conf/mod_remoteip.conf -T20
-
-    mkdir -p ${Setup_Path}/conf/vhost
-	mkdir -p /www/wwwroot/default
-	mkdir -p /www/wwwlogs
-	chmod -R 755 /www/wwwroot/default
-	chown -R www.www /www/wwwroot/default
-
-    ln -sf /usr/local/lib/libltdl.so.3 /usr/lib/libltdl.so.3
-    mkdir ${Setup_Path}/conf/vhost
-
-	wget -O /www/server/apache/htdocs/index.html ${Download_Url}/error/index.html -T20
-	wget -O /etc/init.d/httpd ${Download_Url}/init/init.d.httpd -T20
-    chmod +x /etc/init.d/httpd
-	chkconfig --add httpd
-	chkconfig --level 2345 httpd off
-
-	cd ${Setup_Path}
-	rm -f src.tar.gz
-	echo "${apacheVersion}" > ${Setup_Path}/version.pl
 
 }
 
@@ -2487,8 +2339,6 @@ Install_Web()
 	if [ "${type}" == '' ];then
 		if [ -f "/etc/init.d/nginx" ];then
 			type='nginx';
-		else
-			type='apache';
 		fi
 	fi
 
@@ -2521,10 +2371,8 @@ Select_Install()
 	echo "1) Nginx-${nginx_version}[default]";
 	echo '2) Nginx-1.8.1';
 	echo '3) Tengine-2.2.0';
-	echo "4) Apache-${apache_24_version} + php-fpm";
-	echo "5) Apache-${apache_22_version} + php5_mod";
 	#echo '请选择网站服务器.';
-	read -p "Plese select Web Server(1-5 default:1): " type;
+	read -p "Plese select Web Server(1-3 default:1): " type;
 	echo '=======================================================';
 	if [ "${type}" != '4' ];then
 		echo '1) PHP-5.2';
@@ -2579,14 +2427,6 @@ Select_Install()
 		'3')
 			type='nginx'
 			nginxVersion='-Tengine2.2.0'
-			;;
-		'4')
-			type='apache'
-			apacheVersion="${apache_24_version}"
-			;;
-		'5')
-			type='apache'
-			apacheVersion="${apache_22_version}"
 			;;
 		*)
 			type='nginx'
@@ -2877,12 +2717,6 @@ Start_Install()
 
 	if [ "${type}" == 'nginx' ];then
 		Install_Nginx
-	else
-		if [ "${apacheVersion}" == "${apache_24_version}" ];then
-			Install_Apache_24
-		else
-			Install_Apache_22
-		fi
 	fi
 
 
@@ -2977,9 +2811,6 @@ location ~ [^/]\.php(/|$)
 }" > /www/server/nginx/conf/enable-php.conf
 
 	service nginx reload
-else
-	sed -i "s#VERSION#${ver_sock}#" /www/server/apache/conf/extra/httpd-vhosts.conf
-	service httpd reload
 fi
 
 	wget -O /www/server/uninstall.sh $Download_Url/src/uninstall.sh -T20
@@ -3013,8 +2844,6 @@ Restart_Kill(){
 		service php-fpm-70 start
 		service php-fpm-71 start
 		service nginx restart
-	else
-		service httpd restart
 	fi
 	service mysqld restart
 	service yunclient start
@@ -3022,23 +2851,14 @@ Restart_Kill(){
 }
 
 Install_PHP(){
-	httpdVersion=''
-	if [ -f '/www/server/apache/version.pl' ];then
-		httpdVersion=`cat /www/server/apache/version.pl|grep '2.2'`
-	fi
 	echo '=======================================================';
 	echo '1) PHP-5.2';
 	echo '2) PHP-5.3';
 	echo '3) PHP-5.4';
-	if [ "${httpdVersion}" == '' ];then
-		echo "4) PHP-${php-55}";
-		echo "5) PHP-${php-56}";
-		echo "6) PHP-${php-70}";
-		echo "7) PHP-${php-71}";
-	else
-		type='apache'
-		apacheVersion="${apache_22_version}"
-	fi
+	echo "4) PHP-${php-55}";
+	echo "5) PHP-${php-56}";
+	echo "6) PHP-${php-70}";
+	echo "7) PHP-${php-71}";
 	#echo '请选择要添加的PHP版本.';
 	read -p "Plese select to add php version(1-7): " php;
 	echo '=======================================================';
@@ -3273,14 +3093,6 @@ CheckPHPVersion()
 
 Close_WebServer()
 {
-	if [ -d "/www/server/apache" ];then
-		service httpd stop
-		chkconfig --del httpd
-		rm -f /etc/init.d/httpd
-		rm -rf /www/server/apache
-		pkill -9 httpd
-	fi
-
 	if [ -d "/www/server/nginx" ];then
 		service nginx stop
 		chkconfig --del nginx
@@ -3288,21 +3100,6 @@ Close_WebServer()
 		rm -rf /www/server/nginx
 		pkill -9 nginx
 	fi
-}
-
-To_Apache()
-{
-	CheckPHPVersion
-	type='apache'
-	apacheVersion="${apache_24_version}";
-
-	Close_WebServer
-	Install_Apache_24
-
-	sed -i "s#VERSION#${PHPVersion}#" /www/server/apache/conf/extra/httpd-vhosts.conf
-	service httpd start
-	type='apache'
-	SetWebType
 }
 
 To_Nginx()
@@ -3644,10 +3441,6 @@ case $1 in
 		;;
 	rep)
 		RepWeb
-		exit 0;
-		;;
-	apache)
-		To_Apache
 		exit 0;
 		;;
 	nginx)
