@@ -278,7 +278,7 @@ Install_PHP_54()
     rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${Download_Url}/src/php-5.4.45.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_54}.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -397,7 +397,7 @@ Install_PHP_55()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${Download_Url}/src/php-${php_55}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_55}.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -525,7 +525,7 @@ Install_PHP_56()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${Download_Url}/src/php-${php_56}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_56}.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -652,7 +652,7 @@ Install_PHP_70()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${Download_Url}/src/php-${php_70}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_70}.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -767,7 +767,7 @@ Install_PHP_71()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${Download_Url}/src/php-${php_71}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_71}.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
