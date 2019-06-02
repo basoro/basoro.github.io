@@ -2190,12 +2190,6 @@ Select_Install()
 			vstr='70'
 			;;
 		'5')
-			vphp='ALL'
-			setupTime='120'
-			vstr='54'
-			main=0
-			;;
-		'6')
 			vphp='7.1'
 			vstr='71'
 			;;
@@ -2449,22 +2443,12 @@ Start_Install()
 		'7.1')
 			Install_PHP_71
 			;;
-		'ALL')
-			Install_PHP_54
-			Install_PHP_55
-			Install_PHP_56
-			Install_PHP_70
-			Install_PHP_71
-			;;
 	esac
 
 	echo "${vphp}" > /www/server/php/version.pl
 
-	if [ "${vphp}" != 'ALL' ];then
-		ver_sock=$vstr
-	else
-		ver_sock="54"
-	fi
+	ver_sock=$vstr
+
 if [ "${type}" == 'nginx' ];then
 	echo "
 location ~ [^/]\.php(/|$)
