@@ -325,7 +325,12 @@ END
 
 MemTotal=`free -m | grep Mem | awk '{print  $2}'` 
 
-    if [[ ${MemTotal} -gt 1024 && ${MemTotal} -le 2048 ]]; then
+    if [[ ${MemTotal} -gt 256 && ${MemTotal} -le 1024 ]]; then
+        sed -i "s#pm.max_children.*#pm.max_children = 20#" ${php_conf}/etc/php-fpm.conf
+        sed -i "s#pm.start_servers.*#pm.start_servers = 3#" ${php_conf}/etc/php-fpm.conf
+        sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 3#" ${php_conf}/etc/php-fpm.conf
+        sed -i "s#pm.max_spare_servers.*#pm.max_spare_servers = 20#" ${php_conf}/etc/php-fpm.conf
+    elif [[ ${MemTotal} -gt 1024 && ${MemTotal} -le 2048 ]]; then
         sed -i "s#pm.max_children.*#pm.max_children = 30#" ${php_conf}/etc/php-fpm.conf
         sed -i "s#pm.start_servers.*#pm.start_servers = 5#" ${php_conf}/etc/php-fpm.conf
         sed -i "s#pm.min_spare_servers.*#pm.min_spare_servers = 5#" ${php_conf}/etc/php-fpm.conf
@@ -458,7 +463,18 @@ EOF
 
 MemTotal=`free -m | grep Mem | awk '{print  $2}'` 
 
-    if [[ ${MemTotal} -gt 1024 && ${MemTotal} -lt 2048 ]]; then
+    if [[ ${MemTotal} -gt 256 && ${MemTotal} -lt 1024 ]]; then
+        sed -i "s#^key_buffer_size.*#key_buffer_size = 20M#" /etc/my.cnf
+        sed -i "s#^table_open_cache.*#table_open_cache = 96#" /etc/my.cnf
+        sed -i "s#^sort_buffer_size.*#sort_buffer_size = 512K#" /etc/my.cnf
+        sed -i "s#^read_buffer_size.*#read_buffer_size = 512K#" /etc/my.cnf
+        sed -i "s#^myisam_sort_buffer_size.*#myisam_sort_buffer_size = 4M#" /etc/my.cnf
+        sed -i "s#^thread_cache_size.*#thread_cache_size = 8#" /etc/my.cnf
+        sed -i "s#^query_cache_size.*#query_cache_size = 8M#" /etc/my.cnf
+        sed -i "s#^tmp_table_size.*#tmp_table_size = 16M#" /etc/my.cnf
+        sed -i "s#^innodb_buffer_pool_size.*#innodb_buffer_pool_size = 64M#" /etc/my.cnf
+        sed -i "s#^innodb_log_file_size.*#innodb_log_file_size = 16M#" /etc/my.cnf
+    elif [[ ${MemTotal} -gt 1024 && ${MemTotal} -lt 2048 ]]; then
         sed -i "s#^key_buffer_size.*#key_buffer_size = 32M#" /etc/my.cnf
         sed -i "s#^table_open_cache.*#table_open_cache = 128#" /etc/my.cnf
         sed -i "s#^sort_buffer_size.*#sort_buffer_size = 768K#" /etc/my.cnf
