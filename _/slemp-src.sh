@@ -58,7 +58,6 @@ php_71='7.1.7'
 mysql_55='5.5.57'
 mysql_56='5.6.36'
 mysql_57='5.7.19'
-alisql_version='5.6.32'
 
 CheckInstall()
 {
