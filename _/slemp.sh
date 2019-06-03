@@ -22,7 +22,7 @@ mysql_config="${mysql_dir}/bin/mysql_config"
 Is_64bit=`getconf LONG_BIT`
 run_path="/root"
 
-if [ "${Is_64bit}" !== "64" ] ; then
+if [ ! "${Is_64bit}" == "64" ] ; then
 	echo 'Machine 64 bit architecture is required!';
 	exit
 fi 
