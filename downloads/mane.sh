@@ -36,8 +36,6 @@ echo '1) Github Repository - USA'
 echo '2) Basoro.ID - Indonesia'
 read -p 'Please select download node (1-2 default:1): ' isUrl;
 
-Download_Url=http://download.bt.cn
-
 case "${isUrl}" in
 	'1')
     Download=http://basoro.id
@@ -869,7 +867,6 @@ Install_Nginx()
 	cd ${Setup_Path}
 	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
 		wget -O ${Setup_Path}/src.tar.gz http://nginx.org/download/nginx-$nginxVersion.tar.gz -T20
-    #wget -O ${Setup_Path}/src.tar.gz ${Download_Url}/src/nginx-1.14.2.tar.gz -T20
 	fi
 	tar -zxvf src.tar.gz
 	mv nginx-$nginxVersion src
