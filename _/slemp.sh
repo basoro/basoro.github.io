@@ -32,8 +32,8 @@ mkdir -p /usr/local/ioncube
 
 cd ${run_path}
 echo '=============================================='
-echo '1) Github Repository - USA'
-echo '2) Basoro.ID - Indonesia'
+echo '1) Basoro.ID - Indonesia' 
+echo '2) Github Repository - USA'
 read -p 'Please select download node (1-2 default:1): ' isUrl;
 
 case "${isUrl}" in
@@ -41,7 +41,7 @@ case "${isUrl}" in
     		Download=http://basoro.id
 		;;
 	'2')
-		Download=http://basoro.id
+		Download=http://basoro.github.io
 		;;
 	*)
     		Download=http://basoro.id
