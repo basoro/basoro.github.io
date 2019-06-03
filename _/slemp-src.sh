@@ -5,13 +5,13 @@ echo "
 +----------------------------------------------------------------------
 | Panel 1.0 FOR CentOS
 +----------------------------------------------------------------------
-| Nginx1.16-1.8/MySQL5.5-5.7/PHP5.4-7.1
+| Nginx1.16-1.12/MySQL5.5-5.7/PHP5.4-7.1
 +----------------------------------------------------------------------
 | Thanks to Lnmp.org
 +----------------------------------------------------------------------
 "
 if [ -f "/tmp/bt_lock.pl" ];then
-	echo 'Already in the installation of BT-Panel,Please remove /tmp/bt_lock.pl';
+	echo 'Already in the installation of Panel, please remove /tmp/bt_lock.pl';
 	exit
 fi
 
@@ -22,8 +22,8 @@ mysql_config="${mysql_dir}/bin/mysql_config"
 Is_64bit=`getconf LONG_BIT`
 run_path="/root"
 
-if [ "${Is_64bit}" == "64" ] ; then
-	echo 'Machine 64 bit. architecture is required!';
+if [ "${Is_64bit}" !== "64" ] ; then
+	echo 'Machine 64 bit architecture is required!';
 	exit
 fi 
 
@@ -32,21 +32,19 @@ mkdir -p /usr/local/ioncube
 
 cd ${run_path}
 echo '=============================================='
-echo '1) CHINA - Hong Kong'
-echo '2) U.S.A - Los Angeles'
+echo '1) Github Repository - USA'
+echo '2) Basoro.ID - Indonesia'
 read -p 'Please select download node (1-2 default:1): ' isUrl;
 
 case "${isUrl}" in
 	'1')
-		Download_Url=http://download.bt.cn
     Download=http://basoro.id
 		;;
 	'2')
-    Download_Url=http://128.1.164.196:5880
 		Download=http://basoro.id
 		;;
 	*)
-		Download_Url=http://download.bt.cn
+    Download=http://basoro.id
 		;;
 esac
 
@@ -141,7 +139,7 @@ Install_Curl()
 			wget ${Download}/downloads/rpm/${rpm_path}/curl-7.50.3.rpm
 		fi
 		rpm -ivh curl-7.50.3.rpm --force --nodeps
-		#rm -f curl-7.50.3.rpm
+		rm -f curl-7.50.3.rpm
 		echo -e "curl_installed" >> /www/server/lib.pl
 	fi
 }
@@ -155,7 +153,7 @@ Install_Libiconv()
 			wget ${Download}/downloads/rpm/${rpm_path}/libiconv-1.14.rpm
 		fi
 		rpm -ivh libiconv-1.14.rpm --force --nodeps
-		#rm -f libiconv-1.14.rpm
+		rm -f libiconv-1.14.rpm
 		echo -e "libiconv_installed" >> /www/server/lib.pl
 	fi
 }
@@ -169,7 +167,7 @@ Install_Libmcrypt()
 			wget ${Download}/downloads/rpm/${rpm_path}/libmcrypt-2.5.8.rpm
 		fi
 		rpm -ivh libmcrypt-2.5.8.rpm --force --nodeps
-		#rm -f libmcrypt-2.5.8.rpm
+		rm -f libmcrypt-2.5.8.rpm
 		echo -e "libmcrypt_installed" >> /www/server/lib.pl
 	fi
 }
@@ -184,7 +182,7 @@ Install_Mcrypt()
 		fi
 
 		rpm -ivh mcrypt-2.6.8.rpm --force --nodeps
-		#rm -f mcrypt-2.6.8.rpm
+		rm -f mcrypt-2.6.8.rpm
 		echo -e "mcrypty_installed" >> /www/server/lib.pl
 	fi
 }
@@ -198,7 +196,7 @@ Install_Mhash()
 			wget ${Download}/downloads/rpm/${rpm_path}/mhash-0.9.9.9.rpm
 		fi
 		rpm -ivh mhash-0.9.9.9.rpm --force --nodeps
-		#rm -f mhash-0.9.9.9.rpm
+		rm -f mhash-0.9.9.9.rpm
 		echo -e "mhash_installed" >> /www/server/lib.pl
 	fi
 }
@@ -214,7 +212,7 @@ Install_Pcre()
 				wget ${Download}/downloads/rpm/${rpm_path}/pcre-8.36.rpm
 			fi
 			rpm -ivh pcre-8.36.rpm --force --nodeps
-			#rm -f pcre-8.36.rpm
+			rm -f pcre-8.36.rpm
 	    fi
 	    echo -e "pcre_installed" >> /www/server/lib.pl
 	fi
@@ -229,7 +227,7 @@ Install_OpenSSL()
 		cd ${run_path}
 		wget ${Download}/downloads/src/openssl-1.0.2k.tar.gz -T 20
 		tar xvf openssl-1.0.2k.tar.gz
-		#rm -f openssl-1.0.2k.tar.gz
+		rm -f openssl-1.0.2k.tar.gz
 		cd openssl-1.0.2k
 		./config --prefix=/usr shared zlib-dynamic
 		rm -f /usr/bin/openssl
@@ -285,7 +283,7 @@ Install_PHP_54()
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
 		#wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_54}.tar.gz -T20
-    wget -O ${php_setup_path}/src.tar.gz http:/download.bt.cn/src/php-5.4.45.tar.gz -T20
+    wget -O ${php_setup_path}/src.tar.gz http://download.bt.cn/src/php-5.4.45.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -321,7 +319,7 @@ Install_PHP_54()
         tar zxf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
         \cp ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64/php-5.4.x/ZendGuardLoader.so /usr/local/zend/php54/
 		rm -rf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64
-		#rm -f ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
+		rm -f ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
 
 	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so ${Download}/downloads/ioncube_loader_lin_5.4.so -T 20
     echo "Write ZendGuardLoader to php.ini..."
@@ -383,7 +381,7 @@ EOF
 	chkconfig --level 2345 php-fpm-54 off
 	rm -f /tmp/php-cgi-54.sock
 	service php-fpm-54 start
-	#rm -f ${php_setup_path}/src.tar.gz
+	rm -f ${php_setup_path}/src.tar.gz
 }
 
 Install_PHP_55()
@@ -437,7 +435,7 @@ Install_PHP_55()
         mkdir -p /usr/local/zend/
         \cp zend-loader-php5.5-linux-x86_64/ZendGuardLoader.so /usr/local/zend/php55/
 		rm -rf zend-loader-php5.5-linux-x86_64
-		#rm -f zend-loader-php5.5-linux-x86_64.tar.gz
+		rm -f zend-loader-php5.5-linux-x86_64.tar.gz
 
 	wget -O /usr/local/ioncube/ioncube_loader_lin_5.5.so ${Download}/downloads/ioncube_loader_lin_5.5.so -T 20
 	zend_extension = /usr/local/ioncube/ioncube_loader_lin_5.5.so
@@ -501,7 +499,7 @@ Set_PHP_FPM_Opt
 	chkconfig --add php-fpm-55
 	chkconfig --level 2345 php-fpm-55 off
 	service php-fpm-55 start
-	#rm -f ${php_setup_path}/src.tar.gz
+	rm -f ${php_setup_path}/src.tar.gz
 }
 
 Install_PHP_56()
@@ -557,7 +555,7 @@ Install_PHP_56()
         tar zxf zend-loader-php5.6-linux-x86_64.tar.gz
         \cp zend-loader-php5.6-linux-x86_64/ZendGuardLoader.so /usr/local/zend/php56/
 		rm -rf zend-loader-php5.6-linux-x86_64
-		#rm -f zend-loader-php5.6-linux-x86_64.tar.gz
+		rm -f zend-loader-php5.6-linux-x86_64.tar.gz
 
 	wget -O /usr/local/ioncube/ioncube_loader_lin_5.6.so ${Download}/downloads/ioncube_loader_lin_5.6.so -T 20
 
@@ -620,7 +618,7 @@ Set_PHP_FPM_Opt
 	chkconfig --add php-fpm-56
 	chkconfig --level 2345 php-fpm-56 off
 	service php-fpm-56 start
-	#rm -f ${php_setup_path}/src.tar.gz
+	rm -f ${php_setup_path}/src.tar.gz
 }
 
 Install_PHP_70()
@@ -733,7 +731,7 @@ Set_PHP_FPM_Opt
 	chkconfig --add php-fpm-70
 	chkconfig --level 2345 php-fpm-70 off
 	service php-fpm-70 start
-	#rm -f ${php_setup_path}/src.tar.gz
+	rm -f ${php_setup_path}/src.tar.gz
 
 }
 
@@ -851,7 +849,7 @@ Set_PHP_FPM_Opt
 	if [ -d '/www/server/nginx' ];then
 		wget -O /www/server/nginx/conf/enable-php-71.conf ${Download}/downloads/conf/enable-php-71.conf -T20
 	fi
-	#rm -f ${php_setup_path}/src.tar.gz
+	rm -f ${php_setup_path}/src.tar.gz
 
 }
 
@@ -924,8 +922,8 @@ Install_Nginx()
     fi
 	mkdir -p /usr/local/nginx/logs
 	mkdir -p /www/server/nginx/conf/rewrite
-	wget -O /www/wwwroot/default/index.html ${Download}/downloads/error/index.html
-    wget -O /etc/init.d/nginx ${Download}/downloads/init/nginx.init
+	wget -O /www/wwwroot/default/index.html ${Download}/downloads/index.html
+    wget -O /etc/init.d/nginx ${Download}/downloads/src/nginx.init
     chmod +x /etc/init.d/nginx
 
 	chkconfig --add nginx
@@ -986,7 +984,7 @@ EOF
 
 
 	cd ${Setup_Path}
-	#rm -f src.tar.gz
+	rm -f src.tar.gz
 	service nginx start
 	echo "${nginxVersion}" > ${Setup_Path}/version.pl
 
@@ -1127,7 +1125,7 @@ EOF
 	chkconfig --level 2345 mysqld off
 
 	cd ${Setup_Path}
-	#rm -f src.tar.gz
+	rm -f src.tar.gz
 	rm -rf src
 	echo "${mysql_55}" > ${Setup_Path}/version.pl
 
@@ -1373,7 +1371,7 @@ EOF
 	chkconfig --level 2345 mysqld off
 
 	cd ${Setup_Path}
-	#rm -f src.tar.gz
+	rm -f src.tar.gz
 	rm -rf src
 	echo "${mysql_56}" > ${Setup_Path}/version.pl
 }
@@ -1386,7 +1384,7 @@ Install_MySQL_57()
 	Setup_Path="/www/server/mysql"
 	Data_Path="/www/server/data"
 	if [ ! -f "boost_1_59_0.tar.gz" ];then
-		wget ${Download}/downloads/src/boost_1_59_0.tar.gz -T20
+		wget https://nchc.dl.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz -T20
 	fi
 	tar -zxvf boost_1_59_0.tar.gz
 	cd boost_1_59_0
@@ -1397,7 +1395,7 @@ Install_MySQL_57()
 
 	cd ..
     rm -rf boost_1_59_0
-	#rm -f boost_1_59_0.tar.gz
+	rm -f boost_1_59_0.tar.gz
     rm -f /etc/my.cnf
 
 	mkdir -p ${Setup_Path}
@@ -1555,7 +1553,7 @@ EOF
 	chkconfig --level 2345 mysqld off
 
 	cd ${Setup_Path}
-	#rm -f src.tar.gz
+	rm -f src.tar.gz
 	rm -rf src
 	echo "${mysql_57}" > ${Setup_Path}/version.pl
 }
@@ -1583,7 +1581,7 @@ Install_MySQL_RPM(){
 		exit 0;
 	fi
 
-	#rm -f mysql-${mysqlVersion}-1.el6.x86_${Is_64bit}.rpm
+	rm -f mysql-${mysqlVersion}-1.el6.x86_${Is_64bit}.rpm
 	/www/server/mysql/bin/mysql -uroot -proot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${mysqlpwd}')";
 	/www/server/mysql/bin/mysql -uroot -proot -e "SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('${mysqlpwd}')";
 	/www/server/mysql/bin/mysql -uroot -proot -e "flush privileges";
@@ -1791,7 +1789,7 @@ Install_Yunclient()
 	mv -f /www/server/cloud/dp1.so /lib/dp1.so
 	mv -f /www/server/cloud/EThread.so /lib/EThread.so
 
-	#rm -f cloud.zip
+	rm -f cloud.zip
 	cloud=""
 
 	Install_Web
@@ -1816,7 +1814,7 @@ Install_Web()
 	
 	if [ ! -f "phpMyAdmin.zip" ];then
 			#wget -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
-			wget -O phpMyAdmin.zip $Download/downloads/phpMyAdmin-4.4.15.6.zip -T20
+      wget -O phpMyAdmin.zip $Download/downloads/phpMyAdmin-4.4.15.6.zip -T20
 	fi
 	unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
 	dates=`date`;
@@ -1849,7 +1847,7 @@ Install_Web()
 		chattr -i $userINI
 		rm -f $userINI
 	fi
-	#rm -f phpMyAdmin.zip
+	rm -f phpMyAdmin.zip
 }
 
 Select_Install()
@@ -1857,7 +1855,7 @@ Select_Install()
 	echo '=======================================================';
 	echo "1) Nginx-${nginx_version}[default]";
 	echo '2) Nginx-1.14.2';
-	echo '3) Nginx-1.14.2';
+	echo '3) Nginx-1.12.2';
 	read -p "Plese select Web Server(1-3 default:1): " type;
 	echo '=======================================================';
 	echo '1) PHP-5.4[default]';
@@ -2197,7 +2195,7 @@ fi
 
 	wget -O /www/server/uninstall.sh ${Download}/downloads/src/uninstall.sh -T20
 	rm -rf /patch
-	#rm -f *.gz
+	rm -f *.gz
 }
 
 Restart_Kill(){
@@ -2422,7 +2420,7 @@ Install_Intl()
 		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip -T 20
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
-		#rm -f ext-$php_version.zip
+		rm -f ext-$php_version.zip
 	fi
 
 	case "${php_version}" in
@@ -2475,7 +2473,7 @@ Install_Imap()
 		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip -T 5
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
-		#rm -f ext-$php_version.zip
+		rm -f ext-$php_version.zip
 	fi
 
 	case "${php_version}" in
@@ -2564,7 +2562,7 @@ Install_Exif()
 		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
-		#rm -f ext-$php_version.zip
+		rm -f ext-$php_version.zip
 	fi
 
 	case "${php_version}" in
@@ -2624,7 +2622,7 @@ Install_Fileinfo()
 		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
-		#rm -f ext-$php_version.zip
+		rm -f ext-$php_version.zip
 	fi
 
 	case "${php_version}" in
