@@ -100,9 +100,9 @@ CheckDisk()
 
 centos_version=`cat /etc/redhat-release | grep ' 7.' | grep -i centos`
 if [ "${centos_version}" != '' ]; then
-	rpm_path="centos7"
+	rpm_path="7"
 else
-	rpm_path="centos6"
+	rpm_path="6"
 fi
 
 Install_SendMail()
