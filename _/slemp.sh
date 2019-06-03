@@ -5,7 +5,7 @@ echo "
 +----------------------------------------------------------------------
 | Panel 1.0 FOR CentOS
 +----------------------------------------------------------------------
-| Nginx1.16-1.12/MySQL5.5-5.7/PHP5.4-7.1
+| Nginx 1.16-1.12 / MySQL 5.5-5.7 / PHP 5.4-7.1
 +----------------------------------------------------------------------
 | Thanks to Lnmp.org
 +----------------------------------------------------------------------
@@ -38,13 +38,13 @@ read -p 'Please select download node (1-2 default:1): ' isUrl;
 
 case "${isUrl}" in
 	'1')
-    Download=http://basoro.id
+    		Download=http://basoro.id
 		;;
 	'2')
 		Download=http://basoro.id
 		;;
 	*)
-    Download=http://basoro.id
+    		Download=http://basoro.id
 		;;
 esac
 
@@ -283,7 +283,6 @@ Install_PHP_54()
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
 		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_54}.tar.gz -T20
-    #wget -O ${php_setup_path}/src.tar.gz http://download.bt.cn/src/php-5.4.45.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -983,7 +982,6 @@ EOF
 Install_MySQL_55(){
 	Close_MySQL
 	cd ${run_path}
-	#准备安装
 	Setup_Path="/www/server/mysql"
 	Data_Path="/www/server/data"
 	mkdir -p ${Setup_Path}
@@ -996,7 +994,6 @@ Install_MySQL_55(){
 	mv mysql-$mysql_55 src
 	cd src
 
-	#编译
 	rm -f /etc/my.cnf
 	cmake -DCMAKE_INSTALL_PREFIX=${Setup_Path} -DSYSCONFDIR=/etc -DWITH_MYISAM_STORAGE_ENGINE=1 -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_PARTITION_STORAGE_ENGINE=1 -DWITH_FEDERATED_STORAGE_ENGINE=1 -DEXTRA_CHARSETS=all -DDEFAULT_CHARSET=utf8mb4 -DDEFAULT_COLLATION=utf8mb4_general_ci -DWITH_READLINE=1 -DWITH_EMBEDDED_SERVER=1 -DENABLED_LOCAL_INFILE=1
 	make && make install
@@ -1754,7 +1751,7 @@ fi
 }
 
 
-Install_Yunclient()
+Install_Panel()
 {
 	cd ${run_path}
 
@@ -1803,8 +1800,7 @@ Install_Web()
 	rm -rf slemp-khanza/
 	
 	if [ ! -f "phpMyAdmin.zip" ];then
-			#wget -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
-      wget -O phpMyAdmin.zip $Download/downloads/phpMyAdmin-4.4.15.6.zip -T20
+		wget -O phpMyAdmin.zip $Download/downloads/phpMyAdmin-4.4.15.6.zip -T20
 	fi
 	unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
 	dates=`date`;
@@ -1860,7 +1856,7 @@ Select_Install()
 	MemTotal=`free -m | grep Mem | awk '{sum+=$2} END {print sum}'`
 	echo '1) MySQL 5.5[default]'
 	echo -e "\033[32m2) MySQL 5.5[RPM] \033[0m"
-    if [ ${MemTotal} -gt 800 ]; then
+    	if [ ${MemTotal} -gt 800 ]; then
 		echo '3) MySQL 5.6'
 	else
 		echo -e "\033[31m Memory is less than 1GB, hidden MySQL5.6 installation options. \033[0m";
@@ -1976,27 +1972,12 @@ Select_Install()
 
 
 
-	#if [ ! -f "/usr/bin/wget" ];then
-	#	yum install wget -y
-	#fi
-	#mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+	if [ ! -f "/usr/bin/wget" ];then
+		yum install wget -y
+	fi
   
 	isCentos7=`cat /etc/redhat-release | grep 7\..* | grep -i centos`
   
-	#if [ "${isCentos7}" != '' ];then
-	#	wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS7-Base-163.repo
-	#else
-	#	isCentos6=`cat /etc/redhat-release | grep 6\..* | grep -i centos`
-	#	if [ "${isCentos6}" != '' ];then
-	#		wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS6-Base-163.repo
-	#	else
-	#		wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS5-Base-163.repo
-	#	fi
-	#fi
-
-	#yum clean all
-	#yum makecache
-
 
 	echo "#!/bin/bash
 # chkconfig: 2345 55 25
@@ -2032,7 +2013,7 @@ esac" > /etc/init.d/yunclient
 	startTime=`date +%s`
 
 	Start_Install
-	Install_Yunclient
+	Install_Panel
 
 	service yunclient start
 		if [ -f "/etc/init.d/iptables" ];then
@@ -2060,9 +2041,6 @@ esac" > /etc/init.d/yunclient
 	fi
 
 
-	#rm -f /etc/yum.repos.d/CentOS-Base.repo
-	#mv /etc/yum.repos.d/CentOS-Base.repo.bak /etc/yum.repos.d/CentOS-Base.repo
-	#yum clean all
 	rm -f /tmp/bt_lock.pl
 
 	echo "
@@ -2072,7 +2050,6 @@ phpMyAdmin: http://SERVER_IP:888/phpmyadmin_$phpmyadminExt
 $cloud" > /www/server/default.pl
 	echo "${mysqlpwd}" > /www/server/mysql/default.pl
 	echo "====================================="
-	#echo "安装完成!"
 	echo -e "\033[32mThe install successful!\033[0m"
 	echo -e "====================================="
 	cat /www/server/default.pl
@@ -2392,7 +2369,7 @@ RepWeb()
 		exit;
 	fi
 
-	Install_Yunclient
+	Install_Panel
 }
 
 
@@ -2401,7 +2378,6 @@ Install_Intl()
 	return;
 	isInstall=`cat /www/server/php/$php_version/etc/php.ini|grep 'intl.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装intl,请选择其它版本!"
 		return
 	fi
 
@@ -2454,7 +2430,6 @@ Install_Imap()
 	return;
 	isInstall=`cat /www/server/php/$php_version/etc/php.ini|grep 'imap.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装xdebug,请选择其它版本!"
 		return
 	fi
 
@@ -2543,7 +2518,6 @@ Install_Exif()
 	return;
 	isInstall=`cat /www/server/php/$php_version/etc/php.ini|grep 'exif.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$php_version 已安装exif,请选择其它版本!"
 		return
 	fi
 
@@ -2595,14 +2569,12 @@ Install_Fileinfo()
 {
 	return;
 	if [ ! -f "/www/server/php/$php_version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /www/server/php/$php_version/etc/php.ini|grep 'fileinfo.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装过Fileinfo,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
