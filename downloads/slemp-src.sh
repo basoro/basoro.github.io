@@ -911,8 +911,8 @@ Install_Nginx()
     fi
 	mkdir -p /usr/local/nginx/logs
 	mkdir -p /www/server/nginx/conf/rewrite
-	wget -O /www/wwwroot/default/index.html ${Download}/downloads/error/index.html
-    wget -O /etc/init.d/nginx ${Download}/downloads/init/nginx.init
+	wget -O /www/wwwroot/default/index.html ${Download}/downloads/index.html
+    wget -O /etc/init.d/nginx ${Download}/downloads/src/nginx.init
     chmod +x /etc/init.d/nginx
 
 	chkconfig --add nginx
