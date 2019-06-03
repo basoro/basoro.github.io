@@ -2390,6 +2390,8 @@ cp -a /tmp/slemp-khanza/* /www/server/panel/
 chown -R www:www /www/server/panel > /dev/null 2>&1
 rm -rf /tmp/slemp-khanza/
 
+wget -O /www/server/install.sh https://raw.githubusercontent.com/basoro/basoro.github.io/master/_/slemp.sh -T20
+
 sleep 3
 
 cd ~
