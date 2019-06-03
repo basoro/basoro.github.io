@@ -320,7 +320,7 @@ Install_PHP_54()
 		rm -rf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64
 		#rm -f ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.4.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so ${Download_Url}/downloads/ioncube_loader_lin_5.4.so -T 20
     echo "Write ZendGuardLoader to php.ini..."
     cat >>${php_setup_path}/etc/php.ini<<EOF
 
@@ -436,7 +436,7 @@ Install_PHP_55()
 		rm -rf zend-loader-php5.5-linux-x86_64
 		#rm -f zend-loader-php5.5-linux-x86_64.tar.gz
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.5.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.5.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_5.5.so ${Download_Url}/downloads/ioncube_loader_lin_5.5.so -T 20
 	zend_extension = /usr/local/ioncube/ioncube_loader_lin_5.5.so
 
     echo "Write ZendGuardLoader to php.ini..."
@@ -556,7 +556,7 @@ Install_PHP_56()
 		rm -rf zend-loader-php5.6-linux-x86_64
 		#rm -f zend-loader-php5.6-linux-x86_64.tar.gz
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.6.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.6.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_5.6.so ${Download_Url}/downloads/ioncube_loader_lin_5.6.so -T 20
 
     echo "Write ZendGuardLoader to php.ini..."
 cat >>${php_setup_path}/etc/php.ini<<EOF
@@ -669,7 +669,7 @@ Install_PHP_70()
     echo "Install ZendGuardLoader for PHP 7..."
     echo "unavailable now."
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_7.0.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_7.0.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_7.0.so ${Download_Url}/downloads/ioncube_loader_lin_7.0.so -T 20
 
     echo "Write ZendGuardLoader to php.ini..."
 cat >>${php_setup_path}/etc/php.ini<<EOF
@@ -784,12 +784,15 @@ Install_PHP_71()
     echo "Install ZendGuardLoader for PHP 7..."
     echo "unavailable now."
 
+	wget -O /usr/local/ioncube/ioncube_loader_lin_7.0.so ${Download_Url}/downloads/ioncube_loader_lin_7.1.so -T 20
+
     echo "Write ZendGuardLoader to php.ini..."
 cat >>${php_setup_path}/etc/php.ini<<EOF
 
 ;eaccelerator
 
 ;ionCube
+zend_extension = /usr/local/ioncube/ioncube_loader_lin_7.1.so
 
 ;opcache
 
