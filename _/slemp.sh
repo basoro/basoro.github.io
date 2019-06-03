@@ -2371,6 +2371,44 @@ RepWeb()
 	Install_Panel
 }
 
+Update_Panel()
+{
+	read -p "Please backup your panel first (/www/server/panel). Already backup, hit enter!";
+	while [ "$go" != 'y' ] && [ "$go" != 'n' ]
+	do
+		read -p "Ready You a update the WebPanel?(y/n): " go;
+	done
+
+	if [ "$go" == 'n' ];then
+		exit;
+	fi
+
+cd /tmp/
+svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
+rm -rf /tmp/slemp-khanza/conf
+cp -a /tmp/slemp-khanza/* /www/server/panel/
+chown -R www:www /www/server/panel > /dev/null 2>&1
+rm -rf /tmp/slemp-khanza/
+
+sleep 3
+
+cd ~
+
+clear
+echo
+echo
+echo
+echo
+echo "====================================="
+echo -e "\033[32mServer panel successfully updated!\033[0m"
+echo -e "====================================="
+echo
+echo
+echo
+exit
+
+}
+
 
 Install_Intl()
 {
@@ -2628,6 +2666,10 @@ case $1 in
 		;;
 	rep)
 		RepWeb
+		exit 0;
+		;;
+	update)
+		Update_Panel
 		exit 0;
 		;;
 	*)
