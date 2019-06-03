@@ -5,7 +5,7 @@ echo "
 +----------------------------------------------------------------------
 | Panel 1.0 FOR CentOS
 +----------------------------------------------------------------------
-| Nginx1.16-1.8/MySQL5.5-5.7/PHP5.4-7.1
+| Nginx1.16-1.12/MySQL5.5-5.7/PHP5.4-7.1
 +----------------------------------------------------------------------
 | Thanks to Lnmp.org
 +----------------------------------------------------------------------
@@ -32,21 +32,19 @@ mkdir -p /usr/local/ioncube
 
 cd ${run_path}
 echo '=============================================='
-echo '1) CHINA - Hong Kong'
-echo '2) U.S.A - Los Angeles'
+echo '1) Github Repository - USA'
+echo '2) Basoro.ID - Indonesia'
 read -p 'Please select download node (1-2 default:1): ' isUrl;
 
 case "${isUrl}" in
 	'1')
-		Download_Url=http://download.bt.cn
     Download=http://basoro.id
 		;;
 	'2')
-    Download_Url=http://128.1.164.196:5880
 		Download=http://basoro.id
 		;;
 	*)
-		Download_Url=http://download.bt.cn
+    Download=http://basoro.id
 		;;
 esac
 
