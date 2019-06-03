@@ -284,7 +284,8 @@ Install_PHP_54()
     rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_54}.tar.gz -T20
+		#wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_54}.tar.gz -T20
+    wget -O ${php_setup_path}/src.tar.gz http:/download.bt.cn/src/php-5.4.45.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -873,7 +874,17 @@ Install_Nginx()
 	mv nginx-$nginxVersion src
 	cd src
 
-	./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+	#./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+
+  if [ "${nginxVersion}" != "1.8.1" ];then
+		if [ "${nginx_version}" == "${nginxVersion}" ];then
+			./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+		else
+			./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+		fi
+    else
+		./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+	fi
 		
 	make && make install
     cd ../
@@ -888,7 +899,7 @@ Install_Nginx()
     ln -sf ${Setup_Path}/sbin/nginx /usr/bin/nginx
     rm -f ${Setup_Path}/conf/nginx.conf
 
-    #wget -O ${Setup_Path}/conf/nginx.conf ${Download}/downloads/conf/nginx.conf -T20
+    wget -O ${Setup_Path}/conf/nginx.conf ${Download}/downloads/conf/nginx.conf -T20
     wget -O ${Setup_Path}/conf/pathinfo.conf ${Download}/downloads/conf/pathinfo.conf -T20
     wget -O ${Setup_Path}/conf/enable-php.conf ${Download}/downloads/conf/enable-php.conf -T20
 	wget -O ${Setup_Path}/conf/enable-php-54.conf ${Download}/downloads/conf/enable-php-54.conf -T20
