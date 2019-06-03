@@ -22,7 +22,7 @@ mysql_config="${mysql_dir}/bin/mysql_config"
 Is_64bit=`getconf LONG_BIT`
 run_path="/root"
 
-if [ "${Is_64bit}" == "64" ] ; then
+if [ "${Is_64bit}" !== "64" ] ; then
 	echo 'Machine 64 bit architecture is required!';
 	exit
 fi 
@@ -1843,7 +1843,7 @@ Select_Install()
 	echo '=======================================================';
 	echo "1) Nginx-${nginx_version}[default]";
 	echo '2) Nginx-1.14.2';
-	echo '3) Nginx-1.14.2';
+	echo '3) Nginx-1.12.2';
 	read -p "Plese select Web Server(1-3 default:1): " type;
 	echo '=======================================================';
 	echo '1) PHP-5.4[default]';
