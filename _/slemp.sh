@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 echo "
 +----------------------------------------------------------------------
-| Panel 1.0 FOR CentOS
+| SLEMP Panel 1.0 FOR CentOS
 +----------------------------------------------------------------------
 | Nginx 1.16-1.12 / MySQL 5.5-5.7 / PHP 5.4-7.1
 +----------------------------------------------------------------------
@@ -2353,8 +2353,7 @@ Install_MySQL()
 	/www/server/mysql/bin/mysql -uroot -p${mysqlpwd} -e "update bt_default.bt_config set mysql_root='${mysqlpwd}' where id=1";
 
 	echo '=======================================================';
-	echo "MySQL-$mysql 安装成功!"
-	echo "MySQL-$mysql successful"
+	echo "MySQL-$mysql installed successfully"
 }
 
 RepWeb()
