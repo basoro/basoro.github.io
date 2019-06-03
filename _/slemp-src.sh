@@ -39,9 +39,11 @@ read -p 'Please select download node (1-2 default:1): ' isUrl;
 case "${isUrl}" in
 	'1')
 		Download_Url=http://download.bt.cn
+    Download=http://basoro.id
 		;;
 	'2')
-		Download_Url=http://128.1.164.196:5880
+    Download_Url=http://128.1.164.196:5880
+		Download=http://basoro.id
 		;;
 	*)
 		Download_Url=http://download.bt.cn
@@ -136,7 +138,7 @@ Install_Curl()
 	if [ "${curl_status}" != 'curl_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "curl-7.50.3.rpm" ];then
-			wget ${Download_Url}/rpm/${rpm_path}/${Is_64bit}/curl-7.50.3.rpm
+			wget ${Download}/rpm/${rpm_path}/curl-7.50.3.rpm
 		fi
 		rpm -ivh curl-7.50.3.rpm --force --nodeps
 		#rm -f curl-7.50.3.rpm
@@ -150,7 +152,7 @@ Install_Libiconv()
 	if [ "${libiconv_status}" != 'libiconv_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "libiconv-1.14.rpm" ];then
-			wget ${Download_Url}/rpm/${rpm_path}/${Is_64bit}/libiconv-1.14.rpm
+			wget ${Download}/rpm/${rpm_path}/libiconv-1.14.rpm
 		fi
 		rpm -ivh libiconv-1.14.rpm --force --nodeps
 		#rm -f libiconv-1.14.rpm
@@ -164,7 +166,7 @@ Install_Libmcrypt()
 	if [ "${libmcrypt_status}" != 'libmcrypt_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "libmcrypt-2.5.8.rpm" ];then
-			wget ${Download_Url}/rpm/${rpm_path}/${Is_64bit}/libmcrypt-2.5.8.rpm
+			wget ${Download}/rpm/${rpm_path}/libmcrypt-2.5.8.rpm
 		fi
 		rpm -ivh libmcrypt-2.5.8.rpm --force --nodeps
 		#rm -f libmcrypt-2.5.8.rpm
@@ -178,7 +180,7 @@ Install_Mcrypt()
 	if [ "${mcrypt_status}" != 'mcrypty_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "mcrypt-2.6.8.rpm" ];then
-			wget ${Download_Url}/rpm/${rpm_path}/${Is_64bit}/mcrypt-2.6.8.rpm
+			wget ${Download}/rpm/${rpm_path}/mcrypt-2.6.8.rpm
 		fi
 
 		rpm -ivh mcrypt-2.6.8.rpm --force --nodeps
@@ -193,7 +195,7 @@ Install_Mhash()
 	if [ "${mhash_status}" != 'mhash_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "mhash-0.9.9.9.rpm" ];then
-			wget ${Download_Url}/rpm/${rpm_path}/${Is_64bit}/mhash-0.9.9.9.rpm
+			wget ${Download}/rpm/${rpm_path}/mhash-0.9.9.9.rpm
 		fi
 		rpm -ivh mhash-0.9.9.9.rpm --force --nodeps
 		#rm -f mhash-0.9.9.9.rpm
@@ -209,7 +211,7 @@ Install_Pcre()
 	    if echo "${Cur_Pcre_Ver}" | grep -vEqi '^8.';then
 			cd ${run_path}
 			if [ ! -f "pcre-8.36.rpm" ];then
-				wget ${Download_Url}/rpm/${rpm_path}/${Is_64bit}/pcre-8.36.rpm
+				wget ${Download}/rpm/${rpm_path}/pcre-8.36.rpm
 			fi
 			rpm -ivh pcre-8.36.rpm --force --nodeps
 			#rm -f pcre-8.36.rpm
@@ -225,7 +227,7 @@ Install_OpenSSL()
 	if [ "${openssl_status}" != 'openssl_installed' ]; then
 
 		cd ${run_path}
-		wget ${Download_Url}/src/openssl-1.0.2k.tar.gz -T 20
+		wget ${Download}/src/openssl-1.0.2k.tar.gz -T 20
 		tar xvf openssl-1.0.2k.tar.gz
 		#rm -f openssl-1.0.2k.tar.gz
 		cd openssl-1.0.2k
@@ -320,7 +322,7 @@ Install_PHP_54()
 		rm -rf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64
 		#rm -f ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so ${Download_Url}/downloads/ioncube_loader_lin_5.4.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so ${Download}/downloads/ioncube_loader_lin_5.4.so -T 20
     echo "Write ZendGuardLoader to php.ini..."
     cat >>${php_setup_path}/etc/php.ini<<EOF
 
@@ -436,7 +438,7 @@ Install_PHP_55()
 		rm -rf zend-loader-php5.5-linux-x86_64
 		#rm -f zend-loader-php5.5-linux-x86_64.tar.gz
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.5.so ${Download_Url}/downloads/ioncube_loader_lin_5.5.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_5.5.so ${Download}/downloads/ioncube_loader_lin_5.5.so -T 20
 	zend_extension = /usr/local/ioncube/ioncube_loader_lin_5.5.so
 
     echo "Write ZendGuardLoader to php.ini..."
@@ -556,7 +558,7 @@ Install_PHP_56()
 		rm -rf zend-loader-php5.6-linux-x86_64
 		#rm -f zend-loader-php5.6-linux-x86_64.tar.gz
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.6.so ${Download_Url}/downloads/ioncube_loader_lin_5.6.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_5.6.so ${Download}/downloads/ioncube_loader_lin_5.6.so -T 20
 
     echo "Write ZendGuardLoader to php.ini..."
 cat >>${php_setup_path}/etc/php.ini<<EOF
@@ -669,7 +671,7 @@ Install_PHP_70()
     echo "Install ZendGuardLoader for PHP 7..."
     echo "unavailable now."
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_7.0.so ${Download_Url}/downloads/ioncube_loader_lin_7.0.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_7.0.so ${Download}/downloads/ioncube_loader_lin_7.0.so -T 20
 
     echo "Write ZendGuardLoader to php.ini..."
 cat >>${php_setup_path}/etc/php.ini<<EOF
@@ -784,7 +786,7 @@ Install_PHP_71()
     echo "Install ZendGuardLoader for PHP 7..."
     echo "unavailable now."
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_7.0.so ${Download_Url}/downloads/ioncube_loader_lin_7.1.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_7.0.so ${Download}/downloads/ioncube_loader_lin_7.1.so -T 20
 
     echo "Write ZendGuardLoader to php.ini..."
 cat >>${php_setup_path}/etc/php.ini<<EOF
@@ -1560,7 +1562,7 @@ Install_MySQL_RPM(){
 		mv /www/server/data /www/server/data_backup_$(date +%Y%m%d)
 	fi
 	if [ ! -f "mysql-${mysqlVersion}-1.el6.x86_${Is_64bit}.rpm" ];then
-		wget ${Download_Url}/rpm/${Is_64bit}/mysql-${mysqlVersion}-1.el6.x86_${Is_64bit}.rpm -T20
+		wget ${Download}/downloads/mysql-${mysqlVersion}-1.el6.x86_${Is_64bit}.rpm -T20
 	fi
 
 	rpm -ivh  mysql-${mysqlVersion}-1.el6.x86_${Is_64bit}.rpm --force --nodeps
@@ -1767,7 +1769,7 @@ Install_Yunclient()
 
 
 	if [ ! -f "cloud.zip" ];then
-		wget -c $Download_Url/cloud.zip -T20
+		wget -c $Download/downloads/src/cloud.zip -T20
 	fi
 	rm -rf /www/server/cloud
 	unzip -o cloud.zip -d /www/server/ > /dev/null 2>&1
@@ -1798,19 +1800,6 @@ Install_Yunclient()
 Install_Web()
 {
 
-	#if [ ! -f "default.zip" ];then
-	#	wget -c $Download_Url/src/default.zip -T20
-	#fi
-	#rm -rf /www/wwwroot/default/*
-	#unzip -o default.zip -d /www/wwwroot/default/ > /dev/null 2>&1
-	#rm -f /www/wwwroot/default/index.html
-	#chown -R www:www /www/wwwroot/default > /dev/null 2>&1
-	#rm -f default.zip
-	
-	#mkdir /www/server/panel
-	#unzip -o default.zip -d /www/server/panel/ > /dev/null 2>&1
-	#chown -R www:www /www/server/panel > /dev/null 2>&1
-	
 	yum -y install svn
 
 	svn export --force https://github.com/basoro/basoro.github.io/trunk/_/slemp-khanza/
@@ -2103,17 +2092,12 @@ Download_File()
 {
 	cd ${run_path}
 
-	wget -c $Download_Url/cloud.zip -T20
+	wget -c $Download/downloads/src/cloud.zip -T20
 	if [ ! -f "cloud.zip" ];then
 		echo "Download error of cloud.zip";
 		exit 0;
 	fi
 	wget -c -O zun.init $Download_Url/src/zun.init -T20
-	#wget -c -O default.zip $Download_Url/src/default.zip -T20
-	#if [ ! -f "default.zip" ];then
-	#	echo "Download error of default.zip";
-	#	exit 0;
-	#fi
 	wget -c -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
 
 	if [ ! -f "phpMyAdmin.zip" ];then
