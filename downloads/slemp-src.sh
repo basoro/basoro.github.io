@@ -282,7 +282,7 @@ Install_PHP_54()
     rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_54}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://download.bt.cn/src/php-5.4.45.tar.gz -T20
 	fi
 
     tar zxf src.tar.gz
@@ -314,13 +314,12 @@ Install_PHP_54()
     Pear_Pecl_Set
 
 	mkdir -p /usr/local/zend/php54
-        wget http://downloads.zend.com/guard/6.0.0/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz -T20
+        wget http://downloads.zend.com/guard/7.0.0/zend-loader-php5.5-linux-x86_64.tar.gz -T20
         tar zxf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
         \cp ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64/php-5.4.x/ZendGuardLoader.so /usr/local/zend/php54/
 		rm -rf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64
-		rm -f ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
 
-	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so ${Download}/downloads/ioncube_loader_lin_5.4.so -T 20
+	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so http://download.bt.cn/src/ioncube/$Is_64bit/ioncube_loader_lin_5.4.so -T 20
     echo "Write ZendGuardLoader to php.ini..."
     cat >>${php_setup_path}/etc/php.ini<<EOF
 
@@ -380,7 +379,7 @@ EOF
 	chkconfig --level 2345 php-fpm-54 off
 	rm -f /tmp/php-cgi-54.sock
 	service php-fpm-54 start
-	rm -f ${php_setup_path}/src.tar.gz
+	#rm -f ${php_setup_path}/src.tar.gz
 }
 
 Install_PHP_55()
@@ -865,14 +864,21 @@ Install_Nginx()
 	rm -rf ${Setup_Path}/*
 	cd ${Setup_Path}
 	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.tar.gz http://nginx.org/download/nginx-$nginxVersion.tar.gz -T20
+		wget -O ${Setup_Path}/src.tar.gz http://download.bt.cn/src/nginx-$nginxVersion.tar.gz -T20
 	fi
 	tar -zxvf src.tar.gz
-	mv nginx-$nginxVersion src
+		mv nginx-$nginxVersion src
+
 	cd src
 
-	./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
-		
+		if [ "${nginx_version}" == "${nginxVersion}" ];then
+			./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+		else
+			./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+		fi
+    else
+		./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+
 	make && make install
     cd ../
 
@@ -886,14 +892,14 @@ Install_Nginx()
     ln -sf ${Setup_Path}/sbin/nginx /usr/bin/nginx
     rm -f ${Setup_Path}/conf/nginx.conf
 
-    wget -O ${Setup_Path}/conf/nginx.conf ${Download}/downloads/conf/nginx.conf -T20
-    wget -O ${Setup_Path}/conf/pathinfo.conf ${Download}/downloads/conf/pathinfo.conf -T20
-    wget -O ${Setup_Path}/conf/enable-php.conf ${Download}/downloads/conf/enable-php.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-54.conf ${Download}/downloads/conf/enable-php-54.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-55.conf ${Download}/downloads/conf/enable-php-55.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-56.conf ${Download}/downloads/conf/enable-php-56.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-70.conf ${Download}/downloads/conf/enable-php-70.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-71.conf ${Download}/downloads/conf/enable-php-71.conf -T20
+    wget -O ${Setup_Path}/conf/nginx.conf http://download.bt.cn/conf/nginx.conf -T20
+    wget -O ${Setup_Path}/conf/pathinfo.conf http://download.bt.cn/conf/pathinfo.conf -T20
+    wget -O ${Setup_Path}/conf/enable-php.conf http://download.bt.cn/conf/enable-php.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-54.conf http://download.bt.cn/conf/enable-php-54.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-55.conf http://download.bt.cn/conf/enable-php-55.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-56.conf http://download.bt.cn/conf/enable-php-56.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-70.conf http://download.bt.cn/conf/enable-php-70.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-71.conf http://download.bt.cn/conf/enable-php-71.conf -T20
 	ln -s /usr/local/lib/libpcre.so.1 /lib64/
 	ln -s /usr/local/lib/libpcre.so.1 /lib/
 
@@ -911,8 +917,8 @@ Install_Nginx()
     fi
 	mkdir -p /usr/local/nginx/logs
 	mkdir -p /www/server/nginx/conf/rewrite
-	wget -O /www/wwwroot/default/index.html ${Download}/downloads/index.html
-    wget -O /etc/init.d/nginx ${Download}/downloads/src/nginx.init
+	wget -O /www/wwwroot/default/index.html http://download.bt.cn/error/index.html
+    wget -O /etc/init.d/nginx http://download.bt.cn/init/nginx.init
     chmod +x /etc/init.d/nginx
 
 	chkconfig --add nginx
@@ -973,7 +979,7 @@ EOF
 
 
 	cd ${Setup_Path}
-	rm -f src.tar.gz
+	#rm -f src.tar.gz
 	service nginx start
 	echo "${nginxVersion}" > ${Setup_Path}/version.pl
 
