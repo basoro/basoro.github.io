@@ -22,6 +22,11 @@ mysql_config="${mysql_dir}/bin/mysql_config"
 Is_64bit=`getconf LONG_BIT`
 run_path="/root"
 
+if [ "${Is_64bit}" == "64" ] ; then
+	echo 'Machine 64 bit. architecture is required!';
+	exit
+fi 
+
 mkdir -p $php_path
 mkdir -p /usr/local/ioncube
 
@@ -2793,7 +2798,7 @@ case $1 in
 		exit 0;
 		;;
 	*)
-		#CheckInstall
+		CheckInstall
 		CheckDisk
 		Select_Install
 		exit 0;
