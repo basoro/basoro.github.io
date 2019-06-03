@@ -983,7 +983,7 @@ Install_MySQL_55(){
 	rm -rf ${Setup_Path}/*
 	cd ${Setup_Path}
 	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.tar.gz ${Download_Url}/src/mysql-$mysql_55.tar.gz -T20
+		wget -O ${Setup_Path}/src.tar.gz https://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-$mysql_55.tar.gz -T20
 	fi
 	tar -zxvf src.tar.gz
 	mv mysql-$mysql_55 src
@@ -1200,7 +1200,7 @@ Install_MySQL_56()
 	rm -rf ${Setup_Path}/*
 	cd ${Setup_Path}
 	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.tar.gz ${Download_Url}/src/mysql-$mysql_56.tar.gz -T20
+		wget -O ${Setup_Path}/src.tar.gz https://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-$mysql_56.tar.gz -T20
 	fi
 	tar -zxvf src.tar.gz
 	mv mysql-$mysql_56 src
@@ -1386,7 +1386,7 @@ Install_MySQL_57()
 	rm -rf ${Setup_Path}/*
 	cd ${Setup_Path}
 	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.tar.gz  ${Download_Url}/src/mysql-$mysql_57.tar.gz -T20
+		wget -O ${Setup_Path}/src.tar.gz  https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-$mysql_57.tar.gz -T20
 	fi
 	tar -zxvf src.tar.gz
 	mv mysql-$mysql_57 src
@@ -1542,181 +1542,6 @@ EOF
 	echo "${mysql_57}" > ${Setup_Path}/version.pl
 }
 
-
-Install_AliSQL()
-{
-	Close_MySQL
-	cd ${run_path}
-	#准备安装
-	Setup_Path="/www/server/mysql"
-	Data_Path="/www/server/data"
-
-	rm -f /etc/my.cnf
-	mkdir -p ${Setup_Path}
-	rm -rf ${Setup_Path}/*
-	cd ${Setup_Path}
-	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.zip ${Download_Url}/src/alisql-master.zip -T20
-	fi
-	unzip src.zip
-	mv AliSQL-master src
-	cd src
-
-	groupadd mysql
-    useradd -s /sbin/nologin -M -g mysql mysql
-	yum install bison-2.7 -y
-    cmake -DCMAKE_INSTALL_PREFIX=${Setup_Path} -DMYSQL_UNIX_ADDR=/tmp/mysql.sock -DDEFAULT_CHARSET=utf8   -DDEFAULT_COLLATION=utf8_general_ci -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_ARCHIVE_STORAGE_ENGINE=1 -DWITH_BLACKHOLE_STORAGE_ENGINE=1 -DMYSQL_DATADIR=${Data_Path} -DMYSQL_TCP_PORT=3306 -DENABLE_DOWNLOADS=1
-	make && make install
-
-
-	if [ ! -f "${Setup_Path}/bin/mysqld" ];then
-		echo '========================================================'
-		echo -e "\033[31mERROR: AliSQL-$alisql_version installation failed.\033[0m";
-		rm -rf ${Setup_Path}
-		exit 0;
-	fi
-
-	    cat > /etc/my.cnf<<EOF
-[client]
-#password   = your_password
-port        = 3306
-socket      = /tmp/mysql.sock
-
-[mysqld]
-port        = 3306
-socket      = /tmp/mysql.sock
-datadir = ${Data_Path}
-skip-external-locking
-performance_schema_max_table_instances=400
-table_definition_cache=400
-table_open_cache=256
-key_buffer_size = 16M
-max_allowed_packet = 1M
-table_open_cache = 64
-sort_buffer_size = 512K
-net_buffer_length = 8K
-read_buffer_size = 256K
-read_rnd_buffer_size = 512K
-myisam_sort_buffer_size = 8M
-thread_cache_size = 8
-query_cache_size = 8M
-tmp_table_size = 16M
-
-explicit_defaults_for_timestamp = true
-#skip-networking
-max_connections = 500
-max_connect_errors = 100
-open_files_limit = 65535
-
-log-bin=mysql-bin
-binlog_format=mixed
-server-id   = 1
-expire_logs_days = 10
-
-#loose-innodb-trx=0
-#loose-innodb-locks=0
-#loose-innodb-lock-waits=0
-#loose-innodb-cmp=0
-#loose-innodb-cmp-per-index=0
-#loose-innodb-cmp-per-index-reset=0
-#loose-innodb-cmp-reset=0
-#loose-innodb-cmpmem=0
-#loose-innodb-cmpmem-reset=0
-#loose-innodb-buffer-page=0
-#loose-innodb-buffer-page-lru=0
-#loose-innodb-buffer-pool-stats=0
-#loose-innodb-metrics=0
-#loose-innodb-ft-default-stopword=0
-#loose-innodb-ft-inserted=0
-#loose-innodb-ft-deleted=0
-#loose-innodb-ft-being-deleted=0
-#loose-innodb-ft-config=0
-#loose-innodb-ft-index-cache=0
-#loose-innodb-ft-index-table=0
-#loose-innodb-sys-tables=0
-#loose-innodb-sys-tablestats=0
-#loose-innodb-sys-indexes=0
-#loose-innodb-sys-columns=0
-#loose-innodb-sys-fields=0
-#loose-innodb-sys-foreign=0
-#loose-innodb-sys-foreign-cols=0
-
-default_storage_engine = InnoDB
-innodb_data_home_dir = ${Data_Path}
-innodb_data_file_path = ibdata1:10M:autoextend
-innodb_log_group_home_dir = ${Data_Path}
-innodb_buffer_pool_size = 16M
-innodb_log_file_size = 5M
-innodb_log_buffer_size = 8M
-innodb_flush_log_at_trx_commit = 1
-innodb_lock_wait_timeout = 50
-
-[mysqldump]
-quick
-max_allowed_packet = 16M
-
-[mysql]
-no-auto-rehash
-
-[myisamchk]
-key_buffer_size = 20M
-sort_buffer_size = 20M
-read_buffer = 2M
-write_buffer = 2M
-
-[mysqlhotcopy]
-interactive-timeout
-EOF
-
-
-    MySQL_Opt
-    if [ -d "${Data_Path}" ]; then
-        rm -rf ${Data_Path}/*
-    else
-        mkdir -p ${Data_Path}
-    fi
-
-	chown -R mysql:mysql $Setup_Path
-	chown -R mysql:mysql $Data_Path
-    #chown -R mysql:mysql ${Data_Path}
-    ${Setup_Path}/scripts/mysql_install_db --defaults-file=/etc/my.cnf --basedir=${Setup_Path} --datadir=${Data_Path} --user=mysql
-    chgrp -R mysql ${Setup_Path}/.
-    \cp support-files/mysql.server /etc/init.d/mysqld
-    chmod 755 /etc/init.d/mysqld
-
-    cat > /etc/ld.so.conf.d/mysql.conf<<EOF
-    ${Setup_Path}/lib
-    /usr/local/lib
-EOF
-
-
-
-    ldconfig
-	chown mysql:mysql /etc/my.cnf
-    ln -sf ${Setup_Path}/lib/mysql /usr/lib/mysql
-    ln -sf ${Setup_Path}/include/mysql /usr/include/mysql
-	/etc/init.d/mysqld start
-
-
-    ln -sf ${Setup_Path}/bin/mysql /usr/bin/mysql
-    ln -sf ${Setup_Path}/bin/mysqldump /usr/bin/mysqldump
-    ln -sf ${Setup_Path}/bin/myisamchk /usr/bin/myisamchk
-    ln -sf ${Setup_Path}/bin/mysqld_safe /usr/bin/mysqld_safe
-    ln -sf ${Setup_Path}/bin/mysqlcheck /usr/bin/mysqlcheck
-
-
-
-    ${Setup_Path}/bin/mysqladmin -u root password "${mysqlpwd}"
-
-
-	chkconfig --add mysqld
-	chkconfig --level 2345 mysqld off
-
-	cd ${Setup_Path}
-	#rm -f src.zip
-	rm -rf src
-	echo "AliSQL $alisql_version" > ${Setup_Path}/version.pl
-}
 
 Install_MySQL_RPM(){
 	Close_MySQL
@@ -1988,7 +1813,7 @@ Install_Web()
 	rm -rf slemp-khanza/
 	
 	if [ ! -f "phpMyAdmin.zip" ];then
-			wget -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.4.15.6.zip -T20
+			wget -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
 	fi
 	unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
 	dates=`date`;
@@ -2046,12 +1871,11 @@ Select_Install()
 	echo -e "\033[32m2) MySQL 5.5[RPM] \033[0m"
     if [ ${MemTotal} -gt 800 ]; then
 		echo '3) MySQL 5.6'
-		echo -e "\033[32m4) AliSQL 5.6 \033[0m"
 	else
 		echo -e "\033[31m Memory is less than 1GB, hidden MySQL5.6 installation options. \033[0m";
 	fi
 	if [ ${MemTotal} -gt 1800 ]; then
-		echo '5) MySQL 5.7'
+		echo '4) MySQL 5.7'
 	else
 		echo -e "\033[31m Memory less than 2GB, hidden MySQL5.7 installation options. \033[0m";
 	fi
@@ -2094,10 +1918,6 @@ Select_Install()
 			mysql='5.6'
 			;;
 		'4')
-			mysql='AliSQL'
-			mysqlVersion="${alisql_version}"
-			;;
-		'5')
 			mysql='5.7'
 			;;
 		*)
@@ -2287,7 +2107,7 @@ Download_File()
 	#	echo "Download error of default.zip";
 	#	exit 0;
 	#fi
-	wget -c -O phpMyAdmin.zip $Download_Url/src/phpMyAdmin-4.4.15.6.zip -T20
+	wget -c -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
 
 	if [ ! -f "phpMyAdmin.zip" ];then
 		echo "Download error of phpMyAdmin.zip";
@@ -2347,9 +2167,6 @@ Start_Install()
 			;;
 		'5.5[RPM]')
 			Install_MySQL_RPM
-			;;
-		'AliSQL')
-			Install_AliSQL
 			;;
 	esac
 
@@ -2518,12 +2335,11 @@ Install_MySQL()
 	echo -e "\033[32m2) MySQL 5.5[RPM] \033[0m"
     if [ ${MemTotal} -gt 900 ]; then
 		echo '3) MySQL 5.6'
-		echo -e "\033[32m4) AliSQL 5.6 \033[0m"
 	else
 		echo -e "\033[31m Memory is less than 1GB, hidden MySQL5.6 installation options. \033[0m";
 	fi
 	if [ ${MemTotal} -gt 1800 ]; then
-		echo '5) MySQL 5.7'
+		echo '4) MySQL 5.7'
 	else
 		echo -e "\033[31m Memory less than 2GB, hidden MySQL5.7 installation options. \033[0m";
 	fi
@@ -2540,10 +2356,6 @@ Install_MySQL()
 			;;
 		'3')
 			mysql='5.6'
-			;;
-		'4')
-			mysql='AliSQL'
-			mysqlVersion=$alisql_version
 			;;
 		'5')
 			mysql='5.7'
@@ -2587,9 +2399,6 @@ Install_MySQL()
 			;;
 		'5.7')
 			Install_MySQL_57
-			;;
-		'AliSQL')
-			Install_AliSQL
 			;;
 		'5.5[RPM]')
 			Install_MySQL_RPM
