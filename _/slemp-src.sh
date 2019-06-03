@@ -308,22 +308,13 @@ Install_PHP_54()
     sed -i 's/max_execution_time =.*/max_execution_time = 300/g' ${php_setup_path}/etc/php.ini
     sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru/g' ${php_setup_path}/etc/php.ini
     Pear_Pecl_Set
-    Install_Composer
 
 	mkdir -p /usr/local/zend/php54
-    if [ "${Is_64bit}" == "64" ] ; then
-        wget ${Download_Url}/src/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz -T20
+        wget http://downloads.zend.com/guard/6.0.0/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz -T20
         tar zxf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
         \cp ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64/php-5.4.x/ZendGuardLoader.so /usr/local/zend/php54/
 		rm -rf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64
 		#rm -f ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz
-    else
-        wget ${Download_Url}/src/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-i386.tar.gz -T20
-        tar zxf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-i386.tar.gz
-        \cp ZendGuardLoader-70429-PHP-5.4-linux-glibc23-i386/php-5.4.x/ZendGuardLoader.so /usr/local/zend/php54/
-		rm -rf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-i386
-		#rm -f ZendGuardLoader-70429-PHP-5.4-linux-glibc23-i386.tar.gz
-    fi
 
 	wget -O /usr/local/ioncube/ioncube_loader_lin_5.4.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.4.so -T 20
     echo "Write ZendGuardLoader to php.ini..."
@@ -434,21 +425,12 @@ Install_PHP_55()
 
     echo "Install ZendGuardLoader for PHP 5.5..."
     mkdir -p /usr/local/zend/php55
-    if [ "${Is_64bit}" == "64" ] ; then
-        wget ${Download_Url}/src/zend-loader-php5.5-linux-x86_64.tar.gz -T20
+        wget http://downloads.zend.com/guard/7.0.0/zend-loader-php5.5-linux-x86_64.tar.gz -T20
         tar zxf zend-loader-php5.5-linux-x86_64.tar.gz
         mkdir -p /usr/local/zend/
         \cp zend-loader-php5.5-linux-x86_64/ZendGuardLoader.so /usr/local/zend/php55/
 		rm -rf zend-loader-php5.5-linux-x86_64
 		#rm -f zend-loader-php5.5-linux-x86_64.tar.gz
-    else
-        wget ${Download_Url}/src/zend-loader-php5.5-linux-i386.tar.gz
-        tar zxf zend-loader-php5.5-linux-i386.tar.gz
-        mkdir -p /usr/local/zend/
-        \cp zend-loader-php5.5-linux-i386/ZendGuardLoader.so /usr/local/zend/php55/
-		rm -rf zend-loader-php5.5-linux-i386
-		#rm -f zend-loader-php5.5-linux-i386.tar.gz
-    fi
 
 	wget -O /usr/local/ioncube/ioncube_loader_lin_5.5.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.5.so -T 20
 	zend_extension = /usr/local/ioncube/ioncube_loader_lin_5.5.so
@@ -564,19 +546,11 @@ Install_PHP_56()
 
     echo "Install ZendGuardLoader for PHP 5.6..."
     mkdir -p /usr/local/zend/php56
-    if [ "${Is_64bit}" == "64" ] ; then
-        wget ${Download_Url}/src/zend-loader-php5.6-linux-x86_64.tar.gz -T20
+        wget http://downloads.zend.com/guard/7.0.0/zend-loader-php5.6-linux-x86_64.tar.gz -T20
         tar zxf zend-loader-php5.6-linux-x86_64.tar.gz
         \cp zend-loader-php5.6-linux-x86_64/ZendGuardLoader.so /usr/local/zend/php56/
 		rm -rf zend-loader-php5.6-linux-x86_64
 		#rm -f zend-loader-php5.6-linux-x86_64.tar.gz
-    else
-        wget ${Download_Url}/src/zend-loader-php5.6-linux-i386.tar.gz -T20
-        tar zxf zend-loader-php5.6-linux-i386.tar.gz
-        \cp zend-loader-php5.6-linux-i386/ZendGuardLoader.so /usr/local/zend/php56/
-		rm -rf zend-loader-php5.6-linux-i386
-		#rm -f zend-loader-php5.6-linux-i386.tar.gz
-    fi
 
 	wget -O /usr/local/ioncube/ioncube_loader_lin_5.6.so ${Download_Url}/src/ioncube/$Is_64bit/ioncube_loader_lin_5.6.so -T 20
 
@@ -884,25 +858,14 @@ Install_Nginx()
 	rm -rf ${Setup_Path}/*
 	cd ${Setup_Path}
 	if [ ! -f "${Setup_Path}/src.tar.gz" ];then
-		wget -O ${Setup_Path}/src.tar.gz ${Download_Url}/src/nginx-$nginxVersion.tar.gz -T20
+		wget -O ${Setup_Path}/src.tar.gz http://nginx.org/download/nginx-$nginxVersion.tar.gz -T20
 	fi
 	tar -zxvf src.tar.gz
-	if [ "${nginxVersion}" == '-Tengine2.2.0' ];then
-		mv tengine-2.2.0 src
-	else
-		mv nginx-$nginxVersion src
-	fi
+	mv nginx-$nginxVersion src
 	cd src
 
-	if [ "${nginxVersion}" != "1.8.1" ];then
-		if [ "${nginx_version}" == "${nginxVersion}" ];then
-			./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
-		else
-			./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
-		fi
-    else
-		./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
-	fi
+	./configure --user=www --group=www --prefix=${Setup_Path} --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E"
+		
 	make && make install
     cd ../
 
@@ -2065,8 +2028,8 @@ Select_Install()
 {
 	echo '=======================================================';
 	echo "1) Nginx-${nginx_version}[default]";
-	echo '2) Nginx-1.8.1';
-	echo '3) Tengine-2.2.0';
+	echo '2) Nginx-1.14.2';
+	echo '3) Nginx-1.14.2';
 	read -p "Plese select Web Server(1-3 default:1): " type;
 	echo '=======================================================';
 	echo '1) PHP-5.4[default]';
@@ -2108,11 +2071,11 @@ Select_Install()
 			;;
 		'2')
 			type='nginx'
-			nginxVersion='1.8.1'
+			nginxVersion='1.14.2'
 			;;
 		'3')
 			type='nginx'
-			nginxVersion='-Tengine2.2.0'
+			nginxVersion='1.12.2'
 			;;
 		*)
 			type='nginx'
@@ -2699,8 +2662,8 @@ To_Nginx()
 
 	echo '=======================================================';
 	echo "1) Nginx-${nginx_version}";
-	echo '2) Nginx-1.8.1';
-	echo '3) Tengine-2.2.0';
+	echo '2) Nginx-1.14.2';
+	echo '3) Nginx-1.12.2';
 	read -p "Plese select Web Server(1-3 default:1): " type;
 	echo '=======================================================';
 	case "${type}" in
@@ -2710,11 +2673,11 @@ To_Nginx()
 			;;
 		'2')
 			type='nginx'
-			nginxVersion='1.8.1'
+			nginxVersion='1.14.2'
 			;;
 		'3')
 			type='nginx'
-			nginxVersion='-Tengine2.2.0'
+			nginxVersion='1.12.2'
 			;;
 		*)
 			type='nginx'
