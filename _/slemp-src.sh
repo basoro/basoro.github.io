@@ -1815,7 +1815,8 @@ Install_Web()
 	rm -rf slemp-khanza/
 	
 	if [ ! -f "phpMyAdmin.zip" ];then
-			wget -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
+			#wget -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
+			wget -O phpMyAdmin.zip $Download/downloads/phpMyAdmin-4.4.15.6.zip -T20
 	fi
 	unzip -o phpMyAdmin.zip -d /www/server/panel/ > /dev/null 2>&1
 	dates=`date`;
