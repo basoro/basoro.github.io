@@ -138,7 +138,7 @@ Install_Curl()
 	if [ "${curl_status}" != 'curl_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "curl-7.50.3.rpm" ];then
-			wget ${Download}/rpm/${rpm_path}/curl-7.50.3.rpm
+			wget ${Download}/downloads/rpm/${rpm_path}/curl-7.50.3.rpm
 		fi
 		rpm -ivh curl-7.50.3.rpm --force --nodeps
 		#rm -f curl-7.50.3.rpm
@@ -152,7 +152,7 @@ Install_Libiconv()
 	if [ "${libiconv_status}" != 'libiconv_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "libiconv-1.14.rpm" ];then
-			wget ${Download}/rpm/${rpm_path}/libiconv-1.14.rpm
+			wget ${Download}/downloads/rpm/${rpm_path}/libiconv-1.14.rpm
 		fi
 		rpm -ivh libiconv-1.14.rpm --force --nodeps
 		#rm -f libiconv-1.14.rpm
@@ -166,7 +166,7 @@ Install_Libmcrypt()
 	if [ "${libmcrypt_status}" != 'libmcrypt_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "libmcrypt-2.5.8.rpm" ];then
-			wget ${Download}/rpm/${rpm_path}/libmcrypt-2.5.8.rpm
+			wget ${Download}/downloads/rpm/${rpm_path}/libmcrypt-2.5.8.rpm
 		fi
 		rpm -ivh libmcrypt-2.5.8.rpm --force --nodeps
 		#rm -f libmcrypt-2.5.8.rpm
@@ -180,7 +180,7 @@ Install_Mcrypt()
 	if [ "${mcrypt_status}" != 'mcrypty_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "mcrypt-2.6.8.rpm" ];then
-			wget ${Download}/rpm/${rpm_path}/mcrypt-2.6.8.rpm
+			wget ${Download}/downloads/rpm/${rpm_path}/mcrypt-2.6.8.rpm
 		fi
 
 		rpm -ivh mcrypt-2.6.8.rpm --force --nodeps
@@ -195,7 +195,7 @@ Install_Mhash()
 	if [ "${mhash_status}" != 'mhash_installed' ]; then
 		cd ${run_path}
 		if [ ! -f "mhash-0.9.9.9.rpm" ];then
-			wget ${Download}/rpm/${rpm_path}/mhash-0.9.9.9.rpm
+			wget ${Download}/downloads/rpm/${rpm_path}/mhash-0.9.9.9.rpm
 		fi
 		rpm -ivh mhash-0.9.9.9.rpm --force --nodeps
 		#rm -f mhash-0.9.9.9.rpm
@@ -211,7 +211,7 @@ Install_Pcre()
 	    if echo "${Cur_Pcre_Ver}" | grep -vEqi '^8.';then
 			cd ${run_path}
 			if [ ! -f "pcre-8.36.rpm" ];then
-				wget ${Download}/rpm/${rpm_path}/pcre-8.36.rpm
+				wget ${Download}/downloads/rpm/${rpm_path}/pcre-8.36.rpm
 			fi
 			rpm -ivh pcre-8.36.rpm --force --nodeps
 			#rm -f pcre-8.36.rpm
@@ -227,7 +227,7 @@ Install_OpenSSL()
 	if [ "${openssl_status}" != 'openssl_installed' ]; then
 
 		cd ${run_path}
-		wget ${Download}/src/openssl-1.0.2k.tar.gz -T 20
+		wget ${Download}/downloads/src/openssl-1.0.2k.tar.gz -T 20
 		tar xvf openssl-1.0.2k.tar.gz
 		#rm -f openssl-1.0.2k.tar.gz
 		cd openssl-1.0.2k
@@ -848,7 +848,7 @@ Set_PHP_FPM_Opt
 	chkconfig --level 2345 php-fpm-71 off
 	service php-fpm-71 start
 	if [ -d '/www/server/nginx' ];then
-		wget -O /www/server/nginx/conf/enable-php-71.conf ${Download_Url}/conf/enable-php-71.conf -T20
+		wget -O /www/server/nginx/conf/enable-php-71.conf ${Download}/downloads/conf/enable-php-71.conf -T20
 	fi
 	#rm -f ${php_setup_path}/src.tar.gz
 
@@ -888,15 +888,14 @@ Install_Nginx()
     ln -sf ${Setup_Path}/sbin/nginx /usr/bin/nginx
     rm -f ${Setup_Path}/conf/nginx.conf
 
-    #wget -O ${Setup_Path}/conf/nginx.conf ${Download_Url}/conf/nginx.conf -T20
-    wget -O ${Setup_Path}/conf/nginx.conf basoro.id/downloads/nginx.conf -T20
-    wget -O ${Setup_Path}/conf/pathinfo.conf ${Download_Url}/conf/pathinfo.conf -T20
-    wget -O ${Setup_Path}/conf/enable-php.conf ${Download_Url}/conf/enable-php.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-54.conf ${Download_Url}/conf/enable-php-54.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-55.conf ${Download_Url}/conf/enable-php-55.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-56.conf ${Download_Url}/conf/enable-php-56.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-70.conf ${Download_Url}/conf/enable-php-70.conf -T20
-	wget -O ${Setup_Path}/conf/enable-php-71.conf ${Download_Url}/conf/enable-php-71.conf -T20
+    #wget -O ${Setup_Path}/conf/nginx.conf ${Download}/downloads/conf/nginx.conf -T20
+    wget -O ${Setup_Path}/conf/pathinfo.conf ${Download}/downloads/conf/pathinfo.conf -T20
+    wget -O ${Setup_Path}/conf/enable-php.conf ${Download}/downloads/conf/enable-php.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-54.conf ${Download}/downloads/conf/enable-php-54.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-55.conf ${Download}/downloads/conf/enable-php-55.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-56.conf ${Download}/downloads/conf/enable-php-56.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-70.conf ${Download}/downloads/conf/enable-php-70.conf -T20
+	wget -O ${Setup_Path}/conf/enable-php-71.conf ${Download}/downloads/conf/enable-php-71.conf -T20
 	ln -s /usr/local/lib/libpcre.so.1 /lib64/
 	ln -s /usr/local/lib/libpcre.so.1 /lib/
 
@@ -914,8 +913,8 @@ Install_Nginx()
     fi
 	mkdir -p /usr/local/nginx/logs
 	mkdir -p /www/server/nginx/conf/rewrite
-	wget -O /www/wwwroot/default/index.html ${Download_Url}/error/index.html
-    wget -O /etc/init.d/nginx ${Download_Url}/init/nginx.init
+	wget -O /www/wwwroot/default/index.html ${Download}/downloads/error/index.html
+    wget -O /etc/init.d/nginx ${Download}/downloads/init/nginx.init
     chmod +x /etc/init.d/nginx
 
 	chkconfig --add nginx
@@ -1373,11 +1372,10 @@ Install_MySQL_57()
 {
 	Close_MySQL
 	cd ${run_path}
-	#准备安装
 	Setup_Path="/www/server/mysql"
 	Data_Path="/www/server/data"
 	if [ ! -f "boost_1_59_0.tar.gz" ];then
-		wget ${Download_Url}/src/boost_1_59_0.tar.gz -T20
+		wget ${Download}/downloads/src/boost_1_59_0.tar.gz -T20
 	fi
 	tar -zxvf boost_1_59_0.tar.gz
 	cd boost_1_59_0
@@ -1763,7 +1761,7 @@ Install_Yunclient()
 
 
 	yum install glibc.i686 -y
-	wget -c $Download_Url/src/zun.init -T20
+	wget -c ${Download}/downloads/src/zun.init -T20
 	mv -f zun.init  /bin/bt
 	chmod 755 /bin/bt
 
@@ -1781,9 +1779,6 @@ Install_Yunclient()
 	mv -f /www/server/cloud/iconv.so /lib/iconv.so
 	mv -f /www/server/cloud/dp1.so /lib/dp1.so
 	mv -f /www/server/cloud/EThread.so /lib/EThread.so
-	if [ ! -f '/lib/EThread.so.so' ];then
-		wget -O /lib/EThread.so $Download_Url/EThread.so
-	fi
 
 	#rm -f cloud.zip
 	cloud=""
@@ -1985,7 +1980,9 @@ Select_Install()
 	#	yum install wget -y
 	#fi
 	#mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+  
 	isCentos7=`cat /etc/redhat-release | grep 7\..* | grep -i centos`
+  
 	#if [ "${isCentos7}" != '' ];then
 	#	wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS7-Base-163.repo
 	#else
@@ -2033,8 +2030,6 @@ esac" > /etc/init.d/yunclient
 	chkconfig --level 2345 yunclient on
 
 	startTime=`date +%s`
-
-	Download_File
 
 	Start_Install
 	Install_Yunclient
@@ -2088,24 +2083,6 @@ $cloud" > /www/server/default.pl
 	echo -e "Time consuming:\033[32m $outTime \033[0mMinute!"
 }
 
-Download_File()
-{
-	cd ${run_path}
-
-	wget -c $Download/downloads/src/cloud.zip -T20
-	if [ ! -f "cloud.zip" ];then
-		echo "Download error of cloud.zip";
-		exit 0;
-	fi
-	wget -c -O zun.init $Download_Url/src/zun.init -T20
-	wget -c -O phpMyAdmin.zip https://files.phpmyadmin.net/phpMyAdmin/4.4.15.10/phpMyAdmin-4.4.15.10-all-languages.zip -T20
-
-	if [ ! -f "phpMyAdmin.zip" ];then
-		echo "Download error of phpMyAdmin.zip";
-		exit 0;
-	fi
-}
-
 Start_Install()
 {
 	sed -i "s#SELINUX=enforcing#SELINUX=disabled#" /etc/selinux/config
@@ -2143,8 +2120,6 @@ Start_Install()
 	if [ "${type}" == 'nginx' ];then
 		Install_Nginx
 	fi
-
-
 
 	case "${mysql}" in
 		'5.5')
@@ -2208,7 +2183,7 @@ location ~ [^/]\.php(/|$)
 	service nginx reload
 fi
 
-	wget -O /www/server/uninstall.sh $Download_Url/src/uninstall.sh -T20
+	wget -O /www/server/uninstall.sh ${Download}/downloads/src/uninstall.sh -T20
 	rm -rf /patch
 	#rm -f *.gz
 }
@@ -2420,101 +2395,6 @@ RepWeb()
 	Install_Yunclient
 }
 
-CheckPHPVersion()
-{
-	PHPVersion=""
-	if [ -d "/www/server/php/54" ];then
-		PHPVersion="54"
-	fi
-	if [ -d "/www/server/php/55" ];then
-		PHPVersion="55"
-	fi
-	if [ -d "/www/server/php/56" ];then
-		PHPVersion="56"
-	fi
-	if [ -d "/www/server/php/70" ];then
-		PHPVersion="70"
-	fi
-	if [ -d "/www/server/php/71" ];then
-		PHPVersion="71"
-	fi
-	if [ "${PHPVersion}" == '' ];then
-		echo 'Not Install PHP.';
-		exit 0;
-	fi
-}
-
-
-Close_WebServer()
-{
-	if [ -d "/www/server/nginx" ];then
-		service nginx stop
-		chkconfig --del nginx
-		rm -f /etc/init.d/nginx
-		rm -rf /www/server/nginx
-		pkill -9 nginx
-	fi
-}
-
-To_Nginx()
-{
-	CheckPHPVersion
-
-	echo '=======================================================';
-	echo "1) Nginx-${nginx_version}";
-	echo '2) Nginx-1.14.2';
-	echo '3) Nginx-1.12.2';
-	read -p "Plese select Web Server(1-3 default:1): " type;
-	echo '=======================================================';
-	case "${type}" in
-		'1')
-			type='nginx'
-			nginxVersion="${nginx_version}"
-			;;
-		'2')
-			type='nginx'
-			nginxVersion='1.14.2'
-			;;
-		'3')
-			type='nginx'
-			nginxVersion='1.12.2'
-			;;
-		*)
-			type='nginx'
-			nginxVersion="${nginx_version}"
-	esac
-	Close_WebServer
-	Install_Nginx
-
-		echo "
-location ~ [^/]\.php(/|$)
-{
-	try_files \$uri =404;
-	fastcgi_pass  unix:/tmp/php-cgi-${PHPVersion}.sock;
-	fastcgi_index index.php;
-	include fastcgi.conf;
-	#include pathinfo.conf;
-}" > /www/server/nginx/conf/enable-php.conf
-
-	cat /www/server/mysql/default.pl
-	service nginx reload
-	SetWebType
-
-}
-
-SetWebType()
-{
-	service mysqld stop
-	mysqld_safe --skip-grant-tables&
-	echo 'Set WebServer Type..'
-	sleep 8
-	/www/server/mysql/bin/mysql -uroot -e "update bt_default.bt_config set webserver='${type}' where id=1";
-	pkill -9 mysqld_safe
-	pkill -9 mysqld
-	sleep 3
-	service mysqld start
-}
-
 
 Install_Intl()
 {
@@ -2527,7 +2407,7 @@ Install_Intl()
 
 	if [ ! -d "/www/server/php/$php_version/src/ext/intl" ];then
 		mkdir -p /www/server/php/$php_version/src
-		wget -O ext-$php_version.zip ${Download_Url}/install/ext/ext-$php_version.zip -T 20
+		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip -T 20
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
 		#rm -f ext-$php_version.zip
@@ -2580,7 +2460,7 @@ Install_Imap()
 
 	if [ ! -d "/www/server/php/$php_version/src/ext/imap" ];then
 		mkdir -p /www/server/php/$php_version/src
-		wget -O ext-$php_version.zip ${Download_Url}/install/ext/ext-$php_version.zip -T 5
+		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip -T 5
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
 		#rm -f ext-$php_version.zip
@@ -2612,7 +2492,7 @@ Install_Imap()
 			if [ ! -f "/usr/local/imap-2007f/lib/libc-client.a" ];then
 				yum -y install pam-devel krb5*
 				ln -s /usr/lib64 /usr/kerberos/lib
-				wget ${Download_Url}/src/imap-2007f.tar.gz -T 5
+				wget ${Download}/downloads/src/imap-2007f.tar.gz -T 5
 				tar -zxf imap-2007f.tar.gz
 				cd imap-2007f
 				if [ "$Is_64bit" == "64" ];then
@@ -2669,7 +2549,7 @@ Install_Exif()
 
 	if [ ! -d "/www/server/php/$php_version/src/ext/exif" ];then
 		mkdir -p /www/server/php/$php_version/src
-		wget -O ext-$php_version.zip ${Download_Url}/install/ext/ext-$php_version.zip
+		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
 		#rm -f ext-$php_version.zip
@@ -2729,7 +2609,7 @@ Install_Fileinfo()
 
 	if [ ! -d "/www/server/php/$php_version/src/ext/fileinfo" ];then
 		mkdir -p /www/server/php/$php_version/src
-		wget -O ext-$php_version.zip http://download.bt.cn/install/ext/ext-$php_version.zip
+		wget -O ext-$php_version.zip ${Download}/downloads/src/ext-$php_version.zip
 		unzip -o ext-$php_version.zip -d /www/server/php/$php_version/src/ > /dev/null
 		mv /www/server/php/$php_version/src/ext-$php_version /www/server/php/$php_version/src/ext
 		#rm -f ext-$php_version.zip
@@ -2777,10 +2657,6 @@ case $1 in
 		;;
 	rep)
 		RepWeb
-		exit 0;
-		;;
-	nginx)
-		To_Nginx
 		exit 0;
 		;;
 	*)
