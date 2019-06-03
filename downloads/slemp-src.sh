@@ -11,7 +11,7 @@ echo "
 +----------------------------------------------------------------------
 "
 if [ -f "/tmp/bt_lock.pl" ];then
-	echo 'Already in the installation of BT-Panel,Please remove /tmp/bt_lock.pl';
+	echo 'Already in the installation of Panel, please remove /tmp/bt_lock.pl';
 	exit
 fi
 
@@ -23,7 +23,7 @@ Is_64bit=`getconf LONG_BIT`
 run_path="/root"
 
 if [ "${Is_64bit}" == "64" ] ; then
-	echo 'Machine 64 bit. architecture is required!';
+	echo 'Machine 64 bit architecture is required!';
 	exit
 fi 
 
