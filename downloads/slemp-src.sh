@@ -1373,7 +1373,7 @@ Install_MySQL_57()
 	Setup_Path="/www/server/mysql"
 	Data_Path="/www/server/data"
 	if [ ! -f "boost_1_59_0.tar.gz" ];then
-		wget ${Download}/downloads/src/boost_1_59_0.tar.gz -T20
+		wget https://nchc.dl.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz -T20
 	fi
 	tar -zxvf boost_1_59_0.tar.gz
 	cd boost_1_59_0
