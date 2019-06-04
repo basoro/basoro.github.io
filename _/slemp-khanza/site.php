@@ -320,8 +320,9 @@ EOT;
 			SendSocket("ExecShell|chmod 644 {$webdir}/.user.ini|$webdir");
 			SendSocket("ExecShell|chown root.root {$webdir}/.user.ini|$webdir");
 			SendSocket("ExecShell|chattr +i {$webdir}/.user.ini|$webdir");
-			$serverType = $_SESSION['server_type'] == 'nginx' ? 'nginx':'';
-			SendSocket("ExecShell|service ".$serverType." reload");
+			//$serverType = $_SESSION['server_type'] == 'nginx' ? 'nginx':'';
+			//SendSocket("ExecShell|service ".$serverType." reload");
+			SendSocket("ExecShell|service nginx reload");
 		}
 	}
 
