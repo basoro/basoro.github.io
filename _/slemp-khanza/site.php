@@ -251,18 +251,18 @@ function AddSite($own = false){
 	$port 		= str_replace(' ','',I('post.port'));
 	$domain 	= str_replace(' ','',I('post.domain'));
 	$version 	= str_replace(' ','',I('post.version'));
-
-	if(strlen($version) < 2) returnJson(false,'PHP version number cannot be empty!');
-
-	if(!isset($webname)) returnJson(false,'The parameter is incorrect!');
+	
+	if(strlen($version) < 2) returnJson(false,'PHP版本号不能为空!');
+	
+	if(!isset($webname)) returnJson(false,'参数不正确!');
 	if($domain == '')	$domain = $webname;
 
 	$SQL = M('sites');
-
+	//是否重复
 	if($SQL->where("name='$webname'")->getCount()){
-		returnJson(false,'The site you added already exists!');
-	}
-	//if($_SESSION['server_type'] == 'nginx'){
+		returnJson(false,'您添加的站点已存在!');
+	}	
+	if($_SESSION['server_type'] == 'nginx'){
 		$conf=<<<EOT
 server
 	{
@@ -273,88 +273,139 @@ server
 		#error_page 404/404.html;
 		error_page 404 /404.html;
 		error_page 502 /502.html;
-
+		
 		include enable-php-{$version}.conf;
 		include rewrite/{$webname}.conf;
 		location ~ .*\\.(gif|jpg|jpeg|png|bmp|swf)\$
 		{
 			expires      30d;
-			access_log on;
+			access_log on; 
 		}
 		location ~ .*\\.(js|css)?\$
 		{
 			expires      12h;
-			access_log on;
+			access_log on; 
 		}
 		access_log  /www/wwwlogs/{$webname}.log;
 	}
 EOT;
-	//}
-
+	}else{
+		$listen = '';
+		if($port != '80') apacheAddPort($port);
+		$acc = substr(md5(time()),0,8);
+		
+		$httpdVersion = trim(file_get_contents('/www/server/apache/version.pl'));
+		
+		if(strpos($httpdVersion,'2.2.3') !== false){
+			$vName = "NameVirtualHost  *:{$port}\n";
+			$phpConfig = "";
+			
+		}else{
+			$vName = "";
+			$phpConfig =<<<EOT
+	#PHP
+	<FilesMatch \\.php$>
+	        SetHandler "proxy:unix:/tmp/php-cgi-{$version}.sock|fcgi://localhost"
+	</FilesMatch>
+EOT;
+		}
+		
+		
+		$conf=<<<EOT
+{$vName}<VirtualHost *:{$port}>
+	ServerAdmin webmaster@example.com
+	DocumentRoot "{$webdir}"
+	ServerName {$acc}.{$webname}
+	ServerAlias {$webname}
+	ErrorLog "/www/wwwlogs/{$webname}-error_log"
+	CustomLog "/www/wwwlogs/{$webname}-access_log" combined
+	
+	{$phpConfig}
+	
+	#PATH
+	<Directory "{$webdir}">
+	    SetOutputFilter DEFLATE
+	    Options FollowSymLinks
+	    AllowOverride All
+	    Order allow,deny
+	    Allow from all
+	    DirectoryIndex index.php index.html index.htm default.php default.html default.htm
+	</Directory>
+</VirtualHost>
+EOT;
+	
+	}
+	
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
 		$file = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$webname.'.conf';
 		$status = SendSocket("FileAdmin|SaveFile|" . $file);
 		if($status['status']){
 			SendSocket("FileAdmin|AddDir|" . $webdir);
 			if(!file_exists('./conf/defaultDoc.html')){
-				file_put_contents('./conf/defaultDoc.html',file_get_contents('https://basoro.id/downloads/defaultDoc.html'));
+				file_put_contents('./conf/defaultDoc.html',file_get_contents('http://125.88.182.172:5880/conf/index.html'));
 			}
 			if(!file_exists('./conf/404.html')){
-				file_put_contents('./conf/404.html',file_get_contents('https://basoro.id/downloads/404.html'));
+				file_put_contents('./conf/404.html',file_get_contents('http://125.88.182.172:5880/error/404.html'));
 			}
-
-
+			
+			
+			
+			
 			if($_SESSION['server_type'] == 'nginx'){
 				if(!file_exists('./conf/502.html')){
-					file_put_contents('./conf/502.html',file_get_contents('https://basoro.id/downloads/502.html'));
+					file_put_contents('./conf/502.html',file_get_contents('http://125.88.182.172:5880/error/502.html'));
 				}
 				file_put_contents($webdir.'/502.html', file_get_contents('./conf/502.html'));
 				if(!file_exists('/www/server/nginx/conf/rewrite')) SendSocket("FileAdmin|AddDir|/www/server/nginx/conf/rewrite");
 				SendSocket("FileAdmin|AddFile|/www/server/nginx/conf/rewrite/{$webname}.conf");
-
+				
+			}else{
+				if(!file_exists($webdir.'/.htaccess')) file_put_contents($webdir.'/.htaccess', ' ');
 			}
-
+			
 			file_put_contents($webdir.'/index.html', file_get_contents('./conf/defaultDoc.html'));
 			file_put_contents($webdir.'/404.html', file_get_contents('./conf/404.html'));
 			file_put_contents($webdir.'/.user.ini', 'open_basedir='.$webdir.'/:/tmp/:/proc/');
 			SendSocket("ExecShell|chmod 644 {$webdir}/.user.ini|$webdir");
 			SendSocket("ExecShell|chown root.root {$webdir}/.user.ini|$webdir");
 			SendSocket("ExecShell|chattr +i {$webdir}/.user.ini|$webdir");
-			//$serverType = $_SESSION['server_type'] == 'nginx' ? 'nginx':'';
-			//SendSocket("ExecShell|service ".$serverType." reload");
-			SendSocket("ExecShell|service nginx reload");
+			$serverType = $_SESSION['server_type'] == 'nginx' ? 'nginx':'httpd';
+			SendSocket("ExecShell|service ".$serverType." reload");
 		}
 	}
 
+	//检查处理结果
 	if (!$status['status']){
-		$result = array('status'=>false,'code'=>-1,'msg'=>(isset($status['msg'])?$status['msg']:'Connection server interface failed!'));
+		$result = array('status'=>false,'code'=>-1,'msg'=>(isset($status['msg'])?$status['msg']:'连接服务器接口失败!'));
 		if($own){
 			return $result;
 		}
 		ajax_return($result);
 	}
-
-
+	
+		
+	//添加FTP
 	if (I('post.ftp')=='true'){
 		$ftppassword = I('post.ftppassword');
 		$ftpusername = trim(I('post.ftpuser'));
-		$ftpstatus = SendSocket("FTP|add|{$ftpusername}|{$ftppassword}|{$webdir}|1|Read and write|500|500");
+		$ftpstatus = SendSocket("FTP|add|{$ftpusername}|{$ftppassword}|{$webdir}|1|读写|500|500");
 		if(@$ftpstatus['status'] == 'true'){
 			$data = array(
 				'name' 		=> $ftpusername,
 				'password' 	=> $ftppassword,
 				'path' 		=> $webdir,
 				'status' 	=> 1,
-				'ps' 		=> "website: {$webname} FTP account"
+				'ps' 		=> "网站：{$webname} 的FTP帐户"
 			);
 			M('ftps')->add($data);
 			$_SESSION['server_count']['ftps']++;
-			WriteLogs('FTP management', "Add FTP [$ftpusername] success!");
+			WriteLogs('FTP管理', "添加FTP[$ftpusername]成功!");
 		}
 		$retuls = array('status'=>true,'in_ftp'=>true,'ftpUserName'=>$ftpusername,'ftpPassword'=>$ftppassword,'ftpUrl'=>'ftp://'.$_SESSION['serverip'].':'.$_SESSION['port']);
 	}else{
 		$retuls = array('status'=>true,'in_ftp'=>false);
 	}
+	//添加数据库
 	if(I('post.sql') != 'false'){
 		$retuls['sql'] = AddSql();
 	}
@@ -363,12 +414,12 @@ EOT;
 		'name'		=> $webname,
 		'path' 		=> $webdir,
 		'domain' 	=> $domain.':'.$port,
-		'ps'	=> ($ps == '')? 'Fill in the note':$ps,
-		'status' => "running"
+		'ps'	=> ($ps == '')? '填写备注':$ps,
+		'status' => "正在运行"
 	);
 	$_POST['id'] = $SQL->add($data);
 	$_SESSION['server_count']['sites']++;
-	WriteLogs('Website management', 'Add website ['.$webname.'] success!');
+	WriteLogs('网站管理', '添加网站['.$webname.']成功!');
 	if($own){
 		return $retuls;
 	}
