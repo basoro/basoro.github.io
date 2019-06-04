@@ -262,7 +262,7 @@ function AddSite($own = false){
 	if($SQL->where("name='$webname'")->getCount()){
 		returnJson(false,'The site you added already exists!');
 	}
-	if($_SESSION['server_type'] == 'nginx'){
+	//if($_SESSION['server_type'] == 'nginx'){
 		$conf=<<<EOT
 server
 	{
@@ -289,7 +289,7 @@ server
 		access_log  /www/wwwlogs/{$webname}.log;
 	}
 EOT;
-	}
+	//}
 
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
 		$file = '/www/server/'.$_SESSION['server_type'].'/conf/vhost/'.$webname.'.conf';
