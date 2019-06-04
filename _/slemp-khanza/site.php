@@ -217,7 +217,7 @@ function SiteStart(){
 
 	if($data['status']){
 
-		M('sites')->where("id='$id'")->setField('status','running');
+		M('sites')->where("id='$id'")->setField('status','正在运行');
 		serviceWebReload();
 	}
 	returnSocket($data);
