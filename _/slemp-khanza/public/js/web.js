@@ -1,71 +1,56 @@
-/**
- * 取回网站数据列表
- * @param {Number} page   当前页
- * @param {String} search 搜索条件
- */
 function getWeb(page, search) {
 	search = search == undefined ? '':search;
 	var sUrl = '/Ajax.php?action=getData&tojs=getWeb&tab=sites&limit=10&p=' + page + '&search=' + search;
 	var loadT = layer.load();
-	//取回数据
 	$.get(sUrl, function(data) {
 		layer.close(loadT);
-		//构造数据列表
 		var Body = '';
 		for (var i = 0; i < data.data.length; i++) {
-			//当前站点状态
-			if (data.data[i].status == '正在运行' || data.data[i].status == '1') {
-				var status = "<a href='javascript:;' title='停用这个站点' onclick=\"webStop(" + data.data[i].id + ",'" + data.data[i].name + "')\" class='btn-defsult'><span style='color:rgb(92, 184, 92)'>运行中    </span><span style='color:rgb(92, 184, 92)' class='glyphicon glyphicon-pause'></span></a>";
+			if (data.data[i].status == 'running' || data.data[i].status == '1') {
+				var status = "<a href='javascript:;' title='Deactivate this site' onclick=\"webStop(" + data.data[i].id + ",'" + data.data[i].name + "')\" class='btn-defsult'><span style='color:#3498DB;'>Running    </span><span style='color:#3498DB;' class='glyphicon glyphicon-pause'></span></a>";
 			} else {
-				var status = "<a href='javascript:;' title='启用这个站点' onclick=\"webStart(" + data.data[i].id + ",'" + data.data[i].name + "')\" class='btn-defsult'><span style='color:red'>已停止    </span><span style='color:rgb(255, 0, 0);' class='glyphicon glyphicon-play'></span></a>";
+				var status = "<a href='javascript:;' title='Enable this site' onclick=\"webStart(" + data.data[i].id + ",'" + data.data[i].name + "')\" class='btn-defsult'><span style='color:red'>Stopped    </span><span style='color:rgb(255, 0, 0);' class='glyphicon glyphicon-play'></span></a>";
 			}
 
-			//是否有备份
 			if (data.data[i].backup_count > 0) {
-				var backup = "<a href='javascript:;' class='link' onclick=\"getBackup(" + data.data[i].id + ",'" + data.data[i].name + "')\">有打包</a>";
+				var backup = "<a href='javascript:;' class='link' onclick=\"getBackup(" + data.data[i].id + ",'" + data.data[i].name + "')\">Packed</a>";
 			} else {
-				var backup = "<a href='javascript:;' class='link' onclick=\"getBackup(" + data.data[i].id + ",'" + data.data[i].name + "')\">无打包</a>";
+				var backup = "<a href='javascript:;' class='link' onclick=\"getBackup(" + data.data[i].id + ",'" + data.data[i].name + "')\">No packaging</a>";
 			}
-			//是否设置有效期
-			var web_end_time = (data.data[i].due_date == "0000-00-00") ? '永久' : data.data[i].due_date;
-			//分割域名
+			var web_end_time = (data.data[i].due_date == "0000-00-00") ? 'permanent' : data.data[i].due_date;
 			data.data[i].domain = data.data[i].domain == null?"":data.data[i].domain;
 			var domain = data.data[i].domain.split(',');
-			//表格主体
 			Body += "<tr><td style='display:none'><input type='checkbox' name='id' value='" + data.data[i].id + "'></td>\
 					<td><a class='link webtips' href='javascript:;' onclick=\"webEdit(" + data.data[i].id + ",'" + data.data[i].name + "','" + data.data[i].due_date + "','" + data.data[i].addtime + "')\">" + data.data[i].name + " (" + domain.length + ")</td>\
 					<td>" + status + "</td>\
-					<td>" + backup + "</td>\
-					<td><a class='link' title='打开目录' href=\"javascript:openPath('"+data.data[i].path+"');\">" + data.data[i].path + "</a></td>\
-					<td><a class='linkbed' href='javascript:;' data-id='"+data.data[i].id+"'>" + data.data[i].ps + "</a></td>\
+					<td class='visible-lg visible-md visible-sm'>" + backup + "</td>\
+					<td class='visible-lg visible-md visible-sm'><a class='link' title='Open Directory' href=\"javascript:openPath('"+data.data[i].path+"');\">" + data.data[i].path + "</a></td>\
+					<td class='visible-lg visible-md visible-sm'><a class='linkbed' href='javascript:;' data-id='"+data.data[i].id+"'>" + data.data[i].ps + "</a></td>\
 					<td style='text-align:right; color:#bbb'>\
-					<a href='javascript:;' class='link' onclick=\"webEdit(" + data.data[i].id + ",'" + data.data[i].name + "','" + data.data[i].due_date + "','" + data.data[i].addtime + "')\">修改 </a>\
-                        | <a href='javascript:;' class='link' onclick=\"webDelete('" + data.data[i].id + "','" + data.data[i].name + "')\" title='删除站点'>删除</a>\
+					<a href='javascript:;' class='link' onclick=\"webEdit(" + data.data[i].id + ",'" + data.data[i].name + "','" + data.data[i].due_date + "','" + data.data[i].addtime + "')\">Modify </a>\
+                        | <a href='javascript:;' class='link' onclick=\"webDelete('" + data.data[i].id + "','" + data.data[i].name + "')\" title='Delete site'>Delete</a>\
 					</td></tr>"
 		}
-		//输出数据列表
 		$("#webBody").html(Body);
 		$(".btn-more").hover(function(){
 			$(this).addClass("open");
 		},function(){
 			$(this).removeClass("open");
 		});
-		//输出分页
 		$("#webPage").html(data.page);
-		
+
 		$(".linkbed").click(function(){
 			var dataid = $(this).attr("data-id");
 			var databak = $(this).text();
 			if(databak=="空"){
 				databak='';
 			}
-			$(this).hide().after("<input class='baktext' type='text' data-id='"+dataid+"' name='bak' value='" + databak + "' placeholder='备注信息' onblur='GetBakPost(\"sites\")' />");
+			$(this).hide().after("<input class='baktext' type='text' data-id='"+dataid+"' name='bak' value='" + databak + "' placeholder='Remarks' onblur='GetBakPost(\"sites\")' />");
 			$(".baktext").focus();
 		});
 	});
 }
 
-//添加站点
 function webAdd(type) {
 	if (type == 1) {
 		var array;
@@ -74,25 +59,25 @@ function webAdd(type) {
 		var domain = array = $("#mainDomain").val().split("\n");
 		var Webport=[];
 		var checkDomain = domain[0].split('.');
-		
+
 		if(domain[0].indexOf('*') != -1){
-			layer.msg('主域名不能为泛解析!',{icon:5});
+			layer.msg('Primary domain name cannot be panned!',{icon:5});
 			return;
 		}
-		
+
 		if(checkDomain.length < 1 || checkDomain[1].length < 1|| domain[0].length < 5){
-			layer.msg('域名格式不正确，请重新输入!',{icon:5});
+			layer.msg('The domain name is not in the correct format. Please re-enter!',{icon:5});
 			return;
 		}
 		for(var i=1; i<domain.length; i++){
 			domainlist += '"'+domain[i]+'",';
 		}
-		Webport = domain[0].split(":")[1];//主域名端口
+		Webport = domain[0].split(":")[1];
 		if(Webport==undefined){
 			Webport="80";
 		}
-		domainlist = domainlist.substring(0,domainlist.length-1);//子域名json
-		domain ='{"domain":"'+domain[0]+'","domainlist":['+domainlist+'],"count":'+domain.length+'}';//拼接joson
+		domainlist = domainlist.substring(0,domainlist.length-1);
+		domain ='{"domain":"'+domain[0]+'","domainlist":['+domainlist+'],"count":'+domain.length+'}';
 		var loadT = layer.load({
 			shade: true,
 			shadeClose: false
@@ -101,18 +86,18 @@ function webAdd(type) {
 		$.post('/site.php?action=oneKeyAdd', data, function(ret) {
 			var ftpData = '';
 			if (ret.in_ftp) {
-				ftpData = "<p class='p1'>FTP也帮你建好了</p>\
-					 		<p>FTP地址:<strong>" + ret.ftpUrl + "</strong></p>\
-					 		<p>账号:<strong>" + ret.ftpUserName + "</strong></p>\
-					 		<p class='p1'>密码:<strong>" + ret.ftpPassword + "</strong></p>\
-					 		<p>只要将网站上传至以上FTP即可访问!</p>"
+				ftpData = "<p class='p1'>FTP has also helped you build it.</p>\
+					 		<p>FTP address: <strong>" + ret.ftpUrl + "</strong></p>\
+					 		<p>Account number: <strong>" + ret.ftpUserName + "</strong></p>\
+					 		<p class='p1'>Password:<strong>" + ret.ftpPassword + "</strong></p>\
+					 		<p>Just upload the website to the above FTP to access!</p>"
 			}
 			var sqlData = '';
 			if (ret.sql) {
-				sqlData = "<p class='p1'>数据库也帮你建好了</p>\
-					 		<p>数据库名:<strong>" + ret.sql.dataName + "</strong></p>\
-					 		<p>账号:<strong>" + ret.sql.dataUser + "</strong></p>\
-					 		<p class='p1'>密码:<strong>" + ret.sql.password + "</strong></p>"
+				sqlData = "<p class='p1'>The database has also helped you build it.</p>\
+					 		<p>Data storage name: <strong>" + ret.sql.dataName + "</strong></p>\
+					 		<p>Account number: <strong>" + ret.sql.dataUser + "</strong></p>\
+					 		<p class='p1'>Password: <strong>" + ret.sql.password + "</strong></p>"
 			}
 			if (ret.status == true) {
 				getWeb(1);
@@ -128,11 +113,11 @@ function webAdd(type) {
 					content: "<div class='success-msg'>\
 					 	<div class='pic'><img src='/public/img/success-pic.png'></div>\
 					 	<div class='suc-con'>\
-					 		<h3>站点建立完成!</h3>\
+					 		<h3>Site setup completed!</h3>\
 					 		" + ftpData + sqlData + "\
 					 	</div>\
 					 	<div class='bottom-btn' style='text-align: center;'>\
-					 		<a class='close-btn' onclick='layer.closeAll()'>关闭</a>\
+					 		<a class='close-btn' onclick='layer.closeAll()'>Shut down</a>\
 					 	</div>\
 					 </div>",
 				});
@@ -152,10 +137,10 @@ function webAdd(type) {
 		});
 		return;
 	}
-	
+
 	$.get('/site.php?action=GetPHPVersion',function(rdata){
 		var defaultPath = $("#defaultPath").html();
-		var php_version = "<div class='line'><label><span>PHP版本</span></label><select name='version' id='c_k3' style='width:100px'>";
+		var php_version = "<div class='line'><label><span>PHP version</span></label><select name='version' id='c_k3' style='width:100px'>";
 		for(var i=rdata.length-1;i>=0;i--){
             php_version += "<option value='"+rdata[i].version+"'>"+rdata[i].name+"</option>";
         }
@@ -164,51 +149,34 @@ function webAdd(type) {
 			type: 1,
 			skin: 'demo-class',
 			area: '560px',
-			title: '添加网站',
+			title: 'Add website',
 			closeBtn: 2,
 			shift: 0,
 			shadeClose: false,
 			content: "<form class='zun-form-new' id='addweb'>\
 						<div class='line'>\
-		                    <label><span>域名</span></label>\
+		                    <label><span>Domain name</span></label>\
 		                    <div class='info-r'>\
 								<textarea id='mainDomain' name='webname'/></textarea>\
 							</div>\
 						</div>\
 	                    <div class='line'>\
-	                    <label><span>备注</span></label>\
+	                    <label><span>Remarks</span></label>\
 	                    <div class='info-r'>\
-	                    	<input id='Wbeizhu' type='text' name='bak' placeholder='网站备注' style='width:398px' />\
+	                    	<input id='Wbeizhu' type='text' name='bak' placeholder='Website note' style='width:398px' />\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
-	                    <label><span>根目录</span></label>\
+	                    <label><span>Directory</span></label>\
 	                    <div class='info-r'>\
-	                    	<input id='inputPath' type='text' name='path' value='"+defaultPath+"/' placeholder='网站根目录' style='width:398px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
+	                    	<input id='inputPath' type='text' name='path' value='"+defaultPath+"/' placeholder='Website root directory' style='width:398px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
-	                    	<label><span>FTP</span></label>\
-	                    	<div class='info-r'>\
-	                    	<select name='ftp' id='c_k1' style='width:100px'>\
-		                    	<option value='true'>创建</option>\
-		                    	<option value='false' selected>不创建</option>\
-		                    </select>\
-		                    </div>\
-	                    </div>\
-	                    <div class='line' id='ftpss'>\
-	                    <label><span>FTP设置</span></label>\
-	                    <div class='info-r'>\
-		                    <div class='userpassword'><span>用户名：<input id='ftp-user' type='text' name='ftpuser' value='' style='width:150px' /></span>\
-		                    <span class='last'>密码：<input id='ftp-password' type='text' name='ftppassword' value=''  style='width:150px' /></span></div>\
-		                    <p>创建站点的同时，为站点创建一个对应FTP帐户，并且FTP目录指向站点所在目录。</p>\
-	                    </div>\
-	                    </div>\
-	                    <div class='line'>\
-	                    <label><span>数据库</span></label>\
+	                    <label><span>Database</span></label>\
 		                    <select name='sql' id='c_k2' style='width:100px'>\
 		                    	<option value='MySQL'>MySQL</option>\
-		                    	<option value='false' selected>不创建</option>\
+		                    	<option value='false' selected>Not created</option>\
 		                    </select>\
 		                    <select name='codeing' id='c_codeing' style='width:100px'>\
 		                    	<option value='utf8'>UTF-8</option>\
@@ -218,22 +186,22 @@ function webAdd(type) {
 		                    </select>\
 	                    </div>\
 	                    <div class='line' id='datass'>\
-	                    <label><span>数据库设置</span></label>\
+	                    <label><span>Database settings</span></label>\
 	                    <div class='info-r'>\
-		                    <div class='userpassword'><span>用户名：<input id='data-user' type='text' name='datauser' value=''  style='width:150px' /></span>\
-		                    <span class='last'>密码：<input id='data-password' type='text' name='datapassword' value=''  style='width:150px' /></span></div>\
-		                    <p>创建站点的同时，为站点创建一个对应的数据库帐户，方便不同站点使用不同数据库。</p>\
+		                    <div class='userpassword'><span>Username: <input id='data-user' type='text' name='datauser' value=''  style='width:150px' /></span>\
+		                    <span class='last'>Password: <input id='data-password' type='text' name='datapassword' value=''  style='width:150px' /></span></div>\
+		                    <p>While creating the site, create a corresponding database account for the site to facilitate different databases using different databases.</p>\
 	                    </div>\
 	                    </div>\
 						"+php_version+"\
 	                    <div class='submit-btn'>\
-							<button type='button' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>取消</button>\
-							<button type='button' class='btn btn-success btn-sm btn-title' onclick=\"webAdd(1)\">提交</button>\
+							<button type='button' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>Cancel</button>\
+							<button type='button' class='btn btn-info btn-sm btn-title' onclick=\"webAdd(1)\">Submit</button>\
 						</div>\
 	                  </form>",
 		});
 		$(function() {
-			var placeholder = "<div class='placeholder' style='top:10px;left:10px'>每行填写一个域名<br>默认为80端口<br>如另加端口格式为 www.domain.com:88</div>";
+			var placeholder = "<div class='placeholder' style='top:10px;left:10px'>Fill in one domain per line<br>The default is port 80.<br>If the additional port format is www.domain.com:88</div>";
 			$('#mainDomain').after(placeholder);
 			$(".placeholder").click(function(){
 				$(this).hide();
@@ -242,15 +210,13 @@ function webAdd(type) {
 			$('#mainDomain').focus(function() {
 			    $(".placeholder").hide();
 			});
-			
+
 			$('#mainDomain').blur(function() {
 				if($(this).val().length==0){
 					$(".placeholder").show();
-				}  
+				}
 			});
-			
-			
-			//FTP账号数据绑定域名
+
 			$('#mainDomain').on('input', function() {
 				var array;
 				var res,ress;
@@ -271,20 +237,19 @@ function webAdd(type) {
 				if (len > 20) {
 					str = str.substring(0, 20);
 					$(this).val(str);
-					layer.msg('不要超出20个字符', {
+					layer.msg('Do not exceed 20 characters', {
 						icon: 0
 					});
 				}
 			})
-			//获取当前时间时间戳，截取后6位
+
 			var timestamp = new Date().getTime().toString();
 			var dtpw = timestamp.substring(7);
 			$("#data-user").val("sql" + dtpw);
-	
-			//生成n位随机密码
+
 			function _getRandomString(len) {
 				len = len || 32;
-				var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'; // 默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1  
+				var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
 				var maxPos = $chars.length;
 				var pwd = '';
 				for (i = 0; i < len; i++) {
@@ -294,10 +259,10 @@ function webAdd(type) {
 			}
 			$("#ftp-password").val(_getRandomString(10));
 			$("#data-password").val(_getRandomString(10));
-	
-	
+
+
 			$("#ftpss,#datass").hide();
-			//不创建
+
 			$("#c_k1").change(function() {
 					var val = $("#c_k1").val();
 					if (val == 'false') {
@@ -310,7 +275,7 @@ function webAdd(type) {
 						$("#ftpss").show();
 					}
 				})
-				//不创建
+
 			$("#c_k2").change(function() {
 				var val = $("#c_k2").val();
 				if (val == 'false') {
@@ -327,21 +292,20 @@ function webAdd(type) {
 	});
 }
 
-//修改网站目录
 function webPathEdit(id){
 	$.get("/Ajax.php?action=getKey&tab=sites&key=path&id="+id,function(rdata){
 		$.get('/site.php?action=GetDirUserINI&path='+rdata,function(userini){
 			var checkeds = userini.status?'checked':'';
 			var webPathHtml = "<div class='webEdit-box padding-10'>\
-						<div><input type='checkbox' name='userini' id='userini'"+checkeds+" /><label for='userini' style='font-weight:normal'>防跨站攻击</label></div>\
+						<div><input type='checkbox' name='userini' id='userini'"+checkeds+" /><label for='userini' style='font-weight:normal'>Anti-cross-site attack</label></div>\
 						<div class='line' style='margin-top:5px'>\
-							<input type='text' style='width:90%' placeholder='网站根目录' value='"+rdata+"' name='webdir' id='inputPath'>\
+							<input type='text' style='width:90%' placeholder='Website root directory' value='"+rdata+"' name='webdir' id='inputPath'>\
 							<span onclick='ChangePath(&quot;inputPath&quot;)' class='glyphicon glyphicon-folder-open cursor'></span>\
 						</div>\
-						<button class='btn btn-success btn-sm' onclick='SetSitePath("+id+")'>保存</button>\
+						<button class='btn btn-info btn-sm' onclick='SetSitePath("+id+")'>Preservation</button>\
 					</div>";
 			$("#webEdit-con").html(webPathHtml);
-			
+
 			$("#userini").change(function(){
 				$.get('/site.php?action=SetDirUserINI&path='+rdata,function(userini){
 					layer.msg(userini.msg,{icon:userini.status?1:5});
@@ -351,10 +315,9 @@ function webPathEdit(id){
 	});
 }
 
-//提交网站目录
 function SetSitePath(id){
 	var NewPath = $("#inputPath").val();
-	var loadT = layer.msg('正在处理...',{icon:16,time:100000});
+	var loadT = layer.msg('Processing...',{icon:16,time:100000});
 	$.post('/site.php?action=SetPath','id='+id+'&path='+NewPath,function(rdata){
 		layer.close(loadT);
 		var ico = rdata.status?1:5;
@@ -362,37 +325,31 @@ function SetSitePath(id){
 	});
 }
 
-//修改网站备注
 function webBakEdit(id){
 	$.get("/Ajax.php?action=getKey&tab=sites&key=ps&id="+id,function(rdata){
 		var webBakHtml = "<div class='webEdit-box padding-10'>\
 					<div class='line'>\
-					<label><span>网站备注</span></label>\
+					<label><span>Website note</span></label>\
 					<div class='info-r'>\
 					<textarea name='beizhu' id='webbeizhu' col='5' style='width:96%'>"+rdata+"</textarea>\
-					<br><br><button class='btn btn-success btn-sm' onclick='SetSitePs("+id+")'>保存</button>\
+					<br><br><button class='btn btn-info btn-sm' onclick='SetSitePs("+id+")'>Preservation</button>\
 					</div>\
 					</div>";
 		$("#webEdit-con").html(webBakHtml)
 	});
 }
 
-//提交网站备注
 function SetSitePs(id){
 	var myPs = $("#webbeizhu").val();
 	$.get('/Ajax.php?action=setPs&tab=sites&id='+id+'&ps='+myPs,function(rdata){
-		layer.msg(rdata?"修改成功":"无需修改",{icon:rdata?1:5});
+		layer.msg(rdata?"Successfully modified":"No need to modify",{icon:rdata?1:5});
 	});
 }
 
-/**
- * 文件解压
- * @param {int} id 网站标识
- */
 function FilesRar(id,toServer){
 	if(toServer == 1){
 		var data = $("#FilesRar").serialize()+'&id='+id;
-		var loadT = layer.msg('正在通信...',{icon:16,time:10000});
+		var loadT = layer.msg('Right communication...',{icon:16,time:10000});
 		$.get('/site.php?action=FilesZip',data,function(rdata){
 			layer.closeAll();
 			var ico = rdata.status?1:5;
@@ -402,77 +359,71 @@ function FilesRar(id,toServer){
 	}
 	var fileRarHtml = "<div class='webEdit-box padding-10'><form id='FilesRar'>\
 						<div class='line'>\
-							<label><span style='padding-right:2px'>文件名</span></label>\
+							<label><span style='padding-right:2px'>File name</span></label>\
 							<div class='info-r'>\
-								<input type='text' name='files' placeholder='例：Test.zip 或  public/Test.zip' style='width:60%'/>\
-								<button type='button' class='btn btn-success btn-sm' onclick=\"FilesRar(" + id + ",1)\">解压</button>\
-								<p style='line-height: 26px; color: #666'>只支持.zip和tar.gz文件解压</p>\
+								<input type='text' name='files' placeholder='Example: Test.zip or public/Test.zip' style='width:60%'/>\
+								<button type='button' class='btn btn-info btn-sm' onclick=\"FilesRar(" + id + ",1)\">Decompression</button>\
+								<p style='line-height: 26px; color: #666'>Only decompress .zip and tar.gz files</p>\
 							</div>\
 						</div>\
 				      </form></div>";
 	$("#webEdit-con").html(fileRarHtml)
 }
 
-//设置默认文档
 function SetIndexEdit(id){
 	$.get('/site.php?action=GetIndex&id='+id,function(rdata){
 		rdata= rdata.replace(new RegExp(/(,)/g), "\n");
 		var setIndexHtml = "<div class='webEdit-box padding-10'><form id='SetIndex'><div class='SetIndex'>\
 				<div class='line'>\
 						<textarea id='Dindex' name='files' style='margin-top: 2px; margin-bottom: 0px; height: 186px; width:50%; line-height:20px'>"+rdata+"</textarea>\
-						<p style='line-height: 26px; color: #666'>默认文档，每行一个，优先级由上至下。</p>\
-						</br><button type='button' class='btn btn-success btn-sm' onclick='SetIndexList("+id+")'>保存</button>\
+						<p style='line-height: 26px; color: #666'>The default document, one per line, has a priority from top to bottom.</p>\
+						</br><button type='button' class='btn btn-info btn-sm' onclick='SetIndexList("+id+")'>Preservation</button>\
 				</div>\
 				</div></form></div>";
 		$("#webEdit-con").html(setIndexHtml);
 	});
-	
+
 }
 
-//设置上下左右居中
 function divcenter(){
-	$(".layui-layer").css("position","absolute");  
-    var dw = $(window).width();  
-    var ow = $(".layui-layer").outerWidth();  
-    var dh = $(window).height();  
-    var oh = $(".layui-layer").outerHeight();  
-    var l = (dw - ow) / 2;  
-    var t = (dh - oh) / 2 > 0 ? (dh - oh) / 2 : 10;  
-    var lDiff = $(".layui-layer").offset().left - $(".layui-layer").position().left;  
-    var tDiff = $(".layui-layer").offset().top - $(".layui-layer").position().top;  
-    l = l + $(window).scrollLeft() - lDiff;  
-    t = t + $(window).scrollTop() - tDiff;  
-    $(".layui-layer").css("left",l + "px");  
+	$(".layui-layer").css("position","absolute");
+    var dw = $(window).width();
+    var ow = $(".layui-layer").outerWidth();
+    var dh = $(window).height();
+    var oh = $(".layui-layer").outerHeight();
+    var l = (dw - ow) / 2;
+    var t = (dh - oh) / 2 > 0 ? (dh - oh) / 2 : 10;
+    var lDiff = $(".layui-layer").offset().left - $(".layui-layer").position().left;
+    var tDiff = $(".layui-layer").offset().top - $(".layui-layer").position().top;
+    l = l + $(window).scrollLeft() - lDiff;
+    t = t + $(window).scrollTop() - tDiff;
+    $(".layui-layer").css("left",l + "px");
     $(".layui-layer").css("top",t + "px");
 }
 
-/**
- * 停止一个站点
- * @param {Int} wid  网站ID
- * @param {String} wname 网站名称
- */
 function webStop(wid, wname) {
 	layer.open({
 		type: 1,
-	    title: "停用站点["+wname+"]",
+	    title: "Deactivate site ["+wname+"]",
 	    area: '350px',
 	    closeBtn: 2,
 	    shadeClose: true,
 	    content:"<div class='zun-form-new webDelete'>\
-	    	<p style='font-size:14px'>停用后将无法访问，确定停用这个站点吗？</p>\
+	    	<p style='font-size:14px'>Once disabled, you won’t be able to access it. Are you sure you want to disable this site?</p>\
 	    	<div class='submit-btn' style='margin-top:15px'>\
-				<button type='button' id='web_end_time' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>取消</button>\
-		        <button type='button' id='web_del_send' class='btn btn-success btn-sm btn-title'  onclick=\"webStopPub('"+wid+"','"+wname+"')\">确定</button>\
+				<button type='button' id='web_end_time' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>Cancel</button>\
+		        <button type='button' id='web_del_send' class='btn btn-info btn-sm btn-title'  onclick=\"webStopPub('"+wid+"','"+wname+"')\">Determine</button>\
 	        </div>\
 	    </div>"
 	})
 }
+
 function webStopPub(wid,wname){
 	layer.closeAll();
 	var loadT = layer.load();
 	$.get("/site.php?action=SiteStop&id=" + wid + "&name=" + wname, function(ret) {
 		if (ret['status'] == true) {
-			layer.msg('站点已停用', {
+			layer.msg('Site is disabled', {
 				icon: 1
 			});
 			getWeb(1);
@@ -485,23 +436,18 @@ function webStopPub(wid,wname){
 	});
 }
 
-/**
- * 启动一个网站
- * @param {Number} wid 网站ID
- * @param {String} wname 网站名称
- */
 function webStart(wid, wname) {
 	layer.open({
 		type: 1,
-	    title: "启用站点["+wname+"]",
+	    title: "Enable site ["+wname+"]",
 	    area: '350px',
 	    closeBtn: 2,
 	    shadeClose: true,
 	    content:"<div class='zun-form-new webDelete'>\
-	    	<p style='font-size:14px'>是否确定启用站点？</p>\
+	    	<p style='font-size:14px'>Are you sure you want to enable the site?</p>\
 	    	<div class='submit-btn' style='margin-top:15px'>\
-				<button type='button' id='web_end_time' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>取消</button>\
-		        <button type='button' id='web_del_send' class='btn btn-success btn-sm btn-title'  onclick=\"webStartPub('"+wid+"','"+wname+"')\">确定</button>\
+				<button type='button' id='web_end_time' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>Cancel</button>\
+		        <button type='button' id='web_del_send' class='btn btn-info btn-sm btn-title'  onclick=\"webStartPub('"+wid+"','"+wname+"')\">Determine</button>\
 	        </div>\
 	    </div>"
 	})
@@ -512,7 +458,7 @@ function webStartPub(wid,wname){
 	var loadT = layer.load();
 	$.get("/site.php?action=SiteStart&id=" + wid + "&name=" + wname, function(ret) {
 		if (ret['status'] == true) {
-			layer.msg('站点已启动', {
+			layer.msg('Site has started', {
 				icon: 1
 			});
 			getWeb(1);
@@ -525,35 +471,30 @@ function webStartPub(wid,wname){
 	});
 }
 
-/**
- * 删除一个网站
- * @param {Number} wid 网站ID
- * @param {String} wname 网站名称
- */
 function webDelete(wid, wname){
 	layer.open({
 		type: 1,
-	    title: "删除站点["+wname+"]",
+	    title: "Delete site ["+wname+"]",
 	    area: '350px',
 	    closeBtn: 2,
 	    shadeClose: true,
 	    content:"<div class='zun-form-new webDelete'>\
-	    	<p>是否要删除的同名FTP、数据库、根目录</p>\
+	    	<p>Whether to delete the same name FTP, database, root directory</p>\
 	    	<div class='options'>\
 	    	<label><input type='checkbox' id='delftp' name='ftp'><span>FTP</span></label>\
-	    	<label><input type='checkbox' id='deldata' name='data'><span>数据库</span></label>\
-	    	<label><input type='checkbox' id='delpath' name='path'><span>根目录</span></label>\
+	    	<label><input type='checkbox' id='deldata' name='data'><span>Database</span></label>\
+	    	<label><input type='checkbox' id='delpath' name='path'><span>Root directory</span></label>\
 	    	</div>\
-			<div class='vcode'>计算结果：<span class='text'></span>=<input type='text' id='vcodeResult' value=''></div>\
+			<div class='vcode'>Calculation results: <span class='text'></span>=<input type='text' id='vcodeResult' value=''></div>\
 	    	<div class='submit-btn' style='margin-top:15px'>\
-				<button type='button' id='web_end_time' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>取消</button>\
-		        <button type='button' id='web_del_send' class='btn btn-success btn-sm btn-title'  onclick=\"weball('"+wid+"','"+wname+"')\">提交</button>\
+				<button type='button' id='web_end_time' class='btn btn-danger btn-sm btn-title' onclick='layer.closeAll()'>Cancel</button>\
+		        <button type='button' id='web_del_send' class='btn btn-info btn-sm btn-title'  onclick=\"weball('"+wid+"','"+wname+"')\">Submit</button>\
 	        </div>\
 	    </div>"
 	})
 	randomSum()
 }
-//随机生成验证计算
+
 function randomSum(){
 	var a = Math.round(Math.random()*9+1);
 	var b = Math.round(Math.random()*9+1);
@@ -568,7 +509,7 @@ function randomSum(){
 function weball(wid, wname){
 	var sum = $("#vcodeResult").val();
 	var ftp='',data='',path='';
-	
+
 	if($("#delftp").is(":checked")){
 		ftp='&ftp=1';
 	}
@@ -579,11 +520,11 @@ function weball(wid, wname){
 		path='&path=1';
 	}
 	if(navigator.cookieEnabled == false){
-		layer.msg("浏览器cookie功能被禁用，请启用");
+		layer.msg("Browser cookie function is disabled, please enable");
 		return;
 	}
 	if(sum == undefined || sum ==''){
-		layer.msg("输入计算结果，否则无法删除");
+		layer.msg("Enter the calculation result, otherwise it cannot be deleted");
 		return;
 	}
 	else{
@@ -593,28 +534,24 @@ function weball(wid, wname){
 				if (ret == true) {
 					getWeb(1);
 					layer.closeAll();
-					layer.msg('已成功删除', {
+					layer.msg('Deleted successfully', {
 						icon: 1
 					});
 				} else {
 					layer.closeAll();
-					layer.msg('删除失败,请检查站点是否存在!', {
+					layer.msg('Delete failed, please check if the site exists!', {
 						icon: 5
 					});
 				}
 			});
 		}
 		else{
-			layer.msg("计算错误，请重新计算");
+			layer.msg("Calculation error, please recalculate");
 			return;
 		}
 	}
 }
 
-/**
- * 域名管理
- * @param {Int} id 网站ID
- */
 function DomainEdit(id, name,msg) {
 	$.get('/Ajax.php?action=getKey&tab=sites&key=domain&id=' + id, function(retuls) {
 		var domain = retuls.split(',');
@@ -630,9 +567,9 @@ function DomainEdit(id, name,msg) {
 							<div class='divtable'>\
 								<textarea id='newdomain'></textarea>\
 								<input type='hidden' id='newport' value='80' />\
-								<button type='button' class='btn btn-success btn-sm pull-right' style='margin:30px 35px 0 0' onclick=\"DomainAdd(" + id + ",'" + name + "',1)\">添加</button>\
+								<button type='button' class='btn btn-info btn-sm pull-right' style='margin:30px 35px 0 0' onclick=\"DomainAdd(" + id + ",'" + name + "',1)\">Add to</button>\
 								<table class='table table-hover' width='100%' style='margin-bottom:0'>\
-								<thead><tr><th>域名</th><th width='70px'>端口</th><th width='50px' class='text-center'>操作</th></tr></thead>\
+								<thead><tr><th>Domain name</th><th width='70px'>Port</th><th width='50px' class='text-center'>Action</th></tr></thead>\
 								<tbody id='checkDomain'>" + echoHtml + "</tbody>\
 								</table>\
 							</div>\
@@ -641,7 +578,7 @@ function DomainEdit(id, name,msg) {
 		if(msg != undefined){
 			layer.msg(msg,{icon:1});
 		}
-		var placeholder = "<div class='placeholder'>每行填写一个域名!<br>默认为80端口<br>如另加端口格式为 www.domain.com:88</div>";
+		var placeholder = "<div class='placeholder'>Fill in one domain per line!<br>The default is port 80.<br>If the additional port format is www.domain.com:88</div>";
 		$('#newdomain').after(placeholder);
 		$(".placeholder").click(function(){
 			$(this).hide();
@@ -650,11 +587,11 @@ function DomainEdit(id, name,msg) {
 		$('#newdomain').focus(function() {
 		    $(".placeholder").hide();
 		});
-		
+
 		$('#newdomain').blur(function() {
 			if($(this).val().length==0){
 				$(".placeholder").show();
-			}  
+			}
 		});
 		//checkDomain();
 	});
@@ -666,7 +603,7 @@ function DomainRoot(id, name,msg) {
 		var echoHtml = "";
 		for (var i = 0; i < domain.length; i++) {
 			var str = domain[i].split(':');
-			
+
 			if (str[1] == undefined) {
 				str[1] = '80';
 			}
@@ -676,23 +613,23 @@ function DomainRoot(id, name,msg) {
 			type: 1,
 			skin: 'demo-class',
 			area: '450px',
-			title: '域名管理',
+			title: 'Domain management',
 			closeBtn: 2,
 			shift: 0,
 			shadeClose: true,
 			content: "<div class='divtable padding-10'>\
 						<textarea id='newdomain'></textarea>\
 						<input type='hidden' id='newport' value='80' />\
-						<button type='button' class='btn btn-success btn-sm pull-right' style='margin:30px 35px 0 0' onclick=\"DomainAdd(" + id + ",'" + name + "')\">添加</button>\
+						<button type='button' class='btn btn-info btn-sm pull-right' style='margin:30px 35px 0 0' onclick=\"DomainAdd(" + id + ",'" + name + "')\">Add to</button>\
 						<table class='table table-hover' width='100%' style='margin-bottom:0'>\
-						<thead><tr><th>域名</th><th width='70px'>端口</th><th width='50px' class='text-center'>操作</th></tr></thead>\
+						<thead><tr><th>Domain name</th><th width='70px'>Port</th><th width='50px' class='text-center'>Action</th></tr></thead>\
 						<tbody id='checkDomain'>" + echoHtml + "</tbody>\
 						</table></div>"
 		});
 		if(msg != undefined){
 			layer.msg(msg,{icon:1});
 		}
-		var placeholder = "<div class='placeholder'>每行填写一个域名!<br>默认为80端口<br>如另加端口格式为 www.domain.com:88</div>";
+		var placeholder = "<div class='placeholder'>Fill in one domain per line!<br>The default is port 80.<br>If the additional port format is www.domain.com:88</div>";
 		$('#newdomain').after(placeholder);
 		$(".placeholder").click(function(){
 			$(this).hide();
@@ -701,21 +638,21 @@ function DomainRoot(id, name,msg) {
 		$('#newdomain').focus(function() {
 		    $(".placeholder").hide();
 		});
-		
+
 		$('#newdomain').blur(function() {
 			if($(this).val().length==0){
 				$(".placeholder").show();
-			}  
+			}
 		});
 		//checkDomain();
 	});
 }
-//编辑域名/端口
+
 function cancelSend(){
 	$(".changeDomain,.changePort").hide().prev().show();
 	$(".changeDomain,.changePort").remove();
 }
-//遍历域名
+
 function checkDomain() {
 	$("#checkDomain tr").each(function() {
 		var $this = $(this);
@@ -724,17 +661,18 @@ function checkDomain() {
 		checkDomainWebsize($this,domain);
 	})
 }
-//检查域名是否解析备案
+
 function checkDomainWebsize(obj,domain){
-	var gurl = "http://api.zun.gd/ipaddess"
+	//var gurl = "http://api.zun.gd/ipaddess"
+	var gurl = ""
 	var ip = getCookie('iplist');
 	var data = "domain=" + domain+"&ip="+ip;
 	$.ajax({ url: gurl,data:data,type:"get",dataType:"jsonp",async:true ,success: function(rdata){
 		obj.find("td:first-child").find(".lading").remove();
 		if (rdata.code == -1) {
-			obj.find("td:first-child").append("<i class='yf' data-title='该域名未解析'>未解析</i>");
+			obj.find("td:first-child").append("<i class='yf' data-title='The domain name is not resolved'>Unresolved</i>");
 		} else {
-			obj.find("td:first-child").append("<i class='f' data-title='域名解析IP为：" + rdata.data.ip + "<br>当前服务器IP：" + rdata.data.main_ip + "(仅供参考,使用CDN的用户请无视)'>已解析</i>");
+			obj.find("td:first-child").append("<i class='f' data-title='The domain name resolution IP is: " + rdata.data.ip + "<br>Current server IP: " + rdata.data.main_ip + " (for reference only, users who use CDN please ignore)'>Parsed</i>");
 		}
 
 		obj.find("i").mouseover(function() {
@@ -750,11 +688,6 @@ function checkDomainWebsize(obj,domain){
 	}})
 }
 
-/**
- * 添加域名
- * @param {Int} id  网站ID
- * @param {String} webname 主域名
- */
 function DomainAdd(id, webname,type) {
 	var Domain = $("#newdomain").val().split("\n");
 	var domainlist="";
@@ -767,7 +700,7 @@ function DomainAdd(id, webname,type) {
 	$.post('/site.php?action=oneKeyAddDomain', data, function(retuls) {
 		if (retuls >0) {
 			$.get('/config.php?action=ServiceAdmin&name='+getCookie('serverType')+'&type=reload',function(){});
-			var msg = '成功添加'+retuls+'个新域名!';
+			var msg = 'Successfully added '+retuls+' new domain names!';
 			if(type == 1){
 				layer.close(loadT);
 				DomainEdit(id,webname,msg)
@@ -775,34 +708,27 @@ function DomainAdd(id, webname,type) {
 				layer.closeAll();
 				DomainRoot(id,webname,msg);
 			}
-			
+
 		} else {
 			layer.close(loadT);
-			layer.msg('添加失败,域名已存在!', {
+			layer.msg('Add failed, domain name already exists!', {
 				icon: 5
 			});
 		}
 	});
 }
 
-/**
- * 删除域名
- * @param {Number} wid 网站ID
- * @param {String} wname 主域名
- * @param {String} domain 欲删除的域名
- * @param {Number} port 对应的端口
- */
 function delDomain(wid, wname, domain, port,type) {
 	var num = $("#checkDomain").find("tr").length;
 	if(num==1){
-		layer.msg('最后一个域名不能删除！');
+		layer.msg('The last domain name cannot be deleted!');
 	}
-	layer.confirm('您真的要从站点中删除这个域名吗？',{closeBtn:2}, function(index) {
+	layer.confirm('Do you really want to remove this domain from the site?',{closeBtn:2}, function(index) {
 			var url = "/site.php?action=DeleteDomain&id=" + wid + "&webname=" + wname + "&domain=" + domain + "&port=" + port;
 			var loadT = layer.load();
 			$.get(url, function(ret) {
 				if (ret.status == 'true' || ret.status == true) {
-					
+
 					$.get('/config.php?action=ServiceAdmin&name='+getCookie('serverType')+'&type=reload',function(){});
 					if(type == 1){
 						layer.close(loadT);
@@ -811,7 +737,7 @@ function delDomain(wid, wname, domain, port,type) {
 						layer.closeAll();
 						DomainRoot(wid, wname);
 					}
-					
+
 					layer.msg(ret.msg, {
 						icon: 1
 					});
@@ -826,11 +752,6 @@ function delDomain(wid, wname, domain, port,type) {
 	});
 }
 
-/**
- * 判断IP/域名格式
- * @param {String} domain  源文本
- * @return bool
- */
 function IsDomain(domain) {
 		//domain = 'http://'+domain;
 		var re = new RegExp();
@@ -841,26 +762,20 @@ function IsDomain(domain) {
 			return (false);
 		}
 	}
-/**
- * 删除备份
- * @param {Number} bid  文件ID
- * @param {String} path 目录
- * @param {String} wname 网站名称
- * @param {String} file 文件名
- */
+
 function backupDel(bid, path, wname, file) {
-		layer.confirm('删除打包文件将无法恢复，您真的要删除这份打包文件吗？',{closeBtn:2}, function(index) {
+		layer.confirm('Deleting the packaged file will not be recovered. Do you really want to delete this packaged file?',{closeBtn:2}, function(index) {
 			if (index > 0) {
 				var url = "/Web/delete_backup?id=" + bid + "&path=" + path + "&name=" + wname + "&file=" + file;
 				var loadT = layer.load();
 				$.get(url, function(ret) {
 					if (ret == true) {
-						layer.msg('文件删除成功', {
+						layer.msg('File deleted successfully', {
 							icon: 1
 						});
 						getWeb(1);
 					} else {
-						layer.msg('删除失败', {
+						layer.msg('Failed to delete', {
 							icon: 5
 						});
 					}
@@ -870,16 +785,8 @@ function backupDel(bid, path, wname, file) {
 		});
 	}
 
-
-
-/**
- *设置数据库备份
- * @param {Number} sign	操作标识
- * @param {Number} id	编号
- * @param {String} name	主域名
- */
 function WebBackup(id, name) {
-		var loadT =layer.msg('正在打包，请稍候...', {icon: 16,time:0});
+		var loadT =layer.msg('Packing, please wait...', {icon: 16,time:0});
 		var data = "id="+id;
 		$.post('/site.php?action=ToBackup', data, function(rdata) {
 			if (rdata.status == true) {
@@ -897,15 +804,9 @@ function WebBackup(id, name) {
 		});
 }
 
-/**
- *删除网站备份
- * @param {Number} webid	网站编号
- * @param {Number} id	文件编号
- * @param {String} name	主域名
- */
 function WebBackupDelete(id,pid) {
-	layer.confirm('真的要删除备份包吗?',{title:'删除备份文件',closeBtn:2},function(index){
-		var loadT =layer.msg('正在删除，请稍候...', {icon: 16,time:0});
+	layer.confirm('Really want to delete the backup package?',{title:'Delete backup file',closeBtn:2},function(index){
+		var loadT =layer.msg('Deleting, please wait...', {icon: 16,time:0});
 		$.get('/site.php?action=DelBackup&id='+id, function(rdata) {
 			layer.closeAll();
 			layer.msg(rdata.msg,{icon:rdata.status?1:5});
@@ -921,15 +822,15 @@ function getBackup(id, mainDomain) {
 			type: 1,
 			skin: 'demo-class',
 			area: '700px',
-			title: '打包备份',
+			title: 'Package backup',
 			closeBtn: 2,
 			shift: 0,
 			shadeClose: true,
 			content: "<form class='zun-form' id='WebBackup' style='max-width:98%'>\
-						<button class='btn btn-default btn-sm' style='margin-right:10px' type='button' onclick=\"WebBackup('" + rdata.id + "','" + rdata.name + "')\">打包备份</button>\
+						<button class='btn btn-default btn-sm' style='margin-right:10px' type='button' onclick=\"WebBackup('" + rdata.id + "','" + rdata.name + "')\">Package backup</button>\
 						</form>\
 						<div class='divtable' style='margin:17px'><table width='100%' id='WebBackupList' class='table table-hover'>\
-						<thead><tr><th>文件名称</th><th>文件大小</th><th>打包时间</th><th width='140px' class='text-right'>操作</th></tr></thead>\
+						<thead><tr><th>File name</th><th>File size</th><th>Packing time</th><th width='140px' class='text-right'>Action</th></tr></thead>\
 						<tbody id='WebBackupBody' class='list-list'></tbody>\
 						</table></div>"
 		});
@@ -940,11 +841,11 @@ function getBackup(id, mainDomain) {
 				var body = '';
 				for (var i = 0; i < frdata.data.length; i++) {
 					if(frdata.data[i].type == '1') continue;
-					var ftpdown = "<a class='link' href='/files.php?action=GetFileBytes&file="+frdata.data[i].filename+"&name="+frdata.data[i].name+"' target='_blank'>下载</a> | ";
+					var ftpdown = "<a class='link' href='/files.php?action=GetFileBytes&file="+frdata.data[i].filename+"&name="+frdata.data[i].name+"' target='_blank'>Download</a> | ";
 					body += "<tr><td><span class='glyphicon glyphicon-file'></span>"+frdata.data[i].name+"</td>\
 							<td>" + (ToSize(frdata.data[i].size)) + "</td>\
 							<td>" + frdata.data[i].addtime + "</td>\
-							<td class='text-right' style='color:#ccc'>"+ ftpdown + "<a class='link' href='javascript:;' onclick=\"WebBackupDelete('" + frdata.data[i].id + "',"+id+")\">删除</a></td>\
+							<td class='text-right' style='color:#ccc'>"+ ftpdown + "<a class='link' href='javascript:;' onclick=\"WebBackupDelete('" + frdata.data[i].id + "',"+id+")\">Delete</a></td>\
 						</tr>"
 				}
 				$("#WebBackupBody").html(body);
@@ -955,13 +856,11 @@ function getBackup(id, mainDomain) {
 }
 
 function goSet(num) {
-	//取选中对象
 	var el = document.getElementsByTagName('input');
 	var len = el.length;
 	var data = '';
 	var a = '';
 	var count = 0;
-	//构造POST数据
 	for (var i = 0; i < len; i++) {
 		if (el[i].checked == true && el[i].value != 'on') {
 			data += a + count + '=' + el[i].value;
@@ -969,7 +868,6 @@ function goSet(num) {
 			count++;
 		}
 	}
-	//判断操作类别
 	if(num==1){
 		reAdd(data);
 	}
