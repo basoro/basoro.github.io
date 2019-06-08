@@ -124,8 +124,8 @@
 								<?php foreach($ConfigInfo['php'] as $key=>$value){ if(!$value['setup']) continue; ?>
 								<tr>
 									<td>PHP version:<?php echo $key; ?> </td>
-									<td><a href="javascript:openPath('/www/server/php/<?php echo $key; ?>');">/www/server/php/<?php echo $key; ?></a></td>
-									<td>
+									<td class="visible-lg visible-md visible-sm"><a href="javascript:openPath('/www/server/php/<?php echo $key; ?>');">/www/server/php/<?php echo $key; ?></a></td>
+									<td class="visible-lg visible-md visible-sm">
 										<a class="link" href="javascript:GetConfigFile('<?php echo $key; ?>');">Modify</a> |
 										<a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','reload');">Overload</a> |
 										<a class="link"><label style="font-weight:normal"><input name="PATH_INFO" type="checkbox" onchange="SetPathInfo('<?php echo $key; ?>','<?php if(!$value['pathinfo']){echo 'off';}else{echo 'on';}  ?>');" style="vertical-align: -2px; margin-right: 3px; margin-left: 1px;" <?php if(!$value['pathinfo']){ echo 'checked';}else{echo '';} ?> />PATH_INFO</label></a> |
