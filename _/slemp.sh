@@ -2142,7 +2142,6 @@ Start_Install()
 	esac
 
 	echo "${vphp}" > /www/server/php/version.pl
-	echo "${vstr}" > /www/server/php-default.pl
 
 	ver_sock=$vstr
 
