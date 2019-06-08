@@ -23,9 +23,9 @@ function getWeb(page, search) {
 			Body += "<tr><td style='display:none'><input type='checkbox' name='id' value='" + data.data[i].id + "'></td>\
 					<td><a class='link webtips' href='javascript:;' onclick=\"webEdit(" + data.data[i].id + ",'" + data.data[i].name + "','" + data.data[i].due_date + "','" + data.data[i].addtime + "')\">" + data.data[i].name + " (" + domain.length + ")</td>\
 					<td>" + status + "</td>\
-					<td class='visible-lg visible-md visible-sm'>" + backup + "</td>\
-					<td class='visible-lg visible-md visible-sm'><a class='link' title='Open Directory' href=\"javascript:openPath('"+data.data[i].path+"');\">" + data.data[i].path + "</a></td>\
-					<td class='visible-lg visible-md visible-sm'><a class='linkbed' href='javascript:;' data-id='"+data.data[i].id+"'>" + data.data[i].ps + "</a></td>\
+					<td>" + backup + "</td>\
+					<td><a class='link' title='Open Directory' href=\"javascript:openPath('"+data.data[i].path+"');\">" + data.data[i].path + "</a></td>\
+					<td><a class='linkbed' href='javascript:;' data-id='"+data.data[i].id+"'>" + data.data[i].ps + "</a></td>\
 					<td style='text-align:right; color:#bbb'>\
 					<a href='javascript:;' class='link' onclick=\"webEdit(" + data.data[i].id + ",'" + data.data[i].name + "','" + data.data[i].due_date + "','" + data.data[i].addtime + "')\">Modify </a>\
                         | <a href='javascript:;' class='link' onclick=\"webDelete('" + data.data[i].id + "','" + data.data[i].name + "')\" title='Delete site'>Delete</a>\
@@ -167,9 +167,26 @@ function webAdd(type) {
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
-	                    <label><span>Directory</span></label>\
+	                    <label><span>Root directory</span></label>\
 	                    <div class='info-r'>\
 	                    	<input id='inputPath' type='text' name='path' value='"+defaultPath+"/' placeholder='Website root directory' style='width:398px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
+	                    </div>\
+	                    </div>\
+	                    <div class='line'>\
+	                    	<label><span>FTP</span></label>\
+	                    	<div class='info-r'>\
+	                    	<select name='ftp' id='c_k1' style='width:100px'>\
+		                    	<option value='true'>Create</option>\
+		                    	<option value='false' selected>Not created</option>\
+		                    </select>\
+		                    </div>\
+	                    </div>\
+	                    <div class='line' id='ftpss'>\
+	                    <label><span>FTP settings</span></label>\
+	                    <div class='info-r'>\
+		                    <div class='userpassword'><span>Username: <input id='ftp-user' type='text' name='ftpuser' value='' style='width:150px' /></span>\
+		                    <span class='last'>Password: <input id='ftp-password' type='text' name='ftppassword' value=''  style='width:150px' /></span></div>\
+		                    <p>While creating the site, create a corresponding FTP account for the site, and the FTP directory points to the directory where the site is located.</p>\
 	                    </div>\
 	                    </div>\
 	                    <div class='line'>\
