@@ -133,7 +133,7 @@
 					<div class="bw zun-updata">
 					<div class="bg">
 					<div class="bw-title">Items
-						<div class="pull-right phpinfo" style="display:none;">
+						<div class="pull-right phpinfo">
 							<span>Panel currently uses PHP version</span>
 							<select id="phpinfo" style="vertical-align:-1px; height:22px">
 								<option>PHP-5.4</option>
@@ -179,24 +179,14 @@
 									<tr>
 										<td style="padding-left:18px">PHP version：<?php echo $key; ?> </td>
 										<td class="visible-lg visible-md visible-sm"><a class="link" href="javascript:GetConfigFile('<?php echo $key; ?>');">Config</a>
-											<?php if(strpos($ConfigInfo['web']['version'],'2.2.3') === false){ ?>
 											 | <a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','reload');">Reload</a> |
 											<a class="link" href="javascript:GetPHPStatus('<?php echo $key; ?>');">Status</a></td>
 										<td><span class="<?php if($value['status']){ echo 'ico-start glyphicon glyphicon-play';}else{echo 'ico-stop glyphicon glyphicon-stop';}?>"></span></td>
 										<td style="text-align: right;padding-right:18px"><!--<a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','restart');">Restart</a>-->
 											<?php if($value['status']){ ?>
-												 <?php if($key != $ConfigInfo['default']['version']) { ?>
-												 	 <a class="link" href="javascript:stopPHP('<?php echo $key; ?>');">Stop</a></td>
-												 <?php } else { ?>
-												 	 <a class="link" href="javascript:ServiceAdmin('php-fpm-<?php echo $key; ?>','restart');">Restart</a>
-												 <?php } ?>
+												 | <a class="link" href="javascript:stopPHP('<?php echo $key; ?>');">Stop</a></td> 
 											<?php }else{ ?>
-												 <a class="link" href="javascript:startPHP('<?php echo $key; ?>');">Start</a></td>
-											<?php } ?>
-
-											<?php }else{ ?>
-												<td>php_mod</td>
-												<td></td>
+												 | <a class="link" href="javascript:startPHP('<?php echo $key; ?>');">Start</a></td>
 											<?php } ?>
 									</tr>
 									<?php } ?>
