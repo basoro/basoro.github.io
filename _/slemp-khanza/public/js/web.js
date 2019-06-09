@@ -132,7 +132,7 @@ function webAdd(type) {
 
 	$.get('/site.php?action=GetPHPVersion',function(rdata){
 		var defaultPath = $("#defaultPath").html();
-		var php_version = "<div class='line'><label><span>PHP version</span></label><select name='version' id='c_k3' style='width:100px'>";
+		var php_version = "<div class='line'><label><span>PHP</span></label><select name='version' id='c_k3' style='width:100px'>";
 		for(var i=rdata.length-1;i>=0;i--){
             php_version += "<option value='"+rdata[i].version+"'>"+rdata[i].name+"</option>";
         }
@@ -147,7 +147,7 @@ function webAdd(type) {
 			shadeClose: false,
 			content: "<form class='zun-form-new' id='addweb'>\
 						<div class='line'>\
-		                    <label><span>Domain name</span></label>\
+		                    <label><span>Domain</span></label>\
 		                    <div class='info-r'>\
 								<textarea id='mainDomain' name='webname'/></textarea>\
 							</div>\
