@@ -672,7 +672,7 @@ function DomainAdd(id, webname,type) {
 	var data = "domain=" + domainlist + "&webname=" + webname + "&id=" + id;
 	$.post('/site.php?action=oneKeyAddDomain', data, function(retuls) {
 		if (retuls >0) {
-			$.get('/config.php?action=ServiceAdmin&name='+getCookie('serverType')+'&type=reload',function(){});
+			$.get('/config.php?action=ServiceAdmin&name=nginx&type=reload',function(){});
 			var msg = 'Successfully added '+retuls+' new domain names!';
 			if(type == 1){
 				layer.close(loadT);
