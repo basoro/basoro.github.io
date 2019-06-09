@@ -84,14 +84,6 @@ function webAdd(type) {
 		});
 		var data = $("#addweb").serialize()+"&port="+Webport+"&webname="+domain;
 		$.post('/site.php?action=oneKeyAdd', data, function(ret) {
-			var ftpData = '';
-			if (ret.in_ftp) {
-				ftpData = "<p class='p1'>FTP has also helped you build it.</p>\
-					 		<p>FTP address: <strong>" + ret.ftpUrl + "</strong></p>\
-					 		<p>Account number: <strong>" + ret.ftpUserName + "</strong></p>\
-					 		<p class='p1'>Password:<strong>" + ret.ftpPassword + "</strong></p>\
-					 		<p>Just upload the website to the above FTP to access!</p>"
-			}
 			var sqlData = '';
 			if (ret.sql) {
 				sqlData = "<p class='p1'>The database has also helped you build it.</p>\
@@ -114,7 +106,7 @@ function webAdd(type) {
 					 	<div class='pic'><img src='/public/img/success-pic.png'></div>\
 					 	<div class='suc-con'>\
 					 		<h3>Site setup completed!</h3>\
-					 		" + ftpData + sqlData + "\
+					 		" + sqlData + "\
 					 	</div>\
 					 	<div class='bottom-btn' style='text-align: center;'>\
 					 		<a class='close-btn' onclick='layer.closeAll()'>Shut down</a>\
@@ -228,7 +220,6 @@ function webAdd(type) {
 				if(res.length > 16) res = res.substr(0,16);
 				if($("#inputPath").val().substr(0,defaultPath.length) == defaultPath) $("#inputPath").val(defaultPath+'/'+ress);
 				$("#Wbeizhu").val(ress);
-				$("#ftp-user").val(res);
 				$("#data-user").val(res);
 			})
 			$('#Wbeizhu').on('input', function() {
@@ -257,24 +248,10 @@ function webAdd(type) {
 				}
 				return pwd;
 			}
-			$("#ftp-password").val(_getRandomString(10));
 			$("#data-password").val(_getRandomString(10));
 
 
-			$("#ftpss,#datass").hide();
-
-			$("#c_k1").change(function() {
-					var val = $("#c_k1").val();
-					if (val == 'false') {
-						$("#ftp-user").attr("disabled", true);
-						$("#ftp-password").attr("disabled", true);
-						$("#ftpss").hide();
-					} else {
-						$("#ftp-user").attr("disabled", false);
-						$("#ftp-password").attr("disabled", false);
-						$("#ftpss").show();
-					}
-				})
+			$("#datass").hide();
 
 			$("#c_k2").change(function() {
 				var val = $("#c_k2").val();
@@ -479,11 +456,10 @@ function webDelete(wid, wname){
 	    closeBtn: 2,
 	    shadeClose: true,
 	    content:"<div class='zun-form-new webDelete'>\
-	    	<p>Whether to delete the same name FTP, database, root directory</p>\
+	    	<p>Whether to delete the same name database, root directory</p>\
 	    	<div class='options'>\
-	    	<label><input type='checkbox' id='delftp' name='ftp'><span>FTP</span></label>\
 	    	<label><input type='checkbox' id='deldata' name='data'><span>Database</span></label>\
-	    	<label><input type='checkbox' id='delpath' name='path'><span>Root directory</span></label>\
+	    	<label><input type='checkbox' id='delpath' name='path'><span>Directory</span></label>\
 	    	</div>\
 			<div class='vcode'>Calculation results: <span class='text'></span>=<input type='text' id='vcodeResult' value=''></div>\
 	    	<div class='submit-btn' style='margin-top:15px'>\
@@ -508,11 +484,8 @@ function randomSum(){
 }
 function weball(wid, wname){
 	var sum = $("#vcodeResult").val();
-	var ftp='',data='',path='';
+	var data='',path='';
 
-	if($("#delftp").is(":checked")){
-		ftp='&ftp=1';
-	}
 	if($("#deldata").is(":checked")){
 		data='&data=1';
 	}
@@ -530,7 +503,7 @@ function weball(wid, wname){
 	else{
 		if(sum == getCookie("vcodesum")){
 			var loadT = layer.load()
-			$.get("/site.php?action=DeleteSite&id=" + wid + "&webname=" + wname+ftp+data+path, function(ret) {
+			$.get("/site.php?action=DeleteSite&id=" + wid + "&webname=" + wname+data+path, function(ret) {
 				if (ret == true) {
 					getWeb(1);
 					layer.closeAll();

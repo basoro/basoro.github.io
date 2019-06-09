@@ -152,12 +152,6 @@ ul.sub li.current a,ul.sub li a:hover {
 .sub .current .menu_web,.sub .menu_web:hover{
 	background-image:url("../img/ico/menu_icon_web_active.png");
 }
-.sub .menu_ftp{
-	background-image:url("../img/ico/menu_icon_ftp.png");
-}
-.sub .current .menu_ftp,.sub .menu_ftp:hover{
-	background-image:url("../img/ico/menu_icon_ftp_active.png");
-}
 .sub .menu_data{
 	background-image:url("../img/ico/menu_icon_data.png");
 }

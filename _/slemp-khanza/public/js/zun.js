@@ -145,8 +145,6 @@ function setWebPs(tab, id, bakText) {
 		if (ret == true) {
 			if (tab == 'sites') {
 				getWeb(1);
-			} else if (tab == 'ftps') {
-				getFtp(1);
 			} else {
 				getData(1);
 			}
@@ -847,9 +845,6 @@ function GetConfigFile(type){
 		case 'nginx':
 			fileName = '/www/server/nginx/conf/nginx.conf';
 			break;
-		case 'pure-ftpd':
-			fileName = '/www/server/pure-ftpd/etc/pure-ftpd.conf';
-			break;
 		default:
 			fileName = '/www/server/php/'+type+'/etc/php.ini';
 			break;
@@ -929,7 +924,7 @@ function btcopy(){
 	})
 }
 
-function isChineseChar(str){   
+function isChineseChar(str){
    var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
    return reg.test(str);
 }

@@ -172,8 +172,6 @@ function GetConfigInfo(){
 	$data['web']['version'] = file_get_contents('/www/server/'.$_SESSION['server_type'].'/version.pl');
 	$data['mysql']['version'] = file_get_contents('/www/server/mysql/version.pl');
 	$data['mysql']['status'] = file_exists('/tmp/mysql.sock');
-	$data['pure-ftpd']['version'] = file_get_contents('/www/server/pure-ftpd/version.pl');
-	$data['pure-ftpd']['status'] = file_exists('/var/run/pure-ftpd.pid');
 	return $data;
 }
 

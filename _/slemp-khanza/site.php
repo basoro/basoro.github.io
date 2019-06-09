@@ -334,26 +334,6 @@ EOT;
 	}
 
 
-	if (I('post.ftp')=='true'){
-		$ftppassword = I('post.ftppassword');
-		$ftpusername = trim(I('post.ftpuser'));
-		$ftpstatus = SendSocket("FTP|add|{$ftpusername}|{$ftppassword}|{$webdir}|1|Read and write|500|500");
-		if(@$ftpstatus['status'] == 'true'){
-			$data = array(
-				'name' 		=> $ftpusername,
-				'password' 	=> $ftppassword,
-				'path' 		=> $webdir,
-				'status' 	=> 1,
-				'ps' 		=> "website: {$webname} FTP account"
-			);
-			M('ftps')->add($data);
-			$_SESSION['server_count']['ftps']++;
-			WriteLogs('FTP management', "Add FTP [$ftpusername] success!");
-		}
-		$retuls = array('status'=>true,'in_ftp'=>true,'ftpUserName'=>$ftpusername,'ftpPassword'=>$ftppassword,'ftpUrl'=>'ftp://'.$_SESSION['serverip'].':'.$_SESSION['port']);
-	}else{
-		$retuls = array('status'=>true,'in_ftp'=>false);
-	}
 	if(I('post.sql') != 'false'){
 		$retuls['sql'] = AddSql();
 	}
@@ -620,29 +600,10 @@ function DeleteSite(){
 		if(isset($_GET['data'])){
 			DeleteDatabase();
 		}
-		if(isset($_GET['ftp'])){
-			DeleteFtp();
-		}
 		ajax_return(true);
 	}else{
 		WriteLogs('Website management', "Delete website [".I('get.webname').'] failure!');
 		ajax_return(false);
-	}
-}
-
-function DeleteFtp(){
-	$webname = $_GET['webname'];
-	$SQL = M('ftps');
-	$ftpData = $SQL->where("ps like '%$webname%'")->find();
-	$username = $ftpData['name'];
-	$ret = SendSocket('FTP|delete|'.$username.'|no|');
-	if($ret['status'] == 'true'){
-		$SQL->where("id='".$ftpData['id']."'")->delete();
-		WriteLogs('FTP management', 'Delete FTP ['.$username.'] success!');
-		$_SESSION['server_count']['ftps']--;
-		return true;
-	}else{
-		return false;
 	}
 }
 
@@ -1124,18 +1085,10 @@ function GetPHPVersion(){
 	$phpVersions = array('54','55','56','70','71','72','73');
 	$data = array();
 	$i = 0;
-	$httpdVersion = "";
-	$filename = '/www/server/apache/version.pl';
-	if(file_exists($filename)) $httpdVersion = trim(file_get_contents($filename));
 
 	foreach($phpVersions as $val){
-		if(strpos($httpdVersion,'2.2.3') !== false){
-			$filename = '/www/server/php/'.$val.'/bin/php';
-		}else{
-			$filename = '/tmp/php-cgi-'.$val.'.sock';
-		}
+		$filename = '/tmp/php-cgi-'.$val.'.sock';
 		if(file_exists($filename) == true){
-			if($_SESSION['server_type'] != 'nginx' && $val == '52' && strpos($httpdVersion,'2.2.3') === false) continue;
 			$data[$i]['version'] = $val;
 			$data[$i]['name'] = 'PHP-'.$val;
 			$i++;

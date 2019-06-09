@@ -17,7 +17,6 @@ function ServiceAdmin(){
 
 	if($type == 'test') returnJson(true, 'Configuration detection pass!');
 	$exec = "service $name $type";
-	if($exec == 'service pure-ftpd reload') $exec = '/www/server/pure-ftpd/bin/pure-pw mkdb /www/server/pure-ftpd/etc/pureftpd.pdb';
 	if($name == 'nginx' && $type == 'restart'){
 		SendSocket("ExecShell|pkill -9 nginx");
 		SendSocket("ExecShell|service nginx start");

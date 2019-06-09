@@ -186,9 +186,6 @@ function GetWhere($tableName){
 		case 'sites':
 			$where = "id like binary '$search' or  name like binary '%$search%' or status like binary '$search' or domain like binary '%$search%' or ps like binary '%$search%'";
 			break;
-		case 'ftps':
-			$where = "id like binary '$search' or  name like binary '%$search%' or ps like binary '%$search%'";
-			break;
 		case 'databases':
 			$where = "id like binary '$search' or  name like binary '%$search%' or ps like binary '%$search%'";
 			break;
