@@ -811,7 +811,7 @@ function AddDomain($own=false){
 	}
 
 
-	if($_SESSION['server_type'] == 'nginx'){
+	//if($_SESSION['server_type'] == 'nginx'){
 		$file = '/www/server/nginx/conf/vhost/'.$_POST['webname'].'.conf';
 		$conf = file_get_contents($file);
 
@@ -828,7 +828,7 @@ function AddDomain($own=false){
 		if(!in_array(''.$_POST['port'],$tmp[1])){
 			$conf = str_replace($tmp[0][0],$tmp[0][0]."\n	listen ".$_POST['port'].";",$conf);
 		}
-	}
+	//}
 
 	if (file_put_contents('/tmp/read.tmp', $conf)) {
 		SendSocket('FileAdmin|CopyFile|'.$file.'|/tmp/backup.conf');
