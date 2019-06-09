@@ -22,7 +22,7 @@ NAME=nginx
 NGINX_BIN=/www/server/nginx/sbin/$NAME
 CONFIGFILE=/www/server/nginx/conf/$NAME.conf
 PIDFILE=/www/server/nginx/logs/$NAME.pid
-ulimit -n 8192
+ulimit -n 1024
 case "$1" in
     start)
         echo -n "Starting $NAME... "
