@@ -8,31 +8,33 @@ _start()
 	echo "Starting CloudWebServer..."
 	/etc/init.d/nginx start
 	/etc/init.d/mysqld start
-	/etc/init.d/php-fpm start
+	/etc/init.d/php-fpm-54 start
+	/etc/init.d/php-fpm-55 start
+	/etc/init.d/php-fpm-56 start
+	/etc/init.d/php-fpm-70 start
+	/etc/init.d/php-fpm-71 start
 }
 _stop()
 {
 	echo "Stoping CloudWebServer..."
 	/etc/init.d/nginx stop
 	/etc/init.d/mysqld stop
-	/etc/init.d/php-fpm-52 stop
-	/etc/init.d/php-fpm-53 stop
 	/etc/init.d/php-fpm-54 stop
 	/etc/init.d/php-fpm-55 stop
 	/etc/init.d/php-fpm-56 stop
 	/etc/init.d/php-fpm-70 stop
+	/etc/init.d/php-fpm-71 stop
 }
 _reload()
 {
 	echo "Reload CloudWebServer..."
 	/etc/init.d/nginx reload
 	/etc/init.d/mysqld reload
-	/etc/init.d/php-fpm-52 reload
-	/etc/init.d/php-fpm-53 reload
 	/etc/init.d/php-fpm-54 reload
 	/etc/init.d/php-fpm-55 reload
 	/etc/init.d/php-fpm-56 reload
 	/etc/init.d/php-fpm-70 reload
+	/etc/init.d/php-fpm-71 reload
 }
 _kill()
 {
@@ -46,7 +48,11 @@ _status()
 {
     /etc/init.d/nginx status
     /etc/init.d/mysql status
-    /etc/init.d/php-fpm status
+    /etc/init.d/php-fpm-54 status
+    /etc/init.d/php-fpm-55 status
+    /etc/init.d/php-fpm-56 status
+    /etc/init.d/php-fpm-70 status
+    /etc/init.d/php-fpm-71 status
 }
 _vhost()
 {
@@ -86,27 +92,6 @@ _mysql()
     ;;
 esac
 }
-_ftp()
-{
-    case "$1" in
-    [aA][dD][dD])
-        add_ftp
-    ;;
-    [lL][iI][sS][tT])
-        list_ftp
-    ;;
-    [dD][eE][lL])
-        del_ftp
-    ;;
-    [eE][xX][iI][tT])
-        exit 1
-    ;;
-    *)
-        echo "Usage: cloud ftp {add|list|del}"
-        exit 1
-    ;;
-esac
-}
 
 add_vhost()
 {
@@ -136,34 +121,30 @@ add_vhost()
 		while [ "${vphp}" == "ALL" ]
 		do
 			echo '=======================================================';
-			echo '1) PHP-5.2';
-			echo '2) PHP-5.3';
-			echo '3) PHP-5.4';
-			echo '4) PHP-5.5';
-			echo '5) PHP-5.6';
-			echo '6) PHP-7.0';
+			echo '1) PHP-5.4';
+			echo '2) PHP-5.5';
+			echo '3) PHP-5.6';
+			echo '4) PHP-7.0';
+			echo '5) PHP-7.0';
 			echo '请选择PHP版本.';
-			read -p "Plese select to add php version(1-6): " php;
+			read -p "Plese select to add php version(1-5): " php;
 			echo '=======================================================';
 			
 			case "${php}" in
 				'1')
-					vphp='52'
-					;;
-				'2')
-					vphp='53'
-					;;
-				'3')
 					vphp='54'
 					;;
-				'4')
+				'2')
 					vphp='55'
 					;;
-				'5')
+				'3')
 					vphp='56'
 					;;
-				'6')
+				'4')
 					vphp='70'
+					;;
+				'5')
+					vphp='71'
 					;;
 				*)
 					vphp='ALL'
@@ -296,71 +277,6 @@ del_database()
     [ $? -eq 0 ] && echo "权限刷新成功!(FLUSH PRIVILEGES Sucessfully.)" || echo "FLUSH PRIVILEGES failed!"
 }
 
-add_ftp()
-{
-	read -p "请输入用户名(Enter ftp name): " ftp_name
-	if [ "${ftp_name}" == '' ];then
-		echo "用户名不能为空!(Ftp Name can't be empty!)"
-        exit 1
-	fi
-	read -p "请输入根目录(Please enter the directory for the ftp(Default: /www/wwwroot/${ftp_name})): " ftp_path
-	if [ "${ftp_path}" == '' ];then
-		ftp_path="/www/wwwroot/${ftp_name}"
-	fi
-	read -p "请设置密码(Please enter password): " ftp_password
-	if [ "${ftp_password}" == '' ];then
-		echo "密码不能为空(Ftp Password can't be empty!)"
-        exit 1
-	fi
-	
-	if [ ! -d "${ftp_path}" ];then
-		mkdir -p ${ftp_path}
-	fi
-	chown -R www:www ${ftp_path}
-	if [ -f "${ftp_path}/.user.ini" ];then
-		chown root:root ${ftp_path}/.user.ini
-		chmod 644 ${ftp_path}/.user.ini
-	fi
-	/www/server/pure-ftpd/bin/pure-pw useradd ${ftp_name} -u www -d ${ftp_path}<<EOF
-${ftp_password}
-${ftp_password}
-EOF
-/www/server/pure-ftpd/bin/pure-pw mkdb /www/server/pure-ftpd/etc/pureftpd.pdb
-echo "FTP用户创建成功!(done.)"
-}
-
-del_ftp()
-{
-	read -p "请输入用户名(Enter ftp name): " ftp_name
-	if [ "${ftp_name}" == '' ];then
-		echo "指定用户不存在(Ftp Name can't be empty!)"
-        exit 1
-	fi
-	/www/server/pure-ftpd/bin/pure-pw userdel ${ftp_name}
-	/www/server/pure-ftpd/bin/pure-pw mkdb /www/server/pure-ftpd/etc/pureftpd.pdb
-	echo "FTP删除成功!(Deleted ${ftp_name} successfully.)"
-}
-
-ftp_pwd()
-{
-	read -p "请输入用户名(Enter ftp name): " ftp_name
-	if [ "${ftp_name}" == '' ];then
-		echo "指定用户不存在(Ftp Name can't be empty!)"
-        exit 1
-	fi
-	read -p "输入新的密码(Enter new password): " ftp_password
-	if [ "${ftp_password}" == '' ];then
-		echo "新密码不能为空(New password can't be empty!)"
-        exit 1
-	fi
-	/www/server/pure-ftpd/bin/pure-pw passwd ${ftp_name}<<EOF
-${ftp_password}
-${ftp_password}
-EOF
-	/www/server/pure-ftpd/bin/pure-pw mkdb /www/server/pure-ftpd/etc/pureftpd.pdb
-	echo "密码更新成功!(done.)"
-}
-
 	case "${arg1}" in
 		start)
 			_start
@@ -387,11 +303,13 @@ EOF
 		mysql)
 			/etc/init.d/mysqld ${arg2}
 			;;
-		pure-ftpd)
-			/etc/init.d/pure-ftpd ${arg2}
 			;;
 		php-fpm)
-			/etc/init.d/php-fpm ${arg2}
+			/etc/init.d/php-fpm-54 ${arg2}
+			/etc/init.d/php-fpm-55 ${arg2}
+			/etc/init.d/php-fpm-56 ${arg2}
+			/etc/init.d/php-fpm-70 ${arg2}
+			/etc/init.d/php-fpm-71 ${arg2}
 			;;
 		vhost)
 			_vhost ${arg2}
@@ -399,18 +317,14 @@ EOF
 		database)
 			_mysql ${arg2}
 			;;
-		ftp)
-			_ftp ${arg2}
-			;;
 		cloud)
 			/www/server/cloud/cloud ${arg2}
 			;;
 		*)
 			echo "Usage: zun {start|stop|reload|restart|kill|status}"
-			echo "Usage: zun {nginx|mysql|pure-ftpd|php-fpm} {start|stop|reload|restart|kill|status}"
+			echo "Usage: zun {nginx|mysql|php-fpm} {start|stop|reload|restart|kill|status}"
 			echo "Usage: zun vhost {add|del}"
 			echo "Usage: zun database {add|del}"
-			echo "Usage: zun ftp {add|del}"
 			echo "Usage: zun cloud {start|stop|restart}"
 esac
 exit 1
