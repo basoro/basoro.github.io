@@ -2221,6 +2221,9 @@ Install_PHP(){
 			vphp='7.1'
 			vstr='71'
 			;;
+		*)
+			vphp='5.4'
+			vstr='54'
 	esac
 
 	while [ "$go" != 'y' ] && [ "$go" != 'n' ]
