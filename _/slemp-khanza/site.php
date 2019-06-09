@@ -333,7 +333,8 @@ EOT;
 		ajax_return($result);
 	}
 
-
+        $retuls = array('status'=>true,'in_ftp'=>false);
+	
 	if(I('post.sql') != 'false'){
 		$retuls['sql'] = AddSql();
 	}
