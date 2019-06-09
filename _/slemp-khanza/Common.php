@@ -16,12 +16,10 @@ if(file_exists($filename) === true){
 include_once './model/Public.model.php';
 error_reporting(E_ALL^E_NOTICE^E_WARNING);
 @session_start();
-if(empty($_SESSION['brand'])){
-	session('brand', 'SLEMP');
-	session('product','Panel');
-	session('version','');
-	session('info-n','');
-	if(file_exists('./conf/panelName.conf')) session('version',file_get_contents('./conf/panelName.conf'));
+if(empty($_SESSION['panel_name'])){
+	session('panel_name', 'SLEMP Panel');
+	session('version','1.0');
+	if(file_exists('./conf/panelName.conf')) session('panel_name',file_get_contents('./conf/panelName.conf'));
 }
 
 

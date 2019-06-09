@@ -46,7 +46,7 @@ function StopPHPVersion(){
 	if(file_exists($filename)){
 		SendSocket("ExecShell|service php-fpm-".$version." stop");
 		SendSocket("FileAdmin|MvDirOrFile|" . $filename . '|'.$filename_backup);
-	} else { 
+	} else {
         SendSocket("ExecShell|service php".$version."-php-fpm stop");
     }
 	returnJson(true, 'PHP-'.$version.' terminated!');
@@ -66,7 +66,7 @@ function StartPHPVersion(){
 	if(file_exists($filename)){
 		SendSocket("ExecShell|service php-fpm-".$version." start");
 		returnJson(true, 'PHP-'.$version.' activated!');
-	} else { 
+	} else {
         SendSocket("ExecShell|service php".$version."-php-fpm start");
 	}
 
@@ -240,7 +240,7 @@ function SaveConfig(){
 	if(isset($_POST['panel_name'])){
 		file_put_contents('./conf/panelName.conf', $_POST['panel_name']);
 		$result['status'] = true;
-		$_SESSION['version'] = $_POST['panel_name'];
+		$_SESSION['panel_name'] = $_POST['panel_name'];
 	}
 
 	$result['msg'] = $result['status']?'Configuration saved' : 'Did not make any changes';
