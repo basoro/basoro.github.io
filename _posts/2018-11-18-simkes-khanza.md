@@ -27,7 +27,6 @@ Berikut adalah rilis SIMRS Khanza tiap akhir bulan yang disebut sebagai <span cl
 Licensi yang dianut di software ini adalah <a href="https://en.wikipedia.org/wiki/Aladdin_Free_Public_License">Aladdin Free Public License<a/>.<br> 
 Informasi dan panduan bisa dicek di halaman <a href="https://github.com/mas-elkhanza/SIMRS-Khanza/wiki">Wiki SIMRS Khanza</a>.  
 
-[<img src="https://basoro.id/assets/images/aski.png">](https://basoro.id/assets/images/aski.png)
 
 <h3>Last releases<span class="total-downloads"></span></h3>
 <table class="table-downloads">
