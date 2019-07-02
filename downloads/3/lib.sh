@@ -1,7 +1,10 @@
 #!/bin/bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
+
+. /www/server/panel/script/public.sh
 download_Url=$NODE_URL
+
 mkdir -p /www/server
 run_path="/root"
 Is_64bit=`getconf LONG_BIT`
