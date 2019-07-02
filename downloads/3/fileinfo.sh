@@ -2,6 +2,9 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
+. /www/server/panel/script/public.sh
+download_Url=$NODE_URL
+
 Install_Fileinfo()
 {
 	if [ ! -f "/www/server/php/$version/bin/php-config" ];then
