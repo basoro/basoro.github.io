@@ -182,7 +182,7 @@ address=""
 n=0
 while [ "$address" == '' ]
 do
-	address=`curl -s http://city.ip138.com/ip2city.asp|grep -Eo '([0-9]+\.){3}[0-9]+'`
+	address=`curl ifconfig.me`
 	let n++
 	sleep 0.1
 	if [ $n -gt 5 ];then
