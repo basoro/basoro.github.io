@@ -102,10 +102,10 @@ rm -f $setup_path/server/panel/*.py
 
 mkdir -p $setup_patn/server/panel/logs
 wget https://dl.eff.org/certbot-auto --no-check-certificate -O $setup_path/server/panel/certbot-auto
-chmod +x $setup_patn/server/panel/certbot-auto
+chmod +x $setup_path/server/panel/certbot-auto
 isCron=`cat /var/spool/cron/root|grep certbot.log`
 if [ "${isCron}" == "" ];then
-	echo "30 2 * * * $setup_patn/server/panel/certbot-auto renew >> $setup_patn/server/panel/logs/certbot.log" >>  /var/spool/cron/root
+	echo "30 2 * * * $setup_path/server/panel/certbot-auto renew >> $setup_path/server/panel/logs/certbot.log" >>  /var/spool/cron/root
 	chown 600 /var/spool/cron/root
 fi
 
@@ -176,7 +176,7 @@ else
 
 fi
 
-nohup $setup_patn/server/panel/certbot-auto -n > /tmp/certbot-auto.log 2>&1 &
+nohup $setup_path/server/panel/certbot-auto -n > /tmp/certbot-auto.log 2>&1 &
 
 address=""
 n=0
