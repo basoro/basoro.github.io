@@ -6,14 +6,11 @@ LANG=en_US.UTF-8
 . /www/server/panel/script/public.sh
 download_Url=$NODE_URL
 
-tengine='2.3.0'
-nginx_108='1.8.1'
 nginx_112='1.12.2'
 nginx_114='1.14.2'
 nginx_115='1.15.10'
 nginx_116='1.16.0'
 nginx_117='1.17.1'
-openresty='1.13.6.2'
 
 Root_Path=`cat /var/bt_setupPath.conf`
 Setup_Path=$Root_Path/server/nginx
@@ -69,12 +66,6 @@ Install_Configure(){
 		./configure --user=www --group=www --prefix=${Setup_Path} --with-openssl=${Setup_Path}/src/openssl --add-module=${Setup_Path}/src/ngx_devel_kit --add-module=${Setup_Path}/src/lua_nginx_module --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module ${NGX_PAGESPEED_ON} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_gunzip_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-openssl-opt="enable-tls1_3 enable-weak-ssl-ciphers" --with-cc-opt="-Wno-error" ${jemallocLD}
 	elif [ "${version}" == "1.14" ] || [ "${version}" == "1.12" ] || [ "${version}" == "1.16" ] || [ "${version}" == "1.10" ]; then
 		./configure --user=www --group=www --prefix=${Setup_Path} --with-openssl=${Setup_Path}/src/openssl --add-module=${Setup_Path}/src/ngx_devel_kit --add-module=${Setup_Path}/src/lua_nginx_module --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module --add-module=${Setup_Path}/src/nginx-http-concat --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_gunzip_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-pcre=pcre-${pcre_version} --with-cc-opt="-Wno-error" ${jemallocLD}
-	elif [ "${version}" == "1.8" ]; then
-		./configure --user=www --group=www --prefix=${Setup_Path} --add-module=${Setup_Path}/src/ngx_devel_kit --add-module=${Setup_Path}/src/lua_nginx_module --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module --add-module=${Setup_Path}/src/nginx-http-concat --with-http_stub_status_module --with-http_ssl_module --with-http_image_filter_module --with-http_spdy_module --with-http_gzip_static_module --with-http_gunzip_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-pcre=pcre-${pcre_version} --with-cc-opt="-Wno-error" ${jemallocLD}
-	elif [ "${version}" == "tengine" ]; then
-		./configure --user=www --group=www --prefix=${Setup_Path} --add-module=${Setup_Path}/src/ngx_devel_kit --with-openssl=${Setup_Path}/src/openssl --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module --add-module=${Setup_Path}/src/lua_nginx_module --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_gunzip_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-pcre=pcre-${pcre_version} --with-cc-opt="-Wno-error"
-	elif [ "${version}" == "openresty" ]; then
-		./configure --user=www --group=www --prefix=${Setup_Path} --with-openssl=${Setup_Path}/src/openssl --with-pcre=pcre-${pcre_version} --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module --add-module=${Setup_Path}/src/nginx-http-concat --with-luajit --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_gunzip_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-cc-opt="-Wno-error" ${jemallocLD}
 	fi
 }
 Install_Jemalloc(){
@@ -205,16 +196,10 @@ Install_Nginx(){
 	cd ${Setup_Path}
 	rm -rf ${Setup_Path}/src
 
-	if [ "${version}" == "tengine" ] || [ "${version}" == "openresty" ]; then
-		wget -O ${Setup_Path}/src.tar.gz ${download_Url}/src/${version}-${nginxVersion}.tar.gz -T20
-		tar -xvf src.tar.gz
-		mv ${version}-${nginxVersion} src
-	else
-		wget -O ${Setup_Path}/src.tar.gz ${download_Url}/src/nginx-${nginxVersion}.tar.gz -T20
-		tar -xvf src.tar.gz
-		tar -xvf src.tar.gz
-		mv nginx-${nginxVersion} src
-	fi
+	wget -O ${Setup_Path}/src.tar.gz ${download_Url}/src/nginx-${nginxVersion}.tar.gz -T20
+	tar -xvf src.tar.gz
+	tar -xvf src.tar.gz
+	mv nginx-${nginxVersion} src
 	rm -f src.tar.gz
 	cd src
 
@@ -236,14 +221,6 @@ Install_Nginx(){
 	make -j${cpuCore}
 
 	if [ "${actionType}" == "update" ]; then
-		if [ "${nginxVersion}" = "openresty" ]; then
-			make install
-			echo -e "done"
-			nginx -v
-			echo "${nginxVersion}" > ${Setup_Path}/version.pl
-			rm -f ${Setup_Path}/version_check.pl
-			exit;
-		fi
 		if [ ! -f ${Setup_Path}/src/objs/nginx ]; then
 			exit;
 		fi
@@ -257,22 +234,12 @@ Install_Nginx(){
 		nginx -v
 		echo "${nginxVersion}" > ${Setup_Path}/version.pl
 		rm -f ${Setup_Path}/version_check.pl
-		if [ "${version}" == "tengine" ]; then
-			echo "2.2.4(2.3.0)" > ${Setup_Path}/version_check.pl
-		fi
 		exit
 	fi
 
 	make install
 
 	cd ..
-
-	if [ "${version}" == "openresty" ];then
-		ln -sf /www/server/nginx/nginx/html /www/server/nginx/html
-		ln -sf /www/server/nginx/nginx/conf /www/server/nginx/conf
-		ln -sf /www/server/nginx/nginx/logs /www/server/nginx/logs
-		ln -sf /www/server/nginx/nginx/sbin /www/server/nginx/sbin
-	fi
 
 	if [ ! -f "${Setup_Path}/sbin/nginx" ];then
 		echo '========================================================'
@@ -355,14 +322,8 @@ EOF
 	Service_Add
  	/etc/init.d/nginx start
 
- 	if [ "${version}" == "tengine" ]; then
- 		echo "-Tengine2.2.3" > ${Setup_Path}/version.pl
- 		echo "2.2.4(2.3.0)" > ${Setup_Path}/version_check.pl
- 	elif [ "${version}" == "openresty" ]; then
- 		echo "openresty" > ${Setup_Path}/version.pl
- 	else
- 		echo "${nginxVersion}" > ${Setup_Path}/version.pl
- 	fi
+ 	echo "${nginxVersion}" > ${Setup_Path}/version.pl
+
 }
 Uninstall_Nginx()
 {
@@ -382,8 +343,8 @@ version=$2
 if [ "${actionType}" == "uninstall" ]; then
 	Uninstall_Nginx
 elif [ "${actionType}" == "install" ] || [ "${actionType}" == "update" ] ; then
-	nginxVersion=${tengine}
-	if [ "${version}" == "1.10" ] || [ "${version}" == "1.12" ]; then
+	nginxVersion=${nginx_116}
+	if [ "${version}" == "1.12" ]; then
 		nginxVersion=${nginx_112}
 	elif [ "${version}" == "1.14" ]; then
 		nginxVersion=${nginx_114}
@@ -393,12 +354,8 @@ elif [ "${actionType}" == "install" ] || [ "${actionType}" == "update" ] ; then
 		nginxVersion=${nginx_116}
 	elif [ "${version}" == "1.17" ]; then
 		nginxVersion=${nginx_117}
-	elif [ "${version}" == "1.8" ]; then
-		nginxVersion=${nginx_108}
-	elif [ "${version}" == "openresty" ]; then
-		nginxVersion=${openresty}
 	else
-		version="tengine"
+		version="nginx_116"
 	fi
 	Install_Nginx
 fi
