@@ -101,7 +101,7 @@ rm -f $setup_path/server/panel/class/*.py
 rm -f $setup_path/server/panel/*.py
 
 mkdir -p $setup_patn/server/panel/logs
-wget https://dl.eff.org/certbot-auto --no-check-certificate -O $setup_patn/server/panel/certbot-auto
+wget https://dl.eff.org/certbot-auto --no-check-certificate -O $setup_path/server/panel/certbot-auto
 chmod +x $setup_patn/server/panel/certbot-auto
 isCron=`cat /var/spool/cron/root|grep certbot.log`
 if [ "${isCron}" == "" ];then
