@@ -100,6 +100,15 @@ python -m compileall $setup_path/server/panel
 rm -f $setup_path/server/panel/class/*.py
 rm -f $setup_path/server/panel/*.py
 
+mkdir -p $setup_patn/server/panel/logs
+wget https://dl.eff.org/certbot-auto --no-check-certificate -O $setup_patn/server/panel/certbot-auto
+chmod +x $setup_patn/server/panel/certbot-auto
+isCron=`cat /var/spool/cron/root|grep certbot.log`
+if [ "${isCron}" == "" ];then
+	echo "30 2 * * * $setup_patn/server/panel/certbot-auto renew >> $setup_patn/server/panel/logs/certbot.log" >>  /var/spool/cron/root
+	chown 600 /var/spool/cron/root
+fi
+
 chmod 777 /tmp
 chmod +x /etc/init.d/bt
 
@@ -166,6 +175,20 @@ else
 	fi
 
 fi
+
+nohup $setup_patn/server/panel/certbot-auto -n > /tmp/certbot-auto.log 2>&1 &
+
+address=""
+n=0
+while [ "$address" == '' ]
+do
+	address=`curl -s http://city.ip138.com/ip2city.asp|grep -Eo '([0-9]+\.){3}[0-9]+'`
+	let n++
+	sleep 0.1
+	if [ $n -gt 5 ];then
+		address="SERVER_IP"
+	fi
+done
 
 echo -e "=================================================================="
 echo -e "\033[32mCongratulations! Install succeeded!\033[0m"
