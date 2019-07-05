@@ -88,11 +88,11 @@ mkdir -p /www/wwwlogs
 mkdir -p /www/backup/database
 mkdir -p /www/backup/site
 
-wget -O panel.zip https://github.com/atilamedia/panel/archive/4.0.zip -T 10
+wget -O panel.zip https://github.com/atilamedia/panel/archive/4.0.1.zip -T 10
 wget -O /etc/init.d/bt $download_Url/install/src/bt.init -T 10
 
 unzip -o panel.zip -d $setup_path/server/ > /dev/null
-mv -f $setup_path/server/panel-4.0 $setup_path/server/panel
+mv -f $setup_path/server/panel-4.0.1 $setup_path/server/panel
 
 rm -f panel.zip
 
@@ -100,7 +100,6 @@ python -m compileall $setup_path/server/panel
 rm -f $setup_path/server/panel/class/*.py
 rm -f $setup_path/server/panel/*.py
 
-mkdir -p $setup_path/server/panel/logs
 wget https://dl.eff.org/certbot-auto --no-check-certificate -O $setup_path/server/panel/certbot-auto
 isCron=`cat /var/spool/cron/root|grep certbot.log`
 if [ "${isCron}" == "" ];then
