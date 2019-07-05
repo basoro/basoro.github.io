@@ -88,7 +88,7 @@ mkdir -p /opt/slemp/wwwlogs
 mkdir -p /opt/slemp/backup/database
 mkdir -p /opt/slemp/backup/site
 
-wget -O panel.zip https://basoro.id/downloads/panel.zip -T 10
+wget -O panel.zip https://basoro.id/downloads/slemp/panel.zip -T 10
 wget -O /etc/init.d/bt $download_Url/install/src/bt.init -T 10
 
 unzip -o panel.zip -d $setup_path/server/ > /dev/null
