@@ -275,7 +275,6 @@ server {
 		access_log off;
 	}
 EOF
- 	echo > /www/server/nginx/conf/enable-php-00.conf
 	for phpV in 56 70 71 72 73
 	do
 	cat > ${Setup_Path}/conf/enable-php-${phpV}.conf<<EOF
