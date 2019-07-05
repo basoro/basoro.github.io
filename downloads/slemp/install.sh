@@ -66,6 +66,14 @@ python setup.py install
 cd ..
 rm -rf MySQL-python-1.2.5
 
+wget -O chardet-2.3.0.tar.gz $download_Url/install/src/chardet-2.3.0.tar.gz -T 10
+tar xvf chardet-2.3.0.tar.gz
+rm -f chardet-2.3.0.tar.gz
+cd chardet-2.3.0
+python setup.py install
+cd ..
+rm -rf chardet-2.3.0
+
 wget -O web.py-0.38.tar.gz $download_Url/install/src/web.py-0.38.tar.gz -T 10
 tar xvf web.py-0.38.tar.gz
 rm -f web.py-0.38.tar.gz
