@@ -4,13 +4,11 @@ export PATH
 LANG=en_US.UTF-8
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url='https://basoro.id/downloads/slemp'
 
 nginx_112='1.12.2'
 nginx_114='1.14.2'
-nginx_115='1.15.10'
 nginx_116='1.16.0'
-nginx_117='1.17.1'
 
 Root_Path=`cat /var/bt_setupPath.conf`
 Setup_Path=$Root_Path/server/nginx
@@ -61,12 +59,7 @@ Install_Configure(){
 	else
 		jemallocLD=""
 	fi
-	if [ "${version}" == "1.15" ] || [ "${version}" == "1.17" ];then
-		[ "${Is_64bit}" = "64" ] && NGX_PAGESPEED_ON="--add-module=${Setup_Path}/src/ngx-pagespeed"
-		./configure --user=www --group=www --prefix=${Setup_Path} --with-openssl=${Setup_Path}/src/openssl --add-module=${Setup_Path}/src/ngx_devel_kit --add-module=${Setup_Path}/src/lua_nginx_module --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module ${NGX_PAGESPEED_ON} --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_gunzip_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-openssl-opt="enable-tls1_3 enable-weak-ssl-ciphers" --with-cc-opt="-Wno-error" ${jemallocLD}
-	elif [ "${version}" == "1.14" ] || [ "${version}" == "1.12" ] || [ "${version}" == "1.16" ] || [ "${version}" == "1.10" ]; then
-		./configure --user=www --group=www --prefix=${Setup_Path} --with-openssl=${Setup_Path}/src/openssl --add-module=${Setup_Path}/src/ngx_devel_kit --add-module=${Setup_Path}/src/lua_nginx_module --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module --add-module=${Setup_Path}/src/nginx-http-concat --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_gunzip_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-pcre=pcre-${pcre_version} --with-cc-opt="-Wno-error" ${jemallocLD}
-	fi
+	./configure --user=www --group=www --prefix=${Setup_Path} --with-openssl=${Setup_Path}/src/openssl --add-module=${Setup_Path}/src/ngx_devel_kit --add-module=${Setup_Path}/src/lua_nginx_module --add-module=${Setup_Path}/src/ngx_cache_purge --add-module=${Setup_Path}/src/nginx-sticky-module --add-module=${Setup_Path}/src/nginx-http-concat --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_gunzip_module --with-stream --with-stream_ssl_module --with-ipv6 --with-http_sub_module --with-http_flv_module --with-http_addition_module --with-http_realip_module --with-http_mp4_module --with-ld-opt="-Wl,-E" --with-pcre=pcre-${pcre_version} --with-cc-opt="-Wno-error" ${jemallocLD}
 }
 Install_Jemalloc(){
 	if [ ! -f '/usr/local/lib/libjemalloc.so' ]; then
@@ -83,7 +76,7 @@ Install_Jemalloc(){
 Install_cjson()
 {
 	if [ ! -f /usr/local/lib/lua/5.1/cjson.so ];then
-		wget -O lua-cjson-2.1.0.tar.gz $download_Url/install/src/lua-cjson-2.1.0.tar.gz -T 20
+		wget -O lua-cjson-2.1.0.tar.gz $download_Url/src/lua-cjson-2.1.0.tar.gz -T 20
 		tar xvf lua-cjson-2.1.0.tar.gz
 		rm -f lua-cjson-2.1.0.tar.gz
 		cd lua-cjson-2.1.0
@@ -96,7 +89,7 @@ Install_cjson()
 Install_LuaJIT()
 {
 	if [ ! -d '/usr/local/include/luajit-2.0' ];then
-		wget -c -O LuaJIT-2.0.4.tar.gz ${download_Url}/install/src/LuaJIT-2.0.4.tar.gz -T 5
+		wget -c -O LuaJIT-2.0.4.tar.gz ${download_Url}/src/LuaJIT-2.0.4.tar.gz -T 5
 		tar xvf LuaJIT-2.0.4.tar.gz
 		cd LuaJIT-2.0.4
 		make linux
@@ -126,19 +119,14 @@ CheckPHPVersion()
 }
 
 Download_Src(){
-	TLSv13_NGINX=$(echo ${nginxVersion}|tr -d '.'|cut -c 1-3)
-	if [ "${TLSv13_NGINX}" -ge "115" ];then
-		opensslVer="1.1.1b"
-	else
-		opensslVer="1.0.2r"
-	fi
+	opensslVer="1.0.2r"
 	wget -O openssl.tar.gz ${download_Url}/src/openssl-${opensslVer}.tar.gz -T 5
 	tar -xvf openssl.tar.gz
 	mv openssl-${opensslVer} openssl
 	rm -f openssl.tar.gz
 
 	pcre_version=8.42
-    wget -O pcre-$pcre_version.tar.gz ${download_Url}/src/pcre-$pcre_version.tar.gz -T 5
+  	wget -O pcre-$pcre_version.tar.gz ${download_Url}/src/pcre-$pcre_version.tar.gz -T 5
 	tar zxf pcre-$pcre_version.tar.gz
 
 	wget -O ngx_cache_purge.tar.gz ${download_Url}/src/ngx_cache_purge-2.3.tar.gz
@@ -169,15 +157,6 @@ Download_Src(){
 	mv ngx_devel_kit-${NgxDevelKitVer} ngx_devel_kit
 	rm -f ngx_devel_kit-${NgxDevelKitVer}.zip
 
-	if [ "${Is_64bit}" = "64" ]; then
-		if [ "${version}" == "1.15" ] || [ "${version}" == "1.17" ];then
-			NGX_PAGESPEED_VAR="1.13.35.2"
-			wget -O ngx-pagespeed-${NGX_PAGESPEED_VAR}.tar.gz ${download_Url}/src/ngx-pagespeed-${NGX_PAGESPEED_VAR}.tar.gz
-			tar -xvf ngx-pagespeed-${NGX_PAGESPEED_VAR}.tar.gz
-			mv ngx-pagespeed-${NGX_PAGESPEED_VAR} ngx-pagespeed
-			rm -f ngx-pagespeed-${NGX_PAGESPEED_VAR}.tar.gz
-		fi
-	fi
 }
 
 Install_Nginx(){
@@ -244,7 +223,6 @@ Install_Nginx(){
 	if [ ! -f "${Setup_Path}/sbin/nginx" ];then
 		echo '========================================================'
 		echo -e "\033[31mERROR: nginx-${nginxVersion} installation failed.\033[0m";
-		echo -e "\033[31m安装失败，请截图以上报错信息发帖至论坛www.bt.cn/bbs求助\033[0m"
 		rm -rf ${Setup_Path}
 		exit 0;
 	fi
@@ -347,12 +325,8 @@ elif [ "${actionType}" == "install" ] || [ "${actionType}" == "update" ] ; then
 		nginxVersion=${nginx_112}
 	elif [ "${version}" == "1.14" ]; then
 		nginxVersion=${nginx_114}
-	elif [ "${version}" == "1.15" ]; then
-		nginxVersion=${nginx_115}
 	elif [ "${version}" == "1.16" ]; then
 		nginxVersion=${nginx_116}
-	elif [ "${version}" == "1.17" ]; then
-		nginxVersion=${nginx_117}
 	else
 		version="nginx_116"
 	fi
