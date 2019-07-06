@@ -4,7 +4,7 @@ export PATH
 LANG=en_US.UTF-8
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url='https://basoro.id/downloads/slemp'
 
 nginx_112='1.12.2'
 nginx_114='1.14.2'
@@ -76,7 +76,7 @@ Install_Jemalloc(){
 Install_cjson()
 {
 	if [ ! -f /usr/local/lib/lua/5.1/cjson.so ];then
-		wget -O lua-cjson-2.1.0.tar.gz $download_Url/install/src/lua-cjson-2.1.0.tar.gz -T 20
+		wget -O lua-cjson-2.1.0.tar.gz $download_Url/src/lua-cjson-2.1.0.tar.gz -T 20
 		tar xvf lua-cjson-2.1.0.tar.gz
 		rm -f lua-cjson-2.1.0.tar.gz
 		cd lua-cjson-2.1.0
@@ -89,7 +89,7 @@ Install_cjson()
 Install_LuaJIT()
 {
 	if [ ! -d '/usr/local/include/luajit-2.0' ];then
-		wget -c -O LuaJIT-2.0.4.tar.gz ${download_Url}/install/src/LuaJIT-2.0.4.tar.gz -T 5
+		wget -c -O LuaJIT-2.0.4.tar.gz ${download_Url}/src/LuaJIT-2.0.4.tar.gz -T 5
 		tar xvf LuaJIT-2.0.4.tar.gz
 		cd LuaJIT-2.0.4
 		make linux
