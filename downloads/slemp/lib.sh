@@ -231,7 +231,7 @@ Install_Aptlib(){
 }
 Install_Lib()
 {
-	if [ -f "/opt/slemp/server/nginx/sbin/nginx" ] || [ -f "/opt/slemp/server/apache/bin/httpd" ] || [ -f "/opt/slemp/server/mysql/bin/mysql" ]; then
+	if [ -f "/opt/slemp/server/nginx/sbin/nginx" ] || [ -f "/opt/slemp/server/mysql/bin/mysql" ]; then
 		return
 	fi
 	lockFile="/etc/bt_lib.lock"
