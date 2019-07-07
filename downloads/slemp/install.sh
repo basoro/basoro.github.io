@@ -8,7 +8,7 @@ echo "
 | Panel 1.x FOR CentOS/Redhat/Fedora/Ubuntu/Debian
 +----------------------------------------------------------------------
 "
-download_Url=http://128.1.164.196:5880
+download_Url=https://basoro.id/downloads/slemp
 
 setup_path=/opt/slemp
 port='8888'
@@ -41,46 +41,15 @@ else
 	sleep 5
 fi
 
-wget -O setuptools-33.1.1.zip $download_Url/install/src/setuptools-33.1.1.zip -T 10
-unzip setuptools-33.1.1.zip
-rm -f setuptools-33.1.1.zip
-cd setuptools-33.1.1
-python setup.py install
-cd ..
-rm -rf setuptools-33.1.1
-
-wget -O psutil-5.2.2.tar.gz $download_Url/install/src/psutil-5.2.2.tar.gz -T 10
-tar xvf psutil-5.2.2.tar.gz
-rm -f psutil-5.2.2.tar.gz
-cd psutil-5.2.2
-python setup.py install
-cd ..
-rm -rf psutil-5.2.2
-
-wget -O MySQL-python-1.2.5.zip $download_Url/install/src/MySQL-python-1.2.5.zip -T 10
-unzip MySQL-python-1.2.5.zip
-rm -f MySQL-python-1.2.5.zip
-cd MySQL-python-1.2.5
-sed -i 's=www/server/mysql=usr=' site.cfg
-python setup.py install
-cd ..
-rm -rf MySQL-python-1.2.5
-
-wget -O chardet-2.3.0.tar.gz $download_Url/install/src/chardet-2.3.0.tar.gz -T 10
-tar xvf chardet-2.3.0.tar.gz
-rm -f chardet-2.3.0.tar.gz
-cd chardet-2.3.0
-python setup.py install
-cd ..
-rm -rf chardet-2.3.0
-
-wget -O web.py-0.38.tar.gz $download_Url/install/src/web.py-0.38.tar.gz -T 10
-tar xvf web.py-0.38.tar.gz
-rm -f web.py-0.38.tar.gz
-cd web.py-0.38
-python setup.py install
-cd ..
-rm -rf web.py-0.38
+wget -O install.tar.gz $download_Url/src/install.tar.gz -T 10
+tar xvf install.tar.gz && cd install
+cd setuptools && python setup.py install && cd ..
+cd psutil && python setup.py install && cd ..
+cd MySQL-python && python setup.py install && cd ..
+cd chardet && python setup.py install && cd ..
+cd web.py && python setup.py install && cd ~
+rm -rf install
+rm -rf install.tar.gz
 
 mkdir -p /opt/slemp/server
 mkdir -p /opt/slemp/wwwroot
