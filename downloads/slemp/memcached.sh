@@ -116,7 +116,7 @@ Install_Memcached()
 			cd memcached-${memcachedPhpVer}
 
 			/opt/slemp/server/php/$version/bin/phpize
-			./configure --with-php-config=/opt/slemp/server/php/$version/bin/php-config --enable-memcached --with-libmemcached-dir=/usr/local/libmemcached --enable-sasl
+			./configure --with-php-config=/opt/slemp/server/php/$version/bin/php-config --enable-memcached --with-libmemcached-dir=/usr/local/libmemcached --disable-memcached-sasl
 			make && make install
 			cd $srcPath
 			rm -f memcached-${memcachedPhpVer}${memcachedPhpVer}.tgz
@@ -126,7 +126,7 @@ Install_Memcached()
 			tar -zxf memcached-2.2.0.tgz
 			cd memcached-2.2.0
 			/opt/slemp/server/php/$version/bin/phpize
-			./configure --with-php-config=/opt/slemp/server/php/$version/bin/php-config --enable-memcached --with-libmemcached-dir=/usr/local/libmemcached --enable-sasl
+			./configure --with-php-config=/opt/slemp/server/php/$version/bin/php-config --enable-memcached --with-libmemcached-dir=/usr/local/libmemcached --disable-memcached-sasl
 			make && make install
 			cd $srcPath
 			rm -rf memcached*
