@@ -4,7 +4,7 @@ export PATH
 LANG=en_US.UTF-8
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url=https://basoro.id/downloads/slemp
 
 Install_Imap()
 {
@@ -14,11 +14,9 @@ Install_Imap()
 		return
 	fi
 
-	download_Url=$NODE_URL
-
 	if [ ! -d "/opt/slemp/server/php/$version/src/ext/imap" ];then
 		mkdir -p /opt/slemp/server/php/$version/src
-		wget -O ext-$version.zip $download_Url/install/ext/ext-$version.zip -T 5
+		wget -O ext-$version.zip $download_Url/ext/ext-$version.zip -T 5
 		unzip -o ext-$version.zip -d /opt/slemp/server/php/$version/src/ > /dev/null
 		mv /opt/slemp/server/php/$version/src/ext-$version /opt/slemp/server/php/$version/src/ext
 		rm -f ext-$version.zip
