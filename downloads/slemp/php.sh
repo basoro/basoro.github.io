@@ -226,11 +226,9 @@ Pear_Pecl_Set()
 Install_Composer()
 {
 	if [ ! -f "/usr/bin/composer" ];then
-		wget -O /usr/bin/composer ${download_Url}/install/src/composer.phar -T 20;
+		wget -O /usr/bin/composer ${download_Url}/src/composer.phar -T 20;
 		chmod +x /usr/bin/composer
-		if [ "${download_Url}" == "http://$CN:5880" ];then
-			composer config -g repo.packagist composer https://packagist.phpcomposer.com
-		fi
+		composer config -g repo.packagist composer https://packagist.phpcomposer.com
 	fi
 }
 
@@ -238,23 +236,12 @@ fpmPhpinfo(){
 	nginxPhpStatus=$(cat /opt/slemp/server/panel/vhost/nginx/phpfpm_status.conf |grep 73)
 	if [ "${nginxPhpStatus}" == "" ]; then
 		rm -f /opt/slemp/server/panel/vhost/nginx/phpfpm_status.conf
-		wget -O /opt/slemp/server/panel/vhost/nginx/phpfpm_status.conf ${download_Url}/conf/nginx/phpfpm_status.conf
+		wget -O /opt/slemp/server/panel/vhost/nginx/phpfpm_status.conf ${download_Url}/conf/phpfpm_status.conf
 	fi
 	nginxPhpinfo=$(cat /opt/slemp/server/panel/vhost/nginx/phpinfo.conf |grep 73)
 	if [ "${nginxPhpinfo}" == "" ]; then
 		rm -f /opt/slemp/server/panel/vhost/nginx/phpinfo.conf
-		wget -O /opt/slemp/server/panel/vhost/nginx/phpinfo.conf ${download_Url}/conf/nginx/phpinfo.conf
-	fi
-	apachePhpinfo=$(cat /opt/slemp/server/panel/vhost/apache/phpinfo.conf |grep 73)
-	if [ "${apachePhpinfo}" == "" ];then
-		rm -f /opt/slemp/server/panel/vhost/apache/phpinfo.conf
-		wget -O /opt/slemp/server/panel/vhost/apache/phpinfo.conf ${download_Url}/conf/apache/phpinfo.conf
-
-	fi
-	apachePhpStatus=$(cat /opt/slemp/server/apache/conf/extra/httpd-vhosts.conf |grep 73)
-	if [ "${apachePhpStatus}" == "" ];then
-		rm -f /opt/slemp/server/apache/conf/extra/httpd-vhosts.conf
-		wget -O /opt/slemp/server/apache/conf/extra/httpd-vhosts.conf ${download_Url}/conf/apache/httpd-vhosts.conf
+		wget -O /opt/slemp/server/panel/vhost/nginx/phpinfo.conf ${download_Url}/conf/phpinfo.conf
 	fi
 }
 
@@ -276,7 +263,7 @@ Install_PHP_56()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${download_Url}/src/php-${php_56}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_56}.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
@@ -316,12 +303,6 @@ Install_PHP_56()
 		\cp zend-loader-php5.6-linux-x86_64/ZendGuardLoader.so /usr/local/zend/php56/
 		rm -rf zend-loader-php5.6-linux-x86_64
 		rm -f zend-loader-php5.6-linux-x86_64.tar.gz
-	else
-		wget ${download_Url}/src/zend-loader-php5.6-linux-i386.tar.gz -T20
-		tar zxf zend-loader-php5.6-linux-i386.tar.gz
-		\cp zend-loader-php5.6-linux-i386/ZendGuardLoader.so /usr/local/zend/php56/
-		rm -rf zend-loader-php5.6-linux-i386
-		rm -f zend-loader-php5.6-linux-i386.tar.gz
 	fi
 
 	echo "Write ZendGuardLoader to php.ini..."
@@ -369,7 +350,7 @@ Install_PHP_70()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${download_Url}/src/php-${php_70}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_70}.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
@@ -449,7 +430,7 @@ Install_PHP_71()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${download_Url}/src/php-${php_71}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_71}.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
@@ -532,7 +513,7 @@ Install_PHP_72()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${download_Url}/src/php-${php_72}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_72}.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
@@ -599,9 +580,6 @@ EOF
 	/etc/init.d/php-fpm-72 start
 	if [ -d "$Root_Path/server/nginx" ];then
 		wget -O $Root_Path/server/nginx/conf/enable-php-72.conf ${download_Url}/conf/enable-php-72.conf -T20
-	elif [ -d "$Root_Path/server/apache" ]; then
-		wget -O $Root_Path/server/apache/conf/extra/httpd-vhosts.conf http://download.bt.cn/conf/httpd-vhosts.conf
-		sed -i "s/php-cgi-VERSION/php-cgi-72/g" $Root_Path/server/apache/conf/extra/httpd-vhosts.conf
 	fi
 
 	rm -f ${php_setup_path}/src.tar.gz
@@ -629,44 +607,13 @@ Install_PHP_73()
 		fi
 	fi
 
-	# libzip=$(ldconfig -p|grep libzip.so.5)
-	# if [ "${libzip}" == "" ];then
-	# 	yum install cmake3 -y
-	# 	libzipVer="1.5.1"
-	# 	wget ${download_Url}/src/libzip-${libzipVer}.tar.gz
-	# 	tar -xvf libzip-${libzipVer}.tar.gz
-	# 	cd libzip-${libzipVer}
-	# 	mkdir build && cd build
-	# 	cmake3 ..
-	# 	make -j${cpuCore}
-	# 	make install
-	# 	if [ "$Is_64bit" == "64" ];then
-	# 		ln -sf /usr/local/lib64/libzip.so /usr/local/lib/libzip.so
-	# 		ln -sf /usr/local/lib64/libzip.so.5 /usr/local/lib/libzip.so.5
-	# 	fi
-	# 	cd ../..
-	# 	rm -rf libzip*
-	# 	ldconfig
-	# fi
-
-	# autoconfVer=$(autoconf -V|grep 'GNU Autoconf'|awk '{print $4}'|grep -oE .[0-9]+|grep -oE [0-9]+)
-	# if [ "${autoconfVer}" -lt "69" ]; then
-	# 	wget ${download_Url}/src/autoconf-2.69.tar.gz
-	# 	tar -xvf autoconf-2.69.tar.gz
-	# 	cd autoconf-2.69
-	# 	./configure --prefix=/usr
-	# 	make && make install
-	# 	cd ..
-	# 	rm -rf autoconf*
-	# fi
-
 	php_setup_path=${php_path}/${php_version}
 
 	mkdir -p ${php_setup_path}
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz ${download_Url}/src/php-${php_73}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_73}.tar.gz -T20
 	fi
 
 	if [ -f "/usr/local/curl2/bin/curl" ]; then
@@ -748,9 +695,6 @@ EOF
 	/etc/init.d/php-fpm-73 start
 	if [ -d "$Root_Path/server/nginx" ];then
 		wget -O $Root_Path/server/nginx/conf/enable-php-73.conf ${download_Url}/conf/enable-php-73.conf -T20
-	elif [ -d "$Root_Path/server/apache" ]; then
-		wget -O $Root_Path/server/apache/conf/extra/httpd-vhosts.conf ${download_Url}/conf/httpd-vhosts.conf
-		sed -i "s/php-cgi-VERSION/php-cgi-73/g" $Root_Path/server/apache/conf/extra/httpd-vhosts.conf
 	fi
 
 	rm -f ${php_setup_path}/src.tar.gz
@@ -768,7 +712,7 @@ Update_PHP_56()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz ${download_Url}/src/php-${php_56}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_56}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_56} src
@@ -801,7 +745,7 @@ Update_PHP_70()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz ${download_Url}/src/php-${php_70}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_70}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_70} src
@@ -834,7 +778,7 @@ Update_PHP_71()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz ${download_Url}/src/php-${php_71}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_71}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_71} src
@@ -867,7 +811,7 @@ Update_PHP_72()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz ${download_Url}/src/php-${php_72}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_72}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_72} src
@@ -899,7 +843,7 @@ Update_PHP_73()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz ${download_Url}/src/php-${php_73}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_73}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_73} src
