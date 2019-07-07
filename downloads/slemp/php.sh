@@ -12,7 +12,6 @@ mysql_dir=$Root_Path/server/mysql
 mysql_config="${mysql_dir}/bin/mysql_config"
 Is_64bit=`getconf LONG_BIT`
 run_path='/root'
-apacheVersion=`cat /var/bt_apacheVersion.pl`
 
 php_56='5.6.40'
 php_70='7.0.33'
