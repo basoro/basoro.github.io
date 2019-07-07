@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url=https://basoro.id/downloads/slemp
 
 Install_memcache()
 {
@@ -18,8 +18,6 @@ Install_memcache()
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
-
-	download_Url=$NODE_URL
 
 	yum -y remove libmemcached libmemcached-devel
 	srcPath='/root';
@@ -36,17 +34,6 @@ Install_memcache()
 		chmod +x /etc/init.d/memcached
 		chkconfig --add memcached
 		chkconfig --level 2345 memcached on
-
-		#if [ ! -f "/etc/init.d/iptables" ];then
-			#firewall-cmd --permanent --zone=public --add-port=11211/tcp
-			#firewall-cmd --permanent --zone=public --add-port=11211/udp
-			#firewall-cmd --reload
-		#else
-			#/sbin/iptables -A INPUT -p tcp --dport 11211 -j ACCEPT
-			#/sbin/iptables -A INPUT -p udp --dport 11211 -j ACCEPT
-			#service iptables save
-			#service iptables restart
-		#fi
 
 		cd $srcPath
 		wget $download_Url/src/libmemcached-1.0.18.tar.gz -T 5
