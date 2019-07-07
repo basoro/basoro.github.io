@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url=https://basoro.id/downloads/slemp
 
 Install_Opcache()
 {
@@ -37,7 +37,6 @@ Install_Opcache()
 	esac
 
 	if [ ! -f "$extFile" ];then
-		download_Url=$NODE_URL
 		wget $download_Url/src/zendopcache-7.0.5.tgz
 		tar -zxf zendopcache-7.0.5.tgz
 		rm -f zendopcache-7.0.5.tgz
