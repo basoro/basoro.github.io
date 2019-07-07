@@ -4,7 +4,7 @@ export PATH
 LANG=en_US.UTF-8
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url=https://basoro.id/downloads/slemp
 
 cpuInfo=$(getconf _NPROCESSORS_ONLN)
 if [ "${cpuInfo}" -ge "4" ];then
@@ -26,8 +26,6 @@ Install_imagemagick()
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
-
-	download_Url=$NODE_URL
 
 	if [ ! -d "/usr/local/imagemagick" ];then
 		yum install libpng* libjpeg* gd-devel -y

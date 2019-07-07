@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url=https://basoro.id/downloads/slemp
 
 Install_xdebug()
 {
@@ -37,15 +37,13 @@ Install_xdebug()
 	esac
 	if [ ! -f "$extFile" ];then
 
-		download_Url=$NODE_URL
-
 		if [ "$version" -ge '70' ];then
 			wget -c -O xdebug-2.7.2.tgz $download_Url/src/xdebug-2.7.2.tgz -T 5
 			tar zxvf xdebug-2.7.2.tgz
 			rm -f xdebug-2.7.2.tgz
 			cd xdebug-2.7.2
 		else
-			wget -c -O xdebug-2.2.7.tgz $download_Url/install/src/xdebug-2.2.7.tgz -T 5
+			wget -c -O xdebug-2.2.7.tgz $download_Url/src/xdebug-2.2.7.tgz -T 5
 			tar zxvf xdebug-2.2.7.tgz
 			rm -f xdebug-2.2.7.tgz
 			cd xdebug-2.2.7

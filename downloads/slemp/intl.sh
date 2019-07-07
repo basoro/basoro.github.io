@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=$NODE_URL
+download_Url=https://basoro.id/downloads/slemp
 
 Install_Intl()
 {
@@ -32,9 +32,8 @@ Install_Intl()
 	fi
 
 	if [ ! -d "/opt/slemp/server/php/$version/src/ext/intl" ];then
-		download_Url=$NODE_URL
 		mkdir -p /opt/slemp/server/php/$version/src
-		wget -O ext-$version.zip $download_Url/install/ext/ext-$version.zip
+		wget -O ext-$version.zip $download_Url/ext/ext-$version.zip
 		unzip -o ext-$version.zip -d /opt/slemp/server/php/$version/src/ > /dev/null
 		mv /opt/slemp/server/php/$version/src/ext-$version /opt/slemp/server/php/$version/src/ext
 		rm -f ext-$version.zip
