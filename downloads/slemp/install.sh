@@ -63,9 +63,9 @@ wget -O /etc/init.d/slemp $download_Url/init/slemp.init -T 10
 unzip -o panel.zip -d $setup_path/server/ > /dev/null
 rm -f panel.zip
 
-#python -m compileall $setup_path/server/panel
-#rm -f $setup_path/server/panel/class/*.py
-#rm -f $setup_path/server/panel/*.py
+python -m compileall $setup_path/server/panel
+rm -f $setup_path/server/panel/class/*.py
+rm -f $setup_path/server/panel/*.py
 
 wget https://dl.eff.org/certbot-auto --no-check-certificate -O $setup_path/server/panel/certbot-auto
 isCron=`cat /var/spool/cron/root|grep certbot.log`
