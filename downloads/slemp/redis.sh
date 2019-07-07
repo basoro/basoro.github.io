@@ -166,14 +166,12 @@ esac
 	fi
 
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'redis.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装过Redis,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
@@ -181,11 +179,7 @@ esac
 	ext_Path
 
 	if [ ! -f "${extFile}" ];then
-		if [ "${version}" == '52' ];then
-			rVersion='2.2.7'
-		else
-			rVersion='4.2.0'
-		fi
+		rVersion='4.2.0'
 
 		wget $download_Url/src/redis-$rVersion.tgz -T 5
 		tar zxvf redis-$rVersion.tgz
@@ -223,14 +217,12 @@ Uninstall_Redis()
 		return;
 	fi
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'redis.so'`
 	if [ "${isInstall}" = "" ];then
-		echo "php-$vphp 未安装Redis,请选择其它版本!"
 		echo "php-$vphp not install Redis, Plese select other version!"
 		return
 	fi

@@ -17,14 +17,12 @@ fi
 Install_imagemagick()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'imagick.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装过imagemagick,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
@@ -97,14 +95,12 @@ Install_imagemagick()
 Uninstall_imagemagick()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'imagick.so'`
 	if [ "${isInstall}" = "" ];then
-		echo "php-$vphp 未安装imagemagick,请选择其它版本!"
 		echo "php-$vphp not install imagemagick, Plese select other version!"
 		return
 	fi

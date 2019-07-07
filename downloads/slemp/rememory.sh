@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 endDate=`date +"%Y-%m-%d %H:%M:%S"`
-log="释放内存!"
+log="Free memory!"
 echo "★[$endDate] $log"
 echo '----------------------------------------------------------------------------'
 
@@ -33,10 +33,6 @@ fi
 
 if [ -f "/etc/init.d/nginx" ];then
 	/etc/init.d/nginx reload
-fi
-
-if [ -f "/etc/init.d/httpd" ];then
-	/etc/init.d/httpd graceful
 fi
 
 sync

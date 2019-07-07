@@ -11,9 +11,7 @@ webserver=""
 
 Install_phpMyAdmin()
 {
-	if [ -d "${Root_Path}/server/apache"  ];then
-		webserver='apache'
-	elif [ -d "${Root_Path}/server/nginx"  ];then
+	if [ -d "${Root_Path}/server/nginx"  ];then
 		webserver='nginx'
 	fi
 
@@ -55,13 +53,7 @@ Install_phpMyAdmin()
 		\cp $Root_Path/server/nginx/conf/enable-php-$PHPVersion.conf $Root_Path/server/nginx/conf/enable-php.conf
 		sed -i "/pathinfo/d" $Root_Path/server/nginx/conf/enable-php.conf
 		/etc/init.d/nginx reload
-	else
-		sed -i "s#$Root_Path/wwwroot/default#$Root_Path/server/phpmyadmin#" $Root_Path/server/apache/conf/extra/httpd-vhosts.conf
-		sed -i "0,/php-cgi/ s/php-cgi-\w*\.sock/php-cgi-${PHPVersion}.sock/" $Root_Path/server/apache/conf/extra/httpd-vhosts.conf
-		/etc/init.d/httpd reload
 	fi
-
-
 
 	if [ -f "/etc/init.d/iptables" ];then
 		isstart=`/etc/init.d/iptables status|grep 'Firewall modules are not loaded'`

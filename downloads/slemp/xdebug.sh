@@ -8,14 +8,12 @@ download_Url=$NODE_URL
 Install_xdebug()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		exit 0
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'xdebug.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装过xdebug,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		exit 0
 	fi
@@ -59,7 +57,7 @@ Install_xdebug()
 		rm -rf xdebug-*
 	fi
 	if [ ! -f "$extFile" ];then
-		echo '安装失败!';
+		echo 'installation failed!';
 		exit 0
 	fi
 
@@ -78,12 +76,12 @@ Install_xdebug()
 Uninstall_xdebug()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
+		echo "php-$vphp Not installed, please choose another version!"
 		return
 	fi
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'xdebug.so'`
 	if [ "${isInstall}" == "" ];then
-		echo "php-$vphp 未安装xdebug,请选择其它版本!"
+		echo "php-$vphp Xdebug is not installed, please choose another version!"
 		return
 	fi
 

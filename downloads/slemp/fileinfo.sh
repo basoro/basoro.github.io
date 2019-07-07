@@ -8,15 +8,13 @@ download_Url=$NODE_URL
 Install_Fileinfo()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'fileinfo.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装过Fileinfo,请选择其它版本!"
-		echo "php-$vphp not install, Plese select other version!"
+		echo "php-$vphp Fileinfo telah diinstal, silakan pilih versi lain!"
 		return
 	fi
 
@@ -68,14 +66,12 @@ Install_Fileinfo()
 Uninstall_Fileinfo()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'fileinfo.so'`
 	if [ "${isInstall}" = "" ];then
-		echo "php-$vphp 未安装Fileinfo,请选择其它版本!"
 		echo "php-$vphp not install Fileinfo, Plese select other version!"
 		return
 	fi

@@ -581,21 +581,21 @@ if [ "${actionType}" == 'install' ] || [ "${actionType}" == "update" ];then
 		'5.7')
 			sqlVersion=${mysql_57}
 			;;
-		'8.0')
-			sqlVersion=${mysql_80}
-			;;
-		'mariadb_10.0')
-			sqlVersion=${mariadb_100}
-			;;
-		'mariadb_10.1')
-			sqlVersion=${mariadb_101}
-			;;
-		'mariadb_10.2')
-			sqlVersion=${mariadb_102}
-			;;
-		'mariadb_10.3')
-			sqlVersion=${mariadb_103}
-			;;
+		#'8.0')
+		#	sqlVersion=${mysql_80}
+		#	;;
+		#'mariadb_10.0')
+		#	sqlVersion=${mariadb_100}
+		#	;;
+		#'mariadb_10.1')
+		#	sqlVersion=${mariadb_101}
+		#	;;
+		#'mariadb_10.2')
+		#	sqlVersion=${mariadb_102}
+		#	;;
+		#'mariadb_10.3')
+		#	sqlVersion=${mariadb_103}
+		#	;;
 	esac
 	Install_Mysql
 elif [ "$actionType" == 'uninstall' ];then

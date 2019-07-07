@@ -8,13 +8,11 @@ download_Url=$NODE_URL
 Install_Ioncube()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'ioncube_loader_lin'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装过ioncube,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
@@ -33,13 +31,11 @@ Install_Ioncube()
 Uninstall_Ioncube()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'ioncube_loader_lin'`
 	if [ "${isInstall}" = "" ];then
-		echo "php-$vphp 未安装ioncube,请选择其它版本!"
 		echo "php-$vphp not install ioncube, Plese select other version!"
 		return
 	fi

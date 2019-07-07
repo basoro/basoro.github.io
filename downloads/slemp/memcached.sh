@@ -98,14 +98,12 @@ Install_Memcached()
 	fi
 
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'memcached.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装过memcached,请选择其它版本!"
 		echo "php-$vphp is already install memcached, Plese select other version!"
 		return
 	fi
@@ -160,14 +158,12 @@ Uninstall_Memcached()
 	fi
 
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
 		echo "php-$vphp not install, Plese select other version!"
 		return
 	fi
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'memcached.so'`
 	if [ "${isInstall}" = "" ];then
-		echo "php-$vphp 未安装memcached,请选择其它版本!"
 		echo "php-$vphp not install memcached, Plese select other version!"
 		return
 	fi

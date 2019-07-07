@@ -27,7 +27,7 @@ Install_Intl()
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'intl.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装intl,请选择其它版本!"
+		echo "php-$vphp Intl terinstal, silakan pilih versi lain!"
 		return
 	fi
 
@@ -67,7 +67,7 @@ Install_Intl()
 Uninstall_Intl()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
+		echo "php-$vphp Tidak terpasang, silakan pilih versi lain!"
 		return
 	fi
 
@@ -89,7 +89,7 @@ Uninstall_Intl()
 		;;
 	esac
 	if [ ! -f "$extFile" ];then
-		echo "php-$vphp 未安装intl,请选择其它版本!"
+		echo "php-$vphp Intl tidak diinstal, silakan pilih versi lain!"
 		return
 	fi
 

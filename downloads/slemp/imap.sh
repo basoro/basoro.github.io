@@ -10,7 +10,7 @@ Install_Imap()
 {
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'imap.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装xdebug,请选择其它版本!"
+		echo "php-$vphp Xdebug diinstal, silakan pilih versi lain!"
 		return
 	fi
 
@@ -98,12 +98,12 @@ Install_Imap()
 Uninstall_Imap()
 {
 	if [ ! -f "/opt/slemp/server/php/$version/bin/php-config" ];then
-		echo "php-$vphp 未安装,请选择其它版本!"
+		echo "php-$vphp Tidak terpasang, silakan pilih versi lain!"
 		return
 	fi
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'imap.so'`
 	if [ "${isInstall}" == "" ];then
-		echo "php-$vphp 未安装xdebug,请选择其它版本!"
+		echo "php-$vphp Xdebug belum diinstal, silakan pilih versi lain!"
 		return
 	fi
 
