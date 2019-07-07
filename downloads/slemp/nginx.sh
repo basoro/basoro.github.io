@@ -44,15 +44,6 @@ Service_Del(){
 		update-rc.d nginx remove
 	fi
 }
-Set_Time(){
-	BtDate=$(curl https://www.bt.cn//api/index/get_date|awk '{print $1}')
-	SysTime=$(date +%Y%m%d)
-	if [ "${BtTime}" != "" ];then
-		if [ "${SysTime}" != "${BtTime}" ]; then
-			date -s "$(curl https://www.bt.cn//api/index/get_date)"
-		fi
-	fi
-}
 Install_Configure(){
 	if [ -f "/usr/local/lib/libjemalloc.so" ]; then
 		jemallocLD="--with-ld-opt="-ljemalloc""
@@ -184,7 +175,6 @@ Install_Nginx(){
 
 	export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
 
-	Set_Time
 	Download_Src
 	Install_Jemalloc
 	Install_LuaJIT
