@@ -4,8 +4,6 @@ export PATH
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en
 
-#NODE_URL='http://128.1.164.196:5880';
-
 GetCpuStat(){
 	time1=$(cat /proc/stat |grep 'cpu ')
 	sleep 1
