@@ -14,9 +14,8 @@ mysql_55='5.5.62'
 mysql_56='5.6.44'
 mysql_57='5.7.26'
 #mysql_80='8.0.16'
-#mariadb_55='5.5.55'
-#mariadb_100='10.0.38'
-#mariadb_101='10.1.40'
+mariadb_100='10.0.38'
+mariadb_101='10.1.40'
 #mariadb_102='10.2.24'
 #mariadb_103='10.3.15'
 
@@ -584,12 +583,12 @@ if [ "${actionType}" == 'install' ] || [ "${actionType}" == "update" ];then
 		#'8.0')
 		#	sqlVersion=${mysql_80}
 		#	;;
-		#'mariadb_10.0')
-		#	sqlVersion=${mariadb_100}
-		#	;;
-		#'mariadb_10.1')
-		#	sqlVersion=${mariadb_101}
-		#	;;
+		'mariadb_10.0')
+			sqlVersion=${mariadb_100}
+			;;
+		'mariadb_10.1')
+			sqlVersion=${mariadb_101}
+			;;
 		#'mariadb_10.2')
 		#	sqlVersion=${mariadb_102}
 		#	;;

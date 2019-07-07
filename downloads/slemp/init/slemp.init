@@ -18,9 +18,9 @@ panel_start()
         isStart=`ps aux |grep 'python main.pyc'|grep -v grep|awk '{print $2}'`
         if [ "$isStart" == '' ];then
                 echo -e "Starting SLEMP-Panel... \c"
-                if [ -f 'main.py' ];then
-                        python -m py_compile main.py
-                fi
+                #if [ -f 'main.py' ];then
+                #        python -m py_compile main.py
+                #fi
                 nohup python main.pyc `cat data/port.pl` > /tmp/panelBoot.pl 2>&1 &
                 sleep 0.2
                 isStart=`ps aux |grep 'python main.pyc'|grep -v grep|awk '{print $2}'`
@@ -129,7 +129,7 @@ panel_reload()
 install_used()
 {
         password=`cat /dev/urandom | head -n 16 | md5sum | head -c 12`
-        username=`python /opt/slemp/server/panel/tools.py panel $password`
+        username=`python /opt/slemp/server/panel/tools.pyc panel $password`
         echo "$password" > /opt/slemp/server/panel/default.pl
 }
 
@@ -160,7 +160,7 @@ case "$1" in
                 echo -e "\033[32mSLEMP-Panel default info!\033[0m"
                 echo -e "=================================================================="
                 echo  "SLEMP-Panel: http://IP:$port"
-                echo -e `python /opt/slemp/server/panel/tools.py username`
+                echo -e `python /opt/slemp/server/panel/tools.pyc username`
                 echo -e "password: $password"
                 echo -e "\033[33mWarning:\033[0m"
                 echo -e "\033[33mIf you cannot access the panel, \033[0m"
