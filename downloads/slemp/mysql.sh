@@ -13,7 +13,7 @@ run_path='/root'
 mysql_55='5.5.62'
 mysql_56='5.6.44'
 mysql_57='5.7.26'
-#mysql_80='8.0.16'
+mysql_80='8.0.16'
 mariadb_100='10.0.38'
 mariadb_101='10.1.40'
 #mariadb_102='10.2.24'
@@ -580,9 +580,9 @@ if [ "${actionType}" == 'install' ] || [ "${actionType}" == "update" ];then
 		'5.7')
 			sqlVersion=${mysql_57}
 			;;
-		#'8.0')
-		#	sqlVersion=${mysql_80}
-		#	;;
+		'8.0')
+			sqlVersion=${mysql_80}
+			;;
 		'mariadb_10.0')
 			sqlVersion=${mariadb_100}
 			;;
