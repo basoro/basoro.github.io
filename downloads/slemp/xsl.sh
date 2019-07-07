@@ -10,7 +10,7 @@ Install_Xsl()
 
 	isInstall=`cat /opt/slemp/server/php/$version/etc/php.ini|grep 'xsl.so'`
 	if [ "${isInstall}" != "" ];then
-		echo "php-$vphp 已安装xsl,请选择其它版本!"
+		echo "php-$vphp Xsl diinstal, silakan pilih versi lain!"
 		return
 	fi
 
