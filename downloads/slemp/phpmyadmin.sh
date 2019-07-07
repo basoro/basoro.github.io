@@ -19,7 +19,7 @@ Install_phpMyAdmin()
 		echo "No Web server installed!"
 		exit 0;
 	fi
-	wget -O phpMyAdmin.zip $download_Url/src/phpMyAdmin-4.4.zip -T20
+	wget -O phpMyAdmin.zip $download_Url/src/phpMyAdmin-${1}.zip -T20
 	mkdir -p $Setup_Path
 
 	unzip -o phpMyAdmin.zip -d $Setup_Path/ > /dev/null
