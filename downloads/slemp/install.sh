@@ -15,7 +15,7 @@ port='8888'
 
 while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 do
-	read -p "Do you want to install Bt-Panel to the $setup_path directory now?(y/n): " go;
+	read -p "Do you want to install SLEMP-Panel to the $setup_path directory now?(y/n): " go;
 done
 
 if [ "$go" == 'n' ];then
@@ -58,7 +58,7 @@ mkdir -p /opt/slemp/backup/database
 mkdir -p /opt/slemp/backup/site
 
 wget -O panel.zip https://basoro.id/downloads/slemp/panel.zip -T 10
-wget -O /etc/init.d/bt $download_Url/install/src/bt.init -T 10
+wget -O /etc/init.d/slemp $download_Url/init/slemp.init -T 10
 
 unzip -o panel.zip -d $setup_path/server/ > /dev/null
 rm -f panel.zip
@@ -75,20 +75,20 @@ if [ "${isCron}" == "" ];then
 fi
 
 chmod 777 /tmp
-chmod +x /etc/init.d/bt
+chmod +x /etc/init.d/slemp
 
 if [ -f "/usr/sbin/update-rc.d" ];then
-	update-rc.d bt defaults
+	update-rc.d slemp defaults
 else
-	chkconfig --add bt
-	chkconfig --level 2345 bt on
+	chkconfig --add slemp
+	chkconfig --level 2345 slemp on
 fi
 
 chmod -R 600 $setup_path/server/panel
 chmod -R +x $setup_path/server/panel/script
-ln -sf /etc/init.d/bt /usr/bin/bt
+ln -sf /etc/init.d/slemp /usr/bin/slemp
 echo "$port" > $setup_path/server/panel/data/port.pl
-/etc/init.d/bt start
+/etc/init.d/slemp start
 password=`cat /dev/urandom | head -n 16 | md5sum | head -c 8`
 cd $setup_path/server/panel/
 username=`python tools.pyc panel $password`
@@ -159,7 +159,7 @@ done
 echo -e "=================================================================="
 echo -e "\033[32mCongratulations! Install succeeded!\033[0m"
 echo -e "=================================================================="
-echo  "Bt-Panel: http://$address:$port"
+echo  "SLEMP-Panel: http://$address:$port"
 echo -e "username: $username"
 echo -e "password: $password"
 echo -e "\033[33mWarning:\033[0m"
