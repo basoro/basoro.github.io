@@ -4,9 +4,9 @@ export PATH
 LANG=en_US.UTF-8
 
 echo "
-+----------------------------------------------------------------------
-| Panel 1.x FOR CentOS/Redhat/Fedora/Ubuntu/Debian
-+----------------------------------------------------------------------
++-----------------------------------------------------------------------------
+| Panel 1.x  Setup FOR CentOS/Redhat/Fedora/Ubuntu/Debian/Mint/Deepin/Raspbian
++-----------------------------------------------------------------------------
 "
 download_Url=https://basoro.id/downloads/slemp
 
