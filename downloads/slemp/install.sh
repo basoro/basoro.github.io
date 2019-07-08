@@ -30,7 +30,7 @@ if [ -f "/usr/bin/apt-get" ];then
 	apt-get update -y
 	apt-get install ruby -y
 	apt-get install lsb-release -y
-	for pace in wget curl python python-dev python-imaging zip unzip openssl libssl-dev gcc llibmysqld-dev ibxml2 libxml2-dev libxslt zlib1g zlib1g-dev libjpeg-dev libpng-dev lsof libpcre3 libpcre3-dev cron;
+	for pace in wget curl python python-dev python-imaging zip unzip openssl libssl-dev gcc libmysqld-dev ibxml2 libxml2-dev libxslt zlib1g zlib1g-dev libjpeg-dev libpng-dev lsof libpcre3 libpcre3-dev cron;
 	do apt-get -y install $pace --force-yes; done
 	apt-get -y install python-pip python-dev
 	sleep 5
