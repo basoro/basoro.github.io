@@ -58,7 +58,7 @@ python setup.py install
 cd ..
 cd web.py 
 python setup.py install 
-cd ..
+cd ~
 rm -rf install
 rm -rf install.tar.gz
 
