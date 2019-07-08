@@ -42,12 +42,23 @@ else
 fi
 
 wget -O install.tar.gz $download_Url/src/install.tar.gz -T 10
-tar xvf install.tar.gz && cd install
-cd setuptools && python setup.py install && cd ..
-cd psutil && python setup.py install && cd ..
-cd MySQL-python && python setup.py install && cd ..
-cd chardet && python setup.py install && cd ..
-cd web.py && python setup.py install && cd ~
+tar xvf install.tar.gz 
+cd install
+cd setuptools 
+python setup.py install 
+cd ..
+cd psutil 
+python setup.py install 
+cd ..
+cd MySQL-python 
+python setup.py install 
+cd ..
+cd chardet 
+python setup.py install 
+cd ..
+cd web.py 
+python setup.py install 
+cd ..
 rm -rf install
 rm -rf install.tar.gz
 
