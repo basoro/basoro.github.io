@@ -25,6 +25,7 @@ fi
 startTime=`date +%s`
 
 if [ -f "/usr/bin/apt-get" ];then
+	export DEBIAN_FRONTEND=noninteractive
 	ln -sf bash /bin/sh
 	apt-get update -y
 	apt-get install ruby -y
