@@ -10,7 +10,7 @@ nginx_112='1.12.2'
 nginx_114='1.14.2'
 nginx_116='1.16.0'
 
-Root_Path=`cat /var/bt_setupPath.conf`
+Root_Path=`cat /var/slemp_setupPath.conf`
 Setup_Path=$Root_Path/server/nginx
 run_path='/root'
 Is_64bit=`getconf LONG_BIT`

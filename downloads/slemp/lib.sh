@@ -206,7 +206,7 @@ Install_Yumlib(){
 		fi
 	done
 	mv /etc/yum.repos.d/epel.repo.backup /etc/yum.repos.d/epel.repo
-	echo "true" > /etc/bt_lib.lock
+	echo "true" > /etc/slemp_lib.lock
 }
 Install_Aptlib(){
 	deepinSys=`cat /etc/issue`
@@ -227,14 +227,14 @@ Install_Aptlib(){
 	ln -s /usr/lib/x86_64-linux-gnu/libjpeg.a /usr/lib/libjpeg.a
 	ln -s /usr/lib/x86_64-linux-gnu/libpng12.so.0 /usr/lib/libpng.so
 	ln -s /usr/lib/x86_64-linux-gnu/libpng.a /usr/lib/libpng.a
-	echo "true" > /etc/bt_lib.lock
+	echo "true" > /etc/slemp_lib.lock
 }
 Install_Lib()
 {
 	if [ -f "/opt/slemp/server/nginx/sbin/nginx" ] || [ -f "/opt/slemp/server/mysql/bin/mysql" ]; then
 		return
 	fi
-	lockFile="/etc/bt_lib.lock"
+	lockFile="/etc/slemp_lib.lock"
 	if [ -f "${lockFile}" ]; then
 		return
 	fi

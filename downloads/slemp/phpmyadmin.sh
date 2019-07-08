@@ -5,7 +5,7 @@ export PATH
 . /opt/slemp/server/panel/script/public.sh
 download_Url=https://basoro.id/downloads/slemp
 
-Root_Path=`cat /var/bt_setupPath.conf`
+Root_Path=`cat /var/slemp_setupPath.conf`
 Setup_Path=$Root_Path/server/phpmyadmin
 webserver=""
 

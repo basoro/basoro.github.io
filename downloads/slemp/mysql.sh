@@ -5,7 +5,7 @@ export PATH
 . /opt/slemp/server/panel/script/public.sh
 download_Url=http://103.224.251.67
 
-Root_Path=`cat /var/bt_setupPath.conf`
+Root_Path=`cat /var/slemp_setupPath.conf`
 Setup_Path=$Root_Path/server/mysql
 Data_Path=$Root_Path/server/data
 Is_64bit=`getconf LONG_BIT`
