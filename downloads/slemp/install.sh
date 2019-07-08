@@ -43,8 +43,7 @@ else
 fi
 
 wget -O install.tar.gz $download_Url/src/install.tar.gz -T 10
-tar xvf install.tar.gz
-cd install/setuptools
+tar xvf install.tar.gz && cd install/setuptools
 python setup.py install && cd ../psutil
 python setup.py install && cd ../MySQL-python
 python setup.py install && cd ../chardet
