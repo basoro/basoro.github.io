@@ -58,7 +58,7 @@ Install_phpMyAdmin()
 	if [ -f "/etc/init.d/iptables" ];then
 		isstart=`/etc/init.d/iptables status|grep 'Firewall modules are not loaded'`
 		if [ "$isstart" = '' ];then
-			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 888 -j ACCEPT
+			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 123 -j ACCEPT
 			/etc/init.d/iptables save
 
 			iptables_status=`/etc/init.d/iptables status | grep 'not running'`
@@ -71,7 +71,7 @@ Install_phpMyAdmin()
 
 	if [ "$isVersion" == '' ];then
 		if [ ! -f "/etc/init.d/iptables" ];then
-			firewall-cmd --permanent --zone=public --add-port=888/tcp
+			firewall-cmd --permanent --zone=public --add-port=123/tcp
 			firewall-cmd --reload
 		fi
 	fi
