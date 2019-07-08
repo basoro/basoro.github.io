@@ -55,10 +55,15 @@ Install_phpMyAdmin()
 		/etc/init.d/nginx reload
 	fi
 
+	if [ -f "/usr/sbin/ufw" ];then
+		ufw allow 1234/tcp
+		ufw reload
+	fi
+
 	if [ -f "/etc/init.d/iptables" ];then
 		isstart=`/etc/init.d/iptables status|grep 'Firewall modules are not loaded'`
 		if [ "$isstart" = '' ];then
-			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 123 -j ACCEPT
+			iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 1234 -j ACCEPT
 			/etc/init.d/iptables save
 
 			iptables_status=`/etc/init.d/iptables status | grep 'not running'`
@@ -71,7 +76,7 @@ Install_phpMyAdmin()
 
 	if [ "$isVersion" == '' ];then
 		if [ ! -f "/etc/init.d/iptables" ];then
-			firewall-cmd --permanent --zone=public --add-port=123/tcp
+			firewall-cmd --permanent --zone=public --add-port=1234/tcp
 			firewall-cmd --reload
 		fi
 	fi

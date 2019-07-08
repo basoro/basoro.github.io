@@ -11,7 +11,7 @@ echo "
 download_Url=https://basoro.id/downloads/slemp
 
 setup_path=/opt/slemp
-port='1234'
+port='12345'
 
 while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 do
@@ -42,22 +42,22 @@ else
 fi
 
 wget -O install.tar.gz $download_Url/src/install.tar.gz -T 10
-tar xvf install.tar.gz 
+tar xvf install.tar.gz
 cd install
-cd setuptools 
-python setup.py install 
+cd setuptools
+python setup.py install
 cd ..
-cd psutil 
-python setup.py install 
+cd psutil
+python setup.py install
 cd ..
-cd MySQL-python 
-python setup.py install 
+cd MySQL-python
+python setup.py install
 cd ..
-cd chardet 
-python setup.py install 
+cd chardet
+python setup.py install
 cd ..
-cd web.py 
-python setup.py install 
+cd web.py
+python setup.py install
 cd ~
 rm -rf install
 rm -rf install.tar.gz
@@ -114,7 +114,7 @@ if [ -f "/usr/bin/apt-get" ];then
 	fi
 
 	if [ -f "/usr/sbin/ufw" ];then
-		ufw allow 123,22,80,$port/tcp
+		ufw allow 1234,22,80,$port/tcp
 		ufw_status=`ufw status`
 		echo y|ufw enable
 		ufw default deny
@@ -126,7 +126,7 @@ else
 	if [ -f "/etc/init.d/iptables" ];then
 		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
-		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 123 -j ACCEPT
+		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 1234 -j ACCEPT
 		iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport $port -j ACCEPT
 		iptables -A INPUT -p icmp --icmp-type any -j ACCEPT
 		iptables -A INPUT -s localhost -d localhost -j ACCEPT
@@ -144,7 +144,7 @@ else
 			firewall-cmd --set-default-zone=public > /dev/null 2>&1
 			firewall-cmd --permanent --zone=public --add-port=22/tcp > /dev/null 2>&1
 			firewall-cmd --permanent --zone=public --add-port=80/tcp > /dev/null 2>&1
-			firewall-cmd --permanent --zone=public --add-port=123/tcp > /dev/null 2>&1
+			firewall-cmd --permanent --zone=public --add-port=1234/tcp > /dev/null 2>&1
 			firewall-cmd --permanent --zone=public --add-port=$port/tcp > /dev/null 2>&1
 			firewall-cmd --reload
 		fi
@@ -175,7 +175,7 @@ echo -e "username: $username"
 echo -e "password: $password"
 echo -e "\033[33mWarning:\033[0m"
 echo -e "\033[33mIf you cannot access the panel, \033[0m"
-echo -e "\033[33mrelease the following port (1234|123|80|22) in the security group\033[0m"
+echo -e "\033[33mrelease the following port (12345|1234|80|22) in the security group\033[0m"
 echo -e "=================================================================="
 
 endTime=`date +%s`
