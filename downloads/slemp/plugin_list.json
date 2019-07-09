@@ -28,19 +28,19 @@
 	"default":false,
 	"display":1
 },{
-		"title":"MySQL master-slave",
-		"tip":"lib",
-		"name":"masterslave",
-		"type":"System Tool",
-		"ps":"Easy MySQL master-slave replication, master-master replication.",
-		"versions":"1.1",
-		"shell":"masterslave.sh",
-		"checks":"/opt/slemp/server/panel/plugin/masterslave",
-		"author":"Ataaka",
-		"home":"https://slemp.basoro.id",
-		"date":"2018-04-26",
-		"default":false,
-		"display":1
+	"title":"MySQL master-slave",
+	"tip":"lib",
+	"name":"masterslave",
+	"type":"System Tool",
+	"ps":"Easy MySQL master-slave replication, master-master replication.",
+	"versions":"1.1",
+	"shell":"masterslave.sh",
+	"checks":"/opt/slemp/server/panel/masterslave",
+	"author":"Ataaka",
+	"home":"https://slemp.basoro.id",
+	"date":"2018-04-26",
+	"default":false,
+	"display":1
 },{
 	"title":"phpMyAdmin",
 	"tip":"soft",
