@@ -1,0 +1,58 @@
+[
+{
+	"title":"Nginx",
+	"name":"nginx",
+	"tip":"soft",
+	"type":"Webserver",
+	"ps":"Ringan, dengan memori lebih sedikit dan konkurensi yang kuat",
+	"versions":"1.16,1.14,1.12",
+	"shell":"nginx.sh",
+	"checks":"/opt/slemp/server/nginx/sbin/nginx",
+	"author":"nginx.org",
+	"home":"https://www.nginx.org",
+	"date":"2017-04-01",
+	"default":false,
+	"display":1
+},{
+	"title":"MySQL",
+	"tip":"soft",
+	"name":"mysql",
+	"type":"Database",
+	"ps":"MySQL adalah sistem manajemen basis data relasional!",
+	"versions":"5.5,5.6,5.7,8.0,mariadb_10.0,mariadb_10.1",
+	"shell":"mysql.sh",
+	"checks":"/opt/slemp/server/mysql/bin/mysql,/opt/slemp/server/mysql/bin/mysqldump",
+	"author":"Oracle",
+	"home":"https://www.mysql.com",
+	"date":"2017-04-01",
+	"default":false,
+	"display":1
+},{
+	"title":"phpMyAdmin",
+	"tip":"soft",
+	"name":"phpmyadmin",
+	"type":"Manajemen Database",
+	"ps":"Alat manajemen MySQL sisi-web",
+	"versions":"4.4",
+	"shell":"phpmyadmin.sh",
+	"checks":"/opt/slemp/server/phpmyadmin/version.pl",
+	"author":"phpMyAdmin",
+	"home":"https://www.phpmyadmin.net",
+	"date":"2017-04-01",
+	"default":false,
+	"display":1
+},{
+	"title":"PHP",
+	"tip":"soft",
+	"name":"php",
+	"type":"Bahasa Pemrograman",
+	"ps":"PHP adalah bahasa pemrograman terbaik di dunia",
+	"versions":"5.6,7.0,7.1,7.2,7.3",
+	"shell":"php.sh",
+	"checks":"/opt/slemp/server/php/VERSION/bin/php",
+	"author":"Zend",
+	"home":"https://www.php.net",
+	"date":"2017-04-01",
+	"default":false,
+	"display":1
+}]
