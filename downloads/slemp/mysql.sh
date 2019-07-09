@@ -23,7 +23,6 @@ if [ -z "${cpuCore}" ]; then
 	cpuCore="1"
 fi
 
-#检测hosts文件
 hostfile=`cat /etc/hosts | grep 127.0.0.1 | grep localhost`
 if [ "${hostfile}" = '' ]; then
 	echo "127.0.0.1  localhost  localhost.localdomain" >> /etc/hosts
@@ -73,7 +72,7 @@ Setup_Mysql_PyDb(){
 	cd ..
 	rm -f src.zip
 	rm -rf src
-	/etc/init.d/bt reload
+	/etc/init.d/slemp reload
 
 }
 Install_Mysql_PyDb(){
@@ -110,14 +109,12 @@ Drop_Test_Databashes(){
 	/opt/slemp/server/mysql/bin/mysql -uroot -p$mysqlpwd -e "drop database test";
 
 }
-#删除软链
 DelLink()
 {
 	rm -f /usr/bin/mysql*
 	rm -f /usr/lib/libmysql*
 	rm -f /usr/lib64/libmysql*
 }
-#设置软件链
 SetLink()
 {
 	ln -sf ${Setup_Path}/bin/mysql /usr/bin/mysql
@@ -539,14 +536,6 @@ EOF
 Close_MySQL()
 {
 	[ -f "/etc/init.d/mysqld" ] && /etc/init.d/mysqld stop
-
-	if [ "${PM}" = "yum" ];then
-		mysqlVersion=`rpm -qa |grep bt-mysql-`
-		mariadbVersion=`rpm -qa |grep bt-mariadb-`
-		[ "${mysqlVersion}" ] && rpm -e $mysqlVersion --nodeps
-		[ "${mariadbVersion}" ] && rpm -e $mariadbVersion --nodeps
-		[ -f "${Setup_Path}/rpm.pl" ] && yum remove $(cat ${Setup_Path}/rpm.pl) -y
-	fi
 
 	if [ -f "${Setup_Path}/bin/mysql" ];then
 		Service_Del

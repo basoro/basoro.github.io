@@ -901,10 +901,6 @@ Uninstall_PHP()
 {
 	php_version=${1/./}
 
-	if [ -f "/opt/slemp/server/php/${php_version}/rpm.pl" ];then
-		yum remove -y bt-php${php_version}
-		[ ! -f "/opt/slemp/server/php/${php_version}/bin/php" ] && exit 0;
-	fi
 	service php-fpm-$php_version stop
 
 	Service_Del

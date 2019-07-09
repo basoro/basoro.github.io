@@ -299,7 +299,6 @@ Uninstall_Nginx()
 		/etc/init.d/nginx stop
 		rm -f /etc/init.d/nginx
 	fi
-	[ -f "${Setup_Path}/rpm.pl" ] && yum remove bt-$(cat ${Setup_Path}/rpm.pl) -y
 	pkill -9 nginx
 	rm -rf ${Setup_Path}
 }

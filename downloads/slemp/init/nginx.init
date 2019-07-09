@@ -14,8 +14,6 @@
 # Description:       starts nginx using start-stop-daemon
 ### END INIT INFO
 
-# Author:   licess
-# website:  http://www.bt.cn
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NAME=nginx
