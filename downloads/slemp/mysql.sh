@@ -528,7 +528,7 @@ EOF
 	rm -rf src
 
 	printVersion
-	Install_Mysql_PyDb
+	#Install_Mysql_PyDb
 
 	if [ -f '/opt/slemp/server/panel/tools.py' ];then
 		python /opt/slemp/server/panel/tools.py root $mysqlpwd
