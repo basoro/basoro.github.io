@@ -160,7 +160,7 @@ case "$1" in
                 echo -e "\033[32mSLEMP-Panel default info!\033[0m"
                 echo -e "=================================================================="
                 echo  "SLEMP-Panel: http://IP:$port"
-                echo -e `python /opt/slemp/server/panel/tools.pyc username`
+                echo -e "password: admin"
                 echo -e "password: $password"
                 echo -e "\033[33mWarning:\033[0m"
                 echo -e "\033[33mIf you cannot access the panel, \033[0m"
