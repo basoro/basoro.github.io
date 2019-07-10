@@ -60,7 +60,7 @@ class docker_main(object):
     # UTCS时间转换为时间戳
     def utc_to_local(self, utc_time_str, utc_format='%Y-%m-%dT%H:%M:%S'):
         import pytz, datetime, time
-        local_tz = pytz.timezone('Asia/Chongqing')
+        local_tz = pytz.timezone('Asia/Jakarta')
         local_format = "%Y-%m-%d %H:%M"
         utc_dt = datetime.datetime.strptime(utc_time_str, utc_format)
         local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
