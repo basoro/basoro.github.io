@@ -1,17 +1,10 @@
  #coding: utf-8
-# +-------------------------------------------------------------------
-# | 宝塔Linux面板
-# +-------------------------------------------------------------------
-# | Copyright (c) 2015-2019 宝塔软件(http://bt.cn) All rights reserved.
-# +-------------------------------------------------------------------
-# | Author: 黄文良 <287962566@qq.com>
-# +-------------------------------------------------------------------
 import re ,os ,sys ,time #line:9
 sys.path.append ("/opt/slemp/server/panel/")#line:10
 import public ,db ,crontab #line:11
 import re ,json #line:12
 import time ,base64 ,web #line:13
-from panelAuth import panelAuth #line:14
+from auth import auth #line:14
 class plugin_rsync_init ():#line:16
     __OO0O00O0OOOO0OOOO ='/usr/bin/rsync'#line:17
     rsyn_file ="/etc/rsyncd.conf"#line:18
@@ -131,7 +124,7 @@ class plugin_rsync_init ():#line:16
         if getattr (web .ctx .session ,'rsync',False ):return public .returnMsg (True ,'OK!');#line:156
         O00000OO00O0OOOO0 ={}#line:157
         O00000OO00O0OOOO0 ['pid']='100000005';#line:158
-        O00OOO000OO0O0OO0 =panelAuth ().send_cloud ('check_plugin_status',O00000OO00O0OOOO0 )#line:159
+        O00OOO000OO0O0OO0 =auth ().send_cloud ('check_plugin_status',O00000OO00O0OOOO0 )#line:159
         try :#line:160
             if not O00OOO000OO0O0OO0 ['status']:#line:161
                 if getattr (web .ctx .session ,'rsync',False ):del (web .ctx .session ['rsync'])#line:162
