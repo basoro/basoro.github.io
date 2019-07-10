@@ -6,7 +6,7 @@ import base64
 import web
 import ast
 import time
-#sys.path.append("/")
+sys.path.append("")
 import public
 import db
 import MySQLdb
