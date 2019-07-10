@@ -10,7 +10,7 @@ if [ ! -f $public_file ];then
 fi
 . $public_file
 
-pluginPath=/www/server/panel/masterslave
+pluginPath=/opt/slemp/server/panel/masterslave
 
 Install_masterslave()
 {
