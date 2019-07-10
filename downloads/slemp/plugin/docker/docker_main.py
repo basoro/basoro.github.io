@@ -7,7 +7,7 @@ if sys.version_info[0] == 2:
     sys.setdefaultencoding('utf-8')
 os.chdir('/opt/slemp/server/panel');
 sys.path.append("")
-import docker, public, json
+import public, json
 
 
 class docker_main(object):
