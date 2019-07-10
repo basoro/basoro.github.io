@@ -68,7 +68,7 @@
 	"home":"https://ataaka.basoro.id",
 	"date":"2018-12-17",
 	"default":false,
-	"display":1
+	"display":0
 },{
 	"title":"phpMyAdmin",
 	"tip":"soft",
