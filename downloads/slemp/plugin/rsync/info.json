@@ -1,10 +1,10 @@
 {
-	"title":"宝塔数据同步工具",
+	"title":"Sync Tool",
 	"tip":"lib",
 	"name":"rsync",
-	"type":"系统工具",
+	"type":"System Tool",
 	"ps":"基于rsync开发的数据同步工具",
-	"versions":"2.3",
+	"versions":"1.0Data synchronization tool based on rsync development",
 	"shell":"rsync.sh",
 	"checks":"/www/server/panel/plugin/rsync",
 	"author":"宝塔",
