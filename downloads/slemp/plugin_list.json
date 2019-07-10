@@ -50,8 +50,8 @@
 	"versions":"1.0",
 	"shell":"rsync.sh",
 	"checks":"/opt/slemp/server/panel/rsync",
-	"author":"宝塔",
-	"home":"http://www.bt.cn/bbs",
+	"author":"Ataaka",
+	"home":"https://slemp.basoro.id",
 	"date":"2018-02-28",
 	"default":false,
 	"display":1
