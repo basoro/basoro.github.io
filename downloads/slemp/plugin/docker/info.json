@@ -1,0 +1,15 @@
+{
+	"title":"Docker",
+	"tip":"lib",
+	"name":"docker",
+	"type":"Expansion",
+	"ps":"Docker, an open source application container engine",
+	"versions":"2.0",
+	"shell":"install.sh",
+	"checks":"/opt/slemp/server/panel/docker",
+	"author":"宝塔",
+	"home":"https://ataaka.basoro.id",
+	"date":"2018-12-17",
+	"default":false,
+	"display":0
+}

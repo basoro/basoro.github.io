@@ -1,0 +1,1381 @@
+<style>
+/*docker*/
+.docker-sub {
+	border-bottom: 1px solid #ccc;
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 15px
+}
+
+.docker-sub span {
+	display: inline-block;
+	font-size: 14px;
+	height: 30px;
+	padding: 0 25px;
+	cursor: pointer
+}
+
+.docker-sub .on {
+	border-bottom: 2px solid #20a53a;
+	color: #20a53a;
+	font-weight: bold;
+	font-family: "宋体";
+}
+.relabel{
+	line-height: 30px;
+	margin-bottom: 0;
+	font-weight: normal;
+}
+.relabel input[type='radio']{
+	margin-right: 5px;
+}
+.type-port .plus,.type-port .minus,.type-volumes .plus2,.type-volumes .minus2{
+	cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    text-align: center;
+    width: 20px;
+}
+
+
+.ceart-docker .help{
+	color: #999;
+	font-style: normal;
+	margin-left: 20px;
+}
+.dc-un{
+	display: inline-block;
+	width: 20px;
+	margin-left: 7px;
+}
+.infoline .cname{
+	display: inline-block;
+	width: 200px;
+}
+.infoline{
+	border-bottom: #eee 1px solid;
+	padding: 20px 0;
+}
+.dk-table > thead > tr > th{
+	font-weight: normal;
+	background-color: #F5F7FA;
+	border: #F0F0F0 1px solid;
+	padding: 12px 8px;
+}
+.dk-table > tbody > tr > td{
+	padding: 12px 8px;
+	line-height: 30px;
+}
+.dk-table{
+	border-bottom: #ddd 1px solid;
+}
+.image-search input{
+	border-radius: 0;
+}
+.image-search .s-btn{
+	border: #ddd 1px solid;
+	height: 30px;
+	line-height: 30px;
+	cursor: pointer;
+	margin-left: -1px;
+}
+.image-list{
+	margin-top: 20px;
+}
+.image-list ul li{
+	float: left;
+	height: 166px;
+	width: 190px;
+	border: #ddd 1px solid;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+.image-list ul li:nth-of-type(4n){
+	margin-right: 0;
+}
+.image-list .image-ico{
+	height: 90px;
+	line-height: 90px;
+	vertical-align: middle;
+}
+.image-list .image-ico img{
+	vertical-align: middle;
+}
+.image-list .tt{
+	font-weight: bold;
+	line-height: 30px;
+}
+.image-list .oper{
+	line-height: 30px;
+}
+.image-list .oper span{
+	border: 1px solid #ddd;
+    border-radius: 3px;
+    display: inline-block;
+    height: 26px;
+    line-height: 24px;
+	width: 56px;
+}
+.masks{
+	position:absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 19999911;
+	background: rgba(0, 0, 0, 0.2)
+}
+.masks span{
+	position: absolute;
+    width: 300px;
+    margin-left: -150px;
+    margin-top: -75px;
+    left: 50%;
+    top: 40%;
+    z-index: 1000;
+    background: #fff;
+    padding: 25px 20px;
+    overflow: hidden;
+}
+.edit_name{
+	position: relative;
+    display: block;
+}
+.limit{
+	max-width: 150px;
+	font-style: normal;
+	float: left;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.login_view{
+	float:right;
+	margin-top:10px
+}
+#images_list tbody td>span,
+#docker_list tbody td div>span{
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#docker_list .table-hover:nth-child(2){
+	position: relative;
+	top: 34px;
+}
+.divtable .table-body{
+	position:absolute;
+	z-index:999;
+	border:1.5px solid #ddd;
+	border-bottom: none;
+}
+</style>
+<div class="bt-w-main" style="position: relative;">
+	<div class="bt-w-menu">
+		<p class="bgw">容器列表</p>
+		<p>镜像管理</p>
+		<!-- <p onclick="SnapshotMana()" style="display: none;">快照管理</p> -->
+		<p>IP地址池</p></div>
+	<div id="bt-docker-con" class="bt-w-con pd15">
+		<div class="conter docker_list">
+			<button class="btn btn-success  btn-sm" onclick="docker.create_mydocker_template()">创建容器</button>
+			<div class="divtable mtb15" id="docker_list_table" style="overflow: auto;height: 450px;">
+				<div id="docker_list"></div>
+			</div>
+		</div>
+		<div class="conter" style="display:none">
+			<button class="btn btn-success  btn-sm" onclick="docker.pull_images_file_template()">获取镜像</button>
+			<div class="login_view">
+				<a href="javascript:;" class="btlink on_login" onclick="docker.login_aliyun_images_template()">登录阿里镜像仓库</a>
+				<span class="off_login">用户信息: <a href="javascript:;" class="btlink edit_aliyun_images"></a></span>
+			</div>
+			<!-- <button class="btn btn-success  btn-sm" onclick="docker.pull_images_file()">PULL镜像</button> -->
+			<div class="divtable mtb15" id="images_list_table" style="overflow: auto;height: 450px;">
+				<table class="table table-hover" id="images_list"></table>
+			</div>
+		</div>
+		<div class="conter ip_pool_list" style="display:none">
+			<div class="bt-docker-con">
+				<input class="bt-input-text mr5" type="text" style="width:150px" name="address" placeholder="IP地址">
+				<input class="bt-input-text mr5" name="netmask" type="text" style="width:150px" placeholder="子网掩码">
+				<input name="gateway" class="bt-input-text mr5" type="text" style="width:150px" placeholder="网关地址">
+				<button class="btn btn-success btn-sm va0" onclick="docker.add_ip_pool()">添加IP</button>
+				<div class="divtable mtb15" id="ip_pool_list_table">
+					<table class="table table-hover" id="ip_pool_list">
+						<thead><tr><th>IP地址</th><th>子网掩码</th><th>网关</th><th class="text-right">操作</th></tr></thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="masks_tips" class="masks" style="display:none"><span></span></div>
+</div>
+
+<script>
+var docker = {
+	data:{
+		create_index:0
+	},
+	// 初始化
+	initial:function(){
+		$('.layui-layer-page').width(850);
+		$(".bt-w-menu p").click(function(){
+			var index = $(this).index();
+			$(this).addClass("bgw").siblings().removeClass("bgw");
+			$('.bt-w-con>div:eq('+ index +')').show().siblings().hide();
+			switch(index){
+				case 0:
+					docker.get_mydocker_list();
+				break;
+				case 1:
+					docker.get_images_list();
+					docker.get_login_stuats();
+				break;
+				case 2:
+					docker.get_ip_pool_list();
+				break;
+			}
+		});
+		docker.set_cookie('webssh_serial',0);//设置webssh初始化
+		docker.inspect_docker(function(){
+			docker.get_mydocker_list();
+		});
+	},
+
+	// 表头固定
+	table_sroll_fixed:function(select){
+		//表格头固定
+		var tableName = document.querySelector(select);
+		tableName.addEventListener('scroll',function(e){
+			var scrollTop = this.scrollTop;
+			$(this).find("thead").css({"transform":"translateY("+scrollTop+"px)","position":"relative","z-index":"1"});
+		});
+	},
+	// 设置cookie,设置val为空，即为删除
+	set_cookie : function(key,val)
+	{
+		var Days = 30;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*24*60*60*1000);
+		document.cookie = key + "="+ escape (val) + ";expires=" + exp.toGMTString();
+	},
+	// 获取cookie
+	get_cookie : function(key)
+	{
+		var arr,reg=new RegExp("(^| )"+key+"=([^;]*)(;|$)");
+		if(arr=document.cookie.match(reg))
+		{
+			var val = unescape(arr[2]);
+			return val== 'undefined'?'':val;
+		}
+		else{
+			return null;
+		}
+	},
+	// 请求封装
+	send:function(api_type,param,callback,loading){
+		var type = api_type.split('/');
+		if(type.length != 2) layer.msg('参数传递错误,请检查当前api名称。');
+		if(typeof param != 'object'){
+			loading = callback;
+			callback = param;
+			param = {};
+		}
+		if(loading){
+			var loadT = layer.msg(loading,{icon:16,time:0,shade: [0.3, "#000"]});
+		}else{
+			var loadT = layer.load();
+		}
+		$.post('/plugin?action=a&name='+ type[0] +'&s='+ type[1],param,function(res){
+			layer.close(loadT);
+			if(callback) callback(res);
+		});
+	},
+	// 检查docker状态
+	inspect_docker:function(callback){
+		this.send('docker/GetStatus',function(res){
+			if(!res.status) $('#masks_tips').show().find('span').html(res.msg);
+			if(callback) callback();
+		},'正在检查Docker运行状态&nbsp;&nbsp;<img src="/static/img/ing.gif">');
+	},
+	// 获取容器列表
+	get_mydocker_list:function(){
+		var _this = this,thead_array = [{title:'名称',width:'155px'},{title:'镜像',width:'160px'},{title:'创建时间',width:'120px'},{title:'状态',width:'25px'},{title:'操作',width:'144px',align:'right'}];
+		this.send('docker/GetConList',function(mlist){
+			var tbody = "",thead = '';
+			for(var j= 0 ; j <thead_array.length; j++){
+				thead += '<th '+ (thead_array[j].align != undefined ? 'style="text-align:'+ thead_array[j].align +'"':'')  +'><div style="width:'+ thead_array[j].width +'">'+ thead_array[j].title +'</div></th>'
+			}
+			for(var i=0;i<mlist.length;i++){
+				tbody += '<tr><td><div style="width:'+ thead_array[0].width +'"><a class="btlink edit_name" href="javascript:;" title="'+ mlist[i].Name.replace(/^\/?/,'') +'" onclick="docker.edit_mydocker_template(\''+ mlist[i].Config.Hostname +'\',\''+ mlist[i].Name +'\')"><i class="limit">'+ mlist[i].Name.replace(/^\/?/,'') +'</i>&nbsp;<span class="glyphicon glyphicon-edit"></span></a></div></td>'+
+					// '<td>'+mlist[i].Config.Hostname+'</td>'+
+					'<td><div style="width:'+ thead_array[1].width +'"><span style="width:160px;" title="'+ mlist[i].Config.Image+'">'+ mlist[i].Config.Image+'</span></div></td>'+
+					'<td><div style="width:'+ thead_array[2].width +'">'+getLocalTime(mlist[i].Created)+'</div></td>'+
+					'<td style="cursor:pointer;" title="点击启动或停止容器" onclick="'+(mlist[i].State.Running?'docker.stop_mydocker':'docker.start_mydocker')+'(\''+mlist[i].Config.Hostname+'\')"><div style="width:'+ thead_array[3].width +'">'+
+						'<span class="glyphicon '+(mlist[i].State.Running?'glyphicon-play':'glyphicon-pause')+'" style="color:'+(mlist[i].State.Running?'#20a53a':'red')+';font-size:12px"></span></div></td>'+
+					'<td class="text-right"><div style="width:'+ thead_array[4].width +'">'+
+					//'<a class="btlink" onclick="mydockerset(\''+mlist[i].Config.Hostname+'\')" style="display:none;">设置 | </a>'+
+					'<a class="btlink" onclick="docker.create_mydocker_images_template(\''+mlist[i].Config.Hostname+'\')">生成镜像</a> | '+
+					'<a class="btlink" onclick="docker.executive_mydorder(\''+mlist[i].Config.Hostname+'\')">打开终端</a> | '+
+					'<a class="btlink" onclick="docker.delete_mydocker(\''+mlist[i].Config.Hostname+'\')">删除</a>'+
+				'</div></td></tr>'
+			}
+			$("#docker_list").html('<table class="table table-hover table-body"><thead><tr>'+ thead +'</tr></thead></table><table class="table table-hover"><tbody>'+ tbody +'</tbody></table>');
+			docker.table_sroll_fixed('#docker_list_table')
+		});
+	},
+	// 启动容器
+	start_mydocker:function(Hostname){
+		this.send('docker/RunCon',{Hostname:Hostname},function(rdata){
+			layer.msg(rdata.msg,{icon:rdata.status?1:2});
+			if(rdata.status) docker.get_mydocker_list();
+		},'正在启动容器['+Hostname+'] <img src="/static/img/ing.gif">');
+	},
+	// 关闭容器
+	stop_mydocker:function(Hostname){
+		this.send('docker/StopCon',{Hostname:Hostname},function(rdata){
+			layer.msg(rdata.msg,{icon:rdata.status?1:2});
+			if(rdata.status) docker.get_mydocker_list();
+		},'正在停止容器['+Hostname+'] <img src="/static/img/ing.gif">');
+	},
+	// 删除容器
+	delete_mydocker:function(Hostname){
+		var _this = this;
+		SafeMessage('删除容器','即将删除容器['+Hostname+'],确定吗？',function(){
+			_this.send('docker/RemoveCon',{Hostname:Hostname},function(rdata){
+				layer.msg(rdata.msg,{icon:rdata.status?1:2});
+				if(rdata.status) docker.get_mydocker_list()
+			},'正在删除容器[ '+ Hostname +' ] <img src="/static/img/ing.gif">');
+		});
+	},
+	// 创建容器
+	create_mydocker:function(memSize){
+		var ports = {};
+		var volumes = {};
+		var portval = $('#portabletr')[0].childNodes;
+		var address = $('.docker-address').val();
+		var portval2 = $('#portabletr2')[0].childNodes;
+		// var pass = $('.docker-ps').val()
+		var command = $('.docker-command').val()
+		var entrypoint = $('.docker-entrypoint').val()
+		var accept = [];
+		
+		// if(pass.length < 5){
+		// 	layer.msg('root密码必需5位以上',{icon:2});
+		// 	$('.docker-ps').focus();
+		// 	return;
+		// }
+
+		//遍历端口映射
+		for(var i=0;i<portval.length;i++){
+			if(portval[i].childNodes[0].innerText == '当前未添加端口映射') continue;
+			var port = portval[i].childNodes[0].innerText.replace(/\s/g,'');
+			var dport = port + '/' + portval[i].childNodes[1].innerText.toLowerCase().replace(/\s/g,'');
+			var sport = [address,parseInt(portval[i].childNodes[2].innerText.replace(/\s/g,''))];
+			ports[dport] = sport
+			accept.push(port);
+		}
+		
+		//遍历目录映射
+		volumes['/sys/fs/cgroup'] = {'bind':'/sys/fs/cgroup', 'mode': 'rw'};
+		for(var i=0;i<portval2.length;i++){
+			if(portval2[i].childNodes[0].innerText.replace(/\s/g,'') == '当前未添加目录映射') continue;
+			var dpath = portval2[i].childNodes[0].innerText.replace(/\s/g,'')
+			var spath = {'bind':portval2[i].childNodes[2].innerText.replace(/\s/g,''),'mode':portval2[i].childNodes[1].innerText.toLowerCase().replace(/\s/g,'')};
+			volumes[dpath] = spath
+		}
+		
+		var data = {
+			image:$('.docker-image').val(),
+			ports:JSON.stringify(ports),
+			accept:JSON.stringify(accept),
+			volumes:JSON.stringify(volumes),
+			mem_limit:$('.docker-mem').val(),
+			cpu_shares:$('.docker-cpu').val(),
+			command:command,
+			entrypoint:entrypoint
+			// ps:pass
+		}
+		
+		if(data.mem_limit > memSize){
+			layer.msg('内存配额不能大于物理内存['+memSize+']!',{icon:2});
+			return;
+		}
+		
+		if(data.cpu_shares > 100 || data.cpu_shares < 1){
+			layer.msg('CPU权重设置值范围应该为[1-100]!',{icon:2});
+			return;
+		}
+		this.send('docker/CreateCon',data,function(rdata){
+			layer.msg(rdata.msg,{icon:rdata.status?1:2});
+			if(rdata.status){
+				docker.get_mydocker_list();
+				layer.close(docker.data.layer_index);
+			} 
+		},'正在创建容器 <img src="/static/img/ing.gif">');
+	},
+	// 创建容器模板
+	create_mydocker_template:function(){
+		this.send('docker/GetCreateInfo',function(createInfo){
+			var imageOpt = '';
+			for(var i=0;i<createInfo.images.length;i++){
+				var imageName = createInfo.images[i].RepoTags.indexOf('panel') == -1? createInfo.images[i].RepoTags:'宝塔面板:'+createInfo.images[i].RepoTags.split(':')[1];
+				imageOpt += '<option value="'+createInfo.images[i].RepoTags+'">'+imageName+'</option>';
+			}
+			var iplistOpt = '';
+			for(var i=0;i<createInfo.iplist.length;i++){
+				iplistOpt += '<option value="'+createInfo.iplist[i].address+'">'+createInfo.iplist[i].address+'</option>';
+			}
+			docker.data.layer_index = layer.open({
+				type: 1,
+				title: "创建容器",
+				area: '500px',
+				closeBtn: 2,
+				shadeClose: false,
+				content: '<div class="bt-form pd20 pb70 ceart-docker">\
+							<div class="line">\
+								<span class="tname">镜像</span>\
+								<div class="info-r c4"><select class="bt-input-text docker-image" style="width:300px">'+imageOpt+'</select></div>\
+							</div>\
+							<div class="line">\
+								<span class="tname">绑定IP</span>\
+								<div class="info-r c4"><select class="bt-input-text docker-address" style="width:300px"><option value="0.0.0.0">0.0.0.0</optin>'+iplistOpt+'</select></div>\
+							</div>\
+							<div class="line">\
+								<span class="tname">端口映射</span>\
+								<div class="info-r c4">\
+									<div class="type-port">\
+										<input class="bt-input-text" name="name1" type="number" placeholder="容器端口" style="width:100px;margin-right:15px">\
+										<select class="bt-input-text" style="width:60px;margin-right:15px"><option value="TCP">TCP</optin><option value="UDP">UDP</optin></select>\
+										<input class="bt-input-text" name="name2" type="number" placeholder="服务端口" style="width:100px">\
+										<span class="plus">+</span>\
+									</div>\
+									<div class="divtable" style="max-height:100px;overflow:auto; margin-top:15px;width:300px">\
+										<table class="table table-hover">\
+											<tbody id="portabletr"><tr class="more1"><td>当前未添加端口映射</td></tr></tbody>\
+										</table>\
+									</div>\
+								</div>\
+							</div>\
+							<div class="line">\
+								<span class="tname">目录映射</span>\
+								<div class="info-r c4">\
+									<div class="type-volumes">\
+										<input class="bt-input-text" name="path1" type="text" placeholder="服务器目录" style="width:100px;margin-right:15px">\
+										<select class="bt-input-text" style="width:60px;margin-right:15px"><option value="rw">读写</optin><option value="ro">只读</optin></select>\
+										<input class="bt-input-text" name="path2" type="text" placeholder="容器目录" style="width:100px">\
+										<span class="plus2">+</span>\
+									</div>\
+									<div class="divtable" style="max-height:100px;overflow:auto; margin-top:15px;width:300px">\
+										<table class="table table-hover">\
+											<tbody id="portabletr2"><tr class="more2"><td>当前未添加目录映射</td></tr></tbody>\
+										</table>\
+									</div>\
+								</div>\
+							</div>\
+							<div class="line">\
+								<span class="tname">内存配额</span>\
+								<div class="info-r c4"><input class="bt-input-text mr5 docker-mem" type="number" style="width:100px" value="'+parseInt(createInfo.memSize/2)+'"><span class="dc-un">MB</span><i class="help">不可超过'+createInfo.memSize+'MB</i></div>\
+							</div>\
+							<div class="line">\
+								<span class="tname">CPU权重</span>\
+								<div class="info-r c4"><input class="bt-input-text mr5 docker-cpu" type="number" max="100" min="1" style="width:100px" value="100"><span class="dc-un"></span><i class="help">权重越大,忙时CPU资源分配越多</i></div>\
+							</div>\
+							<div class="line">\
+								<span class="tname">执行命令</span>\
+								<div class="info-r c4"><input class="bt-input-text docker-command" type="text" style="width:300px" value="" placeholder="/bin/bash"></div>\
+							</div>\
+							<div class="line" style="display:none">\
+								<span class="tname">entrypoint</span>\
+								<div class="info-r c4"><input class="bt-input-text docker-entrypoint" type="text" style="width:300px" value=""></div>\
+							</div>\
+							<div class="line">\
+								<span class="tname"></span>\
+								<div class="info-r c4"><a class="btlink" href="https://www.bt.cn/bbs/thread-7878-1-1.html" target="_blank">如何创建容器?</a></div>\
+							</div>\
+							<div class="bt-form-submit-btn">\
+								<button type="button" class="btn btn-danger btn-sm bt-cancel">取消</button>\
+								<button type="button" class="btn btn-success btn-sm" onclick="docker.create_mydocker('+createInfo.memSize+')">提交</button>\
+							</div>\
+						</div>'
+			});
+			// <div class="line">\
+			// 	<span class="tname">root密码</span>\
+			// 	<div class="info-r c4"><input class="bt-input-text docker-ps" type="text" style="width:300px" readonly value="bt.cn"></div>\
+			// </div>\
+			setTimeout(function(){
+				$(".bt-cancel").click(function(){
+					layer.close(docker.data.layer_index)
+				});
+			
+				$(".plus").click(function(){
+					var name1 = $(".type-port input[name='name1']").val();
+					var name2 = $(".type-port input[name='name2']").val();
+					if(name1 < 1 || name1 > 65535 || name2 < 1 || name2 > 65535 || isNaN(name1) || isNaN(name2)){
+						layer.msg('端口设置值范围不合法，范围[1-65535]',{icon:2});
+						return;
+					}
+					
+					var portval = $('#portabletr')[0].childNodes;
+					for(var i=0;i<portval.length;i++){
+						if(portval[i].childNodes[0].innerText == '当前未添加端口映射') continue;
+						var sport = portval[i].childNodes[2].innerText;
+						if(name2 == sport){
+							layer.msg('端口['+name2+']已经在映射列表!',{icon:2});
+							return;
+						}
+					}
+					var address = $('.docker-address').val();
+					if(address == '0.0.0.0'){
+						address = '*';
+					}
+					var port = address + ':' + name2;
+					var loadT = layer.msg('正在检测 <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+					$.post('/plugin?action=a&name=docker&s=IsPortExists',{port:port},function(rdata){
+						layer.close(loadT);
+						if(rdata !== false){
+							layer.msg('主机端口['+port+']已被占用，请使用其它端口!',{icon:2});
+							return;
+						}
+						var selecttype = $(".type-port select").val();
+						var portable= '<tr><td>'+name1+'</td><td>'+selecttype+'</td><td>'+name2+'</td><td class="text-right" width="50"><a href="javascript:;" class="btlink minus">删除</a></td></tr>';
+						$("#portabletr").append(portable);
+						$(".more1").remove();
+						$(".minus").click(function(){
+							$(this).parents("tr").remove();
+						});
+					});
+				});
+				
+				$(".plus2").click(function(){
+					var path1 = $(".type-volumes input[name='path1']").val();
+					var path2 = $(".type-volumes input[name='path2']").val();
+					
+					var notPath = ['/boot','/bin','/sbin','/etc','/usr/bin','/usr/sbin','/dev']
+					if($.inArray(path2,notPath) != -1){
+						layer.msg('不能映射' + path2,{icon:2});
+						return;
+					}			
+					var portval = $('#portabletr2')[0].childNodes;
+					for(var i=0;i<portval.length;i++){
+						if(portval[i].childNodes[0].innerText == '当前未添加目录映射') continue;
+						var sport = portval[i].childNodes[2].innerText;
+						if(path2 == sport){
+							layer.msg('目录['+path2+']已经在映射列表!',{icon:2});
+							return;
+						}
+					}
+					var selecttype = $(".type-volumes select").val();
+					var portable= '<tr><td>'+path1+'</td><td>'+selecttype+'</td><td>'+path2+'</td><td class="text-right" width="50"><a href="javascript:;" class="btlink minus2">删除</a></td></tr>';
+					$("#portabletr2").append(portable);
+					$(".more2").remove();
+					$(".minus2").click(function(){
+						$(this).parents("tr").remove();
+					});
+				});
+			},500);
+		},'正在获取必要信息 <img src="/static/img/ing.gif">');
+	},
+	// 修改容器名称
+	edit_mydocker_name:function(obj){
+		console.log(obj)
+		this.send('docker/ReName',{Hostname:obj.Hostname,name2:obj.name2},function(res){
+			layer.msg(res.msg,{icon:res.status?1:2});
+			if(res.status){
+				layer.close(docker.data.layer_index);
+				docker.get_mydocker_list();
+			}
+		},'正在修改容器[ '+ obj.Hostname +' ]名称 <img src="/static/img/ing.gif">')
+	},
+	// 修改容器名称模板
+	edit_mydocker_template:function(Hostname,name){
+		docker.data.layer_index = layer.open({
+			type: 1,
+			title: "修改容器[ "+ Hostname +" ]名称",
+			area: '400px',
+			closeBtn: 2,
+			shadeClose: false,
+			content: '<div class="bt-form pd20 pb70 ceart-docker">\
+						<div class="line">\
+							<span class="tname">容器名称</span>\
+							<div class="info-r c4"><input class="bt-input-text" type="text" name="docker_name" style="width:250px" value="'+ name.replace(/^\/?/,'') +'"></div>\
+						</div>\
+						<div class="bt-form-submit-btn">\
+							<button type="button" class="btn btn-danger btn-sm bt-cancel">取消</button>\
+							<button type="button" class="btn btn-success btn-sm btn-edit-docker-name">提交</button>\
+						</div>\
+					</div>'
+
+		});
+		setTimeout(function(){
+			$(".bt-cancel").click(function(){
+				layer.close(docker.data.layer_index)
+			});
+			$('.btn-edit-docker-name').click(function(){
+				var docker_name =  $('[name="docker_name"]').val();
+				docker.edit_mydocker_name({
+					Hostname:Hostname,
+					name2:docker_name
+				})
+			});
+		},500);
+	},
+	// 执行容器命令
+	executive_mydorder:function(Hostname){
+		web_shell();
+		var shell = setInterval(function(){
+			if($('.term-box').length == 0){
+				socket.emit('webssh','exit\n');
+				clearInterval(shell);
+			}
+		},500);
+		var _this = this;
+		setTimeout(function(){
+			_this.send('docker/ExecutiveOrder',{Hostname:Hostname},function(res){
+				if(!res.status){
+					layer.msg(res.msg,{icon:res.status?1:2});
+				}else{
+					socket.emit('webssh','clear && ' + res.msg +'\n');
+				}
+			},'正在执行容器命令中，请稍后<img src="/static/img/ing.gif">');
+		});
+	},
+	// 生成镜像模板
+	create_mydocker_images_template:function(Hostname){
+		docker.data.layer_index = layer.open({
+			type: 1,
+			title: "创建镜像",
+			area: '400px',
+			closeBtn: 2,
+			shadeClose: false,
+			content: '<div class="bt-form pd20 pb70 ceart-docker">\
+						<div class="line">\
+							<span class="tname">镜像名称</span>\
+							<div class="info-r c4"><input class="bt-input-text" type="text" name="imageName" style="width:200px" value=""></div>\
+						</div>\
+						<div class="line">\
+							<span class="tname">版本号</span>\
+							<div class="info-r c4"><input class="bt-input-text" type="text" name="tag" style="width:200px" value=""></div>\
+						</div>\
+						<div class="line">\
+							<span class="tname">标签</span>\
+							<div class="info-r c4"><input class="bt-input-text" type="text" name="message" style="width:200px" value=""></div>\
+						</div>\
+						<div class="line">\
+							<span class="tname">作者</span>\
+							<div class="info-r c4"><input class="bt-input-text" type="text" name="author" style="width:200px" value=""></div>\
+						</div>\
+						<div class="line">\
+							<span class="tname">启动命令</span>\
+							<div class="info-r c4"><input class="bt-input-text" type="text" name="chenges" style="width:200px" placeholder="/bin/bash"></div>\
+						</div>\
+						<div class="bt-form-submit-btn">\
+							<button type="button" class="btn btn-danger btn-sm bt-cancel">取消</button>\
+							<button type="button" class="btn btn-success btn-sm btn-edit-docker-name">提交</button>\
+						</div>\
+					</div>'
+
+		});
+		setTimeout(function(){
+			$(".bt-cancel").click(function(){
+				layer.close(docker.data.layer_index)
+			});
+			$('.btn-edit-docker-name').click(function(){
+				var docker_name =  $('[name="docker_name"]').val();
+				docker.create_mydocker_images({
+					Hostname:Hostname,
+					imageName:$('[name="imageName"]').val(),
+					tag:$('[name="tag"]').val(),
+					message:$('[name="message"]').val(),
+					author:$('[name="author"]').val(),
+					chenges:$('[name="chenges"]').val()
+				})
+			});
+		},500);
+	},
+	// 生成镜像
+	create_mydocker_images:function(obj){
+		this.send('docker/CommitCon',{
+			Hostname:obj.Hostname,imageName:obj.imageName,tag:obj.tag,message:obj.message,author:obj.author,chenges:obj.chenges
+		},function(res){
+			layer.msg(res.msg,{icon:res.status?1:2});
+			if(res.status){
+				layer.close(docker.data.layer_index);
+				docker.get_mydocker_list();
+			}
+		},'正在生成镜像，请稍后<img src="/static/img/ing.gif">');
+	},
+	// 获取镜像列表
+	get_images_list:function(){
+		var thead =  '',tbody = '',thead_array = [{title:'名称'},{title:'大小'},{title:'许可'},{title:'描述'},{title:'操作',align:'right'}];
+		console.log('d')
+		this.send('docker/GetImageList',function(imageList){
+			console.log('d')
+			for(var j= 0 ; j <thead_array.length; j++){
+				thead += '<th '+ (thead_array[j].align != undefined ? 'style="text-align:'+ thead_array[j].align +'"':'')  +'>'+ thead_array[j].title +'</th>'
+			}
+			for(var i=0;i<imageList.length;i++){
+				tbody += '<tr><td><span style="width:250px" title="'+imageList[i].RepoTags+'">'+imageList[i].RepoTags+'</span></td><td>'+ToSize(imageList[i].Size)+'</td><td>'+(imageList[i].Labels?(imageList[i].Labels.license?imageList[i].Labels.license:'空'):'Free')+'</td><td>'+(imageList[i].Comment == ''?'空':imageList[i].Comment)+'</td>'+
+					'<td class="text-right">'+
+						'<a href="javascript:;" onclick="docker.push_image_template(\''+imageList[i].RepoTags+'\',\''+imageList[i].Id+'\');" class="btlink">推送</a> | ' +
+						'<a href="javascript:;" onclick="docker.delete_images(\''+imageList[i].RepoTags+'\',\''+imageList[i].Id+'\')" class="btlink">删除</a></td></tr>'
+			}
+			$("#images_list").html('<thead><tr>'+ thead +'</tr></thead><tbody>'+ tbody +'</tbody>');
+			docker.table_sroll_fixed('#images_list_table');
+
+		});
+	},
+	// 获取阿里镜像市场登录状态
+	get_login_stuats:function(callback){
+		this.send('docker/GetUser',function(res){
+			if(!res.status){
+				$('.login_view .no_login').show().next().hide();
+			}else{
+				$('.login_view .off_login a').html(res.msg.user_name).parent().show().prev().hide();
+				$('.edit_aliyun_images').unbind().click(function(){
+					docker.login_aliyun_images_template(res.msg)
+				});
+			}
+		});
+	},
+	// 登录阿里镜像账号模板
+	login_aliyun_images_template:function(obj){
+
+		if(obj == undefined) obj = {hub_name: "", namespace: "", registry: "", user_pass: "", user_name: ""}
+		docker.data.layer_index = layer.open({
+			type: 1,
+			title: "登录阿里云镜像账号",
+			area: '450px',
+			closeBtn: 2,
+			shadeClose: false,
+			content: '<div class="bt-docker-con">'+
+						'<div class="soft-man-con pd20 pb70 private_pull">'+
+							'<div class="line"><span class="tname">用户名:</span><div class="info-r"><input class="bt-input-text" type="text" name="user" style="width:250px" value="'+ obj.user_name +'"></div></div>'+
+							'<div class="line"><span class="tname">密码:</span><div class="info-r"><input class="bt-input-text" type="text" name="passwd" style="width:250px" value="'+ obj.user_pass +'"></div></div>'+
+							'<div class="line"><span class="tname">registry:</span><div class="info-r"><input class="bt-input-text" type="text" name="registry" style="width:250px" value="'+ obj.registry +'"></div></div>'+
+							'<div class="line"><span class="tname">仓库名称:</span><div class="info-r"><input class="bt-input-text" type="text" name="hub_name" style="width:250px" value="'+ obj.hub_name +'"></div></div>'+
+							'<div class="line"><span class="tname">命名空间:</span><div class="info-r"><input class="bt-input-text" type="text" name="namespace" style="width:250px" value="'+ obj.namespace +'"></div></div>'+
+							'<div class="bt-form-submit-btn"><button type="button" class="btn btn-sm btn-success login_aliyun">登录</button></div>'+
+						'</div>'+
+					'</div>'
+
+		});
+		setTimeout(function(){
+			$('.login_aliyun').click(function(){
+				var user = $('[name="user"]').val(),
+				passwd = $('[name="passwd"]').val(),
+				registry = $('[name="registry"]').val(),
+				hub_name = $('[name="hub_name"]').val(),
+				namespace = $('[name="namespace"]').val();
+				console.log({user:user,passwd:passwd,registry:registry,hub_name:hub_name,namespace:namespace})
+				docker.login_aliyun_images({user:user,passwd:passwd,registry:registry,hub_name:hub_name,namespace:namespace})
+			});
+		},500);
+	},
+	// 登录阿里云镜像账号
+	login_aliyun_images:function(obj){
+		console.log(obj)
+		this.send('docker/login',{
+			user:obj.user,
+			passwd:obj.passwd,
+			registry:obj.registry,
+			hub_name:obj.hub_name,
+			namespace:obj.namespace
+		},function(res){
+			layer.msg(res.msg,{icon:res.status?1:2});
+			if(res.status){
+				layer.close(docker.data.layer_index);
+				docker.get_login_stuats();
+			}
+			
+		},'正在登录阿里镜像账号，请稍后 <img src="/static/img/ing.gif">');
+	},	
+	// 删除镜像
+	delete_images:function(imageName,imageId){
+		var _this = this;
+		SafeMessage('删除镜像','即将删除镜像['+imageName+'],确定吗？',function(){
+			_this.send('docker/RemoveImage',{imageId:imageId},function(rdata){
+				layer.msg(rdata.msg,{icon:rdata.status?1:2});
+				if(rdata.status) docker.get_images_list();
+			},'正在删除镜像['+imageName+'] <img src="/static/img/ing.gif">');
+		});
+	},
+	// 拉取镜像文件模板
+	pull_images_file_template:function(){
+		docker.data.layer_index = layer.open({
+			type: 1,
+			title: "获取镜像",
+			area: '500px',
+			closeBtn: 2,
+			shadeClose: false,
+			content: '<div class="bt-docker pd20">'+
+						'<div class="docker-sub">'+
+							'<span class="on">官方库</span>'+
+							'<span>公网库</span>'+
+							'<span>私有库</span>'+
+						'</div>'+
+						'<div class="bt-form bt-docker-con">'+
+							'<div class="conter official_pull pd15"><div class="line">'+
+								'<span class="tname">镜像名称:</span><div class="info-r c4"><input class="bt-input-text mr5" type="text" name="official_pull_name" style="width:250px" value=""><button type="button" class="btn btn-sm btn-success official_pull_btn">获取镜像</button></div>'+
+							'</div></div>'+
+							'<div class="conter public_pull pd15" style="display: none;"><div class="line">'+
+								'<span class="tname">镜像地址:</span><div class="info-r c4"><input class="bt-input-text mr5" type="text" name="public_pull_path" style="width:250px" value=""><button type="button" class="btn btn-sm btn-success public_pull_btn">获取镜像</button></div>'+
+							'</div></div>'+
+							'<div class="conter private_pull" style="display: none;">'+
+								'<div class="line"><span class="tname">镜像地址:</span><div class="info-r c4"><input class="bt-input-text" type="text" name="private_pull_path" style="width:250px" value=""></div></div>'+
+								'<div class="line"><span class="tname">用户名:</span><div class="info-r c4"><input class="bt-input-text" type="text" name="private_pull_user" style="width:250px" value=""></div></div>'+
+								'<div class="line"><span class="tname">密码:</span><div class="info-r c4"><input class="bt-input-text" type="text" name="private_pull_pw" style="width:250px" value=""></div></div>'+
+								'<div class="line"><span class="tname">registry:</span><div class="info-r c4"><input class="bt-input-text" type="text" name="private_pull_registry" style="width:250px" value=""></div></div>'+
+								'<div class="line"><span class="tname"></span><div class="info-r c4"><button type="button" class="btn btn-sm btn-success private_pull_btn">获取镜像</button></div></div>'+
+							'</div>'+
+						'</div>'+
+					'</div>'
+
+		});
+		setTimeout(function(){
+			$('.docker-sub span').click(function(){
+				var index = $(this).index();
+				$(this).addClass('on').siblings().removeClass('on');
+				$(this).parent().next().find('.conter').eq(index).show().siblings().hide();
+			});
+			$('.official_pull_btn').click(function(){
+				var name = $('[name="official_pull_name"]').val();
+				if(name == ''){
+					layer.msg('镜像名称不能为空');
+					return
+				}
+				docker.pull_images_official(name);
+			});
+
+			$('.public_pull_btn').click(function(){
+				var path = $('[name="public_pull_path"]').val();
+				if(path == ''){
+					layer.msg('公网镜像地址不能为空');
+					return
+				}
+				docker.pull_images_public(path);
+			});
+			$('.private_pull_btn').click(function(){
+				var path = $('[name="private_pull_path"]').val(),
+					user = $('[name="private_pull_user"]').val(),
+					pw = $('[name="private_pull_pw"]').val(),
+					registry = $('[name="private_pull_registry"]').val();
+				if(path == ''){
+					layer.msg('私有镜像地址不能为空');
+					return
+				}else if(user == ''){
+					layer.msg('私有镜像用户名不能为空');
+					return
+				}else if(pw == ''){
+					layer.msg('私有镜像用户名密码不能为空');
+					return
+				}else if(registry == ''){
+					layer.msg('私有镜像registry不能为空');
+					return
+				}
+				docker.pull_images_private({
+					path:path,
+					user:user,
+					password:pw,
+					registry:registry
+				});
+			});
+
+		},500);
+	},
+	// 拉取镜像文件_官网库（镜像名称）
+	pull_images_official:function(images){
+		this.send('docker/pull',{images:images},function(res){
+			layer.msg(res.msg,{icon:res.status?1:2});
+			if(res.status){
+				layer.close(docker.data.layer_index);
+				docker.get_images_list();
+			}
+		},'正在获取镜像中，请稍后<img src="/static/img/ing.gif">');
+	},
+	// 拉取镜像文件_公网库（地址）
+	pull_images_public:function(path){
+		this.send('docker/pull_reg',{path:path},function(res){
+			layer.msg(res.msg,{icon:res.status?1:2});
+			if(res.status){
+				layer.close(docker.data.layer_index);
+				docker.get_images_list();
+			}
+		},'正在获取镜像中，请稍后<img src="/static/img/ing.gif">');
+	},
+	// 拉取镜像文件_公网库（地址）
+	pull_images_private:function(obj){
+		this.send('docker/pull_private',{user:obj.user,password:obj.password,registry:obj.registry,path:obj.path},function(res){
+			layer.msg(res.msg,{icon:res.status?1:2});
+			if(res.status){
+				layer.close(docker.data.layer_index);
+				docker.get_images_list();
+			}
+		},'正在获取镜像中，请稍后<img src="/static/img/ing.gif">');
+	},
+	// 推送镜像模板
+	push_image_template:function(imageName,imageid){
+		docker.data.layer_index = layer.open({
+			type: 1,
+			title: "推送镜像[ "+ imageName +" ]至阿里云",
+			area: '400px',
+			closeBtn: 2,
+			shadeClose: false,
+			content: '<div class="bt-form pd20 pb70 ceart-docker">\
+						<div class="line">\
+							<span class="tname">版本号</span>\
+							<div class="info-r c4"><input class="bt-input-text" type="text" name="version" style="width:200px" value=""></div>\
+						</div>\
+						<div class="bt-form-submit-btn">\
+							<button type="button" class="btn btn-danger btn-sm bt-cancel">取消</button>\
+							<button type="button" class="btn btn-success btn-sm btn-edit-docker-name">提交</button>\
+						</div>\
+					</div>'
+
+		});
+		setTimeout(function(){
+			$(".bt-cancel").click(function(){
+				layer.close(docker.data.layer_index)
+			});
+			$('.btn-edit-docker-name').click(function(){
+				var version =  $('[name="version"]').val();
+				docker.push_image({ version:version, imageid:imageid});
+			});
+		},500);
+	},
+	// 推送镜像至阿里云
+	push_image:function(obj){
+		this.send('docker/push',{version:obj.version,imageid:obj.imageid},function(res){
+			layer.msg(res.msg,{icon:res.status?1:2});
+			if(res.status){
+				layer.close(docker.data.layer_index);
+				docker.get_images_list();
+			}
+		},'正在push镜像至阿里云，请稍后 <img src="/static/img/ing.gif">');
+	},
+	// 获取IP池列表
+	get_ip_pool_list:function(){
+		this.send('docker/GetIPList',function(iplist){
+			var thead = '',tbody = '',thead_array = [{title:'IP地址'},{title:'子网掩码'},{title:'网关'},{title:'操作',align:'right'}]
+			for(var j= 0 ; j <thead_array.length; j++){
+				thead += '<th '+ (thead_array[j].align != undefined ? 'style="text-align:'+ thead_array[j].align +'"':'')  +'>'+ thead_array[j].title +'</th>'
+			}
+			for(var i=0;i<iplist.length;i++){
+				tbody += '<tr><td>'+ iplist[i].address+'</td><td>'+iplist[i].netmask+'</td><td>'+iplist[i].gateway+'</td><td class="text-right"><a href="javascript:;" onclick="docker.del_ip_pool(\''+iplist[i].address+'\')" class="btlink del">删除</a></td></tr>'
+			}
+			$("#ip_pool_list").html('<thead><tr>'+ thead +'</tr></thead><tbody>'+ tbody +'</tbody>');
+		})
+	},
+	// 添加ip
+	add_ip_pool:function(obj){
+		var data = {};
+		$('.ip_pool_list input').each(function(index,el){
+			data[$(this).attr('name')] = $(this).val();
+		});
+		
+		this.send('docker/AddIP',data,function(rdata){
+			layer.msg(rdata.msg,{icon:rdata.status?1:2});
+			if(rdata.status) docker.get_ip_pool_list();
+		},'正在添加IP['+data.address+']到地址池 <img src="/static/img/ing.gif">');
+	},
+	// 删除ip
+	del_ip_pool:function(address){
+		var _this = this;
+		SafeMessage('删除IP','即将从地址池删除['+address+'],确定吗？',function(){
+			_this.send('docker/DelIP',{address:address},function(rdata){
+				console.log(address)
+				layer.msg(rdata.msg,{icon:rdata.status?1:2});
+				if(rdata.status) docker.get_ip_pool_list();
+			},'正在从地址池删除IP['+address+'] <img src="/static/img/ing.gif">');
+		});
+	}
+}
+
+docker.initial();
+
+
+// 备份文件
+// function backupDocker(name){
+// 	console.log(name);
+// 	layer.msg(name);
+// }
+
+//启动容器
+// function StartDocker(Hostname){
+
+// }
+
+// //停止容器
+// function StopDocker(Hostname){
+// 	var loadT = layer.msg('正在停止容器['+Hostname+'] <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+// 	$.post('/plugin?action=a&name=docker&s=StopCon',{Hostname:Hostname},function(rdata){
+// 		layer.close(loadT);
+// 		layer.msg(rdata.msg,{icon:rdata.status?1:2});
+// 		if(rdata.status) mydocker();
+// 	});
+// }
+
+//删除容器
+// function deleteDocker(Hostname){
+
+// }
+
+var a = null;
+//创建容器
+// function CreateDocker(){
+// 	var loadT = layer.msg('',{icon:16,time:0,shade: [0.3, "#000"]});
+	
+// }
+
+//提交容器创建
+function CreateDockerSubmit(memSize){
+	var ports = {};
+	var volumes = {};
+	var portval = $('#portabletr')[0].childNodes;
+	var address = $('.docker-address').val();
+	var portval2 = $('#portabletr2')[0].childNodes;
+	// var pass = $('.docker-ps').val()
+	var command = $('.docker-command').val()
+	var entrypoint = $('.docker-entrypoint').val()
+	var accept = [];
+	
+	if(pass.length < 5){
+		layer.msg('root密码必需5位以上',{icon:2});
+		$('.docker-ps').focus();
+		return;
+	}
+
+	//遍历端口映射
+	for(var i=0;i<portval.length;i++){
+		if(portval[i].childNodes[0].innerText == '当前未添加端口映射') continue;
+		var port = portval[i].childNodes[0].innerText;
+		var dport = port + '/' + portval[i].childNodes[1].innerText.toLowerCase();
+		var sport = [address,parseInt(portval[i].childNodes[2].innerText)];
+		ports[dport] = sport
+		accept.push(port);
+	}
+	
+	//遍历目录映射
+	volumes['/sys/fs/cgroup'] = {'bind':'/sys/fs/cgroup', 'mode': 'rw'};
+	for(var i=0;i<portval2.length;i++){
+		if(portval2[i].childNodes[0].innerText == '当前未添加目录映射') continue;
+		var dpath = portval2[i].childNodes[0].innerText
+		var spath = {'bind':portval2[i].childNodes[2].innerText,'mode':portval2[i].childNodes[1].innerText.toLowerCase()};
+		volumes[dpath] = spath
+	}
+	
+	var data = {
+		image:$('.docker-image').val(),
+		ports:JSON.stringify(ports),
+		accept:JSON.stringify(accept),
+		volumes:JSON.stringify(volumes),
+		mem_limit:$('.docker-mem').val(),
+		cpu_shares:$('.docker-cpu').val(),
+		command:command,
+		entrypoint:entrypoint
+		// ps:pass
+	}
+	
+	if(data.mem_limit > memSize){
+		layer.msg('内存配额不能大于物理内存['+memSize+']!',{icon:2});
+		return;
+	}
+	
+	if(data.cpu_shares > 100 || data.cpu_shares < 1){
+		layer.msg('CPU权重设置值范围应该为[1-100]!',{icon:2});
+		return;
+	}
+	
+	var loadT = layer.msg('正在创建容器 <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+	$.post('/plugin?action=a&name=docker&s=CreateCon',data,function(rdata){
+		layer.close(loadT);
+		layer.msg(rdata.msg,{icon:rdata.status?1:2});
+		if(rdata.status){
+			mydocker();
+			layer.close(a);
+		} 
+	});
+}
+
+//管理容器
+function mydockerset(){
+	layer.open({
+		type: 1,
+		title: "mydocker设置",
+		area: '860px',
+		closeBtn: 2,
+		shadeClose: false,
+		content:'<div class="bt-form">\
+			<div class="bt-w-main">\
+				<div class="bt-w-menu">\
+					<p class="bgw" onclick="DockerInfo()">容器信息</p>\
+					<p onclick="MyDockerConfig()">配置修改</p>\
+					<p onclick="MappedPort()">映射端口</p>\
+					<p onclick="ManaKey()">管理密钥</p>\
+					<p onclick="BindIp()">绑定IP</p>\
+				</div>\
+				<div class="bt-w-con pd15">\
+					<div class="mydocker-con"></div>\
+				</div>\
+			</div>\
+		</div>'
+	});
+	DockerInfo();
+	$(".bt-w-menu p").click(function(){
+		$(this).addClass("bgw").siblings().removeClass("bgw");
+	})
+}
+//容器信息
+function DockerInfo(){
+	var con = '<div class="infoline">\
+				<div class="cname">当前状态：运行中 <span class="glyphicon glyphicon-play" style="color:#20a53a;font-size:12px"></span></div>\
+				<button class="btn btn-default btn-sm mr20">重启</button>\
+				<button class="btn btn-default btn-sm mr20">停止</button>\
+				<button class="btn btn-default btn-sm mr20">保存镜像</button>\
+				<button class="btn btn-default btn-sm">保存快照</button>\
+			</div>\
+			<div class="infoline">\
+				<div class="cname">运行时间：4天5小时28分钟</div>\
+				<button class="btn btn-default btn-sm mr20">查看日志</button>\
+			</div>\
+			<div class="infoline">\
+				<div class="cname">进程数量：102个</div>\
+				<button class="btn btn-default btn-sm mr20">查看</button>\
+			</div>\
+			<div class="infoline">\
+				<div class="cname">使用镜像：centos 7.2</div>\
+			</div>\
+			<div class="infoline" style="border-bottom:0 none">\
+				<div class="cname">使用状态： </div>\
+				<ul class="c-c">\
+					<li class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mtb20 circle-box text-center">\
+						<h4 class="c5 f12">CPU使用率</h3>\
+						<div class="circle"><div class="pie_left"><div class="left" style="transform: rotate(133.2deg);"></div></div><div class="pie_right"><div class="right" style="transform: rotate(180deg);"></div></div><div class="mask"><span>87</span>%</div></div>\
+						<h4 id="core" class="c5 f12">1 核心</h4>\
+					</li>\
+					<li class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mtb20 circle-box text-center">\
+						<h4 class="c5 f12">内存使用率</h3>\
+						<div class="circle"><div class="pie_left"><div class="left" style="transform: rotate(133.2deg);"></div></div><div class="pie_right"><div class="right" style="transform: rotate(180deg);"></div></div><div class="mask"><span>87</span>%</div></div>\
+						<h4 id="core" class="c5 f12">1 核心</h4>\
+					</li>\
+					<li class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mtb20 circle-box text-center">\
+						<h4 class="c5 f12">磁盘使用率</h3>\
+						<div class="circle"><div class="pie_left"><div class="left" style="transform: rotate(133.2deg);"></div></div><div class="pie_right"><div class="right" style="transform: rotate(180deg);"></div></div><div class="mask"><span>87</span>%</div></div>\
+						<h4 id="core" class="c5 f12">1 核心</h4>\
+					</li>\
+				</ui>\
+			</div>';
+	$(".mydocker-con").html(con);
+}
+//配置修改
+function MyDockerConfig(){
+	var con = '<div class="bt-form ceart-docker">\
+					<div class="line">\
+						<span class="tname">容器名称</span>\
+						<div class="info-r c4"><input class="bt-input-text" type="text" style="width:300px" value="mytest" disabled></div>\
+					</div>\
+					<div class="line">\
+						<span class="tname">内存配额</span>\
+						<div class="info-r c4"><input class="bt-input-text mr5" type="text" style="width:100px"><span class="dc-un">MB</span><i class="help">不可超过1000MB</i></div>\
+					</div>\
+					<div class="line">\
+						<span class="tname">磁盘配额</span>\
+						<div class="info-r c4"><input class="bt-input-text mr5" type="text" style="width:100px"><span class="dc-un">MB</span><i class="help">不可超过1000MB</i></div>\
+					</div>\
+					<div class="line">\
+						<span class="tname">CPU核心数</span>\
+						<div class="info-r c4"><input class="bt-input-text mr5" type="text" style="width:100px"><span class="dc-un">核</span><i class="help">不可超过8核</i></div>\
+					</div>\
+					<div class="line">\
+						<span class="tname">绑定IP</span>\
+						<div class="info-r c4"><select class="bt-input-text" style="width:300px"><option value="192.168.1.234">192.168.1.234</optin><option value="192.168.1.235">192.168.1.235</optin></select></div>\
+					</div>\
+					<div class="line">\
+						<span class="tname">挂载目录</span>\
+						<div class="info-r c4"><input class="bt-input-text" type="text" style="width:300px"></div>\
+					</div>\
+					<div class="line">\
+						<span class="tname">备注</span>\
+						<div class="info-r c4"><input class="bt-input-text" type="text" style="width:300px"></div>\
+					</div>\
+					<div class="line">\
+						<span class="tname"></span>\
+						<div class="info-r c4"><button class="btn btn-success btn-sm">保存</button></div>\
+					</div>\
+				</div>';
+	$(".mydocker-con").html(con);
+}
+//映射端口
+function MappedPort(){
+	var con = '<button class="btn btn-default btn-sm dkadd-port">添加端口</button>\
+		<table class="table dk-table mtb15">\
+			<thead>\
+				<tr><th>容器端口</th><th>协议</th><th>服务端口</th><th class="text-right">操作</th></tr>\
+			</thead>\
+			<tbody class="docker-port-list">\
+				<tr><td><input class="bt-input-text" placeholder="1-65536内的整数"></td>\
+				<td><select class="bt-input-text"><option value="TCP">TCP</optin><option value="UDP">UDP</optin></select></td>\
+				<td><input class="bt-input-text" placeholder="1-65536内的整数"></td>\
+				<td class="text-right"><a href="#" class="btlink">确定</a>  |  <a href="javascript:;" class="btlink del">删除</a></td>\
+				</tr>\
+				<tr><td>8888</td><td>TCP</td><td>8888</td><td class="text-right"><a href="#" class="btlink">修改</a>  |  <a href="javascript:;" class="btlink del">删除</a></td></tr>\
+			</tbody>\
+		</table>';
+	$(".mydocker-con").html(con);
+	$(".dkadd-port").click(function(){
+		var portcon = '<tr><td><input class="bt-input-text" placeholder="1-65536内的整数"></td>\
+				<td><select class="bt-input-text"><option value="TCP">TCP</optin><option value="UDP">UDP</optin></select></td>\
+				<td><input class="bt-input-text" placeholder="1-65536内的整数"></td>\
+				<td class="text-right"><a href="#" class="btlink">确定</a>  |  <a href="javascript:;" class="btlink del">删除</a></td>\
+				</tr>' 
+		$(".docker-port-list").prepend(portcon);
+		$(".del").click(function(){
+			$(this).parents("tr").remove();
+		})
+	});
+	
+	$(".del").click(function(){
+		$(this).parents("tr").remove();
+	})
+}
+//管理密钥
+function ManaKey(){
+	var con = '<div class="bt-form">\
+		<div class="line">\
+			<span class="tname">容器地址:</span>\
+			<div class="info-r c4"><input class="bt-input-text" type="text" style="width:400px" value="http://192.168.1.245:8888" disabled></div>\
+		</div>\
+		<div class="line">\
+			<span class="tname">用户名:</span>\
+			<div class="info-r c4"><input class="bt-input-text" type="text" style="width:400px" value="mytest" disabled></div>\
+		</div>\
+		<div class="line">\
+			<span class="tname">密钥:</span>\
+			<div class="info-r c4"><input class="bt-input-text mr20" type="text" style="width:400px" value="mytest"><button class="btn btn-success btn-sm">更新密钥</button></div>\
+		</div>\
+	</div>';
+	$(".mydocker-con").html(con);
+}
+//绑定IP
+function BindIp(){
+	var loadT = layer.msg('正在获取IP地址池 <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+	$.get('/plugin?action=a&name=docker&s=GetIPList',function(iplist){
+		layer.close(loadT);
+		var ipBody = ''
+		for(var i=0;i<iplist.length;i++){
+			ipBody += '<tr><td>'+iplist[i].address+'</td><td>'+iplist[i].netmask+'</td><td>'+iplist[i].gateway+'</td><td class="text-right"><a href="javascript:DelIP(\''+iplist[i].address+'\');" class="btlink del">删除</a></td></tr>'
+		}
+		
+		var con = '<input class="bt-input-text mr5" type="text" style="width:150px" name="address" placeholder="IP地址"><input class="bt-input-text mr5" name="netmask" type="text" style="width:150px" placeholder="子网掩码"><input name="gateway" class="bt-input-text mr5" type="text" style="width:150px" placeholder="网关地址"><button class="btn btn-default btn-sm va0" onclick="AddIP()">添加IP</button>\
+				<div class="divtable mtb15">\
+					<table class="table table-hover">\
+						<thead>\
+							<tr><th>IP地址</th><th>子网掩码</th><th>网关</th><th class="text-right">操作</th></tr>\
+						</thead>\
+						<tbody>'+ipBody+'</tbody>\
+					</table>\
+				</div>';
+		$(".mydocker-con").html(con);
+	});
+}
+
+//添加IP
+function AddIP(){
+	var data = {
+		address:$("input[name='address']").val(),
+		netmask:$("input[name='netmask']").val(),
+		gateway:$("input[name='gateway']").val()
+	}
+	
+	var loadT = layer.msg('正在添加IP['+data.address+']到地址池 <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+	$.post('/plugin?action=a&name=docker&s=AddIP',data,function(rdata){
+		layer.close(loadT);
+		layer.msg(rdata.msg,{icon:rdata.status?1:2});
+		if(rdata.status) IpPool();
+	});
+}
+
+//删除IP
+function DelIP(address){
+	SafeMessage('删除IP','即将从地址池删除['+address+'],确定吗？',function(){
+		var loadT = layer.msg('正在从地址池删除IP['+address+'] <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+		$.post('/plugin?action=a&name=docker&s=DelIP',{address:address},function(rdata){
+			layer.close(loadT);
+			layer.msg(rdata.msg,{icon:rdata.status?1:2});
+			if(rdata.status) IpPool();
+		});
+	});
+}
+
+//镜像管理
+function ImageMana(){
+	var loadT = layer.msg('正在获取镜像列表 <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+	$.get('/plugin?action=a&name=docker&s=GetImageList',function(imageList){
+		layer.close(loadT);
+		var imageBody = '';
+		for(var i=0;i<imageList.length;i++){
+			imageBody += '<tr><td>'+imageList[i].RepoTags//删除镜像
+function RemoveImage(imageName,imageId){
+	SafeMessage('删除镜像','即将删除镜像['+imageName+'],确定吗？',function(){
+		var loadT = layer.msg('正在删除镜像['+imageName+'] <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+		$.post('/plugin?action=a&name=docker&s=RemoveImage',{imageId:imageId},function(rdata){
+			layer.close(loadT);
+			layer.msg(rdata.msg,{icon:rdata.status?1:2});
+			if(rdata.status) ImageMana();
+		});
+	});
+}+'</td><td>'+ToSize(imageList[i].Size)+'</td><td>'+(imageList[i].Labels?imageList[i].Labels.license:'Free')+'</td><td>'+imageList[i].Comment+'</td><td class="text-right"><a href="javascript:RemoveImage(\''+imageList[i].RepoTags+'\',\''+imageList[i].Id+'\');" class="btlink del">删除</a></td></tr>'
+		}
+		var con = '<div class="image-list divtable">\
+		<table class="table table-hover">\
+			<thead><tr><th>名称</th><th>大小</th><th>许可</th><th>描述</th><th class="text-right">操作</th></tr></thead>\
+			<tbody>'+imageBody+'</tbody>\
+		</table>\
+		</div>';
+		$("#bt-docker-con").html(con);
+	});
+}
+
+
+
+
+//快照管理
+function SnapshotMana(){
+	var con = '<div class="divtable">\
+		<table class="table table-hover">\
+		<thead>\
+			<tr><th>名称</th><th>大小</th><th>创建时间</th><th>备注</th><th class="text-right">操作</th></tr>\
+		</thead>\
+		<tbody>\
+			<tr><td>mytest</td><td>100MB</td><td>2017-10-14 18:00</td><td>mytest</td><td class="text-right"><a href="#" class="btlink">设置</a>  |  <a href="#" class="btlink del">删除</a></td></tr>\
+		</tbody>\
+	</table>\
+	</div>';
+	$("#bt-docker-con").html(con);
+}
+
+//IP地址池
+function IpPool(){
+	var loadT = layer.msg('正在获取IP地址池 <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+	$.get('/plugin?action=a&name=docker&s=GetIPList',function(iplist){
+		layer.close(loadT);
+		var ipBody = ''
+		for(var i=0;i<iplist.length;i++){
+			ipBody += '<tr><td>'+iplist[i].address+'</td><td>'+iplist[i].netmask+'</td><td>'+iplist[i].gateway+'</td><td class="text-right"><a href="javascript:DelIP(\''+iplist[i].address+'\');" class="btlink del">删除</a></td></tr>'
+		}
+		var con = '<input class="bt-input-text mr5" type="text" style="width:150px" name="address" placeholder="IP地址"><input class="bt-input-text mr5" name="netmask" type="text" style="width:150px" placeholder="子网掩码"><input name="gateway" class="bt-input-text mr5" type="text" style="width:150px" placeholder="网关地址"><button class="btn btn-default btn-sm va0" onclick="AddIP()">添加IP</button>\
+				<div class="divtable mtb15">\
+					<table class="table table-hover">\
+						<thead>\
+							<tr><th>IP地址</th><th>子网掩码</th><th>网关</th><th class="text-right">操作</th></tr>\
+						</thead>\
+						<tbody>'+ipBody+'</tbody>\
+					</table>\
+				</div>';
+		$("#bt-docker-con").html(con);
+	});
+}
+</script>
