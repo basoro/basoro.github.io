@@ -1,14 +1,6 @@
  #coding: utf-8
-# +-------------------------------------------------------------------
-# | 宝塔Linux面板
-# +-------------------------------------------------------------------
-# | Copyright (c) 2015-2019 宝塔软件(http://bt.cn) All rights reserved.
-# +-------------------------------------------------------------------
-# | Author: 黄文良 <287962566@qq.com>
-# +-------------------------------------------------------------------
 import sys,os;
-p_path = '/opt/slemp/server/panel/rsync';
-sys.path.append(p_path);
+sys.path.append("");
 reload(sys);
 import rsync_init;
 reload(rsync_init);

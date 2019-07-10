@@ -10,7 +10,7 @@
 }
 .serverSide .header,
 .clientSide .header{
-	padding-top:20px; 
+	padding-top:20px;
 	overflow: hidden;
 }
 .serverSide .header .switch span{
@@ -68,11 +68,11 @@
 	background: #fff;
 	transform: rotate(45deg);
 	border-top: 1px solid #ececec;
-	border-left: 1px solid #ececec; 
+	border-left: 1px solid #ececec;
 }
 .wafConf{
 	overflow: hidden;
-	margin:15px; 
+	margin:15px;
 }
 .wafConf fieldset {
 	border: 1px solid #ccc;
@@ -231,7 +231,7 @@ code{
 						<input class="btswitch btswitch-ios" id="switch" type="checkbox" onclick="tsync.serverSwitch()">
 						<label class="btswitch-btn" for="switch"></label>
 					</div>
-				</div>		
+				</div>
 			</div>
 			<div class="conter divtable">
 				<table class="table table-hover">
@@ -272,7 +272,7 @@ code{
 		cancelLog:'',
 		setServerForm:{
 			mName:'',
-			path:'/www/wwwroot/',
+			path:'/opt/slemp/wwwroot/',
 			passwd:'',
 			comment:''
 		},
@@ -293,7 +293,7 @@ code{
 			secret_key:'',
 			ip:'',
 			mName:'',
-			path:'/www/wwwroot/',
+			path:'/opt/slemp/wwwroot/',
 			exclude:'',
 			include:''
 		},
@@ -363,7 +363,7 @@ code{
 										<a href="javascript:;" class="btlink" onclick="tsync.setServerView(\''+ res['modules'][i].name +'\')">编辑</a> | \
 										<a href="javascript:;" style="color:red" onclick="tsync.delServerInfo(\''+ res['modules'][i].name +'\')">删除</a>\
 									</td>\
-								</tr>' 
+								</tr>'
 				}
 				$('.serverSide .sideList').empty().append(domData);
 				$('.psShow').click(function(event) {
@@ -415,7 +415,7 @@ code{
 					action = 'add_module'
 					this.setServerForm = {
 						mName:'',
-						path:'/www/wwwroot/',
+						path:'/opt/slemp/wwwroot/',
 						dont_commpress:'',
 						password:RandomStrPwd(12),
 						comment:''
@@ -724,7 +724,7 @@ code{
 				model:'default.direct',
 				index:index
 			}
-			
+
 			if(pdata['nName'] == '' || pdata['path'] == '' || pdata['to'] == ''){
 				layer.msg('请填写任务名称、被同步的文件夹、目标文件夹!');
 				return;
@@ -736,7 +736,7 @@ code{
 				if(rdata.status){
 					layer.close(tsync.set_layer_View)
 					tsync.getClientInfo();
-				} 
+				}
 			});
 		},
 		// 发送端 - 设置配置信息(编辑和添加)
@@ -795,7 +795,7 @@ code{
 						secret_key:'',
 						ip:'',
 						mName:'',
-						path:'/www/wwwroot/',
+						path:'/opt/slemp/wwwroot/',
 						exclude:'',
 					}
 				}
@@ -941,11 +941,11 @@ code{
 					if($('input[name="bwlimit"]').val() > -1){
 						server.bwlimit = $('input[name="bwlimit"]').val();
 					}
-					
+
 					if($('input[name="delay"]').val() > -1){
 						server.delay = $('input[name="delay"]').val();
 					}
-	
+
 					if ($('input[name="path"]').val() != ''){
 						server.path = $('input[name="path"]').val();
 					}else{
@@ -977,7 +977,7 @@ code{
 						layer.msg('请输入接收密钥！');
 						return false;
 					}
-					
+
 					server.cron = JSON.stringify(server.cron);
 					server.index = index
 					var loading = layer.msg('提交数据中,请稍后...',{icon:16,time:0,shade: [0.3, '#000']});
@@ -992,10 +992,10 @@ code{
 						}else{
 							layer.msg(res.msg,{icon:2});
 						}
-						
+
 					});
 					function method(){
-	
+
 					}
 				});
 			});
@@ -1024,7 +1024,7 @@ code{
 				tsync.cancelLog = layer.open({
 					type:1,
 					title:'查看同步日志['+mName+']',
-					area: ['1000px','540px'], 
+					area: ['1000px','540px'],
 					shadeClose:false,
 					closeBtn:2,
 					content:'<div class="setchmod bt-form pd20 pb70">'
@@ -1037,8 +1037,8 @@ code{
 				});
 				setTimeout(function(){
 					var ob = document.getElementById('preLogs');
-					ob.scrollTop = ob.scrollHeight;	
-				},300);	
+					ob.scrollTop = ob.scrollHeight;
+				},300);
 				$('.btn-delLogs').click(function(event) {
 					layer.confirm('确定删除'+ mName +'吗？',{title:'删除日志',icon:3},function(){
 						$.post('/plugin?action=a&name=rsync&s=remove_rsync_logs',{mName:mName}, function(res) {
@@ -1059,7 +1059,7 @@ code{
 				layer.open({
 					type:1,
 					title:'过滤器',
-					area: '400px', 
+					area: '400px',
 					shadeClose:false,
 					closeBtn:2,
 					content:'<div class="wafConf">\

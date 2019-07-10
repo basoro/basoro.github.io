@@ -1,6 +1,6 @@
  #coding: utf-8
 import re ,os ,sys ,time #line:9
-sys.path.append ("/opt/slemp/server/panel/")#line:10
+sys.path.append ("")#line:10
 import public ,db ,crontab #line:11
 import re ,json #line:12
 import time ,base64 ,web #line:13
