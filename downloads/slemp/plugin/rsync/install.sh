@@ -8,7 +8,7 @@ if [ ! -f $public_file ];then
 fi
 . $public_file
 download_Url=http://download.bt.cn
-pluginPath=/www/server/panel/plugin/rsync
+pluginPath=/opt/slemp/server/panel/plugin/rsync
 centos=1
 if [ ! -f /usr/bin/yum ];then
 	centos=0

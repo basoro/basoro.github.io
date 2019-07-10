@@ -7,7 +7,7 @@
 # | Author: 黄文良 <287962566@qq.com>
 # +-------------------------------------------------------------------
 import re ,os ,sys ,time #line:9
-sys .path .append ("/www/server/panel/class/")#line:10
+sys.path.append ("/opt/slemp/server/panel/")#line:10
 import public ,db ,crontab #line:11
 import re ,json #line:12
 import time ,base64 ,web #line:13
@@ -16,7 +16,7 @@ class plugin_rsync_init ():#line:16
     __OO0O00O0OOOO0OOOO ='/usr/bin/rsync'#line:17
     rsyn_file ="/etc/rsyncd.conf"#line:18
     lsync_file ="/etc/lsyncd.conf"#line:19
-    rsyn_path ='/www/server/panel/plugin/rsync'#line:20
+    rsyn_path ='/opt/slemp/server/panel/rsync'#line:20
     def __init__ (OO0O000OO00OOOO00 ):#line:22
         OOO0O0OO0OO000000 =OO0O000OO00OOOO00 .rsyn_path +'/sclient';#line:23
         if not os .path .exists (OOO0O0OO0OO000000 ):public .ExecShell ("mkdir -p "+OOO0O0OO0OO000000 );#line:24
@@ -126,7 +126,7 @@ class plugin_rsync_init ():#line:16
                 return O00O0O0000000000O ;#line:150
         return public .returnMsg (False ,'指定任务不存在!');#line:151
     def __O0O0OOO0O00000O00 (OO0OOOO000OO00O0O ,O000OO00OOO00OO00 ):#line:153
-        O0OO0000OO00O0OOO ='/www/server/panel/plugin/rsync/rsync_init.py';#line:154
+        O0OO0000OO00O0OOO ='/opt/slemp/server/panel/rsync/rsync_init.py';#line:154
         if os .path .exists (O0OO0000OO00O0OOO ):os .remove (O0OO0000OO00O0OOO );#line:155
         if getattr (web .ctx .session ,'rsync',False ):return public .returnMsg (True ,'OK!');#line:156
         O00000OO00O0OOOO0 ={}#line:157
@@ -453,7 +453,7 @@ echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" >> $logs_file
         if O0OO000O0OOO00OOO [-1 ]!='/':O0OO000O0OOO00OOO +='/'#line:564
         for O0O0O0OO00O0O0OOO in ['/usr/','/var/','/proc/','/boot/','/etc/','/dev/','/root/','/run/','/sys/','/tmp/']:#line:565
             if re .match ('^'+O0O0O0OO00O0O0OOO ,O0OO000O0OOO00OOO ):return True #line:566
-        if O0OO000O0OOO00OOO in ['/','/www/','/www/server/','/home/']:return True #line:567
+        if O0OO000O0OOO00OOO in ['/','/opt/slemp/','/opt/slemp/server/','/home/']:return True #line:567
         return False #line:568
     def to_new_version (OO0OO0O000O0O0O0O ,get =None ):#line:570
         if not os .path .exists (OO0OO0O000O0O0O0O .rsyn_path +'secrets'):#line:571
