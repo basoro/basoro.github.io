@@ -40,12 +40,12 @@ Install_rsync()
 	mkdir -p $pluginPath
 	echo '正在安装脚本文件...' > $install_tmp
 	wget -O $pluginPath/rsync_main.py https://basoro.id/downloads/slemp/plugin/rsync/rsync_main.py -T 5
-	wget -O $pluginPath/rsync_init.py $https://basoro.id/downloads/slemp/plugin/rsync/rsync_init.py -T 5
-	wget -O $pluginPath/index.html $https://basoro.id/downloads/slemp/plugin/rsync/index.html -T 5
-	wget -O $pluginPath/info.json $https://basoro.id/downloads/slemp/plugin/rsync/info.json -T 5
-	wget -O $pluginPath/icon.png $https://basoro.id/downloads/slemp/plugin/rsync/icon.png -T 5
+	wget -O $pluginPath/rsync_init.py https://basoro.id/downloads/slemp/plugin/rsync/rsync_init.py -T 5
+	wget -O $pluginPath/index.html https://basoro.id/downloads/slemp/plugin/rsync/index.html -T 5
+	wget -O $pluginPath/info.json https://basoro.id/downloads/slemp/plugin/rsync/info.json -T 5
+	wget -O $pluginPath/icon.png https://basoro.id/downloads/slemp/plugin/rsync/icon.png -T 5
 	if [ ! -f $pluginPath/config.json ];then
-		wget -O $pluginPath/config.json $https://basoro.id/downloads/slemp/plugin/rsync/config.json -T 5
+		wget -O $pluginPath/config.json https://basoro.id/downloads/slemp/plugin/rsync/config.json -T 5
 	fi
 	python -m compileall $pluginPath/rsync_init.py
 

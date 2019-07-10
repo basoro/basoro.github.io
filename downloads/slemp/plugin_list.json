@@ -54,7 +54,7 @@
 	"home":"http://www.bt.cn/bbs",
 	"date":"2018-02-28",
 	"default":false,
-	"display":0
+	"display":1
 },{
 	"title":"Docker",
 	"tip":"lib",
@@ -68,7 +68,7 @@
 	"home":"https://ataaka.basoro.id",
 	"date":"2018-12-17",
 	"default":false,
-	"display":0
+	"display":1
 },{
 	"title":"phpMyAdmin",
 	"tip":"soft",
