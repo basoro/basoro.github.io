@@ -28,7 +28,7 @@
 	"default":false,
 	"display":1
 },{
-	"title":"MySQL master-slave",
+	"title":"Database Replika",
 	"tip":"lib",
 	"name":"masterslave",
 	"type":"System Tool",
@@ -38,21 +38,21 @@
 	"checks":"/opt/slemp/server/panel/masterslave",
 	"author":"Ataaka",
 	"home":"https://slemp.basoro.id",
-	"date":"2018-04-26",
+	"date":"2019-07-10",
 	"default":false,
 	"display":1
 },{
-	"title":"Sync Tool",
+	"title":"Files Replika",
 	"tip":"lib",
 	"name":"rsync",
 	"type":"System Tool",
 	"ps":"Data synchronization tool based on rsync development",
-	"versions":"2.3",
+	"versions":"1.0",
 	"shell":"rsync.sh",
 	"checks":"/opt/slemp/server/panel/rsync",
 	"author":"Ataaka",
 	"home":"https://slemp.basoro.id",
-	"date":"2018-02-28",
+	"date":"2019-07-10",
 	"default":false,
 	"display":1
 },{
@@ -64,9 +64,9 @@
 	"versions":"1.0",
 	"shell":"install.sh",
 	"checks":"/opt/slemp/server/panel/docker",
-	"author":"宝塔",
+	"author":"Ataaka",
 	"home":"https://ataaka.basoro.id",
-	"date":"2018-12-17",
+	"date":"2019-07-10",
 	"default":false,
 	"display":1
 },{
