@@ -1,8 +1,29 @@
 <style>
-.bt-w-menu p a{
+.bt-w-menu {
+	float: left;
+	background-color: #f0f0f1;
+	height: 100%;
+	width: 110px
+}
+
+.bt-w-menu p {
+	cursor: pointer;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 20px;
+	position: relative;
+	text-overflow: ellipsis;
+	overflow: hidden
+}
+
+.bt-w-menu p a {
+	display: block;
 	text-decoration: none;
 }
 
+.bt-w-menu p .spanmove {
+	display: none
+}
 .bt-w-con .serverSide,
 .bt-w-con .clientSide,
 .bt-w-con .logsSide{
