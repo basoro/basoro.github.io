@@ -30,14 +30,13 @@ if [ -f "/usr/bin/apt-get" ];then
 	apt-get update -y
 	apt-get install ruby -y
 	apt-get install lsb-release -y
-	for pace in wget curl python python-dev python-imaging zip unzip openssl libssl-dev gcc libmysqld-dev libxml2 libxml2-dev libxslt zlib1g zlib1g-dev libjpeg-dev libpng-dev lsof libpcre3 libpcre3-dev cron;
+	for pace in wget curl python python-pip python-dev python-imaging zip unzip openssl libssl-dev gcc libmysqld-dev libxml2 libxml2-dev libxslt zlib1g zlib1g-dev libjpeg-dev libpng-dev lsof libpcre3 libpcre3-dev cron;
 	do apt-get -y install $pace --force-yes; done
-	apt-get -y install python-pip python-dev
 	sleep 5
 else
 	setenforce 0
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-	for pace in wget unzip python-devel python-imaging zip unzip mysql-devel openssl openssl-devel gcc libxml2 libxml2-dev libxslt* zlib zlib-devel libjpeg-devel libpng-devel libwebp libwebp-devel freetype freetype-devel lsof pcre pcre-devel vixie-cron crontabs;
+	for pace in wget unzip python-pip python-devel python-imaging zip unzip mysql-devel openssl openssl-devel gcc libxml2 libxml2-dev libxslt* zlib zlib-devel libjpeg-devel libpng-devel libwebp libwebp-devel freetype freetype-devel lsof pcre pcre-devel vixie-cron crontabs;
 	do yum -y install $pace; done
 	sleep 5
 fi

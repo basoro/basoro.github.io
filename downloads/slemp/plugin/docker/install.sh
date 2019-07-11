@@ -25,12 +25,17 @@ Install_docker()
 Install_Docker_ce()
 {
 	#install docker-ce
-	yum remove docker docker-common docker-selinux docker-engine -y
-	yum install -y yum-utils device-mapper-persistent-data lvm2 -y
-	yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-	yum-config-manager --enable docker-ce-edge
-	yum install docker-ce -y
-	yum-config-manager --disable docker-ce-edge
+	if [ -f "/usr/bin/apt-get" ];then
+		apt-get remove docker docker-engine docker.io -y
+		apt install docker.io -y
+	else
+		yum remove docker docker-common docker-selinux docker-engine -y
+		yum install -y yum-utils device-mapper-persistent-data lvm2 -y
+		yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+		yum-config-manager --enable docker-ce-edge
+		yum install docker-ce -y
+		yum-config-manager --disable docker-ce-edge
+	fi
 
 	#move docker data to /opt/slemp/server/docker
 	echo 'move docker data to /opt/slemp/server/docker ...';
