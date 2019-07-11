@@ -63,9 +63,9 @@ Install_Docker_ce()
 	pip install docker
 
 	#pull image of bt-panel
-	imageVersion='5.6.0'
-	docker pull registry.cn-hangzhou.aliyuncs.com/bt-panel/panel:$imageVersion
-	docker tag `docker images|grep bt-panel|awk '{print $3}'` bt-panel:$imageVersion
+	#imageVersion='5.6.0'
+	#docker pull registry.cn-hangzhou.aliyuncs.com/bt-panel/panel:$imageVersion
+	#docker tag `docker images|grep bt-panel|awk '{print $3}'` bt-panel:$imageVersion
 }
 
 Uninstall_docker()

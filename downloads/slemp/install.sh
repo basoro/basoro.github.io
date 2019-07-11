@@ -63,6 +63,8 @@ cd ~
 rm -rf install
 rm -f install.tar.gz
 
+pip install pytz
+
 mkdir -p /opt/slemp/server
 mkdir -p /opt/slemp/wwwroot
 mkdir -p /opt/slemp/wwwlogs
