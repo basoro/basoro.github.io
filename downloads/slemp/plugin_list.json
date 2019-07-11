@@ -42,7 +42,7 @@
 	"default":false,
 	"display":1
 },{
-	"title":"WebAppa Replika",
+	"title":"WebApps Replika",
 	"tip":"lib",
 	"name":"rsync",
 	"type":"System Tool",
