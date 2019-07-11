@@ -28,11 +28,7 @@
 	"default":false,
 	"display":1
 },{
-<<<<<<< HEAD
 	"title":"Database Replika",
-=======
-	"title":"MySQL Replika",
->>>>>>> 3c446b42c1d732865d2a073f7fd160bc2f9b7474
 	"tip":"lib",
 	"name":"masterslave",
 	"type":"System Tool",
@@ -46,11 +42,7 @@
 	"default":false,
 	"display":1
 },{
-<<<<<<< HEAD
 	"title":"Files Replika",
-=======
-	"title":"WebApps Replika",
->>>>>>> 3c446b42c1d732865d2a073f7fd160bc2f9b7474
 	"tip":"lib",
 	"name":"rsync",
 	"type":"System Tool",
