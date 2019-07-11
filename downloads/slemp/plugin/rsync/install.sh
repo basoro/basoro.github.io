@@ -2,13 +2,14 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 install_tmp='/tmp/slemp_install.pl'
+download_Url=https://basoro.id/downloads/slemp
 public_file=/opt/slemp/server/panel/script/public.sh
 if [ ! -f $public_file ];then
-	wget -O $public_file https://basoro.id/downloads/slemp/public.sh -T 5;
+	wget -O $public_file $download_Url/public.sh -T 5;
 fi
 . $public_file
-download_Url=http://download.bt.cn
 pluginPath=/opt/slemp/server/panel/rsync
+dataPath=/opt/slemp/server/panel/data
 centos=1
 if [ ! -f /usr/bin/yum ];then
 	centos=0
@@ -19,7 +20,7 @@ Install_rsync()
 	check_fs
 	check_package
 
-	wget -O /etc/init.d/rsynd $download_Url/install/lib/plugin/rsync/rsynd.init -T 5
+	wget -O /etc/init.d/rsynd $download_Url/plugin/rsync/rsynd.init -T 5
 	chmod +x /etc/init.d/rsynd
 	if [ $centos == 1 ];then
 		chkconfig --add rsynd
@@ -28,7 +29,7 @@ Install_rsync()
 		update-rc.d rsynd defaults
 	fi
 
-	wget -O /etc/init.d/lsyncd $download_Url/install/lib/plugin/rsync/lsyncd.init -T 5
+	wget -O /etc/init.d/lsyncd $download_Url/plugin/rsync/lsyncd.init -T 5
 	chmod +x /etc/init.d/lsyncd
 	if [ $centos == 1 ];then
 		chkconfig --add lsyncd
@@ -39,13 +40,15 @@ Install_rsync()
 
 	mkdir -p $pluginPath
 	echo '正在安装脚本文件...' > $install_tmp
-	wget -O $pluginPath/rsync_main.py https://basoro.id/downloads/slemp/plugin/rsync/rsync_main.py -T 5
-	wget -O $pluginPath/rsync_init.py https://basoro.id/downloads/slemp/plugin/rsync/rsync_init.py -T 5
-	wget -O $pluginPath/index.html https://basoro.id/downloads/slemp/plugin/rsync/index.html -T 5
-	wget -O $pluginPath/info.json https://basoro.id/downloads/slemp/plugin/rsync/info.json -T 5
-	wget -O $pluginPath/icon.png https://basoro.id/downloads/slemp/plugin/rsync/icon.png -T 5
+	wget -O $pluginPath/rsync_main.py $download_Url/plugin/rsync/rsync_main.py -T 5
+	wget -O $pluginPath/rsync_init.py $download_Url/plugin/rsync/rsync_init.py -T 5
+	wget -O $pluginPath/index.html $download_Url/plugin/rsync/index.html -T 5
+	wget -O $pluginPath/info.json $download_Url/plugin/rsync/info.json -T 5
+	if [ ! -f $dataPath/userInfo.json ];then
+		wget -O $dataPath/userInfo.json $download_Url/plugin/rsync/userInfo.json -T 5
+	fi
 	if [ ! -f $pluginPath/config.json ];then
-		wget -O $pluginPath/config.json https://basoro.id/downloads/slemp/plugin/rsync/config.json -T 5
+		wget -O $pluginPath/config.json $download_Url/plugin/rsync/config.json -T 5
 	fi
 	python -m compileall $pluginPath/rsync_init.py
 
@@ -98,7 +101,7 @@ EOF
 
 	rsync_version=`/usr/bin/rsync --version|grep version|awk '{print $3}'`
 	if [ "$rsync_version" != "3.1.2" ] &&  [ "$rsync_version" != "3.1.3" ];then
-		wget -O rsync-3.1.3.tar.gz $download_Url/install/src/rsync-3.1.3.tar.gz -T 20
+		wget -O rsync-3.1.3.tar.gz $download_Url/src/rsync-3.1.3.tar.gz -T 20
 		tar xvf rsync-3.1.3.tar.gz
 		cd rsync-3.1.3
 		./configure --prefix=/usr
@@ -115,7 +118,7 @@ EOF
 
 	lsyncd_version=`lsyncd --version |grep Version|awk '{print $2}'`
 	if [ "$lsyncd_version" != "2.2.2" ];then
-		wget -O lsyncd-release-2.2.2.zip $download_Url/install/src/lsyncd-release-2.2.2.zip -T 20
+		wget -O lsyncd-release-2.2.2.zip $download_Url/src/lsyncd-release-2.2.2.zip -T 20
 		unzip lsyncd-release-2.2.2.zip
 		cd lsyncd-release-2.2.2
 		cmake -DCMAKE_INSTALL_PREFIX=/usr
