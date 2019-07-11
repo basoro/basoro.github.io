@@ -184,6 +184,8 @@ Uninstall_rsync()
 
 if [ "${1}" == 'install' ];then
 	Install_rsync
+	rm -rf /opt/slemp/server/panel/rsyncsecrets
 elif [ "${1}" == 'uninstall' ];then
 	Uninstall_rsync
+	rm -rf /opt/slemp/server/panel/rsyncsecrets
 fi
