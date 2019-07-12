@@ -10,12 +10,9 @@
 # Required-Stop:     $all
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: starts the rsync 
+# Short-Description: starts the rsync
 # Description:       starts rsync using start-stop-daemon
 ### END INIT INFO
-
-# Author:   licess
-# website:  http://www.bt.cn
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NAME=rsync

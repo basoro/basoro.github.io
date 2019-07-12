@@ -15,40 +15,35 @@ class docker_main(object):
     __path = '/opt/slemp/backup/docker/'
     __setupPath = '/opt/slemp/server/panel/docker'
 
-    # 实例化SDK
     def __init__(self):
         if not os.path.exists(self.__path):
             public.ExecShell('mkdir -p %s' % self.__path)
         if not self.__docker: self.__docker = docker.from_env();
 
-    # 判断服务是否正常
     def GetStatus(self, get):
         ret = ''
         try:
             import docker
         except:
-            return public.returnMsg(False, '为安装docker模块,解决方法 pip install docker')
+            return public.returnMsg(False, 'To install the docker module, pip install docker')
         sock = '/var/run/docker.pid'
         if os.path.exists(sock):
             try:
                 __docker = docker.from_env()
                 aaa = __docker.images
                 if aaa:
-                    return public.returnMsg(True, '服务正常')
+                    return public.returnMsg(True, 'Normal service')
                 else:
-                    return public.returnMsg(False, 'Docker服务未启动')
+                    return public.returnMsg(False, 'Docker service is not started')
             except:
-                return public.returnMsg(False, 'Docker服务未启动')
+                return public.returnMsg(False, 'Docker service is not started')
         else:
-            return public.returnMsg(False, 'Docker服务未启动')
-
-    # 启动Docker 服务
+            return public.returnMsg(False, 'Docker service is not started')
 
     def StartDocker(self, get):
         public.ExecShell('systemctl start docker')
         return True
 
-    # 取容器列表
     def GetConList(self, get):
         conList = []
         for con in self.__docker.containers.list(all=True):
@@ -57,7 +52,6 @@ class docker_main(object):
             conList.append(tmp)
         return conList
 
-    # UTCS时间转换为时间戳
     def utc_to_local(self, utc_time_str, utc_format='%Y-%m-%dT%H:%M:%S'):
         import pytz, datetime, time
         local_tz = pytz.timezone('Asia/Jakarta')
@@ -67,7 +61,6 @@ class docker_main(object):
         time_str = local_dt.strftime(local_format)
         return int(time.mktime(time.strptime(time_str, local_format)))
 
-    # 创建容器
     def CreateCon(self, get):
         try:
             conObject = self.__docker.containers.run(
@@ -87,13 +80,12 @@ class docker_main(object):
             if conObject:
                 # conObject.exec_run('(echo "'+get.ps.strip()+'";sleep 0.1;echo "'+get.ps.strip()+'")|passwd root',privileged = True,stdin = True);
                 self.AcceptPort(get)
-                return public.returnMsg(True, '创建成功!')
+                return public.returnMsg(True, 'Created successfully!')
 
-            return public.returnMsg(False, '创建失败!')
+            return public.returnMsg(False, 'Creation failed!')
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '创建失败!' + str(ex))
+            return public.returnMsg(False, 'Creation failed!' + str(ex))
 
-    # pull Dockr 官方镜像
     def pull(self, get):
         images = get.images
         if ':' in images:
@@ -104,54 +96,50 @@ class docker_main(object):
         try:
             ret = self.__docker.images.pull(images)
             if ret:
-                return public.returnMsg(True, 'pull 成功!')
+                return public.returnMsg(True, 'pull success!')
             else:
-                return public.returnMsg(False, '无效地址')
+                return public.returnMsg(False, 'Invalid address')
         except:
             ret = public.ExecShell('docker pull %s' % images)
             if 'invalid' in ret[-1]:
-                return public.returnMsg(False, '无效地址')
+                return public.returnMsg(False, 'Invalid address')
             else:
-                return public.returnMsg(False, '无效地址')
-            # return public.returnMsg(False, '创建失败!' + str(ex))
+                return public.returnMsg(False, 'Invalid address')
+            # return public.returnMsg(False, 'Creation failed!' + str(ex))
 
-    # pull 其他
     def pull_reg(self, get):
         ret = 'not\s?found\n$|invalid|Error'
         path = str(get.path)
-        if not path and path == '': return public.returnMsg(False, '无效地址')
+        if not path and path == '': return public.returnMsg(False, 'Invalid address')
         ret2 = public.ExecShell('docker pull %s' % path)
         retur = re.findall(ret, ret2[-1])
         if len(retur) == 0:
-            return public.returnMsg(True, 'pull 成功!')
+            return public.returnMsg(True, 'pull success!')
         else:
-            return public.returnMsg(False, '无效地址')
+            return public.returnMsg(False, 'Invalid address')
 
-    # pull 私有仓库
     def pull_private(self, get):
         user_name = get.user
         user_pass = get.password
         registry = get.registry
         path = get.path
-        if not user_name and not user_pass and not path: return public.returnMsg(False, '请输入正确的信息')
+        if not user_name and not user_pass and not path: return public.returnMsg(False, 'Please enter the correct information')
         login = self.login_check(user_name=user_name, user_pass=user_pass, registry=registry)
         if login:
             ret = self.pull_reg(get)
             return ret
         else:
-            return public.returnMsg(False, '登陆失败')
+            return public.returnMsg(False, 'Login failed')
 
-    # 放行端口
     def AcceptPort(self, get):
         import firewalls
         f = firewalls.firewalls()
-        get.ps = 'docker容器的端口'
+        get.ps = 'Port of docker container'
         for port in json.loads(get.accept):
             get.port = port
             f.AddAcceptPort(get)
         return True
 
-    # 判断端口是否被占用
     def IsPortExists(self, get):
         port=get.port
         ret=self.__check_dst_port(ip='localhost',port=port)
@@ -171,7 +159,6 @@ class docker_main(object):
         # return False
 
 
-    # 端口检测
     def __check_dst_port(self, ip, port, timeout=3):
         import socket
         ok = True
@@ -184,7 +171,6 @@ class docker_main(object):
             ok = False
         return ok
 
-    # 删除容器
     def RemoveCon(self, get):
         try:
             conFind = self.__docker.containers.get(get.Hostname)
@@ -192,47 +178,42 @@ class docker_main(object):
             for i in path_list:
                 os.system('chattr -R -i %s'%i)
             conFind.remove()
-            return public.returnMsg(True, '删除成功!')
+            return public.returnMsg(True, 'Successfully deleted!')
         except:
-            return public.returnMsg(False, '删除失败,请先停止该容器!')
+            return public.returnMsg(False, 'The deletion failed. Please stop the container first.!')
 
-    # 查找容器
     def GetConFind(self, get):
         find = self.__docker.containers.get(get.Hostname)
         if not find: return None;
         return find.attrs
 
-    # 启动容器
     def RunCon(self, get):
         try:
             conFind = self.__docker.containers.get(get.Hostname)
-            if not conFind: return public.returnMsg(False, '指定容器不存在!');
+            if not conFind: return public.returnMsg(False, 'The specified container does not exist!');
             conFind.start()
-            return public.returnMsg(True, '启动成功!')
+            return public.returnMsg(True, 'Successful startup!')
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '启动失败!' + str(ex))
+            return public.returnMsg(False, 'Startup failed!' + str(ex))
 
-    # 停止容器
     def StopCon(self, get):
         try:
             conFind = self.__docker.containers.get(get.Hostname)
-            if not conFind: return public.returnMsg(False, '指定容器不存在!');
+            if not conFind: return public.returnMsg(False, 'The specified container does not exist!');
             conFind.stop()
-            return public.returnMsg(True, '停止成功!')
+            return public.returnMsg(True, 'Stop successful!')
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '停止失败!' + str(ex))
+            return public.returnMsg(False, 'Stop failure!' + str(ex))
 
-    # 修改名称
     def ReName(self, get):
         try:
             conFind = self.__docker.containers.get(get.Hostname)
-            if not conFind: return public.returnMsg(False, '指定容器不存在!');
+            if not conFind: return public.returnMsg(False, 'The specified container does not exist!');
             conFind.rename(get.name2)
-            return public.returnMsg(True, '修改成功!')
+            return public.returnMsg(True, 'Successfully modified!')
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '修改失败!名称重复')
+            return public.returnMsg(False, 'Modification failed! Duplicate name')
 
-    # 导出容器为tar 格式
     def export(self, get):
         try:
             file_name = self.__path + get.Hostname + str(time.strftime('%Y%m%d_%H%M%S', time.localtime())) + '.tar'
@@ -245,9 +226,8 @@ class docker_main(object):
             f.close()
             return public.returnMsg(True, file_name);
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '操作失败: ' + str(ex));
+            return public.returnMsg(False, 'Operation failed: ' + str(ex));
 
-    # image 导出
     def SaveImage(self, get):
         try:
             image = self.__docker.images.get(get.name2)
@@ -256,29 +236,26 @@ class docker_main(object):
             public.ExecShell('docker save  %s -o %s' % (get.name2, file_name))
             return public.returnMsg(True,file_name )
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '请输入正确的镜像')
+            return public.returnMsg(False, 'Please enter the correct image')
 
-    # image 导入
     def ExperImage(self, get):
         try:
             image = self.__path + get.imagename
             if not os.path.exists(image):
-                return public.returnMsg(False, '文件不存在')
+                return public.returnMsg(False, 'File does not exist')
             public.ExecShell('docker load -i %s' % image)
-            return public.returnMsg(True, '导入镜像成功!')
+            return public.returnMsg(True, 'Import image successfully!')
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '请输入正确的镜像')
+            return public.returnMsg(False, 'Please enter the correct image')
 
-    # 容器执行命令
     def ExecutiveOrder(self, get):
         try:
             conFind = self.__docker.containers.get(get.Hostname)
             cmd = 'docker exec -it %s /bin/bash' % get.Hostname
             return public.returnMsg(True, cmd)
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '连接失败')
+            return public.returnMsg(False, 'Connection failed')
 
-    # 登陆验证
     def login_check(self, user_name, user_pass, registry):
         login_test = public.ExecShell('docker login -u=%s -p %s %s' % (user_name, user_pass, registry))
         ret = 'required$|Error'
@@ -288,10 +265,9 @@ class docker_main(object):
         else:
             return False
 
-    # 登陆阿里云Docker hub
     def login(self, get):
         '''
-        只支持阿里云 docker hub
+        Only support Alibaba Cloud docker hub
         :param get:
         :return:
         '''
@@ -301,7 +277,7 @@ class docker_main(object):
         hub_name = get.hub_name
         namespace = get.namespace
         if not user_pass and not user_pass and not registry and not hub_name and not namespace: return public.returnMsg(
-            False, '请填写好正确信息')
+            False, 'Please fill in the correct information')
         ret2 = self.login_check(user_name, user_pass, registry)
         if ret2:
             ret = {}
@@ -312,11 +288,10 @@ class docker_main(object):
             ret['namespace'] = namespace
             public.writeFile(self.__setupPath + '/user.json', json.dumps(ret))
 
-            return public.returnMsg(True, '登陆成功')
+            return public.returnMsg(True, 'Landed successfully')
         else:
-            return public.returnMsg(False, '登陆失败')
+            return public.returnMsg(False, 'Login failed')
 
-    # push 到仓库中
     def push(self, get):
         version = get.version
         imageid = get.imageid
@@ -328,8 +303,7 @@ class docker_main(object):
             namespace = self.chekc(user_info['namespace'])
             user_name = user_info['user_name']
             user_pass = user_info['user_pass']
-            if not user_name and user_pass and not registry and not hub_name and not namespace: public.returnMsg(False,
-                                                                                                                 '信息验证失败')
+            if not user_name and user_pass and not registry and not hub_name and not namespace: public.returnMsg(False,'Information verification failed')
             ret2 = self.login_check(user_name, user_pass, registry)
             if ret2:
                 aa = 'docker tag %s %s/%s/%s:%s' % (imageid, registry, hub_name, namespace, version)
@@ -341,33 +315,29 @@ class docker_main(object):
                 ret = 'exist'
                 rec = re.findall(ret, push[-1])
                 if len(rec) == 0:
-                    return public.returnMsg(True, 'Push 成功')
+                    return public.returnMsg(True, 'Push success')
                 else:
-                    return public.returnMsg(False, 'Push 失败')
+                    return public.returnMsg(False, 'Push failure')
             else:
-                return public.returnMsg(False, '登陆失败')
+                return public.returnMsg(False, 'Login failed')
         else:
-            return public.returnMsg(False, '请登陆')
+            return public.returnMsg(False, 'Please login')
 
-    # 判断最后一个是否是/
     def chekc(self, string):
         strings = str(string)
         if strings == '': return False
         if strings[-1] == '/': return strings[0:-1]
         return strings
 
-        # 重启容器
-
     def RestartCon(self, get):
         try:
             conFind = self.__docker.containers.get(get.Hostname)
-            if not conFind: return public.returnMsg(False, '指定容器不存在!');
+            if not conFind: return public.returnMsg(False, 'The specified container does not exist!');
             conFind.restart()
-            return public.returnMsg(True, '重启成功!')
+            return public.returnMsg(True, 'Restart successfully!')
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '重启成功!' + str(ex))
+            return public.returnMsg(False, 'Restart successfully!' + str(ex))
 
-    # 登陆状态
     def GetUser(self, get):
         relist = self.__setupPath + '/user.json'
         if os.path.exists(relist):
@@ -375,27 +345,22 @@ class docker_main(object):
             if ['user_name']:
                 return public.returnMsg(True, user_info)
             else:
-                return public.returnMsg(False, '未登陆')
+                return public.returnMsg(False, 'Not logged in')
         else:
-            return public.returnMsg(False, '未登陆')
+            return public.returnMsg(False, 'Not logged in')
 
-    # 内存配额
     def MemLimit(self, get):
         pass
 
-    # CPU配额
     def CpuLimit(self, get):
         pass
 
-    # 添加磁盘
     def AddDisk(self, get):
         pass
 
-    # 绑定磁盘
     def BindingDisk(self, get):
         pass
 
-    # 取创建依赖
     def GetCreateInfo(self, get):
         import psutil
         data = {}
@@ -404,14 +369,12 @@ class docker_main(object):
         data['iplist'] = self.GetIPList(None)
         return data
 
-    # 取IP列表
     def GetIPList(self, get):
         ipConf = '/opt/slemp/server/panel/docker/iplist.json'
         if not os.path.exists(ipConf): return [];
         iplist = json.loads(public.readFile(ipConf))
         return iplist
 
-    # 添加IP
     def AddIP(self, get):
         ipConf = '/opt/slemp/server/panel/docker/iplist.json'
         if not os.path.exists(ipConf):
@@ -422,42 +385,38 @@ class docker_main(object):
         ipInfo = {'address': get.address, 'netmask': get.netmask, 'gateway': get.gateway}
         iplist.append(ipInfo)
         public.writeFile(ipConf, json.dumps(iplist))
-        return public.returnMsg(True, '添加成功!')
+        return public.returnMsg(True, 'Added successfully!')
 
-    # 删除IP
     def DelIP(self, get):
         ipConf = '/opt/slemp/server/panel/docker/iplist.json'
-        if not os.path.exists(ipConf): return public.returnMsg(False, '指定IP不存在!')
+        if not os.path.exists(ipConf): return public.returnMsg(False, 'The specified IP does not exist.!')
         iplist = json.loads(public.readFile(ipConf))
         newList = []
         for ipInfo in iplist:
             if ipInfo['address'] == get.address: continue;
             newList.append(ipInfo)
         public.writeFile(ipConf, json.dumps(newList))
-        return public.returnMsg(True, '删除成功!')
+        return public.returnMsg(True, 'Successfully deleted!')
 
-    # 生成快照
     def Snapshot(self, get):
         try:
             ConObject = self.GetConFind(get.Hostname)
             ConObject.commit(repository=get.imageName, tag=get.tag, message=get.message, author=get.author,
                              changes=get.chenges)
-            return public.returnMsg(True, '操作成功!')
+            return public.returnMsg(True, 'Successful operation!')
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '操作失败: ' + str(ex))
+            return public.returnMsg(False, 'Operation failed: ' + str(ex))
 
-    # 制作镜像
     def CommitCon(self, get):
         try:
             # conFind = self.__docker.containers.get(get.Hostname)
             conFind = self.__docker.containers.get(get.Hostname)
             conFind.commit(repository=get.imageName, tag=get.tag, message=get.message, author=get.author,
                            changes=get.chenges);
-            return public.returnMsg(True, '操作成功!');
+            return public.returnMsg(True, 'Successful operation!');
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '操作失败: ' + str(ex));
+            return public.returnMsg(False, 'Operation failed: ' + str(ex));
 
-    # 取镜像列表
     def GetImageList(self, get):
         imageList = []
         for image in self.__docker.images.list():
@@ -484,18 +443,9 @@ class docker_main(object):
         imageList = sorted(imageList, key=lambda x: x['Created'], reverse=True)
         return imageList
 
-    # 删除镜像
     def RemoveImage(self, get):
         try:
             conFind = self.__docker.images.remove(get.imageId);
-            return public.returnMsg(True, '删除成功!');
+            return public.returnMsg(True, 'Successfully deleted!');
         except docker.errors.APIError as ex:
-            return public.returnMsg(False, '删除失败,该镜像当前正在被使用!');
-
-    # 用户管理页面
-    def UserAdmin(self, get):
-        return public.readFile('/opt/slemp/server/panel/docker/userdocker.html');
-
-    # 用户登陆
-    def UserLogin(self, get):
-        return public.readFile('/opt/slemp/server/panel/docker/login-docker.html');
+            return public.returnMsg(False, 'Delete failed, the image is currently being used!');

@@ -13,13 +13,11 @@ Install_docker()
 {
 	Install_Docker_ce
 	mkdir -p /opt/slemp/server/panel/docker
-	echo '正在安装脚本文件...' > $install_tmp
+	echo 'Installing script file...' > $install_tmp
 	wget -O /opt/slemp/server/panel/docker/docker_main.py $download_Url/plugin/docker/docker_main.py -T 5
 	wget -O /opt/slemp/server/panel/docker/index.html $download_Url/plugin/docker/index.html -T 5
 	wget -O /opt/slemp/server/panel/docker/info.json $download_Url/plugin/docker/info.json -T 5
-	wget -O /opt/slemp/server/panel/docker/login-docker.html $download_Url/plugin/docker/login-docker.html -T 5
-	wget -O /opt/slemp/server/panel/docker/userdocker.html $download_Url/plugin/docker/userdocker.html -T 5
-	echo '安装完成' > $install_tmp
+	echo 'The installation is complete' > $install_tmp
 }
 
 Install_Docker_ce()

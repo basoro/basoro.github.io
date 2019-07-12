@@ -39,7 +39,7 @@ Install_rsync()
 	fi
 
 	mkdir -p $pluginPath
-	echo '正在安装脚本文件...' > $install_tmp
+	echo 'Installing script file...' > $install_tmp
 	wget -O $pluginPath/rsync_main.py $download_Url/plugin/rsync/rsync_main.py -T 5
 	wget -O $pluginPath/rsync_init.py $download_Url/plugin/rsync/rsync_init.py -T 5
 	wget -O $pluginPath/index.html $download_Url/plugin/rsync/index.html -T 5
@@ -52,7 +52,7 @@ Install_rsync()
 	fi
 	python -m compileall $pluginPath/rsync_init.py
 
-	echo '安装完成' > $install_tmp
+	echo 'The installation is complete' > $install_tmp
 	python $pluginPath/rsync_main.py new
 	if [ -f $pluginPath/rsync_init.pyc ];then
 		rm -f $pluginPath/rsync_init.py
