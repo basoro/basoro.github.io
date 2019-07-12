@@ -52,7 +52,7 @@ class mysql_conn():
 class master():
 
     def delSlaveByMaster(self, get):
-        # 删除从服务器
+
         if 'ip' in get.keys() and get['ip'] in self.data['slave']:
             slave_info = self.data['slave'][get['ip']]
             slave_panel_addr = slave_info['slave_panel_addr']
@@ -66,7 +66,7 @@ class master():
         else:
             del self.data['slave'][get['client_ip']]
         self._updateFile('data.json', self.data)
-        return public.returnMsg(True, '删除成功')
+        return public.returnMsg(True, 'Successfully deleted')
 
     def __getAllUserId(self):
         slave_id_arr = []
@@ -82,7 +82,6 @@ class master():
         return base64.b64encode(data)
 
     def downSqlFile(self, get):
-        # 用于主服务器
         data = public.readFile(self.masterslave_path+"token.pl")
         if get['passwd'] == data.split(':')[-1].replace('\n', ''):
             filename = "%smaster_sql_file.sql.gz" % self.masterslave_path
@@ -90,7 +89,7 @@ class master():
 
     def addSlaveByMaster(self, get):
         '''
-        开启权限 允许从服务器连接
+        Open permission Allows connection from the server
         get = {
             'db':'*',
             'master_ip':'192.168.1.242',
@@ -102,7 +101,7 @@ class master():
         public.ExecShell("echo '%s' > %stoken.pl" %
                          (data, self.masterslave_path))
         '''
-        秘钥包含：server_id, uesr, passwd, all_user_id, master_ip, panel_addr, db
+        Secret key contains：server_id, uesr, passwd, all_user_id, master_ip, panel_addr, db
         '''
         all_user_id = self.__getAllUserId()
         my_panel_addr = public.getPanelAddr()
@@ -115,12 +114,12 @@ class master():
         '''
         from:   setSlave(self, get)
         to:     createAccountBySlave(self, get)
-        添加用户
-        锁表
-        导出数据库
+        Add user
+        Lock table
+        Export database
         '''
         # change master
-        print '主服务器：  添加账户并锁表'
+        print 'Primary server: Add account and lock table'
         create_sql = "grant replication slave on *.* to '%s'@'%s' identified by '%s';" \
             % (self.user_name, get['slave_ip'], get['passwd'])
 
@@ -134,13 +133,13 @@ class master():
         master_info = self._mysql.query("show master status;", []).find()
         log_file = master_info[0]
         log_pos = master_info[1]
-        print "导出主数据库", get['db']
+        print "Export the primary database", get['db']
         sql_name = 'master_sql_file.sql.gz'
         get['file_name'] = sql_name
 
         falg = self._dumpMysql(get)
 
-        # 请求从服务器  --> createAccountBySlave
+        # Request from server  --> createAccountBySlave
         my_panel_addr = public.getPanelAddr()
         post_data = {
             "slave_ip": get['slave_ip'],
@@ -161,7 +160,7 @@ class master():
         }
         # if False and os.path.getsize(self.masterslave_path+sql_name) < 1024*1024*100:
         if falg:
-            # 将从服务器信息 写入 data.json文件
+            # Write server information to the data.json file
             self._updateFile('data.json', self.data)
             data = self._curlServer(
                 post_data, get['panel_addr'], 'createAccountBySlave')
@@ -169,24 +168,24 @@ class master():
             return data[1:-1], ''
         else:
             '''
-            # 文件过大 返回下载链接
-            # 将从服务器信息 写入 data.json文件
+            # File too large Back to download link
+            # Write server information to the data.json file
             self.data['slave'][get['slave_ip']]['status'] = False
             self._updateFile('data.json', self.data)
             return '%s/yield?action=a&name=masterslave&fun=downSqlFile&passwd=%s&master_ip=%s'\
                 % (my_panel_addr, get['passwd'], get['master_ip']), post_data
             '''
-            # 解锁
+            # Unlock
             post_data['status'] = '404'
             self.unlockTables(post_data)
             return '404'
 
     def unlockTables(self, get):
         '''
-        主服务器 解锁
+        Primary server unlock
         from: createAccountBySlave(self, get)
         '''
-        print '主服务器 解锁'
+        print 'Primary server unlock'
         self._mysql.execute("unlock tables;")
         # print 'rm -f %smaster_sql_file*' % self.masterslave_path
         public.ExecShell('rm -f %smaster_sql_file*' % self.masterslave_path)
@@ -196,39 +195,7 @@ class master():
         self._updateFile('data.json', self.data)
         return True
 
-    # def _set_master_binlog_db(self, db):
-    #     # 主从复制指定数据库
-    #     is_update = False
-    #     if db != '*':
-    #         with open(self.mysql_conf_file, "r") as conf:
-    #             for n, row in enumerate(conf):
-    #                 if row.find("binlog-do-db") != -1:
-    #                     if row.find(db) != -1:
-    #                         return True
-    #                     num = n
-    #                     break
-    #                 if row.find('[mysqldump]') != -1:
-    #                     num = n - 1
-    #                     break
-    #             sed_cmd = "sed -i '%da%s' %s" % (num, 'binlog-do-db = %s' %
-    #                                              db, self.mysql_conf_file)
-    #             is_update = True
-    #             public.ExecShell(sed_cmd)
-    #     else:
-    #         # 删除配置文件指定的数据库
-    #         with open(self.mysql_conf_file, "r") as conf:
-    #             for n, row in enumerate(conf):
-    #                 if row.find("binlog-do-db") != -1:
-    #                     is_update = True
-    #                     sed_cmd = "sed -i '%sd' %s" % (n+1,
-    #                                                    self.mysql_conf_file)
-    #                     public.ExecShell(sed_cmd)
-    #     if is_update:
-    #         os.system('/etc/init.d/mysqld reload')
-    #     return True
-
     def _set_salve_replicate_db(self, dbs):
-        # 主从复制指定从数据库 需要复制的数据库
         is_update = False
         if dbs != '*':
             for db in dbs.split(','):
@@ -247,7 +214,6 @@ class master():
                     is_update = True
                     public.ExecShell(sed_cmd)
         else:
-            # 删除配置文件指定的数据库
             with open(self.mysql_conf_file, "r") as conf:
                 for n, row in enumerate(conf):
                     if row.find("replicate-do-db") != -1:
@@ -279,20 +245,20 @@ class slave():
         else:
             del self.data['master'][get['client_ip']]
         self._updateFile('data.json', self.data)
-        return public.returnMsg(True, '删除成功')
+        return public.returnMsg(True, 'Successfully deleted')
 
     def __setServerId(self, server_id):
         with open(self.mysql_conf_file, "r") as conf:
             for n, row in enumerate(conf):
                 if row.find("server-id") != -1:
-                    print '正在修改 serverid'
+                    print 'Under revision serverid'
                     self.__sedCmd(n+1, "server-id",
                                   "server-id = %s" % server_id)
                     break
         time.sleep(1)
-        print '正在重启mysql服务器'
+        print 'Restarting mysql server'
         os.system('/etc/init.d/mysqld restart')
-        print '重启成功', self._mysql
+        print 'Restart successfully', self._mysql
         time.sleep(1)
 
     def __sedCmd(self, n, old, new):
@@ -305,23 +271,21 @@ class slave():
             public.ExecShell(sed_cmd)
 
     def uploadSqlFile(self, get):
-        # 用于从服务器
         # with open(self.masterslave_path+'master_sql_file.sql', 'wb') as f:
         with open(self.masterslave_path+'master_sql_file.sql', "w") as code:
             code.write(get['file'])
 
     def _importMysql(self, db):
-        # 覆盖导入
         file_path = self.masterslave_path + 'master_sql_file.sql'
         public.ExecShell('gunzip %s.gz' % file_path)
         sql = "mysql -uroot -p%s < %s " % (self.passwd, file_path)
-        print '正在导入', sql
-        public.WriteLog('主从复制', '已导入主服务器的数据库')
+        print 'Importing', sql
+        public.WriteLog('Master-slave replication', 'The database of the primary server has been imported')
         return public.ExecShell(sql)
 
     def setSlave(self, get):
         '''
-        # 将该服务器设置为 从服务器
+        # Set the server as a slave
         to:     createAccountByMaster(self, get)
         '''
         try:
@@ -336,52 +300,41 @@ class slave():
             master_id = data['H']
             master_version = data['I']
         except:
-            return public.returnMsg(403, '秘钥不正确')
+            return public.returnMsg(403, 'The key is incorrect')
 
         if master_version != self.my_version:
-            return public.returnMsg(403, '数据库版本不一致')
+            return public.returnMsg(403, 'Inconsistent database version')
 
         if master_ip in self.data['master'].keys():
-            return public.returnMsg(403, '该主数据库已存在，请不要重复添加')
+            return public.returnMsg(403, 'The primary database already exists. Please do not add it repeatedly.')
 
         if master_ip in self.data['master']:
-            return public.returnMsg(403, '已存在主服务器, 不支持做多主复制')
-
-        # if self.data['master'] and self.my_id in all_user_id:
-        #     # 该服务器同时也为 主服务器
-        #     return public.returnMsg(403, '目标服务存在主服务器，server-id冲突，请手动处理')
+            return public.returnMsg(403, 'Primary server already exists, multi-master replication is not supported')
 
         if self.data['slave'] and self.my_id in all_user_id:
-            # 该服务器同时也为 主服务器
-            return public.returnMsg(403, '目标服务存在从服务器，server-id冲突，请手动处理')
+            return public.returnMsg(403, 'The target service exists from the server, server-id conflict, please handle it manually')
 
         if not master_ip in self.data['slave'].keys():
-            print '正在计算 severid', self.my_id in all_user_id, self.my_id
-            # 该服务器的server_id 存在 主服务器已分配的id中 则修改该服务器id
+            print 'Calculating severid', self.my_id in all_user_id, self.my_id
             if self.my_id in all_user_id:
-                # 计算新的 slave_id
                 user_count = len(all_user_id)
                 for i in xrange(1, user_count+2):
                     if str(i) not in all_user_id:
                         slave_id = i
                         break
-                print '修改 服务器id', slave_id
+                print 'Modify server id', slave_id
                 self.__setServerId(slave_id)
 
-                # 并且该服务器 同时也是主服务器  ——————>  这里暂时不设置
             else:
-                # 不需修改 服务器id, 添加slave-skip-errors
                 slave_id = self.my_id
                 if not public.ExecShell("cat /etc/my.cnf|grep 'slave-skip-errors'|awk '{print $3}'")[0]:
                     self.__setServerId(self.my_id)
 
-            print '计算成功', self.my_id
+            print 'Successful calculation', self.my_id
 
         else:
-            # 不需要重新导入数据库，主主复制
             public.ExecShell('echo 1 > %sis_import' % self.masterslave_path)
-            print '主主复制'
-            # 不需修改 服务器id, 添加slave-skip-errors
+            print 'Master master copy'
             slave_id = self.my_id
             if not public.ExecShell("cat /etc/my.cnf|grep 'slave-skip-errors'|awk '{print $3}'")[0]:
                 self.__setServerId(self.my_id)
@@ -390,7 +343,6 @@ class slave():
         public.ExecShell("echo '%s' > %stoken.pl" %
                          (data, self.masterslave_path))
         my_panel_addr = public.getPanelAddr()
-        # 请求主服务器 --> createAccountByMaster
         post_data = {
             "slave_ip": get['slave_ip'],
             "passwd": passwd,
@@ -406,42 +358,31 @@ class slave():
         print 'msg-----------', msg
         try:
             msg = ast.literal_eval(msg)
-        except: return {'status': 401, 'msg': '服务器无法连接目标面板地址:' + master_panel_addr}
+        except: return {'status': 401, 'msg': 'The server was unable to connect to the target panel address:' + master_panel_addr}
         print 'msg-----------', msg[0]
         if msg[0] == '200':
-            return public.returnMsg(200, '成功添加')
+            return public.returnMsg(200, 'Successfully added')
         # return public.returnMsg(False, msg)
         elif msg[0] == '401':
-            return public.returnMsg(401, '添加失败')
+            return public.returnMsg(401, 'Add failed')
         else:
-            return {'status': 404, 'msg': '数据文件过大，请先做主从复制，再导入数据库!'}
-            # return {'status': 404, 'msg': '数据文件过大，请手动下载到从服务器导入', 'url': msg[0], 'post_data': msg[1]}
+            return {'status': 404, 'msg': 'The data file is too large, please do the master-slave copy first, then import the database.!'}
 
     def createAccountBySlave(self, get):
-        # 添加用户
         '''
         from:   createAccountByMaster(self, get)
         to:     unlockTables(self, get)
         '''
-        # print self.data
-        # 导入数据库
-        # 请求数据库文件
 
         url = "%s/yield?action=a&name=masterslave&fun=downSqlFile&passwd=%s&master_ip=%s" % (
             get['panel_addr'], get['passwd'], get['master_ip'])
         public.ExecShell("wget '%s' -O %s" %
                          (url, self.masterslave_path+'master_sql_file.sql.gz'))
 
-        # # 备份 从服务器数据库
-        # get['file_name'] = 'salve_sql_file.sql.bak.gz'
-        # self._dumpMysql(get)
-
         if not os.path.exists(self.masterslave_path+'is_import'):
-            # 导入数据库
             _, ret = self._importMysql(get['db'])
             if ret and 'Using a password on' not in ret:
-                # 导入出错
-                print '导入出错', ret
+                print 'Import error', ret
                 public.ExecShell('rm -f %smaster_sql_file.sql' %
                                  self.masterslave_path)
                 return '401'
@@ -450,7 +391,7 @@ class slave():
 
     def _startSlave(self, get):
         status = '200'
-        print '从服务器： stop slave; 添加用户 start slave'
+        print 'From the server: stop slave; Add user start slave'
         self._mysql.execute("stop slave;")
         create_sql = "change master to master_host='%s',master_user='%s',master_password='%s', master_log_file='%s',master_log_pos=%s;" \
             % (get['master_ip'], self.user_name, get['passwd'], get['log_file'], get['log_pos'])
@@ -464,7 +405,6 @@ class slave():
         if slave_status[10] == 'Yes' and slave_status[11] == 'Yes':
             self._set_salve_replicate_db(get['db'])
 
-            # 将从服务器信息 写入 data.json文件
             self.data['master'][get['master_ip']] = {
                 "master_panel_addr": get['panel_addr'],
                 "passwd": get['passwd'],
@@ -477,7 +417,6 @@ class slave():
             slave_status = self._mysql.query("show slave status;", []).find()
             if slave_status[10] == 'Yes' and slave_status[11] == 'Yes':
                 self._set_salve_replicate_db(get['db'])
-                # 将从服务器信息 写入 data.json文件
                 self.data['master'][get['master_ip']] = {
                     "master_panel_addr": get['panel_addr'],
                     "passwd": get['passwd'],
@@ -489,7 +428,6 @@ class slave():
                 status = '401'
 
         my_panel_addr = public.getPanelAddr()
-        # 请求主服务器 --> unlockTables
         post_data = {
             "passwd": get['passwd'],
             "panel_addr": my_panel_addr,
@@ -522,9 +460,9 @@ class slave():
         status = self._startSlave(post_data)
         print '_startSlave--------------------', status
         if status == '200':
-            return public.returnMsg(True, '导入成功')
+            return public.returnMsg(True, 'Successfully imported')
         else:
-            return public.returnMsg(False, '操作失败')
+            return public.returnMsg(False, 'Operation failed')
 
     def getStatus(self, get):
         # /public?action=a&name=masterslave&fun=getStatus
@@ -579,7 +517,7 @@ class masterslave_main(master, slave):
         for ip in self.data['master']:
             data_list.append({
                 'master_ip': ip,
-                'slave_ip': '本机',
+                'slave_ip': 'Local',
                 'db': self.data['master'][ip]['db'],
                 'master_panel_addr': self.data['master'][ip]['master_panel_addr'],
                 'slave_panel_addr': my_panel_addr,
@@ -588,7 +526,7 @@ class masterslave_main(master, slave):
         for ip in self.data['slave']:
             if self.data['slave'][ip]['status']:
                 data_list.append({
-                    'master_ip': '本机',
+                    'master_ip': 'Local',
                     'slave_ip': ip,
                     'db': self.data['slave'][ip]['db'],
                     'slave_panel_addr': self.data['slave'][ip]['slave_panel_addr'],
@@ -599,7 +537,6 @@ class masterslave_main(master, slave):
         self.check_port_accept(get);
         return public.returnMsg(True, {'data_list': data_list, 'db': db})
 
-    #检查是否放行3306
     def check_port_accept(self,get):
         try:
             import firewalls
@@ -627,11 +564,10 @@ class masterslave_main(master, slave):
         if get['passwd'] == data[-1].replace('\n', '') and get['master_ip'] == data[0]:
             return True
         else:
-            print '验证失败'
+            print 'Verification failed'
             return False
 
     def reqPost(self, url, data):
-        # 发布时 不使用该函数
         try:
             import urllib
             import urllib2
@@ -650,7 +586,6 @@ class masterslave_main(master, slave):
         # return self.reqPost(url, post_data).decode('unicode_escape')
 
     def _dumpMysql(self, get):
-        # 获取数据库大小
         information_schema_mysql = mysql_conn('root', self.passwd, int(
             self.port), 'information_schema', self.unix_socket)
         data_size_sql = "select concat(round(sum(data_length/1024/1024),2)) as data from tables"
@@ -664,12 +599,9 @@ class masterslave_main(master, slave):
                     data_size_sql += 'or '
 
         data = information_schema_mysql.query(data_size_sql, []).find()
-        print '数据库大小', data[0]
+        print 'Database size', data[0]
         if float(data[0]) > 100.0:
             return False
-
-        # 导出数据库
-        # print '导出数据库', get['db'], get['file_name']
 
         if get['db'] == '*':
             dbs = " ".join(self.getDataBaseList())
@@ -678,11 +610,10 @@ class masterslave_main(master, slave):
         mysql_dump_cmd = "mysqldump -uroot -p%s  --databases %s | gzip > %s%s" % (
             self.passwd, dbs, self.masterslave_path, get['file_name'])
         print(mysql_dump_cmd)
-        public.WriteLog('主从复制', '导出' + get['db'] + '数据库')
+        public.WriteLog('Master-slave replication', 'Export ' + get['db'] + ' database')
         return public.ExecShell(mysql_dump_cmd)
 
     def _updateFile(self, file_name, data):
-        # 更新 文件
         public.writeFile(self.masterslave_path+'data.json',
                          json.dumps(data, sort_keys=True))
         pass
