@@ -122,13 +122,13 @@ class plugin_rsync_init ():#line:16
         O0OO0000OO00O0OOO ='/opt/slemp/server/panel/rsync/rsync_init.py';#line:154
         if os .path .exists (O0OO0000OO00O0OOO ):os .remove (O0OO0000OO00O0OOO );#line:155
         if getattr (web .ctx .session ,'rsync',False ):return public .returnMsg (True ,'OK!');#line:156
-        #O00000OO00O0OOOO0 ={}#line:157
+        O00000OO00O0OOOO0 ={}#line:157
         O00000OO00O0OOOO0 ['pid']='100000005';#line:158
         O00OOO000OO0O0OO0 =auth ().send_cloud ('check_plugin_status',O00000OO00O0OOOO0 )#line:159
         try :#line:160
-            #if not O00OOO000OO0O0OO0 ['status']:#line:161
-            #    if getattr (web .ctx .session ,'rsync',False ):del (web .ctx .session ['rsync'])#line:162
-            #    return O00OOO000OO0O0OO0 ;#line:163
+            if not O00OOO000OO0O0OO0 ['status']:#line:161
+                if getattr (web .ctx .session ,'rsync',False ):del (web .ctx .session ['rsync'])#line:162
+                return O00OOO000OO0O0OO0 ;#line:163
         except :pass ;#line:164
         web .ctx .session .rsync =True #line:165
         return O00OOO000OO0O0OO0 #line:166
