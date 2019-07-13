@@ -21,7 +21,7 @@ class plugin_rsync_init ():#line:16
     def get_logs (O00O000O0OO0000O0 ,O00O0OOOO0OO00O00 ):#line:31
         import page #line:32
         page =page .Page ();#line:33
-        OO00OOO0OO0O0O0O0 =public .M ('logs').where ('type=?',(u'数据同步工具',)).count ();#line:34
+        OO00OOO0OO0O0O0O0 =public .M ('logs').where ('type=?',(u'Data synchronization tool',)).count ();#line:34
         OOO00O000OO0O0OOO =12 ;#line:35
         del (O00O0OOOO0OO00O00 .data )#line:36
         del (O00O0OOOO0OO00O00 .zunfile )#line:37
@@ -37,7 +37,7 @@ class plugin_rsync_init ():#line:16
             OOO0OO0O000O0OO0O ['return_js']=O00O0OOOO0OO00O00 .tojs #line:47
         OO000OO000OOO00O0 ={}#line:48
         OO000OO000OOO00O0 ['page']=page .GetPage (OOO0OO0O000O0OO0O ,'1,2,3,4,5,8');#line:50
-        OO000OO000OOO00O0 ['data']=public .M ('logs').where ('type=?',(u'数据同步工具',)).order ('id desc').limit (bytes (page .SHIFT )+','+bytes (page .ROW )).field ('log,addtime').select ();#line:51
+        OO000OO000OOO00O0 ['data']=public .M ('logs').where ('type=?',(u'Data synchronization tool',)).order ('id desc').limit (bytes (page .SHIFT )+','+bytes (page .ROW )).field ('log,addtime').select ();#line:51
         return OO000OO000OOO00O0 ;#line:52
     def get_rsync_conf (OO0OO0OOO0O00000O ,OOO0000O000O000OO ):#line:54
         OOO0O0O0O00O0O0O0 =json .loads (public .readFile (OO0OO0OOO0O00000O .rsyn_path +'/config.json'))#line:55
@@ -57,24 +57,24 @@ class plugin_rsync_init ():#line:16
         if 'max_connections'in O0OO000000O00O0O0 :O0OO0O000O0000O00 ['global']['max connections']=int (O0OO000000O00O0O0 .max_connections )#line:71
         if 'dont_compress'in O0OO000000O00O0O0 :O0OO0O000O0000O00 ['global']['dont compress']=O0OO000000O00O0O0 .dont_compress #line:72
         OO00OOOO00OO0000O .__O00OOOOO0000OO00O (O0OO0O000O0000O00 );#line:73
-        OO00OOOO00OO0000O .__O0OO0O0OOO000OOO0 ('修改rsync服务器全局配置');#line:74
-        return public .returnMsg (True ,'设置成功!');#line:75
+        OO00OOOO00OO0000O .__O0OO0O0OOO000OOO0 ('Modify the rsync server global configuration');#line:74
+        return public .returnMsg (True ,'Successful setup!');#line:75
     def get_secretkey (O0O00O0OO0OOO00OO ,O0000OOO000O0O0OO ):#line:77
         OO0O0000O0000000O =O0O00O0OO0OOO00OO .get_module (O0000OOO000O0O0OO )#line:78
         OOOO000OOO00OO0O0 =O0O00O0OO0OOO00OO .__OOOOOO0OOO0O00OOO (OO0O0000O0000000O ['name'],OO0O0000O0000000O ['password'],OO0O0000O0000000O ['port'])#line:79
         return OOOO000OOO00OO0O0 #line:80
     def add_module (OO0OO00000000O0O0 ,O0OO0O00OOOOO0O0O ):#line:82
-        if OO0OO00000000O0O0 .__OO00OO0OO00O0O0O0 (O0OO0O00OOOOO0O0O .path ):return public .returnMsg (False ,'不能同步系统关键目录');#line:83
-        if OO0OO00000000O0O0 .__OOOOOOO000OOOOOO0 (O0OO0O00OOOOO0O0O .mName ):return public .returnMsg (False ,'您输入的用户名已存在');#line:84
+        if OO0OO00000000O0O0 .__OO00OO0OO00O0O0O0 (O0OO0O00OOOOO0O0O .path ):return public .returnMsg (False ,'Cannot synchronize system critical directories');#line:83
+        if OO0OO00000000O0O0 .__OOOOOOO000OOOOOO0 (O0OO0O00OOOOO0O0O .mName ):return public .returnMsg (False ,'The username you entered already exists');#line:84
         O00O00O00OO0000O0 =OO0OO00000000O0O0 .get_rsync_conf (None );#line:85
         O0O00OO0O0OOOOO0O =OO0OO00000000O0O0 .rsyn_path +'/secrets/'+O0OO0O00OOOOO0O0O .mName +'.db';#line:86
         O00OO0O00O0O0OOO0 ={'name':O0OO0O00OOOOO0O0O .mName ,'path':O0OO0O00OOOOO0O0O .path ,'password':O0OO0O00OOOOO0O0O .password ,'comment':O0OO0O00OOOOO0O0O .comment ,'read only':'false','ignore errors':True ,'auth users':O0OO0O00OOOOO0O0O .mName ,'secrets file':O0O00OO0O0OOOOO0O ,'addtime':int (time .time ())}#line:96
         O00O00O00OO0000O0 ['modules'].insert (0 ,O00OO0O00O0O0OOO0 )#line:97
         OO0OO00000000O0O0 .__O00OOOOO0000OO00O (O00O00O00OO0000O0 );#line:98
-        OO0OO00000000O0O0 .__O0OO0O0OOO000OOO0 ('添加rsync接收帐户['+O0OO0O00OOOOO0O0O .mName +']');#line:99
-        return public .returnMsg (True ,'添加成功!');#line:100
+        OO0OO00000000O0O0 .__O0OO0O0OOO000OOO0 ('Add rsync receiving account ['+O0OO0O00OOOOO0O0O .mName +']');#line:99
+        return public .returnMsg (True ,'Added successfully!');#line:100
     def modify_module (O0OOOO000OO00000O ,O0O0000O0OO00O0O0 ):#line:102
-        if O0OOOO000OO00000O .__OO00OO0OO00O0O0O0 (O0O0000O0OO00O0O0 .path ):return public .returnMsg (False ,'不能同步系统关键目录');#line:103
+        if O0OOOO000OO00000O .__OO00OO0OO00O0O0O0 (O0O0000O0OO00O0O0 .path ):return public .returnMsg (False ,'Cannot synchronize system critical directories');#line:103
         OOOOOO0OOOOOOO00O =O0OOOO000OO00000O .get_rsync_conf (None );#line:104
         for O000OOOO0OOOOO00O in xrange (len (OOOOOO0OOOOOOO00O ['modules'])):#line:105
             if OOOOOO0OOOOOOO00O ['modules'][O000OOOO0OOOOO00O ]['name']==O0O0000O0OO00O0O0 .mName :#line:106
@@ -83,9 +83,9 @@ class plugin_rsync_init ():#line:16
                 OOOOOO0OOOOOOO00O ['modules'][O000OOOO0OOOOO00O ]['comment']=O0O0000O0OO00O0O0 .comment ;#line:109
                 O0OOOO000OO00000O .__OO0O0O0000O000000 (OOOOOO0OOOOOOO00O ['modules'][O000OOOO0OOOOO00O ]['name'],OOOOOO0OOOOOOO00O ['modules'][O000OOOO0OOOOO00O ]['auth users'],OOOOOO0OOOOOOO00O ['modules'][O000OOOO0OOOOO00O ]['password'],False )#line:110
                 O0OOOO000OO00000O .__O00OOOOO0000OO00O (OOOOOO0OOOOOOO00O );#line:111
-                O0OOOO000OO00000O .__O0OO0O0OOO000OOO0 ('修改rsync接收帐户['+O0O0000O0OO00O0O0 .mName +']');#line:112
-                return public .returnMsg (True ,'编辑成功!');#line:113
-        return public .returnMsg (False ,'指定模块不存在!');#line:114
+                O0OOOO000OO00000O .__O0OO0O0OOO000OOO0 ('Modify rsync receiving account ['+O0O0000O0OO00O0O0 .mName +']');#line:112
+                return public .returnMsg (True ,'Successful editing!');#line:113
+        return public .returnMsg (False ,'The specified module does not exist!');#line:114
     def remove_module (OOOOO00OOO0O0OOO0 ,O0O0OOO00OO00OO0O ):#line:116
         OOO0O0O00O0O0O000 =OOOOO00OOO0O0OOO0 .get_rsync_conf (None );#line:117
         for O0O0O0OOOO0OO00O0 in xrange (len (OOO0O0O00O0O0O000 ['modules'])):#line:118
@@ -94,9 +94,9 @@ class plugin_rsync_init ():#line:16
                 OOOOO00OOO0O0OOO0 .__O00OOOOO0000OO00O (OOO0O0O00O0O0O000 );#line:121
                 O00O0O0O0OO0O0OOO =OOOOO00OOO0O0OOO0 .rsyn_path +'/secrets/'+O0O0OOO00OO00OO0O .mName +'.db';#line:122
                 if os .path .exists (O00O0O0O0OO0O0OOO ):os .remove (O00O0O0O0OO0O0OOO );#line:123
-                OOOOO00OOO0O0OOO0 .__O0OO0O0OOO000OOO0 ('删除rsync接收帐户['+O0O0OOO00OO00OO0O .mName +']');#line:124
-                return public .returnMsg (True ,'删除成功!');#line:125
-        return public .returnMsg (False ,'指定模块不存在!');#line:126
+                OOOOO00OOO0O0OOO0 .__O0OO0O0OOO000OOO0 ('Delete rsync receiving account ['+O0O0OOO00OO00OO0O .mName +']');#line:124
+                return public .returnMsg (True ,'Successfully deleted!');#line:125
+        return public .returnMsg (False ,'The specified module does not exist!');#line:126
     def get_module (O00O0OOOOOOO0O0OO ,O0OOO0O000OOOO0OO ,name =None ):#line:129
         if O0OOO0O000OOOO0OO :name =O0OOO0O000OOOO0OO .mName ;#line:130
         OOO00OOOO0O0OOO0O =O00O0OOOOOOO0O0OO .get_rsync_conf (None );#line:131
@@ -104,7 +104,7 @@ class plugin_rsync_init ():#line:16
             if OOO00OOOO0O0OOO0O ['modules'][OO000000OO0O0O00O ]['name']==name :#line:133
                 OOO00OOOO0O0OOO0O ['modules'][OO000000OO0O0O00O ]['port']=OOO00OOOO0O0OOO0O ['global']['port'];#line:134
                 return OOO00OOOO0O0OOO0O ['modules'][OO000000OO0O0O00O ]#line:135
-        return public .returnMsg (False ,'指定模块不存在!');#line:136
+        return public .returnMsg (False ,'The specified module does not exist!');#line:136
     def get_send_conf (OO0O0O0000OO0O0O0 ,OO000000OO000OO00 ):#line:138
         OOO000OOO0OOO0O00 =OO0O0O0000OO0O0O0 .__O0O0OOO0O00000O00 (OO000000OO000OO00 )#line:139
         if not getattr (web .ctx .session ,'rsync',False ):return OOO000OOO0OOO0O00 ;#line:140
@@ -117,7 +117,7 @@ class plugin_rsync_init ():#line:16
                 O00O0O0000000000O =O000OO0O000OO0OOO ['client'][OO0OO000O00O00O00 ];#line:148
                 O00O0O0000000000O ['secret_key']=OO0OO0O0O0O0OO0OO .__OOOOOO0OOO0O00OOO (O00O0O0000000000O ['name'],O00O0O0000000000O ['password'],O00O0O0000000000O ['rsync']['port'])#line:149
                 return O00O0O0000000000O ;#line:150
-        return public .returnMsg (False ,'指定任务不存在!');#line:151
+        return public .returnMsg (False ,'The specified task does not exist!');#line:151
     def __O0O0OOO0O00000O00 (OO0OOOO000OO00O0O ,O000OO00OOO00OO00 ):#line:153
         O0OO0000OO00O0OOO ='/opt/slemp/server/panel/rsync/rsync_init.py';#line:154
         if os .path .exists (O0OO0000OO00O0OOO ):os .remove (O0OO0000OO00O0OOO );#line:155
@@ -147,7 +147,7 @@ class plugin_rsync_init ():#line:16
             O00O000OO00OO0000 =False ;#line:181
         return O00O000OO00OO0000 ;#line:182
     def add_ormodify_send (OO00O00O0OOOOOOO0 ,O0O00O0O00O00OO00 ):#line:184
-        if OO00O00O0OOOOOOO0 .__OO00OO0OO00O0O0O0 (O0O00O0O00O00OO00 .path ):return public .returnMsg (False ,'不能同步系统关键目录');#line:185
+        if OO00O00O0OOOOOOO0 .__OO00OO0OO00O0O0O0 (O0O00O0O00O00OO00 .path ):return public .returnMsg (False ,'Cannot synchronize system critical directories');#line:185
         O0O00O0O00O00OO00 .delay =getattr (O0O00O0O00O00OO00 ,'delay','3');#line:186
         O0O00O0O00O00OO00 .model =getattr (O0O00O0O00O00OO00 ,'model','default.rsync');#line:187
         O0O00O0O00O00OO00 .to =getattr (O0O00O0O00O00OO00 ,'to','');#line:188
@@ -168,18 +168,18 @@ class plugin_rsync_init ():#line:16
             try :#line:207
                 O00OOOOO0OOO00OO0 =json .loads (base64 .b64decode (O0O00O0O00O00OO00 ['secret_key']))#line:208
             except :#line:209
-                return public .returnMsg (False ,'错误的接收密钥');#line:210
-            if not re .match ("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$",O0O00O0O00O00OO00 .ip ):return public .returnMsg (False ,'请填写正确的IP地址!');#line:212
+                return public .returnMsg (False ,'Wrong receiving key');#line:210
+            if not re .match ("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$",O0O00O0O00O00OO00 .ip ):return public .returnMsg (False ,'Please fill in the correct IP address!');#line:212
             OO0O0O000O000OOO0 =json .loads (O0O00O0O00O00OO00 .cron )#line:213
             if not OO00O00O0OOOOOOO0 .__O0000O0OO0OO00OOO (O0O00O0O00O00OO00 .ip ,int (O00OOOOO0OOO00OO0 ['C'])):#line:214
-                return public .returnMsg (False ,'无法连接['+O0O00O0O00O00OO00 .ip +':'+str (O00OOOOO0OOO00OO0 ['C'])+'],请检查IP地址是否正确,若正确无误，请检查远程服务器的安全组及防火墙是否正确放行['+str (O00OOOOO0OOO00OO0 ['C'])+']端口!');#line:215
+                return public .returnMsg (False ,'Unable to connect ['+O0O00O0O00O00OO00 .ip +':'+str (O00OOOOO0OOO00OO0 ['C'])+'],Please check if the IP address is correct, if it is correct，please check if the security group and firewall of the remote server are correctly released ['+str (O00OOOOO0OOO00OO0 ['C'])+'] port!');#line:215
         else :#line:216
-            if O0O00O0O00O00OO00 .path ==O0O00O0O00O00OO00 .to :return public .returnMsg (False ,'不能同步两个相同的目录');#line:217
+            if O0O00O0O00O00OO00 .path ==O0O00O0O00O00OO00 .to :return public .returnMsg (False ,'Cannot synchronize two identical directories');#line:217
             if not os .path .exists (O0O00O0O00O00OO00 .to ):public .ExecShell ('mkdir -p '+O0O00O0O00O00OO00 .to );#line:218
             O00OOOOO0OOO00OO0 ={'A':O0O00O0O00O00OO00 .mName ,'B':'','C':'873'}#line:219
             OO0O0O000O000OOO0 ={}#line:220
         if O0O00O0O00O00OO00 .index =='-1':#line:222
-            if OO00O00O0OOOOOOO0 .__O0OO00O0O00OOOO0O (O00OOOOO0OOO00OO0 ['A']):return public .returnMsg (False ,'已存在同名任务!');#line:223
+            if OO00O00O0OOOOOOO0 .__O0OO00O0O00OOOO0O (O00OOOOO0OOO00OO0 ['A']):return public .returnMsg (False ,'A task with the same name already exists!');#line:223
         if not os .path .exists (O0O00O0O00O00OO00 .path ):public .ExecShell ('mkdir -p '+O0O00O0O00O00OO00 .path );#line:225
         OO000O0OOO00OOOOO ={'model':O0O00O0O00O00OO00 .model ,'name':O00OOOOO0OOO00OO0 ['A'],'ip':O0O00O0O00O00OO00 .ip ,'password':O00OOOOO0OOO00OO0 ['B'],'path':O0O00O0O00O00OO00 .path ,'to':O0O00O0O00O00OO00 .to ,'exclude':[],'delete':O0O00O0O00O00OO00 .delete ,'realtime':O0O00O0O00O00OO00 .realtime |False ,'delay':str (int (O0O00O0O00O00OO00 .delay )),'rsync':{'bwlimit':str (int (O0O00O0O00O00OO00 .bwlimit )),'port':str (O00OOOOO0OOO00OO0 ['C']),'compress':O0O00O0O00O00OO00 .compress ,'archive':O0O00O0O00O00OO00 .archive ,'verbose':O0O00O0O00O00OO00 .verbose },'ps':O0O00O0O00O00OO00 .ps ,'cron':OO0O0O000O000OOO0 ,'update':time .time ()}#line:247
         if O0O00O0O00O00OO00 .model =='default.rsync':#line:249
@@ -199,11 +199,11 @@ class plugin_rsync_init ():#line:16
         OO00O00O0OOOOOOO0 .__O00OOOOO0000OO00O (OOOOO0OO0O00000O0 ,True )#line:265
         if OOO0O00O0OO0OO00O :#line:266
             public .writeFile (OO00O00O0OOOOOOO0 .rsyn_path +'/sclient/'+OO000O0OOO00OOOOO ['name']+'_exec.log','');#line:267
-            OO00O00O0OOOOOOO0 .__O0OO0O0OOO000OOO0 ('添加同步任务['+OO000O0OOO00OOOOO ['name']+']');#line:268
+            OO00O00O0OOOOOOO0 .__O0OO0O0OOO000OOO0 ('Add a synchronization task ['+OO000O0OOO00OOOOO ['name']+']');#line:268
             public .ExecShell ("nohup bash "+OOO000OOOOO0O0OO0 +" >> "+OO00O00O0OOOOOOO0 .rsyn_path +"/sclient/"+OO000O0OOO00OOOOO ['name']+"_exec.log 2>&1 &");#line:269
-            return public .returnMsg (True ,'添加成功!');#line:270
-        OO00O00O0OOOOOOO0 .__O0OO0O0OOO000OOO0 ('修改同步任务['+OO000O0OOO00OOOOO ['name']+']');#line:271
-        return public .returnMsg (True ,'修改成功!')#line:272
+            return public .returnMsg (True ,'Added successfully!');#line:270
+        OO00O00O0OOOOOOO0 .__O0OO0O0OOO000OOO0 ('Modify synchronization tasks ['+OO000O0OOO00OOOOO ['name']+']');#line:271
+        return public .returnMsg (True ,'Successfully modified!')#line:272
     def get_rsync_logs (OOO0OOOO000000O0O ,O0O0OOOO0O000OO0O ):#line:274
         if O0O0OOOO0O000OO0O .mName =='lsyncd_logs':#line:275
             O00O00OOOO00O0OOO =OOO0OOOO000000O0O .rsyn_path +'/lsyncd.log';#line:276
@@ -214,20 +214,20 @@ class plugin_rsync_init ():#line:16
     def remove_rsync_logs (O00000O000O0OO0OO ,OO00OOO0O0OOO00O0 ):#line:282
         if OO00OOO0O0OOO00O0 .mName =='lsyncd_logs':#line:283
             OOO0O00OO00O00OOO =O00000O000O0OO0OO .rsyn_path +'/lsyncd.log';#line:284
-            O00000O000O0OO0OO .__O0OO0O0OOO000OOO0 ('清空实时同步日志');#line:285
+            O00000O000O0OO0OO .__O0OO0O0OOO000OOO0 ('Clear real-time sync log');#line:285
         else :#line:286
             OOO0O00OO00O00OOO =O00000O000O0OO0OO .rsyn_path +'/sclient/'+OO00OOO0O0OOO00O0 .mName +'_exec.log';#line:287
-            O00000O000O0OO0OO .__O0OO0O0OOO000OOO0 ('清空发送日志['+OO00OOO0O0OOO00O0 .mName +']');#line:288
+            O00000O000O0OO0OO .__O0OO0O0OOO000OOO0 ('Clear the send log ['+OO00OOO0O0OOO00O0 .mName +']');#line:288
         public .writeFile (OOO0O00OO00O00OOO ,'');#line:289
-        return public .returnMsg (True ,'清除成功!');#line:291
+        return public .returnMsg (True ,'Cleared successfully!');#line:291
     def exec_cmd (O0O0OO0OO0OOO0O0O ,O0O0O00OO000OO0O0 ):#line:293
         OO0O0OO0O0O0OOO0O =O0O0OO0OO0OOO0O0O .rsyn_path +'/sclient/'+O0O0O00OO000OO0O0 ['mName']+'_cmd'#line:294
         O0OO00000O0O0000O =O0O0OO0OO0OOO0O0O .get_send_byname (O0O0O00OO000OO0O0 )#line:295
         public .writeFile (OO0O0OO0O0O0OOO0O ,O0O0OO0OO0OOO0O0O .__O0O0O00O0O0OOO0OO (O0OO00000O0O0000O ))#line:296
         os .system ('echo "【'+public .getDate ()+'】" >> '+O0O0OO0OO0OOO0O0O .rsyn_path +"/sclient/"+O0O0O00OO000OO0O0 .mName +"_exec.log")#line:298
         public .ExecShell ("nohup bash "+OO0O0OO0O0O0OOO0O +" >> "+O0O0OO0OO0OOO0O0O .rsyn_path +"/sclient/"+O0O0O00OO000OO0O0 .mName +"_exec.log 2>&1 &")#line:299
-        O0O0OO0OO0OOO0O0O .__O0OO0O0OOO000OOO0 ('手动执行同步任务['+O0O0O00OO000OO0O0 ['mName']+']');#line:300
-        return public .returnMsg (True ,'同步指令已发送!');#line:301
+        O0O0OO0OO0OOO0O0O .__O0OO0O0OOO000OOO0 ('Perform synchronization tasks manually ['+O0O0O00OO000OO0O0 ['mName']+']');#line:300
+        return public .returnMsg (True ,'Sync command sent!');#line:301
     def remove_send (OOO0O000OOO0O0O00 ,OOO0O0O00OOO0O0OO ):#line:303
         O000O00OO000000O0 =OOO0O000OOO0O0O00 .get_rsync_conf (None );#line:304
         for O0OO00OO00O000O00 in xrange (len (O000O00OO000000O0 ['client'])):#line:305
@@ -237,38 +237,38 @@ class plugin_rsync_init ():#line:16
             del (O000O00OO000000O0 ['client'][O0OO00OO00O000O00 ])#line:309
             public .ExecShell ("rm -f "+OOO0O000OOO0O0O00 .rsyn_path +'/sclient/'+OOO0O0O00OOO0O0OO .mName +'_*')#line:310
             OOO0O000OOO0O0O00 .__O00OOOOO0000OO00O (O000O00OO000000O0 ,True )#line:311
-            OOO0O000OOO0O0O00 .__O0OO0O0OOO000OOO0 ('删除发送配置['+OOO0O0O00OOO0O0OO ['mName']+']');#line:312
+            OOO0O000OOO0O0O00 .__O0OO0O0OOO000OOO0 ('Delete send configuration ['+OOO0O0O00OOO0O0OO ['mName']+']');#line:312
             break ;#line:313
-        return public .returnMsg (True ,'删除成功!');#line:314
+        return public .returnMsg (True ,'Successfully deleted!');#line:314
     def get_exclude (O000O000O0O0O0O00 ,O0O00000OO00O00OO ):#line:316
         O0O000O0O00OOOO00 =O000O000O0O0O0O00 .get_rsync_conf (None );#line:317
         for O0000OOO0OOOO00O0 in xrange (len (O0O000O0O00OOOO00 ['client'])):#line:318
             if O0O000O0O00OOOO00 ['client'][O0000OOO0OOOO00O0 ]['name']==O0O00000OO00O00OO ['mName']:return O0O000O0O00OOOO00 ['client'][O0000OOO0OOOO00O0 ]['exclude'];#line:319
-        return public .returnMsg (False ,'指定任务不存在!');#line:320
+        return public .returnMsg (False ,'The specified task does not exist!');#line:320
     def add_exclude (O0000O00OOOO00OOO ,OOOO0O0OOO0O0OO00 ):#line:322
         OOO00O0O00OO0OO00 =O0000O00OOOO00OOO .get_rsync_conf (None );#line:323
         for OO0O0O000O0O00000 in xrange (len (OOO00O0O00OO0OO00 ['client'])):#line:324
             if OOO00O0O00OO0OO00 ['client'][OO0O0O000O0O00000 ]['name']!=OOOO0O0OOO0O0OO00 ['mName']:continue ;#line:325
             OOO00O0O00OO0OO00 ['client'][OO0O0O000O0O00000 ]['exclude'].insert (0 ,OOOO0O0OOO0O0OO00 .exclude )#line:326
             O0000O00OOOO00OOO .__O00OOOOO0000OO00O (OOO00O0O00OO0OO00 ,True )#line:327
-            O0000O00OOOO00OOO .__O0OO0O0OOO000OOO0 ('添加排除规则['+OOOO0O0OOO0O0OO00 .exclude +']到['+OOOO0O0OOO0O0OO00 ['mName']+']');#line:328
+            O0000O00OOOO00OOO .__O0OO0O0OOO000OOO0 ('Add exclusion rules ['+OOOO0O0OOO0O0OO00 .exclude +'] to ['+OOOO0O0OOO0O0OO00 ['mName']+']');#line:328
             break ;#line:329
-        return public .returnMsg (True ,'添加成功!');#line:330
+        return public .returnMsg (True ,'Added successfully!');#line:330
     def remove_exclude (O0OO000OOOO000000 ,O0OO00O0O00000O0O ):#line:332
         OOOO0OO00OOO0OOO0 =O0OO000OOOO000000 .get_rsync_conf (None );#line:333
         for O00O0OO00O0000O0O in xrange (len (OOOO0OO00OOO0OOO0 ['client'])):#line:334
             if OOOO0OO00OOO0OOO0 ['client'][O00O0OO00O0000O0O ]['name']!=O0OO00O0O00000O0O ['mName']:continue ;#line:335
             OOOO0OO00OOO0OOO0 ['client'][O00O0OO00O0000O0O ]['exclude'].remove (O0OO00O0O00000O0O .exclude )#line:336
             O0OO000OOOO000000 .__O00OOOOO0000OO00O (OOOO0OO00OOO0OOO0 ,True )#line:337
-            O0OO000OOOO000000 .__O0OO0O0OOO000OOO0 ('从['+O0OO00O0O00000O0O ['mName']+']删除排除规则['+O0OO00O0O00000O0O .exclude +']');#line:338
+            O0OO000OOOO000000 .__O0OO0O0OOO000OOO0 ('From ['+O0OO00O0O00000O0O ['mName']+'] delete exclusion rule ['+O0OO00O0O00000O0O .exclude +']');#line:338
             break ;#line:339
-        return public .returnMsg (True ,'删除成功!');#line:340
+        return public .returnMsg (True ,'Successfully deleted!');#line:340
     def rsync_service (OOO0OOO0O00O0OOOO ,O00OO0O000OOOOO00 ):#line:342
         O0O000000OO0O0O0O ="/etc/init.d/rsynd "+O00OO0O000OOOOO00 .state #line:343
         public .ExecShell (O0O000000OO0O0O0O );#line:344
         OOO0OOO0O00O0OOOO .__O000000OO0OOOO0O0 (O00OO0O000OOOOO00 );#line:345
-        OOO0OOO0O00O0OOOO .__O0OO0O0OOO000OOO0 (O0O000000OO0O0O0O +'已执行');#line:346
-        return public .returnMsg (True ,'操作成功!');#line:347
+        OOO0OOO0O00O0OOOO .__O0OO0O0OOO000OOO0 (O0O000000OO0O0O0O +'It has been executed');#line:346
+        return public .returnMsg (True ,'Successful operation!');#line:347
     def __OO0O00OOO000000OO (O0O00OO00O00O0OO0 ,OO0000O00O00OO000 ):#line:349
         O0000OO0O0000OOO0 ="settings {\n"#line:350
         for OOO0OOO0OO0OOOOOO in OO0000O00O00OO000 ['settings'].keys ():#line:351
@@ -337,7 +337,7 @@ sync {
         if O0O00O000000O0000 :#line:436
             get ['id']=O0O00O000000O0000 ['id']#line:437
             OO0OO00OO000O000O .__O000OO0OO0O0OO0O0 (get )#line:438
-        O0O00O000000O0000 =public .M ('crontab').where ("name=?",('定时数据同步任务【'+O0OOO000OOOO00OO0 ['name']+'】',)).field ('id').find ()#line:440
+        O0O00O000000O0000 =public .M ('crontab').where ("name=?",('Timing data synchronization task ['+O0OOO000OOOO00OO0 ['name']+']',)).field ('id').find ()#line:440
         if O0O00O000000O0000 :#line:441
             get ['id']=O0O00O000000O0000 ['id']#line:442
             OO0OO00OO000O000O .__O000OO0OO0O0OO0O0 (get )#line:443
@@ -361,7 +361,7 @@ echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" >> $logs_file
         OO00OO0000000OOO0 ['sName']=''#line:462
         OO00OO0000000OOO0 ['urladdress']=''#line:463
         OO00OO0000000OOO0 ['save']=''#line:464
-        OO00OO0000000OOO0 ['name']='定时数据同步任务【'+O0OOO000OOOO00OO0 ['name']+'】'#line:466
+        OO00OO0000000OOO0 ['name']='Timing data synchronization task ['+O0OOO000OOOO00OO0 ['name']+']'#line:466
         OO00OO0000000OOO0 ['type']=O0OOO000OOOO00OO0 ['cron']['type']#line:467
         OO00OO0000000OOO0 ['where1']=O0OOO000OOOO00OO0 ['cron']['where1']#line:468
         OO00OO0000000OOO0 ['sBody']=O0OOOOO0OO0OOO0O0 #line:469
@@ -372,7 +372,7 @@ echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" >> $logs_file
     def __O000000OO0OOOO0O0 (OOO0O0OO0OO00O0OO ,O00000O00OOOO000O ):#line:476
         import firewalls ;#line:477
         O00000O00OOOO000O .port =str (OOO0O0OO0OO00O0OO .get_rsync_conf (None )['global']['port']);#line:478
-        O00000O00OOOO000O .ps ='数据同步工具rsync端口';#line:479
+        O00000O00OOOO000O .ps ='Data synchronization tool rsync port';#line:479
         firewalls .firewalls ().AddAcceptPort (O00000O00OOOO000O );#line:480
     def __O000OO0OO0O0OO0O0 (O0O00000O0O00OO0O ,O000O00OO0OO0O0O0 ):#line:482
         crontab .crontab ().DelCrontab (O000O00OO0OO0O0O0 )#line:483
@@ -431,7 +431,7 @@ echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" >> $logs_file
             OO0OO0O0000OO000O .__OO0O00OOO000000OO (OO0OOOOOO000OO000 )#line:545
         return True #line:546
     def __O0OO0O0OOO000OOO0 (OOO00O0OO00O000O0 ,OO0OO00OO000O0O00 ):#line:548
-        public .WriteLog ('数据同步工具',OO0OO00OO000O0O00 );#line:549
+        public .WriteLog ('Data synchronization tool',OO0OO00OO000O0O00 );#line:549
     def __OOOOOOO000OOOOOO0 (O0OOO0OO0OO0O000O ,O0OOO0OOOO000OO0O ):#line:551
         OOO0000O0O000000O =O0OOO0OO0OO0O000O .get_rsync_conf (None )#line:552
         for O0OOOOO0OO00O0O00 in OOO0000O0O000000O ['modules']:#line:553
