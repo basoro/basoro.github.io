@@ -4,7 +4,7 @@ sys.path.append ("")#line:10
 import public ,db ,crontab #line:11
 import re ,json #line:12
 import time ,base64 ,web #line:13
-from auth import auth #line:14
+#from auth import auth #line:14
 class plugin_rsync_init ():#line:16
     __OO0O00O0OOOO0OOOO ='/usr/bin/rsync'#line:17
     rsyn_file ="/etc/rsyncd.conf"#line:18
@@ -124,12 +124,13 @@ class plugin_rsync_init ():#line:16
         if getattr (web .ctx .session ,'rsync',False ):return public .returnMsg (True ,'OK!');#line:156
         O00000OO00O0OOOO0 ={}#line:157
         O00000OO00O0OOOO0 ['pid']='100000005';#line:158
-        O00OOO000OO0O0OO0 =auth ().send_cloud ('check_plugin_status',O00000OO00O0OOOO0 )#line:159
-        try :#line:160
-            if not O00OOO000OO0O0OO0 ['status']:#line:161
-                if getattr (web .ctx .session ,'rsync',False ):del (web .ctx .session ['rsync'])#line:162
-                return O00OOO000OO0O0OO0 ;#line:163
-        except :pass ;#line:164
+        #O00OOO000OO0O0OO0 =auth ().send_cloud ('check_plugin_status',O00000OO00O0OOOO0 )#line:159
+        O00OOO000OO0O0OO0 =True;#line:159
+        #try :#line:160
+            #if not O00OOO000OO0O0OO0 ['status']:#line:161
+            #    if getattr (web .ctx .session ,'rsync',False ):del (web .ctx .session ['rsync'])#line:162
+            #    return O00OOO000OO0O0OO0 ;#line:163
+        #except :pass ;#line:164
         web .ctx .session .rsync =True #line:165
         return O00OOO000OO0O0OO0 #line:166
     def __OOOOOO0OOO0O00OOO (OOO000OOO0OO0O0OO ,O000O000000O00000 ,O0O00O0000OO0OO00 ,O00OO00O0OOO0000O ):#line:168
