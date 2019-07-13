@@ -517,7 +517,7 @@ class masterslave_main(master, slave):
         for ip in self.data['master']:
             data_list.append({
                 'master_ip': ip,
-                'slave_ip': 'Local',
+                'slave_ip': '127.0.0.1',
                 'db': self.data['master'][ip]['db'],
                 'master_panel_addr': self.data['master'][ip]['master_panel_addr'],
                 'slave_panel_addr': my_panel_addr,
@@ -526,7 +526,7 @@ class masterslave_main(master, slave):
         for ip in self.data['slave']:
             if self.data['slave'][ip]['status']:
                 data_list.append({
-                    'master_ip': 'Local',
+                    'master_ip': '127.0.0.1',
                     'slave_ip': ip,
                     'db': self.data['slave'][ip]['db'],
                     'slave_panel_addr': self.data['slave'][ip]['slave_panel_addr'],
