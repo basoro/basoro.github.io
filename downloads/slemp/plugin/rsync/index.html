@@ -423,13 +423,13 @@ code{
 				}
 				this.setStatus = status;
 				if (status){
-					this.setTitle = 'Edit Receive';
+					this.setTitle = 'Edit reception';
 					this.setSubmit = 'Save';
-					Readonly = 'readonly="readonly" disabled="disabled"'
-					Action = 'modify_module';
-					}else{
-					this.setTitle = 'Create Receive';
-					this.setSubmit = 'submit';
+					readonly = 'readonly="readonly" disabled="disabled"'
+					action = 'modify_module';
+				}else{
+					this.setTitle = 'Create receive';
+					this.setSubmit = 'Submit';
 					action = 'add_module'
 					this.setServerForm = {
 						mName:'',
@@ -447,37 +447,37 @@ code{
 					closeBtn: 2,
 					shift: 0,
 					shadeClose: false,
-					Content: "<form class='bt-form pd20 pb70' id='fromServerPath' accept-charset='utf-8' enctype='application/x-www-form-urlencoded'>\
-					<div class='line'>\
-					<span class='tname'>username</span>\
-					<div class='info-r c4'>\
-					<input class='bt-input-text' type='text' name='mName' "+ readonly +" placeholder='Please fill in the username, no Chinese or special symbol ' value='"+ mName +"' Style='width:300px' />\
-					</div>\
-					</div>\
-					<div class='line'>\
-					<span class='tname'>password</span>\
-					<div class='info-r c4'>\
-					<input class='bt-input-text' type='text' name='password' placeholder='Please enter your password' value='"+ rdata.password +"' style='width:300px' />\
-					<span title='random password' style='margin-right: 10px;' class='glyphicon glyphicon-repeat cursor pws'></span>\
-					</div>\
-					</div>\
-					<div class='line'>\
-					<span class='tname'>Sync to</span>\
-					<div class='info-r c4'>\
-					<input id='inputPath' class='bt-input-text mr5' type='text' name='path' value='"+ rdata.path +"' placeholder='Please select local path' style='width :300px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
-					</div>\
-					</div>\
-					<div class='line'>\
-					<span class='tname'>Remarks</span>\
-					<div class='info-r c4'>\
-					<input class='bt-input-text' type='text' name='comment' placeholder='' value='"+ rdata.comment +"' style='width:300px' />\
-					</div>\
-					</div>\
-					<div class='bt-form-submit-btn'>\
-					<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
-					<button type='button' class='btn btn-success btn-sm btn-title setViewData'>"+ _this.setSubmit +"</button>\
-					</div>\
-					</form>",
+					content: "<form class='bt-form pd20 pb70' id='fromServerPath' accept-charset='utf-8' enctype='application/x-www-form-urlencoded'>\
+								<div class='line'>\
+									<span class='tname'>Username</span>\
+									<div class='info-r c4'>\
+										<input class='bt-input-text' type='text' name='mName' "+ readonly +"  placeholder='Please fill in the username, no special symbols' value='"+ mName +"' style='width:300px' />\
+									</div>\
+								</div>\
+								<div class='line'>\
+									<span class='tname'>Password</span>\
+									<div class='info-r c4'>\
+										<input class='bt-input-text' type='text' name='password' placeholder='Please enter your password' value='"+ rdata.password +"' style='width:300px' />\
+										<span title='Random code' style='margin-right: 10px;' class='glyphicon glyphicon-repeat cursor pws'></span>\
+									</div>\
+								</div>\
+								<div class='line'>\
+									<span class='tname'>Sync to</span>\
+									<div class='info-r c4'>\
+										<input id='inputPath' class='bt-input-text mr5' type='text' name='path' value='"+ rdata.path +"' placeholder='Please select a local path' style='width:300px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
+									</div>\
+								</div>\
+								<div class='line'>\
+									<span class='tname'>Remarks</span>\
+									<div class='info-r c4'>\
+										<input class='bt-input-text' type='text' name='comment' placeholder='' value='"+ rdata.comment +"' style='width:300px' />\
+									</div>\
+								</div>\
+								<div class='bt-form-submit-btn'>\
+									<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
+									<button type='button' class='btn btn-success btn-sm btn-title setViewData'>"+ _this.setSubmit +"</button>\
+								</div>\
+							  </form>",
 					});
 				$('.setViewData').click(function(event) {
 					_this.setServerForm = {
@@ -488,19 +488,19 @@ code{
 					}
 					for(var index in _this.setServerForm){
 						if (_this.setServerForm['mName'] == ''){
-							Layer.msg('Please enter the current username!');
-							Return false;
-							}
-							If (_this.setServerForm['password'] == ''){
-							Layer.msg('Please enter the current username and password!');
-							Return false;
-							}
-							If (_this.setServerForm['path'] == ''){
-							Layer.msg('Please enter the current sync directory!');
-							Return false;
-							}
-							}
-							Var loadget = layer.msg('Submitting form information, please wait...', {icon:16,time:0,shade: [0.3, '#000']});
+							layer.msg('Please enter the current username!');
+							return false;
+						}
+						if (_this.setServerForm['password'] == ''){
+							layer.msg('Please enter the current username and password!');
+							return false;
+						}
+						if (_this.setServerForm['path'] == ''){
+							layer.msg('Please enter the current sync directory!');
+							return false;
+						}
+					}
+					var loadget =  layer.msg('Submitting form information, please wait...',{icon:16,time:0,shade: [0.3, '#000']});
 					$.post('/plugin?action=a&name=rsync&s=' + action,_this.setServerForm,function(res){
 						layer.close(loadget);
 						if (res.status){
@@ -530,45 +530,45 @@ code{
 					shadeClose: false,
 					content: "<form class='bt-form pd20 pb70' id='fromServerPath' >\
 								<div class='line'>\
-								<span class='tname'>listening port</span>\
-								<div class='info-r c4'>\
-								<input style='width:60px;background-color: #f1f1f1;margin-right:5px;' class='bt-input-text' type='number' name='port' readonly value='"+ rdata. Global['port'] +"' />\
-								<span>Please leave this port in the firewall and security group, otherwise the sender will not be able to connect</span>\
-								</div>\
-								</div>\
-								<div class='line'>\
-								<span class='tname'>Maximum number of connections</span>\
-								<div class='info-r c4'>\
-								<input style='width:60px;margin-right:5px;' class='bt-input-text' type='number' name='max_connections' value='"+ rdata.global['max connections'] + "' />\
-								<span> Please set a reasonable maximum number of connections. If it is too high, it will increase the server load. If it is too low, it will affect the synchronization efficiency.</span>\
-								</div>\
+									<span class='tname'>Listening port</span>\
+									<div class='info-r c4'>\
+										<input style='width:60px;background-color: #f1f1f1;margin-right:5px;' class='bt-input-text' type='number' name='port' readonly value='"+ rdata.global['port'] +"' />\
+										<span>Please leave this port in the firewall and security group, otherwise the sender will not be able to connect.</span>\
+									</div>\
 								</div>\
 								<div class='line'>\
-								<span class='tname'>Timeout</span>\
-								<div class='info-r c4'>\
-								<input style='width:60px;margin-right:5px;' class='bt-input-text' type='number' name='timeout' value='"+ rdata.global['timeout'] +" ' />\
-								<span> seconds, depending on the file settings you want to sync, it is recommended to set between 300-1800</span>\
-								</div>\
-								</div>\
-								<div class='line'>\
-								<span class='tname'>Uncompressed file</span>\
-								<div class='info-r c4'>\
-								<input style='width:360px;margin-right:5px;' class='bt-input-text' type='text' name='dont_compress' value='"+ rdata.global['dont compress'] + "' />\
-								<span>each separated by a space</span>\
-								</div>\
+									<span class='tname'>Maximum number of connections</span>\
+									<div class='info-r c4'>\
+										<input style='width:60px;margin-right:5px;' class='bt-input-text' type='number' name='max_connections' value='"+ rdata.global['max connections'] +"' />\
+										<span>Please set a reasonable maximum number of connections. If it is too high, it will increase the server load. If it is too low, it will affect the synchronization efficiency.</span>\
+									</div>\
 								</div>\
 								<div class='line'>\
-								<span class='tname'>IP whitelist</span>\
-								<div class='info-r c4'>\
-								<div class='rsync_set_ip'><textarea class='bt-input-text' rows='3' style='width:250px;height:100px;line-height: 20px;' name='hosts_allow' placeholder='Add an IP address per line &#10;Use Enter to split the IP address, for example: &#10;192.168.1.1 &#10;127.0.0.1'>"+ rdata.global['hosts allow'].replace(/ /g,"\n") +"</textarea></div>\
-								<div class='rsync_tip'>Allow only the machines in the IP whitelist to synchronize data with this server. One IP address per line. Leave blank if you do not have IP restrictions.</div>\
+									<span class='tname'>Overtime</span>\
+									<div class='info-r c4'>\
+										<input style='width:60px;margin-right:5px;' class='bt-input-text' type='number' name='timeout' value='"+ rdata.global['timeout'] +"' />\
+										<span>Seconds, depending on the file settings you want to synchronize, it is recommended to set between 300-1800</span>\
+									</div>\
 								</div>\
+								<div class='line'>\
+									<span class='tname'>Uncompressed file</span>\
+									<div class='info-r c4'>\
+										<input style='width:360px;margin-right:5px;' class='bt-input-text' type='text' name='dont_compress' value='"+ rdata.global['dont compress'] +"' />\
+										<span>Each separated by a space</span>\
+									</div>\
+								</div>\
+								<div class='line'>\
+									<span class='tname'>IP whitelist</span>\
+									<div class='info-r c4'>\
+										<div class='rsync_set_ip'><textarea class='bt-input-text' rows='3' style='width:250px;height:100px;line-height: 20px;' name='hosts_allow' placeholder='Add an IP address per line&#10;Use Enter to split the IP address, for example:&#10;192.168.1.1&#10;127.0.0.1'>"+ rdata.global['hosts allow'].replace(/ /g,"\n") +"</textarea></div>\
+										<div class='rsync_tip'>Only the machines in the IP whitelist are allowed to synchronize data with the server. One IP address per line. Leave blank if you do not have IP restrictions.</div>\
+									</div>\
 								</div>\
 								<div class='bt-form-submit-btn'>\
-								<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
-								<button type='button' class='btn btn-success btn-sm btn-title setViewData'>submit</button>\
+									<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
+									<button type='button' class='btn btn-success btn-sm btn-title setViewData'>Submit</button>\
 								</div>\
-								</form>",
+							  </form>",
 					});
 				$('.setViewData').click(function(event) {
 					var pdata = {
@@ -577,7 +577,7 @@ code{
 						dont_compress:$("input[name='dont_compress']").val(),
 						timeout:$("input[name='timeout']").val()
 					}
-					var loadget =  layer.msg('正在提交表单信息，请稍后...',{icon:16,time:0,shade: [0.3, '#000']});
+					var loadget =  layer.msg('Submitting form information, please wait...',{icon:16,time:0,shade: [0.3, '#000']});
 					$.post('/plugin?action=a&name=rsync&s=modify_global_conf',pdata,function(res){
 						layer.close(loadget);
 						if (res.status){
@@ -590,10 +590,10 @@ code{
 				});
 			});
 		},
-		// 接收端 - 删除配置信息
+
 		delServerInfo:function(mName){
-			SafeMessage('删除接收','即将删除接收['+mName+'],确定吗？',function(){
-				var loadT = layer.msg('正在删除接收['+mName+'] <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
+			SafeMessage('Delete receive','Will you delete the reception ['+mName+'], are you sure?',function(){
+				var loadT = layer.msg('Deleting receive ['+mName+'] <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
 				$.post('/plugin?action=a&name=rsync&s=remove_module',{mName:mName},function(res){
 					layer.close(loadT);
 					layer.msg(res.msg,{icon:res.status?1:2});
@@ -601,24 +601,24 @@ code{
 				});
 			});
 		},
-		// 接收端 - 配置开关
+
 		serverSwitch:function(switchs){
 			var _this = this;
 			var title = '';
 			if (switchs == undefined){
 				if ($('#switch').is(':checked')) {
-					$('.switchText').empty().append('<span style="color:#20a53a">服务已开启</span>');
+					$('.switchText').empty().append('<span style="color:#20a53a">Service is on</span>');
 					$('.restart').show();
 					switchs = 'start';
-					title = '正在开启服务中，请稍后...';
+					title = 'Opening service, please wait...';
 				}else{
-					$('.switchText').empty().append('<span style="color:red">服务已关闭</span>');
+					$('.switchText').empty().append('<span style="color:red">Service is closed</span>');
 					$('.restart').hide();
 					switchs = 'stop';
-					title = '正在关闭服务中，请稍后...';
+					title = 'Shutting down the service, please wait...';
 				}
 			}else{
-				$('.switchText').empty().append('<span style="color:#20a53a">服务已开启</span>');
+				$('.switchText').empty().append('<span style="color:#20a53a">Service is on</span>');
 				switchs = 'start';
 			}
 			// layer.load();
@@ -635,16 +635,16 @@ code{
 		get_cycle:function(cron){
 			var cycle_str = '';
 			if(cron['type'] == 'minute-n'){
-				cycle_str = '每隔' + cron['where1'] + '分钟';
+				cycle_str = 'every ' + cron['where1'] + ' minute';
 			}else{
-				cycle_str = '每天' + cron['hour'] + '时'+cron['minute']+'分';
+				cycle_str = 'every day ' + cron['hour'] + ' hour '+cron['minute']+' minute';
 			}
 			return cycle_str;
 		},
-		// 发送端  - 获取配置信息
+
 		getClientInfo:function(){
 			var _this = this,domData = '';
-			var loadget =  layer.msg('正在获取配置信息...',{icon:16,time:0,shade: [0.3, '#000']});
+			var loadget =  layer.msg('Getting configuration information...',{icon:16,time:0,shade: [0.3, '#000']});
 			$.get('/plugin?action=a&name=rsync&s=get_send_conf',function(res){
 				layer.close(loadget);
 				if(res.status === false){
@@ -653,24 +653,24 @@ code{
 					return;
 				}
 				for(var i=0;i<res.length;i++){
-				var to = '接收服务器:'+res[i].ip+'::'+res[i].name.replace(/(\d+\.){3,3}\d+_/,'');
+				var to = 'Receiving server:'+res[i].ip+'::'+res[i].name.replace(/(\d+\.){3,3}\d+_/,'');
 				var edits = 'tsync.setClientView(\''+ res[i].name +'\','+i+')';
 				if(res[i].model == 'default.direct'){
-					to = '<a href="javascript:;" onclick="openPath(\''+ res[i].to+'\')" class="btlink">本地:'+ res[i].to +'</a>';
+					to = '<a href="javascript:;" onclick="openPath(\''+ res[i].to+'\')" class="btlink">Local:'+ res[i].to +'</a>';
 					edits = 'tsync.setClientLocal(\''+ res[i].name +'\',\''+ res[i].path +'\',\''+ res[i].to +'\','+i+')';
 				}
 				domData += '<tr>\
 						<td>'+ res[i].name +'</td>\
 						<td><a href="javascript:;" onclick="openPath(\''+ res[i].path+'\')" class="btlink">'+ res[i].path +'</a></td>\
 						<td>'+ to +'</td>\
-						<td>'+ (res[i].delete == 'true'?'完全':'增量') +'</td>\
-						<td>'+(res[i].realtime?'实时':tsync.get_cycle(res[i].cron))+'</td>\
+						<td>'+ (res[i].delete == 'true'?'Complete':'Increment') +'</td>\
+						<td>'+(res[i].realtime?'Real time':tsync.get_cycle(res[i].cron))+'</td>\
 						<td style="text-align: right;">\
-							<a href="javascript:;" class="btlink" title="立即同步" onclick="tsync.exec_cmd(\''+ res[i].name +'\')">同步</a> | \
-							<a href="javascript:;" class="btlink" title="查看同步日志" onclick="tsync.methodLogs(\''+ res[i].name +'\')">日志</a> | \
-							<a href="javascript:;" class="btlink" onclick="tsync.blackWhiteList(\''+ res[i].name +'\')">过滤器</a> | \
-							<a href="javascript:;" class="btlink" onclick="'+edits+'">编辑</a> | \
-							<a href="javascript:;" class="btlink" style="color:red" onclick="tsync.delClientInfo(\''+ res[i].name +'\')">删除</a>\
+							<a href="javascript:;" class="btlink" title="Synchronize now" onclick="tsync.exec_cmd(\''+ res[i].name +'\')">Synchronize</a> | \
+							<a href="javascript:;" class="btlink" title="View sync log" onclick="tsync.methodLogs(\''+ res[i].name +'\')">Log</a> | \
+							<a href="javascript:;" class="btlink" onclick="tsync.blackWhiteList(\''+ res[i].name +'\')">Filter</a> | \
+							<a href="javascript:;" class="btlink" onclick="'+edits+'">Edit</a> | \
+							<a href="javascript:;" class="btlink" style="color:red" onclick="tsync.delClientInfo(\''+ res[i].name +'\')">Delete</a>\
 						</td>\
 					</tr>';
 				}
@@ -687,7 +687,7 @@ code{
 			});
 		},
 		exec_cmd:function(name){
-			var loadget =  layer.msg('正在发送同步指令...',{icon:16,time:0,shade: [0.3, '#000']});
+			var loadget =  layer.msg('Sending sync command...',{icon:16,time:0,shade: [0.3, '#000']});
 			$.post('/plugin?action=a&name=rsync&s=exec_cmd',{mName:name},function(res){
 				layer.close(loadget);
 				layer.msg(res.msg,{icon:res.status?1:2});
@@ -700,36 +700,36 @@ code{
 			this.set_layer_View = layer.open({
 				type: 1,
 				area: '500px',
-				title: '本地文件夹同步任务',
+				title: 'Local folder synchronization task',
 				closeBtn: 2,
 				shift: 0,
 				shadeClose: false,
 				content: "<form class='bt-form pd20 pb70' id='fromServerPath' accept-charset='utf-8'>\
 							<div class='line'>\
-								<span class='tname'>名称</span>\
+								<span class='tname'>Name</span>\
 								<div class='info-r c4'>\
-									<input class='bt-input-text' type='text' name='mName' placeholder='请填写名称,不能有中文或特殊符号' value='"+name+"' style='width:300px;"+(name==''?'':'background-color:#f1f1f1;')+"' "+(name==''?'':'readonly')+" />\
+									<input class='bt-input-text' type='text' name='mName' placeholder='Please fill in the name, no special symbols' value='"+name+"' style='width:300px;"+(name==''?'':'background-color:#f1f1f1;')+"' "+(name==''?'':'readonly')+" />\
 								</div>\
 							</div>\
 							<div class='line'>\
-								<span class='tname'>从</span>\
+								<span class='tname'>From</span>\
 								<div class='info-r c4'>\
-									<input id='inputPath' class='bt-input-text mr5' type='text' name='path' value='"+path+"' placeholder='请选择被同步的文件夹' style='width:300px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
+									<input id='inputPath' class='bt-input-text mr5' type='text' name='path' value='"+path+"' placeholder='Please select the folder to be synced' style='width:300px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath\")'></span>\
 								</div>\
 							</div>\
 							<div class='line'>\
-								<span class='tname'>同步到</span>\
+								<span class='tname'>Sync to</span>\
 								<div class='info-r c4'>\
-									<input id='inputPath2' class='bt-input-text mr5' type='text' name='path' value='"+to+"' placeholder='请选择目标文件夹' style='width:300px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath2\")'></span>\
+									<input id='inputPath2' class='bt-input-text mr5' type='text' name='path' value='"+to+"' placeholder='Please select the destination folder' style='width:300px' /><span class='glyphicon glyphicon-folder-open cursor' onclick='ChangePath(\"inputPath2\")'></span>\
 								</div>\
 							</div>\
 							<div class='bt-form-submit-btn'>\
-								<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>取消</button>\
-								<button type='button' class='btn btn-success btn-sm btn-title' onclick='tsync.add_local_sync("+index+")'>"+(name==''?'添加':'保存')+"</button>\
+								<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
+								<button type='button' class='btn btn-success btn-sm btn-title' onclick='tsync.add_local_sync("+index+")'>"+(name==''?'Add to':'Save')+"</button>\
 							</div>\
 							<ul class=\"help-info-text c7\">\
-								<li>【同步目录】：若不以<code>/</code>结尾，则表示将数据同步到二级目录</li>\
-							  	<li>【注意】： 此处为服务器内部目录的同步，添加后两个目录即保持实时同步!</li>\
+								<li>[Sync Directory]: If not ending with <code>/</code>, it means that the data is synchronized to the secondary directory</li>\
+								<li>[Note]: Here is the synchronization of the internal directory of the server. After adding the two directories, it will be synchronized in real time!</li>\
 							  </ul>\
 						  </form>",
 				});
@@ -744,7 +744,7 @@ code{
 			}
 
 			if(pdata['nName'] == '' || pdata['path'] == '' || pdata['to'] == ''){
-				layer.msg('请填写任务名称、被同步的文件夹、目标文件夹!');
+				layer.msg('Please fill in the task name, the folder being synchronized, the target folder!');
 				return;
 			}
 			var loading = layer.msg('提交数据中,请稍后...',{icon:16,time:0,shade: [0.3, '#000']});
