@@ -44,12 +44,12 @@ Install_rsync()
 	wget -O $pluginPath/rsync_init.py $download_Url/plugin/rsync/rsync_init.py -T 5
 	wget -O $pluginPath/index.html $download_Url/plugin/rsync/index.html -T 5
 	wget -O $pluginPath/info.json $download_Url/plugin/rsync/info.json -T 5
-	if [ ! -f $dataPath/userInfo.json ];then
-		wget -O $dataPath/userInfo.json $download_Url/plugin/rsync/userInfo.json -T 5
-	fi
-	if [ ! -f $pluginPath/config.json ];then
-		wget -O $pluginPath/config.json $download_Url/plugin/rsync/config.json -T 5
-	fi
+	#if [ ! -f $dataPath/userInfo.json ];then
+	#	wget -O $dataPath/userInfo.json $download_Url/plugin/rsync/userInfo.json -T 5
+	#fi
+	#if [ ! -f $pluginPath/config.json ];then
+	wget -O $pluginPath/config.json $download_Url/plugin/rsync/config.json -T 5
+	#fi
 	python -m compileall $pluginPath/rsync_init.py
 
 	echo 'The installation is complete' > $install_tmp
