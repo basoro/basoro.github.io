@@ -220,7 +220,7 @@ code{
 	<div class="bt-w-menu">
 		<p class="bgw"><a href="javascript:;" onclick="tsync.getClientInfo();">Send configuration</a></p>
 		<p><a href="javascript:;" onclick="tsync.getServerInfo();">Receiving configuration</a></p>
-		<!--<p><a href="javascript:;" onclick="tsync.get_logs();">Operation log</a></p>-->
+		<p><a href="javascript:;" onclick="tsync.get_logs();">Operation log</a></p>
 	</div>
 	<div class="bt-w-con" style="height: 658px;">
 		<div class="clientSide" >
@@ -228,7 +228,7 @@ code{
 				<div class="pull-left">
 					<button class="btn btn-success btn-sm va0" onclick="tsync.setClientView(false)">Create a send task</button>
 					<button class="btn btn-success btn-sm va0" onclick="tsync.setClientLocal()">Create local sync</button>
-					<!--<button class="btn btn-default btn-sm va0" onclick="tsync.methodLogs('lsyncd_logs')">Real-time log</button>-->
+					<button class="btn btn-default btn-sm va0" onclick="tsync.methodLogs('lsyncd_logs')">Real-time log</button>
 				</div>
 			</div>
 			<div class="conter divtable">
@@ -241,9 +241,9 @@ code{
 			</div>
 		</div>
 		<div class="serverSide" style="display: none;">
-			<div class="clientSide_header">
-              	<div class="pull-left">
-                  	<button class="btn btn-success btn-sm va0" onclick="tsync.setServerView(false)" style="margin-right: 6px;">Create a receiving task</button>
+			<div class="serverSide_header">
+        <div class="pull-left">
+        	<button class="btn btn-success btn-sm va0" onclick="tsync.setServerView(false)" style="margin-right: 6px;">Create a receiving task</button>
 					<button class="btn btn-default btn-sm va0" onclick="tsync.setOverallView()">Global configuration</button>
 				</div>
 				<div class="switch pull-right">
@@ -287,7 +287,7 @@ code{
 	var tsync = {
 		setStatus:false,
 		setTitle:'Add directory',
-		setSubmit:'提交',
+		setSubmit:'Submit',
 		set_layer_View:'',
 		cancelLog:'',
 		setServerForm:{
@@ -326,10 +326,8 @@ code{
 			$('.layui-layer-page').width(width);
 			$('.layui-layer-page').height(height);
 			$('.bt-w-menu').height((height - 1) - $('.layui-layer-title').height())
-			$('.layui-layer-page').css({
-				'left': boxwidth + 'px',
-				'top': boxheight +'px'
-			});
+			//$('.layui-layer-page').css({'left': boxwidth + 'px','top': boxheight +'px'});
+			$('.layui-layer-page').css({'left': boxwidth + 'px'});
 			$(".bt-w-menu p").click(function(){
 				var index = $(this).index();
 				$(this).addClass("bgw").siblings().removeClass("bgw");
