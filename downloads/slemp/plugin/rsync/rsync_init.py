@@ -21,7 +21,7 @@ class plugin_rsync_init ():#line:16
     def get_logs (O00O000O0OO0000O0 ,O00O0OOOO0OO00O00 ):#line:31
         import page #line:32
         page =page .Page ();#line:33
-        OO00OOO0OO0O0O0O0 =public .M ('logs').where ('type=?',(u'Data synchronization tool',)).count ();#line:34
+        OO00OOO0OO0O0O0O0 =public .M ('logs').where ('type=?',('Data synchronization tool',)).count ();#line:34
         OOO00O000OO0O0OOO =12 ;#line:35
         del (O00O0OOOO0OO00O00 .data )#line:36
         del (O00O0OOOO0OO00O00 .zunfile )#line:37
@@ -37,7 +37,7 @@ class plugin_rsync_init ():#line:16
             OOO0OO0O000O0OO0O ['return_js']=O00O0OOOO0OO00O00 .tojs #line:47
         OO000OO000OOO00O0 ={}#line:48
         OO000OO000OOO00O0 ['page']=page .GetPage (OOO0OO0O000O0OO0O ,'1,2,3,4,5,8');#line:50
-        OO000OO000OOO00O0 ['data']=public .M ('logs').where ('type=?',(u'Data synchronization tool',)).order ('id desc').limit (bytes (page .SHIFT )+','+bytes (page .ROW )).field ('log,addtime').select ();#line:51
+        OO000OO000OOO00O0 ['data']=public .M ('logs').where ('type=?',('Data synchronization tool',)).order ('id desc').limit (bytes (page .SHIFT )+','+bytes (page .ROW )).field ('log,addtime').select ();#line:51
         return OO000OO000OOO00O0 ;#line:52
     def get_rsync_conf (OO0OO0OOO0O00000O ,OOO0000O000O000OO ):#line:54
         OOO0O0O0O00O0O0O0 =json .loads (public .readFile (OO0OO0OOO0O00000O .rsyn_path +'/config.json'))#line:55
