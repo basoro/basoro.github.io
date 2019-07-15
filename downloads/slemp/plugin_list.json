@@ -28,7 +28,7 @@
 	"default":false,
 	"display":1
 },{
-	"title":"Database Replika",
+	"title":"MySQL Replication",
 	"tip":"lib",
 	"name":"masterslave",
 	"type":"System Tool",
@@ -36,20 +36,6 @@
 	"versions":"1.0",
 	"shell":"masterslave.sh",
 	"checks":"/opt/slemp/server/panel/masterslave",
-	"author":"Ataaka",
-	"home":"https://slemp.basoro.id",
-	"date":"2019-07-10",
-	"default":false,
-	"display":1
-},{
-	"title":"File Replika",
-	"tip":"lib",
-	"name":"rsync",
-	"type":"System Tool",
-	"ps":"Data synchronization tool based on rsync development",
-	"versions":"1.0",
-	"shell":"rsync.sh",
-	"checks":"/opt/slemp/server/panel/rsync",
 	"author":"Ataaka",
 	"home":"https://slemp.basoro.id",
 	"date":"2019-07-10",
