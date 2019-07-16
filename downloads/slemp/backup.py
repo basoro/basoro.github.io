@@ -4,7 +4,7 @@
 import sys,os
 reload(sys)
 sys.setdefaultencoding('utf-8')
-os.chdir('/www/server/panel');
+os.chdir('/opt/slemp/server/panel');
 sys.path.append("")
 import public,db,time
 
@@ -80,7 +80,7 @@ class backupTools:
         if len(mycnf) > 100:
             public.writeFile('/etc/my.cnf',mycnf);
 
-        public.ExecShell("/www/server/mysql/bin/mysqldump --opt --default-character-set=utf8 " + name + " | gzip > " + filename)
+        public.ExecShell("/opt/slemp/server/mysql/bin/mysqldump --opt --default-character-set=utf8 " + name + " | gzip > " + filename)
 
         if not os.path.exists(filename):
             endDate = time.strftime('%Y/%m/%d %X',time.localtime())
