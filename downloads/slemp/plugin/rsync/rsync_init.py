@@ -9,7 +9,7 @@ class plugin_rsync_init ():#line:16
     __OO0O00O0OOOO0OOOO ='/usr/bin/rsync'#line:17
     rsyn_file ="/etc/rsyncd.conf"#line:18
     lsync_file ="/etc/lsyncd.conf"#line:19
-    rsyn_path ='/opt/slemp/server/panel/rsync'#line:20
+    rsyn_path ='/opt/slemp/server/panel/plugin/rsync'#line:20
     def __init__ (OO0O000OO00OOOO00 ):#line:22
         OOO0O0OO0OO000000 =OO0O000OO00OOOO00 .rsyn_path +'/sclient';#line:23
         if not os .path .exists (OOO0O0OO0OO000000 ):public .ExecShell ("mkdir -p "+OOO0O0OO0OO000000 );#line:24
@@ -119,7 +119,7 @@ class plugin_rsync_init ():#line:16
                 return O00O0O0000000000O ;#line:150
         return public .returnMsg (False ,'The specified task does not exist!');#line:151
     def __O0O0OOO0O00000O00 (OO0OOOO000OO00O0O ,O000OO00OOO00OO00 ):#line:153
-        O0OO0000OO00O0OOO ='/opt/slemp/server/panel/rsync/rsync_init.py';#line:154
+        O0OO0000OO00O0OOO ='/opt/slemp/server/panel/plugin/rsync/rsync_init.py';#line:154
         if os .path .exists (O0OO0000OO00O0OOO ):os .remove (O0OO0000OO00O0OOO );#line:155
         if getattr (web .ctx .session ,'rsync',False ):return public .returnMsg (True ,'OK!');#line:156
         O00000OO00O0OOOO0 ={}#line:157

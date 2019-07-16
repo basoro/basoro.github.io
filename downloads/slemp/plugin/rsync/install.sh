@@ -8,7 +8,7 @@ if [ ! -f $public_file ];then
 	wget -O $public_file $download_Url/public.sh -T 5;
 fi
 . $public_file
-pluginPath=/opt/slemp/server/panel/rsync
+pluginPath=/opt/slemp/server/panel/plugin/rsync
 dataPath=/opt/slemp/server/panel/data
 centos=1
 if [ ! -f /usr/bin/yum ];then
@@ -184,8 +184,8 @@ Uninstall_rsync()
 
 if [ "${1}" == 'install' ];then
 	Install_rsync
-	rm -rf /opt/slemp/server/panel/rsyncsecrets
+	rm -rf /opt/slemp/server/panel/plugin/rsyncsecrets
 elif [ "${1}" == 'uninstall' ];then
 	Uninstall_rsync
-	rm -rf /opt/slemp/server/panel/rsyncsecrets
+	rm -rf /opt/slemp/server/panel/plugin/rsyncsecrets
 fi
