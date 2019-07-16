@@ -28,20 +28,6 @@
 	"default":false,
 	"display":1
 },{
-	"title":"MySQL Replication",
-	"tip":"lib",
-	"name":"masterslave",
-	"type":"System Tool",
-	"ps":"Easy MySQL master-slave replication, master-master replication.",
-	"versions":"1.0",
-	"shell":"masterslave.sh",
-	"checks":"/opt/slemp/server/panel/plugin/masterslave",
-	"author":"Ataaka",
-	"home":"https://slemp.basoro.id",
-	"date":"2019-07-10",
-	"default":false,
-	"display":1
-},{
 	"title":"phpMyAdmin",
 	"tip":"soft",
 	"name":"phpmyadmin",
