@@ -226,14 +226,14 @@ Install_Nginx(){
 	mkdir -p ${Setup_Path}/conf/vhost
 	mkdir -p /usr/local/nginx/logs
 	mkdir -p ${Setup_Path}/conf/rewrite
-	mkdir -p ${Root_Path}/server/panel/data/vhost
+	mkdir -p ${Root_Path}/server/panel/vhost/nginx
 
 	wget -O ${Setup_Path}/conf/nginx.conf ${download_Url}/conf/nginx.conf -T20
 	wget -O ${Setup_Path}/conf/pathinfo.conf ${download_Url}/conf/pathinfo.conf -T20
 	wget -O ${Setup_Path}/conf/enable-php.conf ${download_Url}/conf/enable-php.conf -T20
 	wget -O ${Setup_Path}/html/index.html ${download_Url}/error/index.html -T 5
 
-	cat > ${Root_Path}/server/panel/data/vhost/phpfpm_status.conf<<EOF
+	cat > ${Root_Path}/server/panel/vhost/nginx/phpfpm_status.conf<<EOF
 server {
 	listen 80;
 	server_name 127.0.0.1;
@@ -255,7 +255,7 @@ EOF
 		include pathinfo.conf;
 	}
 EOF
-	cat >> ${Root_Path}/server/panel/data/vhost/phpfpm_status.conf<<EOF
+	cat >> ${Root_Path}/server/panel/vhost/nginx/phpfpm_status.conf<<EOF
 	location /phpfpm_${phpV}_status {
 		fastcgi_pass unix:/tmp/php-cgi-${phpV}.sock;
 		include fastcgi_params;
@@ -263,7 +263,7 @@ EOF
 	}
 EOF
 	done
-	echo \} >> ${Root_Path}/server/panel/data/vhost/phpfpm_status.conf
+	echo \} >> ${Root_Path}/server/panel/vhost/nginx/phpfpm_status.conf
 	cat > ${Setup_Path}/conf/proxy.conf<<EOF
 proxy_temp_path ${Setup_Path}/proxy_temp_dir;
 proxy_cache_path ${Setup_Path}/proxy_cache_dir levels=1:2 keys_zone=cache_one:20m inactive=1d max_size=5g;
@@ -278,7 +278,7 @@ proxy_temp_file_write_size 128k;
 proxy_next_upstream error timeout invalid_header http_500 http_503 http_404;
 proxy_cache cache_one;
 EOF
-	sed -i "s#include vhost/\*.conf;#include /opt/slemp/server/panel/data/vhost/\*.conf;#" ${Setup_Path}/conf/nginx.conf
+	sed -i "s#include vhost/\*.conf;#include /opt/slemp/server/panel/vhost/nginx/\*.conf;#" ${Setup_Path}/conf/nginx.conf
 	sed -i "s#/opt/slemp/wwwroot/default#/opt/slemp/server/phpmyadmin#" ${Setup_Path}/conf/nginx.conf
 	sed -i "/pathinfo/d" ${Setup_Path}/conf/enable-php.conf
 

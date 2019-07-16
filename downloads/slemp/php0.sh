@@ -232,15 +232,15 @@ Install_Composer()
 }
 
 fpmPhpinfo(){
-	nginxPhpStatus=$(cat /opt/slemp/server/panel/data/vhost/phpfpm_status.conf |grep 73)
+	nginxPhpStatus=$(cat /opt/slemp/server/panel/vhost/nginx/phpfpm_status.conf |grep 73)
 	if [ "${nginxPhpStatus}" == "" ]; then
-		rm -f /opt/slemp/server/panel/data/vhost/phpfpm_status.conf
-		wget -O /opt/slemp/server/panel/data/vhost/phpfpm_status.conf ${download_Url}/conf/phpfpm_status.conf
+		rm -f /opt/slemp/server/panel/vhost/nginx/phpfpm_status.conf
+		wget -O /opt/slemp/server/panel/vhost/nginx/phpfpm_status.conf ${download_Url}/conf/phpfpm_status.conf
 	fi
-	nginxPhpinfo=$(cat /opt/slemp/server/panel/data/vhost/phpinfo.conf |grep 73)
+	nginxPhpinfo=$(cat /opt/slemp/server/panel/vhost/nginx/phpinfo.conf |grep 73)
 	if [ "${nginxPhpinfo}" == "" ]; then
-		rm -f /opt/slemp/server/panel/data/vhost/phpinfo.conf
-		wget -O /opt/slemp/server/panel/data/vhost/phpinfo.conf ${download_Url}/conf/phpinfo.conf
+		rm -f /opt/slemp/server/panel/vhost/nginx/phpinfo.conf
+		wget -O /opt/slemp/server/panel/vhost/nginx/phpinfo.conf ${download_Url}/conf/phpinfo.conf
 	fi
 }
 
