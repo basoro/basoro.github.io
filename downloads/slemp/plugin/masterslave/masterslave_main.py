@@ -480,7 +480,7 @@ class slave():
 class masterslave_main(master, slave):
     user_name = 'btrsync'
     mysql_conf_file = '/etc/my.cnf'
-    masterslave_path = '/opt/slemp/server/panel/masterslave/'
+    masterslave_path = '/opt/slemp/server/panel/plugin/masterslave/'
     args_cmd = "cat %s|grep %s|awk '{print $3}'|xargs|awk '{print $1}'"
     port = public.ExecShell(args_cmd % (mysql_conf_file, 'port'))[
         0].replace('\n', '')
