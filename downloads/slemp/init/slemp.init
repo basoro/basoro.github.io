@@ -136,7 +136,7 @@ install_used()
 
 case "$1" in
         'start')
-                install_used
+                #install_used
                 panel_start
                 ;;
         'stop')
