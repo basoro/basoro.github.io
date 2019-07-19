@@ -9,14 +9,16 @@ if [ ! -f $public_file ];then
 fi
 . $public_file
 
+pluginPath=/opt/slemp/server/panel/plugin/docker
+
 Install_docker()
 {
 	Install_Docker_ce
-	mkdir -p /opt/slemp/server/panel/docker
+	mkdir -p $pluginPath
 	echo 'Installing script file...' > $install_tmp
-	wget -O /opt/slemp/server/panel/docker/docker_main.py $download_Url/plugin/docker/docker_main.py -T 5
-	wget -O /opt/slemp/server/panel/docker/index.html $download_Url/plugin/docker/index.html -T 5
-	wget -O /opt/slemp/server/panel/docker/info.json $download_Url/plugin/docker/info.json -T 5
+	wget -O $pluginPath/docker_main.py $download_Url/plugin/docker/docker_main.py -T 5
+	wget -O $pluginPath/index.html $download_Url/plugin/docker/index.html -T 5
+	wget -O $pluginPath/info.json $download_Url/plugin/docker/info.json -T 5
 	echo 'The installation is complete' > $install_tmp
 }
 
@@ -76,7 +78,7 @@ Install_Docker_ce()
 
 Uninstall_docker()
 {
-	rm -rf /opt/slemp/server/panel/docker
+	rm -rf $pluginPath
 	if [ -f /usr/bin/systemctl ];then
 		systemctl disable docker
 		systemctl stop docker

@@ -36,6 +36,7 @@ if [ -f "/usr/bin/apt-get" ];then
 else
 	setenforce 0
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+	yum install epel-release -y
 	for pace in wget unzip python-pip python-devel python-imaging zip unzip mysql-devel openssl openssl-devel gcc libxml2 libxml2-dev libxslt* zlib zlib-devel libjpeg-devel libpng-devel libwebp libwebp-devel freetype freetype-devel lsof pcre pcre-devel vixie-cron crontabs;
 	do yum -y install $pace; done
 	sleep 5
