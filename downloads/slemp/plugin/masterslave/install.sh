@@ -14,11 +14,6 @@ pluginPath=/opt/slemp/server/panel/plugin/masterslave
 
 Install_masterslave()
 {
-	isbt_pcre=`rpm -qa|grep bt-pcre`
-	if [ "$isbt_pcre" != '' ];then
-		rpm -e bt-pcre;
-		yum reinstall pcre -y;
-	fi
 	mkdir -p $pluginPath
 	echo 'Installing script file...' > $install_tmp
 	wget -O $pluginPath/masterslave_main.py $download_Url/plugin/masterslave/masterslave_main.py -T 5
