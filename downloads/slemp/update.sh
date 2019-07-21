@@ -8,10 +8,6 @@ yes | cp -a panel/templates/* /opt/slemp/server/panel/templates/
 python -m compileall /opt/slemp/server/panel/
 rm -f /opt/slemp/server/panel/*.py
 rm -f /opt/slemp/server/panel/data/plugin.db
-rm -rf /opt/slemp/server/panel/plugin
-rm -rf /opt/slemp/server/panel/masterslave
-rm -rf /opt/slemp/server/panel/docker
-rm -rf /opt/slemp/server/panel/rsync
 rm -f panel.zip
 chmod +x /etc/init.d/slemp
 slemp restart
