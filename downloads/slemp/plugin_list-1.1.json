@@ -59,7 +59,7 @@
 	"title":"Docker",
 	"tip":"lib",
 	"name":"docker",
-	"type":"Expansion",
+	"type":"Container engine",
 	"ps":"Docker, an open source application container engine",
 	"versions":"1.0",
 	"shell":"install.sh",
