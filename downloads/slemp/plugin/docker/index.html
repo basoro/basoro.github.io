@@ -19,7 +19,7 @@
 	border-bottom: 2px solid #20a53a;
 	color: #20a53a;
 	font-weight: bold;
-	font-family: "宋体";
+	font-family: "Helvetica Neue";
 }
 .relabel{
 	line-height: 30px;
@@ -172,31 +172,32 @@
 	border-bottom: none;
 }
 </style>
-<div class="bt-w-main" style="position: relative;">
-	<div class="bt-w-menu">
-		<p class="bgw">Container list</p>
-		<p>Image management</p>
+<div class="webEdit" style="position: relative;">
+	<div class="webEdit-menu">
+		<p class="active">Container</p>
+		<p>Image</p>
 		<!-- <p onclick="SnapshotMana()" style="display: none;">Snapshot management</p> -->
-		<p>IP address pool</p></div>
-	<div id="bt-docker-con" class="bt-w-con pd15">
-		<div class="conter docker_list">
+		<p>IP address</p>
+    </div>
+	<div id="bt-docker-con" class="webEdit-box webEdit-con pd15" style="padding:10px;">
+		<div class="conter docker_list" style="width:730px;">
 			<button class="btn btn-info  btn-sm" onclick="docker.create_mydocker_template()">Create container</button>
 			<div class="divtable mtb15" id="docker_list_table" style="overflow: auto;height: 450px;">
 				<div id="docker_list"></div>
 			</div>
 		</div>
-		<div class="conter" style="display:none">
+		<div class="conter" style="display:none;width:730px;">
 			<button class="btn btn-info  btn-sm" onclick="docker.pull_images_file_template()">Get mirror</button>
-			<div class="login_view">
+			<!--<div class="login_view">
 				<a href="javascript:;" class="btlink on_login" onclick="docker.login_aliyun_images_template()">Log in to Ali mirror</a>
 				<span class="off_login">User Info: <a href="javascript:;" class="btlink edit_aliyun_images"></a></span>
-			</div>
+			</div>-->
 			<!-- <button class="btn btn-info  btn-sm" onclick="docker.pull_images_file()">PULL image</button> -->
 			<div class="divtable mtb15" id="images_list_table" style="overflow: auto;height: 450px;">
 				<table class="table table-hover" id="images_list"></table>
 			</div>
 		</div>
-		<div class="conter ip_pool_list" style="display:none">
+		<div class="conter ip_pool_list" style="display:none;width:730px;">
 			<div class="bt-docker-con">
 				<input class="bt-input-text mr5" type="text" style="width:150px" name="address" placeholder="IP address">
 				<input class="bt-input-text mr5" name="netmask" type="text" style="width:150px" placeholder="Subnet mask">
@@ -222,10 +223,10 @@ var docker = {
 
 	initial:function(){
 		$('.layui-layer-page').width(850);
-		$(".bt-w-menu p").click(function(){
+		$(".webEdit-menu p").click(function(){
 			var index = $(this).index();
-			$(this).addClass("bgw").siblings().removeClass("bgw");
-			$('.bt-w-con>div:eq('+ index +')').show().siblings().hide();
+			$(this).addClass("active").siblings().removeClass("active");
+			$('.webEdit-con>div:eq('+ index +')').show().siblings().hide();
 			switch(index){
 				case 0:
 					docker.get_mydocker_list();
@@ -301,7 +302,7 @@ var docker = {
 	},
 
 	get_mydocker_list:function(){
-		var _this = this,thead_array = [{title:'Name',width:'155px'},{title:'Mirror',width:'160px'},{title:'Creation time',width:'120px'},{title:'Status',width:'25px'},{title:'Action',width:'144px',align:'right'}];
+		var _this = this,thead_array = [{title:'Name',width:'155px'},{title:'Mirror',width:'160px'},{title:'Creation time',width:'120px'},{title:'Status',width:'25px'},{title:'Action',width:'188px',align:'right'}];
 		this.send('docker/GetConList',function(mlist){
 			var tbody = "",thead = '';
 			for(var j= 0 ; j <thead_array.length; j++){
@@ -316,8 +317,8 @@ var docker = {
 						'<span class="glyphicon '+(mlist[i].State.Running?'glyphicon-play':'glyphicon-pause')+'" style="color:'+(mlist[i].State.Running?'#20a53a':'red')+';font-size:12px"></span></div></td>'+
 					'<td class="text-right"><div style="width:'+ thead_array[4].width +'">'+
 					//'<a class="btlink" onclick="mydockerset(\''+mlist[i].Config.Hostname+'\')" style="display:none;">Setting | </a>'+
-					'<a class="btlink" onclick="docker.create_mydocker_images_template(\''+mlist[i].Config.Hostname+'\')">Mirroring</a> | '+
-					'<a class="btlink" onclick="docker.executive_mydorder(\''+mlist[i].Config.Hostname+'\')">Open terminal</a> | '+
+					//'<a class="btlink" onclick="docker.create_mydocker_images_template(\''+mlist[i].Config.Hostname+'\')">Mirroring</a> | '+
+					//'<a class="btlink" onclick="docker.executive_mydorder(\''+mlist[i].Config.Hostname+'\')">Open terminal</a> | '+
 					'<a class="btlink" onclick="docker.delete_mydocker(\''+mlist[i].Config.Hostname+'\')">Delete</a>'+
 				'</div></td></tr>'
 			}
@@ -716,7 +717,7 @@ var docker = {
 			for(var i=0;i<imageList.length;i++){
 				tbody += '<tr><td><span style="width:250px" title="'+imageList[i].RepoTags+'">'+imageList[i].RepoTags+'</span></td><td>'+ToSize(imageList[i].Size)+'</td><td>'+(imageList[i].Labels?(imageList[i].Labels.license?imageList[i].Labels.license:'Free'):'Free')+'</td><td>'+(imageList[i].Comment == ''?'Free':imageList[i].Comment)+'</td>'+
 					'<td class="text-right">'+
-						'<a href="javascript:;" onclick="docker.push_image_template(\''+imageList[i].RepoTags+'\',\''+imageList[i].Id+'\');" class="btlink">Push</a> | ' +
+						//'<a href="javascript:;" onclick="docker.push_image_template(\''+imageList[i].RepoTags+'\',\''+imageList[i].Id+'\');" class="btlink">Push</a> | ' +
 						'<a href="javascript:;" onclick="docker.delete_images(\''+imageList[i].RepoTags+'\',\''+imageList[i].Id+'\')" class="btlink">Delete</a></td></tr>'
 			}
 			$("#images_list").html('<thead><tr>'+ thead +'</tr></thead><tbody>'+ tbody +'</tbody>');
@@ -809,9 +810,9 @@ var docker = {
 			shadeClose: false,
 			content: '<div class="bt-docker pd20">'+
 						'<div class="docker-sub">'+
-							'<span class="on">Official library</span>'+
-							'<span>Public network library</span>'+
-							'<span>Private library</span>'+
+							//'<span class="on">Official library</span>'+
+							'<span class="on">Public network library</span>'+
+							//'<span>Private library</span>'+
 						'</div>'+
 						'<div class="bt-form bt-docker-con">'+
 							'<div class="conter official_pull pd15"><div class="line">'+
@@ -1069,22 +1070,22 @@ function mydockerset(){
 		closeBtn: 2,
 		shadeClose: false,
 		content:'<div class="bt-form">\
-			<div class="bt-w-main">\
-				<div class="bt-w-menu">\
+			<div class="webEdit-main">\
+				<div class="webEdit-menu">\
 					<p class="bgw" onclick="DockerInfo()">Container information</p>\
 					<p onclick="MyDockerConfig()">Configuration modification</p>\
 					<p onclick="MappedPort()">Map port</p>\
 					<p onclick="ManaKey()">Management key</p>\
 					<p onclick="BindIp()">Bind IP</p>\
 				</div>\
-				<div class="bt-w-con pd15">\
+				<div class="webEdit-con pd15">\
 					<div class="mydocker-con"></div>\
 				</div>\
 			</div>\
 		</div>'
 	});
 	DockerInfo();
-	$(".bt-w-menu p").click(function(){
+	$(".webEdit-menu p").click(function(){
 		$(this).addClass("bgw").siblings().removeClass("bgw");
 	})
 }
