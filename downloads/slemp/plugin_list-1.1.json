@@ -42,6 +42,34 @@
 	"default":false,
 	"display":1
 },{
+	"title":"File Synchronization",
+	"tip":"lib",
+	"name":"rsync",
+	"type":"System Tool",
+	"ps":"Data synchronization tool based on rsync development",
+	"versions":"1.0",
+	"shell":"rsync.sh",
+	"checks":"/opt/slemp/server/panel/plugin/rsync",
+	"author":"Ataaka",
+	"home":"https://slemp.basoro.id",
+	"date":"2018-02-28",
+	"default":false,
+	"display":1
+},{
+	"title":"Docker",
+	"tip":"lib",
+	"name":"docker",
+	"type":"Expansion",
+	"ps":"Docker, an open source application container engine",
+	"versions":"1.0",
+	"shell":"install.sh",
+	"checks":"/opt/slemp/server/panel/plugin/docker",
+	"author":"Ataaka",
+	"home":"https://ataaka.basoro.id",
+	"date":"2018-12-17",
+	"default":false,
+	"display":1
+},{
 	"title":"phpMyAdmin",
 	"tip":"soft",
 	"name":"phpmyadmin",
