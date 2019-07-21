@@ -13,7 +13,7 @@ import docker, public, json
 class docker_main(object):
     __docker = None
     __path = '/opt/slemp/backup/docker/'
-    __setupPath = '/opt/slemp/server/panel/docker'
+    __setupPath = '/opt/slemp/server/panel/plugin/docker'
 
     def __init__(self):
         if not os.path.exists(self.__path):
@@ -370,13 +370,13 @@ class docker_main(object):
         return data
 
     def GetIPList(self, get):
-        ipConf = '/opt/slemp/server/panel/docker/iplist.json'
+        ipConf = '/opt/slemp/server/panel/plugin/docker/iplist.json'
         if not os.path.exists(ipConf): return [];
         iplist = json.loads(public.readFile(ipConf))
         return iplist
 
     def AddIP(self, get):
-        ipConf = '/opt/slemp/server/panel/docker/iplist.json'
+        ipConf = '/opt/slemp/server/panel/plugin/docker/iplist.json'
         if not os.path.exists(ipConf):
             iplist = []
             public.writeFile(ipConf, json.dumps(iplist))
@@ -388,7 +388,7 @@ class docker_main(object):
         return public.returnMsg(True, 'Added successfully!')
 
     def DelIP(self, get):
-        ipConf = '/opt/slemp/server/panel/docker/iplist.json'
+        ipConf = '/opt/slemp/server/panel/plugin/docker/iplist.json'
         if not os.path.exists(ipConf): return public.returnMsg(False, 'The specified IP does not exist.!')
         iplist = json.loads(public.readFile(ipConf))
         newList = []
