@@ -1,0 +1,454 @@
+<style>
+.tasklist{
+	padding-left: 0;
+	padding-top: 0;
+}
+.tab-con{
+	margin-left: 15px;
+}
+.tab-con .SetDns{
+	overflow: hidden;
+}
+.tab-con .clearfixDns>p{
+	float: left;
+    margin-top: 35px;
+    margin-left: 25px;
+}
+.tab-con .clearfixDns>p button{
+	margin-right: 15px;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+.tab-con .SetDns .SetAggregateOne p{
+	margin-top: 15px;
+}
+.tab-con .SetDns .SetAggregateOne p span{
+	margin-right:15px;
+    display: inline-block;
+    width: 51px;
+    text-align: right;
+}
+.tab-con .SetDns .SetAggregateOne p input{
+	height: 30px;
+	width: 240px;
+	padding-left: 10px;
+	font-size: 13px;
+}
+.tab-con .SetDns .SetAggregateOne{
+	width: 325px;
+	float: left;
+}
+.tab-con .SetZone .Setshow{
+	margin: 15px 0;
+	font-size: 14px;
+}
+.tab-con .SetZone .Setshow span{
+	margin-right: 5px;
+	font-size: 14px;
+}
+.tab-con .SetZont .SetTime button{
+	margin-top: -5px;
+	margin-right: 15px;
+	padding-left: 18px;
+	padding-right: 18px;
+	margin-left: 20px;
+}
+.tab-con .SetZone .SetTime{
+	margin-left: 20px;
+	margin-bottom: 20px;
+	margin: 0 10px 20px 0px;
+}
+.tab-con .SetZone .SetTime select{
+	height: 30px;
+	font-size: 14px;
+}
+.tab-con .SetTime span{
+	margin-right: 10px;
+}
+.tab-con .clearfixSwap>p{
+	clear: both;
+    margin-top: 15px;
+    margin-bottom: 17px;
+}
+.tab-con .clearfixSwap>p span{
+	margin-right: 15px;
+}
+.tab-con .clearfixSwap>p input{
+	height: 30px;
+    width: 130px;
+	padding-left: 10px;
+	margin-left: 10px;
+	font-size: 13px;
+}
+.tab-con .clearfixSwap>p button,
+.tab-con .SetTime button{
+	margin-top: -5px;
+	margin-right: 15px;
+	padding-left: 18px;
+	padding-right: 18px;
+	margin-left: 20px;
+}
+.tab-con .SetSwap .SetAggregateTwo{
+	overflow: hidden;
+    margin-top: 14px;
+	margin-bottom:20px;
+}
+.tab-con .SetSwap .SetAggregateTwo p{
+    float: left;
+	margin-right:50px;
+}
+.tab-con .SetSwap .SetAggregateTwo size{
+	font-size:14px;
+}
+.tab-con .SetSwap .SetAggregateTwo span{
+	margin-right: 10px;
+}
+.tab-con .SetDns .clearfixDns{
+	overflow: hidden;
+	margin-bottom: 25px;
+}
+.tasklist .tab-nav{
+	background-color: #F0F0F1;
+    width: 125px;
+    height: 550px;
+    float: left;
+}
+.tasklist .tab-nav span{
+	display: block;
+	width: 125px;
+	padding-right:0 ;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 20px;
+	position: relative;
+	cursor: pointer;
+	border:none;
+	background: #F0F0F1;
+}
+.tasklist .tab-nav span.on{
+	background-color:#fff ;
+}
+</style>
+<div class="tasklist">
+	<div class="tab-nav">
+		<span class="on">DNS Setting</span>
+		<span class="">Swap/Virtual Memory</span>
+		<span class="">Timezone Setting</span>
+		<span class="">System Password</span>
+		<span class="">IP Setting</span>
+	</div>
+	<div class="tab-con">
+		<div id="dns" class="SetDns" style="display: block;">
+			<div class="clearfixDns">
+				<div class="SetAggregateOne">
+					<p><span>Main DNS</span><input class="bt-input-text" name="dns1" type="text" value="" /></p>
+					<p><span>Standby DNS</span><input class="bt-input-text" name="dns2" type="text" value="" /></p>
+				</div>
+				<p><button class="btn btn-default btn-sm btn-title" onclick="TestDns();">Test</button><button class="btn btn-default btn-sm btn-title" onclick="SetDnsInfo();">Save</button></p>
+			</div>
+			<ul class="help-info-text c7 mtb15">
+				<li>If DNS setting has problem, it will make your server cannot resolve the domain name, thus server cannot access domain!</li>
+				<li>Please click test button to test vail of setting before you save the setting!</li>
+			</ul>
+		</div>
+		<div id="swap" class="SetSwap" style="display: none;">
+			<div class="clearfixSwap">
+				<div class="SetAggregateTwo">
+					<p><span>Total:</span><size id="total"></size></p>
+					<p><span>Used:</span><size id="used"></size></p>
+					<p><span>Free:</span><size id="free"></size></p>
+				</div>
+				<p>
+					<span>Add Swap</span><input class="bt-input-text" name="size" type="number" value="" /> MB
+					<button class="btn btn-default btn-sm btn-title" onclick="SetSwap()">Save</button>
+				</p>
+			</div>
+			<ul class="help-info-text c7 mtb15">
+				<li>swap is Linux virtual memory, set a suitable swap can increase the stable of server</li>
+				<li>Suggeest to set swap disk is 1.5 times physical memory, if your server has been more than 4GB memory, you can set 1-2GB fix value.</li>
+				<li>swap document default directory is /www/swap，make sure you have enough free disk.</li>
+				<li>If you do not need swap，please set 0</li>
+				<li>OVZ virtual machine cannot use.</li>
+			</ul>
+		</div>
+		<div id="zone" class="SetZone" style="display: none;">
+			<p class="Setshow"><span>Current time:</span><date id="date"></date></p>
+			<p class="SetTime">
+				<span>Set Timezone:</span>
+				<select class="bt-input-text" name="zone"></select>
+				<select class="bt-input-text" name="area"></select>
+				<button class="btn btn-default btn-sm btn-title" onclick="SetZone()">Save</button>
+			</p>
+			<ul class="help-info-text c7 mtb15">
+				<li>If the timezone is wrong, it will make the server time is wrong！</li>
+				<li>Jakarta time(CST +0700)，Please select Asia/Jakarta</li>
+			</ul>
+		</div>
+		<div id="root" class="SetDns" style="display: none;">
+			<div class="clearfixDns">
+				<div class="SetAggregateOne">
+					<p><span>User name</span><input class="bt-input-text" name="linuxuser" type="text" value="" /></p>
+					<p><span>New password</span><input class="bt-input-text" name="userpass1" type="password" value="" /></p>
+					<p><span>Password again</span><input class="bt-input-text" name="userpass2" type="password" value="" /></p>
+				</div>
+			</div>
+			<p><button style="margin-left: 261px;" class="btn btn-default btn-sm btn-title" onclick="SetRoot();">Change</button></p>
+			<ul class="help-info-text c7 mtb15">
+				<li>Program will auto obtain current user</li>
+				<li>ubuntu user need input by manual</li>
+			</ul>
+		</div>
+		<div id="root" class="SetDns" style="display: none;">
+			<div class="divtable" style="width: 520px;">
+				<input class="bt-input-text mr5" name="address" type="text" value="" style="width:140px" placeholder="IP address" />
+				<input class="bt-input-text mr5" name="netmask" type="text" value="" style="width:140px" placeholder="Sub network mask" />
+				<input class="bt-input-text mr5" name="gateway" type="text" value="" style="width:140px" placeholder="Gateway" />
+				<button class="btn btn-default btn-sm va0" onclick="SetAddress();">Add</button>
+				<table class="table table-hover" style="margin-top: 10px; max-height: 380px; overflow: auto;">
+					<thead>
+						<tr>
+							<th>IP address</th>
+							<th>Sub network mask</th>
+							<th>Gateway</th>
+							<th style="text-align: right;">Operating</th>
+						</tr>
+					</thead>
+					<tbody id="iplist"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="javascript/text">
+	$(".tab-nav span").click(function(){
+		var i = $(this).index();
+		$(this).addClass("on").siblings().removeClass("on");
+		$(".tab-con > div").hide().eq(i).show();
+		switch(i){
+			case 0:
+				GetDnsInfo();
+				break;
+			case 1:
+				GetSwap();
+				break;
+			case 2:
+				GetZone()
+				break;
+			case 3:
+				GetRoot()
+				break;
+			case 4:
+				GetAddress();
+				break;
+		}
+	});
+
+	mainAd = null;
+
+	function closeF(){
+		layer.close(mainAd);
+	}
+
+	function GetAddress(){
+		$.get('/plugin?action=a&name=linuxsys&s=GetAddress',function(data){
+			if(data === false){
+				layer.msg('Current only support Centos!',{icon:5});
+				return;
+			}
+			if(data.status === false){
+				mainAd = layer.open({
+					type: 1,
+					skin: 'demo-class',
+					area: '300px',
+					title: 'Initialize network card',
+					closeBtn: 2,
+					shift: 5,
+					shadeClose: false,
+					content:"<div class='bt-form pd20 pb70'>"
+								+"<div class='line'><span class='tname'>IP Address</span><input class='bt-input-text' name='mainAddress' value='' style='width:170px'></div>"
+								+"<div class='line'><span class='tname'>Sub network mask</span><input class='bt-input-text' name='mainNetmask' value='' style='width:170px'></div>"
+								+"<div class='line'><span class='tname'>Gateway</span><input class='bt-input-text' name='mainGateway' value='' style='width:170px'></div>"
+								+"<div class='bt-form-submit-btn'><button class='btn btn-danger btn-sm' onclick='closeF()'>Canel</button><button class='btn btn-success btn-sm' onclick='CheckConfig()'>Save</button></div>"
+							+"</div>"
+				});
+				return;
+			}
+			var tbody = ''
+			for(var i=0;i<data.length;i++){
+				tbody += '<tr><td>'+data[i].address+'</td><td>'+data[i].netmask+'</td><td>'+data[i].gateway+'</td><td style="text-align: right;"><a href="#" class="btlink" onclick="DelAddress(\''+data[i].address+'\')">Delete</a></td></tr>';
+			}
+			if(data.length > 0){
+				$("input[name='netmask']").val(data[0].netmask);
+				$("input[name='gateway']").val(data[0].gateway);
+			}
+			$("input[name='address']").val('');
+			$("#iplist").html(tbody);
+		});
+
+
+	}
+
+	function CheckConfig(){
+		var pdata =  "address="+$("input[name='mainAddress']").val()+"&netmask="+$("input[name='mainNetmask']").val()+"&gateway="+$("input[name='mainGateway']").val();
+		var loadT = layer.msg('Initializing network card...',{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/plugin?action=a&name=linuxsys&s=CheckConfig',pdata,function(data){
+			layer.close(loadT);
+			layer.msg(data.msg,{icon:data.status?1:5});
+			if(data.status){
+				layer.close(mainAd);
+				var loadT = layer.msg('Initializing network card...',{icon:16,time:0,shade: [0.3, '#000']});
+				$.get('/plugin?action=a&name=linuxsys&s=ReloadNetwork',function(){
+					layer.close(loadT);
+					layer.msg(data.msg,{icon:data.status?1:5});
+					GetAddress();
+				});
+			}
+		});
+	}
+
+	function SetAddress(){
+		var pdata = 'address=' + $("input[name='address']").val()+'&netmask=' + $("input[name='netmask']").val()+'&gateway=' + $("input[name='gateway']").val();
+		var loadT = layer.msg('Adding...',{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/plugin?action=a&name=linuxsys&s=SetAddress',pdata,function(data){
+			layer.close(loadT);
+			layer.msg(data.msg,{icon:data.status?1:5});
+			if(data.status){
+				var loadT = layer.msg('Adding...',{icon:16,time:0,shade: [0.3, '#000']});
+				$.get('/plugin?action=a&name=linuxsys&s=ReloadNetwork',function(){
+					layer.close(loadT);
+					layer.msg(data.msg,{icon:data.status?1:5});
+					GetAddress();
+				});
+			}
+		});
+	}
+
+	function DelAddress(address){
+		layer.confirm('Delete configuration from network card['+address+']？',{title:'Delete IP address',icon:3},function(){
+			var loadT = layer.msg('Deleting...',{icon:16,time:0,shade: [0.3, '#000']});
+			$.post('/plugin?action=a&name=linuxsys&s=DelAddress','address='+address,function(data){
+				layer.close(loadT);
+				layer.msg(data.msg,{icon:data.status?1:5});
+				if(data.status){
+					var loadT = layer.msg('Adding...',{icon:16,time:0,shade: [0.3, '#000']});
+					$.get('/plugin?action=a&name=linuxsys&s=ReloadNetwork',function(){
+						layer.close(loadT);
+						layer.msg(data.msg,{icon:data.status?1:5});
+						GetAddress();
+					});
+				}
+			});
+		});
+	}
+
+	function GetRoot(){
+		$.get('/plugin?action=a&name=linuxsys&s=GetRoot',function(user){
+			$("input[name='linuxuser']").val(user);
+		});
+	}
+
+	function SetRoot(){
+		var user = $("input[name='linuxuser']").val();
+		var pass1 = $("input[name='userpass1']").val();
+		var pass2 = $("input[name='userpass2']").val();
+		var data = 'user='+user+'&passwd1='+pass1+'&passwd2='+pass2;
+		var loadT = layer.msg('Changing password...',{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/plugin?action=a&name=linuxsys&s=SetRoot',data,function(rdata){
+			layer.close(loadT);
+			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+		});
+
+	}
+
+	function GetZone(){
+		var zone = $("select[name='zone']").val();
+		if(!zone) zone = 'Asia';
+		var data = 'zone=' + zone;
+		$.post('/plugin?action=a&name=linuxsys&s=GetZoneinfo',data,function(rdata){
+			var zoneList = areaList = '';
+			var isarea = rdata.date.indexOf('+0800');
+			for(var i=0;i<rdata.zoneList.length;i++){
+				var opt = '';
+				if(rdata.zone == rdata.zoneList[i]) opt = 'selected';
+				zoneList += '<option value="'+rdata.zoneList[i]+'" '+opt+'>'+rdata.zoneList[i]+'</option>'
+			}
+			for(var i=0;i<rdata.areaList.length;i++){
+				var opt = '';
+				if(rdata.areaList[i] == 'Jakarta' && isarea != -1) opt = 'selected';
+				areaList += '<option value="'+rdata.areaList[i]+'" '+opt+'>'+rdata.areaList[i]+'</option>'
+			}
+			$("#date").html(rdata.date);
+			$("select[name='zone']").html(zoneList);
+			$("select[name='area']").html(areaList);
+		});
+	}
+
+	function SetZone(){
+		var zone = $("select[name='zone']").val();
+		var area = $("select[name='area']").val();
+		var data = 'zone=' + zone + '&area=' + area;
+		var loadT = layer.msg('Setting Timezone...',{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/plugin?action=a&name=linuxsys&s=SetZone',data,function(rdata){
+			layer.close(loadT);
+			layer.msg(rdata.msg,{icon:rdata?1:5});
+			$("#date").html(rdata.date);
+		});
+
+	}
+
+	$("select[name='zone']").change(function(){
+		GetZone();
+	});
+
+	function GetSwap(){
+		$.get('/plugin?action=a&name=linuxsys&s=GetSwap',function(rdata){
+			$("#total").html(rdata.total + ' MB');
+			$("#used").html(rdata.used + ' MB');
+			$("#free").html(rdata.free + ' MB');
+			$("input[name='size']").val(rdata.size / 1024 / 1024);
+		});
+	}
+	function SetSwap(){
+		var data = 'size=' + $("input[name='size']").val();
+		var loadT = layer.msg('Setting Swap...',{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/plugin?action=a&name=linuxsys&s=SetSwap',data,function(rdata){
+			layer.close(loadT);
+			$("#total").html(rdata.total + ' MB');
+			$("#used").html(rdata.used + ' MB');
+			$("#free").html(rdata.free + ' MB');
+			$("input[name='size']").val(rdata.size / 1024 / 1024);
+			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+		});
+	}
+
+	function GetDnsInfo(){
+		$.get('/plugin?action=a&name=linuxsys&s=GetConfig',function(rdata){
+			$("input[name='dns1']").val(rdata.dns1);
+			$("input[name='dns2']").val(rdata.dns2);
+		});
+	}
+
+	function SetDnsInfo(){
+		var dns1 = $("input[name='dns1']").val();
+		var dns2 = $("input[name='dns2']").val();
+		var data = 'dns1='+dns1+'&dns2='+dns2;
+		var loadT = layer.msg('Saving configuration...',{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/plugin?action=a&name=linuxsys&s=SetConfig',data,function(rdata){
+			layer.close(loadT);
+			layer.msg(rdata.msg,{icon:rdata.status?1:5});
+		});
+	}
+
+	function TestDns(){
+		var dns1 = $("input[name='dns1']").val();
+		var dns2 = $("input[name='dns2']").val();
+		var data = 'dns1='+dns1+'&dns2='+dns2;
+		var loadT = layer.msg('Testing DNS...',{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/plugin?action=a&name=linuxsys&s=TestDns',data,function(rdata){
+			layer.close(loadT);
+			layer.msg(rdata.msg,{icon:rdata.status?1:5,time:5000,area:'500px'});
+		});
+	}
+
+	GetDnsInfo();
+</script>
