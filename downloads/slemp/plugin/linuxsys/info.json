@@ -7,9 +7,9 @@
 	"versions":"1.0",
 	"shell":"linuxsys.sh",
 	"checks":"/opt/slemp/server/panel/plugin/linuxsys",
-	"author":"aaPanel",
-	"home":"http://www.bt.cn/bbs",
-	"date":"2017-05-15",
+	"author":"Ataaka",
+	"home":"https://slemp.basoro.id",
+	"date":"2019-07-25",
 	"default":false,
 	"display":1
 }
