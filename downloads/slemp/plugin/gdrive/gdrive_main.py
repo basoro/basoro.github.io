@@ -80,31 +80,15 @@ class gdrive_main():
         return flow.credentials
 
     def set_libList(self):
-        libList = public.readFile("/opt/slemp/server/panel/data/libList.conf")
+        libList = public.readFile("/opt/slemp/server/panel/data/lib_gdrive.conf")
         if libList:
             libList = json.loads(libList)
         for i in libList:
             if "gdrive" in i.values():
                 return
-        d = {
-            "name": "Google Drive",
-            "type": "Cron job",
-            "ps": "Back up your website or database to Google Cloud Storage.",
-            "status": False,
-            "opt": "gdrive",
-            "module": "os",
-            "script": "gdrive",
-            "help": "http://ataaka.basoro.id",
-            "key": "",
-            "secret": "",
-            "bucket": "",
-            "domain": "",
-            "check": ["/opt/slemp/server/panel/plugin/gdrive/gdrive_main.py",
-                      "/opt/slemp/server/panel/script/backup_gdrive.py"]
-        }
-        data = d
+        data = {"status": false, "opt": "gdrive", "domain": "", "help": "http://ataaka.basoro.id", "module": "os", "key": "", "check": ["/opt/slemp/server/panel/plugin/gdrive/gdrive_main.py", "/opt/slemp/server/panel/script/backup_gdrive.py"], "ps": "Back up your website or database to Google Cloud Storage.", "name": "Google Drive", "script": "gdrive", "bucket": "", "secret": "", "type": "Cron job"}
         libList.append(data)
-        public.writeFile("/opt/slemp/server/panel/data/libList.conf", json.dumps(libList))
+        public.writeFile("/opt/slemp/server/panel/data/lib_gdrive.conf", json.dumps(libList))
         return libList
 
     def set_creds(self):
