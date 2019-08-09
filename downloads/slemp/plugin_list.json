@@ -42,6 +42,20 @@
 	"default":false,
 	"display":1
 },{
+	"title":"Google Drive",
+	"tip":"lib",
+	"name":"gdrive",
+	"type":"plugin",
+	"ps":"Help you back up your site data to Google Drive",
+	"versions":"1.0",
+	"shell":"gdrive.sh",
+	"checks":"/opt/slemp/server/panel/plugin/gdrive.py",
+	"author":"official",
+	"home":"http://ataaka.basoro.id",
+	"date":"2019-08-6",
+	"default":false,
+	"display":0
+},{
 	"title":"phpMyAdmin",
 	"tip":"soft",
 	"name":"phpmyadmin",
