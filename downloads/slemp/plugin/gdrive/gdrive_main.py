@@ -362,7 +362,7 @@ class gdrive_main():
         mycnf = mycnf.replace(subStr, sea)
         if len(mycnf) > 100:
             public.writeFile('/etc/my.cnf', mycnf)
-        # 上传
+
         get = getObject()
         get.filename = filename
         get.filepath = 'backup/database/' + name
