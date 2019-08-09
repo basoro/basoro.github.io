@@ -477,7 +477,6 @@ if __name__ == "__main__":
     q = gdrive_main()
     #getObject.filename = "uploadtest"
     #getObject.filepath = "/tmp/uploadtest"
-    # 检查获取验证
     q.set_creds()
 
     # print(q.check_connect(getObject))
