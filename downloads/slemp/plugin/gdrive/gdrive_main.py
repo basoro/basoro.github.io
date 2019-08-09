@@ -80,15 +80,17 @@ class gdrive_main():
         return flow.credentials
 
     def set_libList(self):
-        libList = public.readFile("/opt/slemp/server/panel/data/lib_gdrive.conf")
+        libList = 'https://basoro.id/downloads/slemp/lib_gdrive.json'
+        #data = json.loads(public.httpGet(downloadUrl))
+        #libList = public.readFile("/opt/slemp/server/panel/data/lib_gdrive.conf")
         if libList:
-            libList = json.loads(libList)
+            libList = json.loads(public.httpGet(libList))
         for i in libList:
             if "gdrive" in i.values():
                 return
-        data = {"status": false, "opt": "gdrive", "domain": "", "help": "http://ataaka.basoro.id", "module": "os", "key": "", "check": ["/opt/slemp/server/panel/plugin/gdrive/gdrive_main.py", "/opt/slemp/server/panel/script/backup_gdrive.py"], "ps": "Back up your website or database to Google Cloud Storage.", "name": "Google Drive", "script": "gdrive", "bucket": "", "secret": "", "type": "Cron job"}
-        libList.append(data)
-        public.writeFile("/opt/slemp/server/panel/data/lib_gdrive.conf", json.dumps(libList))
+        #data = {"status": false, "opt": "gdrive", "domain": "", "help": "http://ataaka.basoro.id", "module": "os", "key": "", "check": ["/opt/slemp/server/panel/plugin/gdrive/gdrive_main.py", "/opt/slemp/server/panel/script/backup_gdrive.py"], "ps": "Back up your website or database to Google Cloud Storage.", "name": "Google Drive", "script": "gdrive", "bucket": "", "secret": "", "type": "Cron job"}
+        #libList.append(data)
+        #public.writeFile("/opt/slemp/server/panel/data/lib_gdrive.conf", json.dumps(libList))
         return libList
 
     def set_creds(self):
