@@ -56,6 +56,20 @@
 	"default":false,
 	"display":1
 },{
+	"title":"SIMKES Khanza",
+	"tip":"lib",
+	"name":"khanza",
+	"type":"System Tools",
+	"ps":"One clik install for SIMKES Khanza",
+	"versions":"1.0",
+	"shell":"khanza.sh",
+	"checks":"/opt/slemp/server/panel/plugin/khanza",
+	"author":"Ataaka",
+	"home":"http://ataaka.basoro.id",
+	"date":"2019-08-6",
+	"default":false,
+	"display":1
+},{
 	"title":"Foo Plugin",
 	"tip":"lib",
 	"name":"foo",
