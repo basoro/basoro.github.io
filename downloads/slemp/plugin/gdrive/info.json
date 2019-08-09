@@ -7,7 +7,7 @@
 	"versions":"1.0",
 	"shell":"gdrive.sh",
 	"checks":"/opt/slemp/server/panel/plugin/gdrive",
-	"author":"official",
+	"author":"Ataaka",
 	"home":"http://ataaka.basoro.id",
 	"date":"2019-08-6",
 	"default":false,
