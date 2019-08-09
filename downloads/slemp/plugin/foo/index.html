@@ -1,5 +1,34 @@
-<div id="beta-1" class="zun-form-new" style="padding-top:0">
-	<div class="neice_con">
-		<div class="tit">Foo Plugin</div>
+<div class="tasklist" style="width:640px;height:480px;">
+	<div class="tab-nav">
+		<span class="on">Main Tab</span>
+		<span class="">Second Tab</span>
 	</div>
+	<div class="tab-con">
+		<div id="tab1" class="SetTab1" style="display: block;">
+			<p>
+              This is main tab for foo plugin. Just example!
+			</p>
+
+		</div>
+		<div id="tab2" class="SetTab2"  style="display: none;">
+			<p>
+              This is second tab for foo plugin!
+			</p>
+		</div>
+  	</div>
 </div>
+<script type="javascript/text">
+	$(".tab-nav span").click(function(){
+		var i = $(this).index();
+		$(this).addClass("on").siblings().removeClass("on");
+		$(".tab-con > div").hide().eq(i).show();
+		switch(i){
+			case 0:
+				SetTab1();
+				break;
+			case 1:
+				SetTab2();
+				break;
+		}
+	});
+</script>
