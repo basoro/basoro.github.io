@@ -56,20 +56,6 @@
 	"default":false,
 	"display":1
 },{
-	"title":"Foo Plugin",
-	"tip":"lib",
-	"name":"foo",
-	"type":"Foo Tools",
-	"ps":"Just example plugin",
-	"versions":"1.0",
-	"shell":"foo.sh",
-	"checks":"/opt/slemp/server/panel/plugin/foo",
-	"author":"Ataaka",
-	"home":"http://ataaka.basoro.id",
-	"date":"2019-08-6",
-	"default":false,
-	"display":1
-},{
 	"title":"phpMyAdmin",
 	"tip":"soft",
 	"name":"phpmyadmin",
