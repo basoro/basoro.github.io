@@ -3,7 +3,7 @@
 	"tip":"lib",
 	"name":"gdrive",
 	"type":"System Tool",
-	"ps":"Help you back up your site data to Google Drive",
+	"ps":"Help you back up your site and database to Google Drive",
 	"versions":"1.0",
 	"shell":"gdrive.sh",
 	"checks":"/opt/slemp/server/panel/plugin/gdrive",
