@@ -1,0 +1,272 @@
+<style>
+        .upyunCon {
+            padding: 30px;
+        }
+    
+        .up-place {
+            height: 62px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .up-place .btn {
+            border-radius: 0;
+        }
+    
+        .up-place .place-input {
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            height: 30px;
+            line-height: 28px;
+            overflow: hidden;
+            margin: 1px 0 0 -1px;
+            width: 340px;
+        }
+    
+        .place-input ul {
+            display: inline-block;
+            position: relative;
+            width: auto;
+        }
+    
+        .place-input ul li {
+            background: url("/static/img/ico/ico-ltr.png") no-repeat right center;
+            float: left;
+            padding-left: 10px;
+            padding-right: 18px;
+        }
+    
+        .place-input ul li a {
+            height: 28px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    
+        .upyunlist {
+            height: 516px;
+            overflow: auto;
+        }
+    
+        .up-bottom {
+            background-color: #fafafa;
+            border-top: 1px solid #eee;
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+        }
+    
+        .up-use {
+            line-height: 50px
+        }
+    
+        .list-list .cursor span {
+            line-height: 30px;
+        }
+    
+        .btn-title {
+            margin-top: 1px
+        }
+
+        .step_item{
+            clear: both;
+			margin-bottom:15px;
+        }
+
+        .step_item .serial_box{
+            display: inline-block;
+            clear: both;
+        }
+
+        .step_item .serial{
+            width: 70px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            display: inline-block;
+            float: left;
+        }
+        .step_item .serial span{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 28px;
+            font-size: 11px;
+            border-radius: 50%;
+            color: #20a53a;
+            border: 2px solid #20a53a;
+        }
+        .step_item .serial_title{
+          margin-bottom: 15px;
+          font-size: 15px;
+          line-height: 30px;
+          color: #666;
+        }
+        .step_item .serial_conter{
+			margin-bottom:20px;
+        }
+        .step_two_rul{
+            display: inline-block;
+            overflow: hidden;
+            width: 380px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 30px;
+            line-height: 30px;
+            background: #ececec;
+            margin-right: 10px;
+            border-radius: 2px;
+            padding: 0 10px;
+            float: left;
+        }
+        .btn_btlink{
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 12px;
+            line-height: 1.5;
+            border-radius: 3px;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid #20a53a;
+            color: #fff;
+            background-color: #20a53a;
+			margin-right:10px;
+        }
+        .btn_btlink:hover{
+            color: #fff;
+            background-color: #10952a;
+            border-color: #398439;
+        }
+        .btn_btlink a:visited{
+            color: #fff;
+            background-color: #10952a;
+            border-color: #398439;
+        }
+        .view_video{
+            width:350px;
+            height:150px;
+			border:1px solid #ececec;
+        }
+        .setp_one i{
+          position: absolute;
+          top: 8px;
+          left: 25px;
+          width: 30px;
+          height: 30px;
+        }
+  		.serial_conter textarea{	
+  			width:450px;
+            height:100px;
+            margin-right:15px;
+            margin-bottom:10px;
+  		}
+    </style>
+    <div class="upyunCon">
+      	<div class="setp_one" style="display:none">
+          <span style="display: inline-block;text-align: center;margin: 0 120px;width: 400px;height: 50px;line-height: 50px;position: relative;font-size: 14px;"><i class="layui-layer-ico layui-layer-ico6"></i><span style="padding-left:60px;">Verify Google Token success</span></span>
+		</div>
+     	<div class="step_two" style="display:none">
+          <div class="step_item">
+              <div class="serial"><span>1</span></div>
+              <div class="serial_box">
+                  <div class="serial_title">Get the Google Token validity period</div>
+                  <div class="serial_conter"><span>Verification failed, please follow the GDrive prompt below</span></div>
+              </div>
+          </div>
+          <div class="step_item">
+              <div class="serial"><span>2</span></div>
+              <div class="serial_box">
+                  <div class="serial_title">Click the link👇below to complete the Google Drive license</div>
+                  <div class="serial_conter step_two">
+                      <a href="" class="step_two_rul" target="_blank"></a>
+                      <a href="" class="btn_btlink open_btlink" target="_blank">Open link</a>
+                  </div>
+              </div>
+          </div>
+          <div class="step_item">
+              <div class="serial"><span>3</span></div>
+              <div class="serial_box">
+                  <div class="serial_title">How to get the verification URL address</div>
+                  <div class="serial_conter">
+                      <div class="view_video">
+                        <iframe width="350" height="150" src="https://www.youtube.com/embed/UnlTKetIBrk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="step_item">
+              <div class="serial"><span>4</span></div>
+              <div class="serial_box">
+                  <div class="serial_title">Google Drive verification</div>
+                  <div class="serial_conter">
+                      <textarea row="3" placeholder="Verify URL address" class="bt-input-text" style=""/></br><button type="button" class="btn btn-success btn-sm">confirm at once</button>
+                  </div>
+              </div>
+          </div>
+		</div>
+    </div>
+    <script>        
+        // 验证谷歌token有效期
+        function get_config_token(callback){
+            var loadT = layer.msg('Verifying Token validity, please wait...', {icon: 16,time: 0,shade: [0.3, '#000']});
+            $.ajax({
+                url:'/plugin?action=a&s=get_token&name=gdrive',
+                  type:'GET',
+                async:true,
+                timeout:3000,
+                success:function(res){
+                    $('.setp_one').show().next().hide();
+                },	
+                error:function(res){
+                    get_auth_url(function(res){
+						$('.setp_one').hide().next().show();
+                        $('.step_two_rul').attr('href',res).text(res);
+                        $('.open_btlink').attr('href',res);
+                    });
+                },
+				complete:function(){
+					layer.close(loadT);
+				}
+            })
+        }
+        // 获取验证地址
+        function get_auth_url(callback){
+            $.post('/plugin?action=a&s=get_auth_url&name=gdrive', function (rdata) {
+                if(callback) callback(rdata)
+            });
+        }
+        // 提交谷歌验证URL
+        function set_auth_url(obj,callback){
+			var loadT = layer.msg('Verifying URL address, please wait...', {icon: 16,time: 0,shade: [0.3, '#000']});
+            $.post('/plugin?action=a&s=set_auth_url&name=gdrive',{url:obj.url}, function (rdata) {
+				layer.close(loadT);
+                if(callback) callback(rdata)
+                layer.msg(rdata.msg, {icon: rdata.status ? 1 : 2});
+            });
+        }
+    
+          function check_connect(callback){
+            var loadT = layer.msg('Checking Google drive connection status, please wait...', {icon: 16,time: 0,shade: [0.3, '#000']});
+            $.post('/plugin?action=a&s=check_connect&name=gdrive',function (rdata) {
+				layer.close(loadT);
+                if(callback) callback(rdata)
+                layer.msg(rdata.msg, {icon: rdata.status ? 1 : 2});
+            });
+        }
+		$('.serial_conter button').click(function(){
+			var _val = $('.serial_conter textarea').val();
+			if(_val == ''){
+				layer.msg('Verify that the URL address cannot be empty!',{icon:0});
+				return false;
+			}
+			set_auth_url({url:_val},function(res){
+				if(res.status){
+					$('.setp_one').show().next().hide();
+				}
+			});
+		});
+      
+        get_config_token();
+        // $('.layui-layer-page').css('height', '670px');
+    </script>
