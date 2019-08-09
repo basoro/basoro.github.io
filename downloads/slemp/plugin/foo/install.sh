@@ -11,7 +11,7 @@ fi
 
 pluginPath=/opt/slemp/server/panel/plugin/foo
 
-Install_Beta()
+Install_Foo()
 {
 	mkdir -p $pluginPath
 	echo 'Installing script file...' > $install_tmp
@@ -23,7 +23,7 @@ Install_Beta()
 
 }
 
-Uninstall_Beta()
+Uninstall_Foo()
 {
 	rm -rf $pluginPath
 }
@@ -31,8 +31,7 @@ Uninstall_Beta()
 
 action=$1
 if [ "${1}" == 'install' ];then
-	Install_Beta
+	Install_Foo
 else
-	Uninstall_Beta
+	Uninstall_Foo
 fi
-
