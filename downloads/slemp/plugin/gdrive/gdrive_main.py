@@ -39,7 +39,7 @@ class gdrive_main():
         'The authentication flow has completed, you may close this window.')
 
     def __init__(self):
-        #self.set_libList()
+        self.set_libList()
         self.set_creds()
 
     def run_local_server(
