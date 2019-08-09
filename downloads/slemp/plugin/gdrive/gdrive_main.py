@@ -1,15 +1,4 @@
 # coding: utf-8
-# +-------------------------------------------------------------------
-# | 宝塔Linux面板
-# +-------------------------------------------------------------------
-# | Copyright (c) 2015-2099 宝塔软件(http://bt.cn) All rights reserved.
-# +-------------------------------------------------------------------
-# | Author: 邹浩文 <627622230@qq.com>
-# +-------------------------------------------------------------------
-
-# -----------------------------
-# 宝塔Linux面板网站备份工具 - google drive
-# -----------------------------
 from __future__ import print_function
 import sys, os, json
 import pickle
@@ -23,7 +12,7 @@ from googleapiclient.http import MediaFileUpload
 if sys.version_info[0] == 2:
     reload(sys)
     sys.setdefaultencoding('utf-8')
-os.chdir('/www/server/panel')
+os.chdir('/opt/slemp/server/panel')
 sys.path.append("class/")
 import public, db, time, re
 
@@ -113,32 +102,11 @@ class gdrive_main():
             "check": ["/opt/slemp/server/panel/plugin/gdrive/gdrive_main.py",
                       "/opt/slemp/server/panel/script/backup_gdrive.py"]
         }
-        d1 = {
-            "name": "谷歌硬盘",
-            "type": "计划任务",
-            "ps": "将网站或数据库打包备份到谷歌硬盘.",
-            "status": False,
-            "opt": "gdrive",
-            "module": "os",
-            "script": "gdrive",
-            "help": "http://www.bt.cn/bbs",
-            "key": "",
-            "secret": "",
-            "bucket": "",
-            "domain": "",
-            "check": ["/opt/slemp/server/panel/plugin/gdrive/gdrive_main.py",
-                      "/opt/slemp/server/panel/script/backup_gdrive.py"]
-        }
-        language = public.readFile("/www/server/panel/config/config.json")
-        if "English" in language:
-            data = d
-        else:
-            data = d1
+        data = d
         libList.append(data)
         public.writeFile("/opt/slemp/server/panel/data/libList.conf", json.dumps(libList))
         return libList
 
-    # 设置creds
     def set_creds(self):
         if os.path.exists(self.__setup_path + '/token.pickle'):
             with open(self.__setup_path + '/token.pickle', 'rb') as token:
@@ -147,7 +115,6 @@ class gdrive_main():
         else:
             print("Failed to get Google token, please verify before use")
 
-    # 获取token
     def get_token(self,get):
         if self.set_creds():
             return public.returnMsg(True,"Get success")
@@ -162,7 +129,6 @@ class gdrive_main():
             with open('token.pickle', 'wb') as token:
                 pickle.dump(self.__creds, token)
 
-    # 获取auth_url
     def get_auth_url(self,get):
         if os.path.exists("/tmp/auth_url"):
             return public.readFile("/tmp/auth_url")
@@ -177,7 +143,6 @@ class gdrive_main():
             return public.returnMsg(True,"Verification successful")
         return public.returnMsg(False, "Verification failed")
 
-    # 检查连接
     def check_connect(self,get):
         if os.path.exists(self.__setup_path + '/token.pickle'):
             with open(self.__setup_path + '/token.pickle', 'rb') as token:
@@ -223,7 +188,6 @@ class gdrive_main():
             fid_list.append(self.create_folder(i,fid_list[-1]))
         return fid_list[-1]
 
-    # 上传文件
     def upload_file(self,get):
         """
         get.filename 上传后的文件名
@@ -254,7 +218,6 @@ class gdrive_main():
         drive_service.files().delete(fileId=file_id).execute()
         print("delete ok")
 
-    # 获取目录id
     def __get_folder_id(self, floder_name):
         service = build('drive', 'v3', credentials=self.__creds)
         results = service.files().list(pageSize=10, q="name='{}' and mimeType='application/vnd.google-apps.folder'".format(floder_name),fields="nextPageToken, files(id, name)").execute()
@@ -265,7 +228,6 @@ class gdrive_main():
             for item in items:
                 return item["id"]
 
-    # 创建目录
     def create_folder(self,folder_name,parents=""):
         print("folder_name: {}\nparents: {}".format(folder_name,parents))
         service = build('drive', 'v3', credentials=self.__creds)
@@ -279,7 +241,6 @@ class gdrive_main():
         print('Create Folder ID: %s' % folder.get('id'))
         return folder.get('id')
 
-    # 获取数据库编码
     def get_database_character(self,db_name):
         try:
             import panelMysql
@@ -294,8 +255,6 @@ class gdrive_main():
     def download_file(self,filename,m=True):
         return "Google storage products do not currently support downloads"
 
-
-        # 备份网站
     def backup_site(self, name, count):
         sql = db.Sql()
         path = sql.table('sites').where('name=?', (name,)).getField('path')
@@ -323,7 +282,6 @@ class gdrive_main():
             print("----------------------------------------------------------------------------")
             return;
 
-        # 上传文件
         get = getObject()
         get.filename = filename
         get.filepath = 'bt_backup/sites/' + name
@@ -341,10 +299,8 @@ class gdrive_main():
         print("|---Keep the latest [" + count + "] backups")
         print("|---File name:" + os.path.basename(filename))
 
-        # 清理本地文件
         public.ExecShell("rm -f " + filename)
 
-        # 清理多余备份
         backups = sql.table('backup').where('type=? and pid=? and filename=?', ('0', pid, 'gdrive')).field(
             'id,name,filename').select()
         num = len(backups) - int(count)
@@ -366,7 +322,6 @@ class gdrive_main():
                 if num < 1: break
         return None
 
-    # 备份数据库
     def backup_database(self, name, count):
         print("start backup database")
         sql = db.Sql()
@@ -410,7 +365,7 @@ class gdrive_main():
         # 上传
         get = getObject()
         get.filename = filename
-        get.filepath = 'bt_backup/database/' + name
+        get.filepath = 'backup/database/' + name
         print("Start upload",get.filename,get.filepath)
         self.upload_file(get)
         endDate = time.strftime('%Y/%m/%d %X', time.localtime())
@@ -423,9 +378,7 @@ class gdrive_main():
         print("★[" + endDate + "] " + log)
         print("|---Keep the latest [" + count + "] backups")
         print("|---File name:" + os.path.basename(filename))
-        # 清理本地文件
         public.ExecShell("rm -f " + filename)
-        # 清理多余备份
         backups = sql.table('backup').where('type=? and pid=? and filename=?', ('1', pid, 'gdrive')).field(
             'id,name,filename').select()
         num = len(backups) - int(count)
@@ -446,7 +399,6 @@ class gdrive_main():
                 if num < 1: break
         return None
 
-    # 备份指定目录
     def backup_path(self, path, count):
         sql = db.Sql()
         startTime = time.time()
@@ -482,10 +434,9 @@ class gdrive_main():
         print("|---Keep the latest [" + count + "] backups")
         print("|---File name:" + filename)
 
-        # 清理多余备份
         backups = sql.table('backup').where('type=? and filename=?',('2',"gdrive")).field('id,name,filename').select()
         print(backups)
-        # 清理本地备份
+
         if os.path.exists(filename): os.remove(filename)
 
         num = len(backups) - int(count)
