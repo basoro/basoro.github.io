@@ -3,18 +3,18 @@
 import sys,os
 reload(sys)
 sys.setdefaultencoding('utf-8')
-os.chdir('/www/server/panel');
-sys.path.append("class/")
+os.chdir('/opt/slemp/server/panel');
+sys.path.append("")
 import public,db,time
 
-class beta_main:
-    __setupPath = '/www/server/panel/plugin/beta';
+class foo_main:
+    __setupPath = '/opt/slemp/server/panel/plugin/foo';
     def SetConfig(self,get):
         data = {}
         data['username'] = get.bbs_name
         data['qq'] = get.qq
         data['email'] = get.email
-        result = public.httpPost('http://www.bt.cn/Api/LinuxBeta',data);
+        result = public.httpPost('#',data);
         import json;
         data = json.loads(result);
         if data['status']:
