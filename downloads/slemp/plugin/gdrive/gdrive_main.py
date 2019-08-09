@@ -13,7 +13,7 @@ if sys.version_info[0] == 2:
     reload(sys)
     sys.setdefaultencoding('utf-8')
 os.chdir('/opt/slemp/server/panel')
-sys.path.append("class/")
+sys.path.append("")
 import public, db, time, re
 
 
@@ -94,7 +94,7 @@ class gdrive_main():
             "opt": "gdrive",
             "module": "os",
             "script": "gdrive",
-            "help": "http://forum.aapanel.com",
+            "help": "http://ataaka.basoro.id",
             "key": "",
             "secret": "",
             "bucket": "",
@@ -190,8 +190,8 @@ class gdrive_main():
 
     def upload_file(self,get):
         """
-        get.filename 上传后的文件名
-        get.filepath 上传文件路径
+        get.filename File name after uploading
+        get.filepath Upload file path
         :param get:
         :return:
         """
@@ -284,7 +284,7 @@ class gdrive_main():
 
         get = getObject()
         get.filename = filename
-        get.filepath = 'bt_backup/sites/' + name
+        get.filepath = 'backup/sites/' + name
         print("Start upload")
         #print(get.filename) #/www/backup/site/Web_bt.youbadbad.cn_20190802_121927_2bDwmdM3.tar.gz
         #print(get.filepath) #bt_backup/sites/bt.youbadbad.cn/
