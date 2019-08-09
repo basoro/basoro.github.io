@@ -14,8 +14,8 @@ pluginPath=/opt/slemp/server/panel/plugin/gdrive
 
 Install_GDrive()
 {
-tmp=`python -V 2>&1|awk '{print $2}'`
-pVersion=${tmp:0:3}
+#tmp=`python -V 2>&1|awk '{print $2}'`
+#pVersion=${tmp:0:3}
 
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 echo 'Installing script file...' > $install_tmp
@@ -45,7 +45,7 @@ Uninstall_GDrive()
 {
 	#rm -rf /www/server/panel/plugin/gdrive
 	#rm -f /www/server/panel/script/backup_gdrive.py
-	#echo '卸载完成' > $install_tmp
+	echo 'The installation is complete' > $install_tmp
 }
 
 
