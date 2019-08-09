@@ -18,7 +18,7 @@ pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-
 mkdir -p $pluginPath
 echo 'Installing script file...' > $install_tmp
 	wget -O /opt/slemp/server/panel/script/backup_gdrive.py $download_Url/plugin/gdrive/gdrive_main.py -T 5
-	wget -O /opt/slemp/server/plugin/gdrive/gdrive_main.py $download_Url/plugin/gdrive/gdrive_main.py -T 5
+	\cp -a -r /opt/slemp/server/panel/script/backup_gdrive.py /opt/slemp/server/panel/plugin/gdrive/gdrive_main.py
 	wget -O /opt/slemp/server/panel/plugin/gdrive/index.html $download_Url/plugin/gdrive/index.html -T 5
 	wget -O /opt/slemp/server/panel/plugin/gdrive/info.json $download_Url/plugin/gdrive/info.json -T 5
 	wget -O /opt/slemp/server/panel/plugin/gdrive/credentials.json $download_Url/plugin/gdrive/credentials.json -T 5
