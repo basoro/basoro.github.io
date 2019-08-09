@@ -2,7 +2,7 @@
 	"title":"Google Drive",
 	"tip":"lib",
 	"name":"gdrive",
-	"type":"plugin",
+	"type":"System Tool",
 	"ps":"Help you back up your site data to Google Drive",
 	"versions":"1.0",
 	"shell":"gdrive.sh",
@@ -11,5 +11,5 @@
 	"home":"http://ataaka.basoro.id",
 	"date":"2019-08-6",
 	"default":false,
-	"display":0
+	"display":1
 }
