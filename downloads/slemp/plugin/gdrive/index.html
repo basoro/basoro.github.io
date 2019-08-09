@@ -2,16 +2,16 @@
         .upyunCon {
             padding: 30px;
         }
-    
+
         .up-place {
             height: 62px;
             border-bottom: 1px solid #ddd;
         }
-    
+
         .up-place .btn {
             border-radius: 0;
         }
-    
+
         .up-place .place-input {
             background-color: #f3f3f3;
             border: 1px solid #ccc;
@@ -21,31 +21,31 @@
             margin: 1px 0 0 -1px;
             width: 340px;
         }
-    
+
         .place-input ul {
             display: inline-block;
             position: relative;
             width: auto;
         }
-    
+
         .place-input ul li {
             background: url("/static/img/ico/ico-ltr.png") no-repeat right center;
             float: left;
             padding-left: 10px;
             padding-right: 18px;
         }
-    
+
         .place-input ul li a {
             height: 28px;
             cursor: pointer;
             display: inline-block;
         }
-    
+
         .upyunlist {
             height: 516px;
             overflow: auto;
         }
-    
+
         .up-bottom {
             background-color: #fafafa;
             border-top: 1px solid #eee;
@@ -53,15 +53,15 @@
             position: absolute;
             width: 100%;
         }
-    
+
         .up-use {
             line-height: 50px
         }
-    
+
         .list-list .cursor span {
             line-height: 30px;
         }
-    
+
         .btn-title {
             margin-top: 1px
         }
@@ -155,7 +155,7 @@
           width: 30px;
           height: 30px;
         }
-  		.serial_conter textarea{	
+  		.serial_conter textarea{
   			width:450px;
             height:100px;
             margin-right:15px;
@@ -206,8 +206,7 @@
           </div>
 		</div>
     </div>
-    <script>        
-        // 验证谷歌token有效期
+    <script>
         function get_config_token(callback){
             var loadT = layer.msg('Verifying Token validity, please wait...', {icon: 16,time: 0,shade: [0.3, '#000']});
             $.ajax({
@@ -217,7 +216,7 @@
                 timeout:3000,
                 success:function(res){
                     $('.setp_one').show().next().hide();
-                },	
+                },
                 error:function(res){
                     get_auth_url(function(res){
 						$('.setp_one').hide().next().show();
@@ -230,13 +229,11 @@
 				}
             })
         }
-        // 获取验证地址
         function get_auth_url(callback){
             $.post('/plugin?action=a&s=get_auth_url&name=gdrive', function (rdata) {
                 if(callback) callback(rdata)
             });
         }
-        // 提交谷歌验证URL
         function set_auth_url(obj,callback){
 			var loadT = layer.msg('Verifying URL address, please wait...', {icon: 16,time: 0,shade: [0.3, '#000']});
             $.post('/plugin?action=a&s=set_auth_url&name=gdrive',{url:obj.url}, function (rdata) {
@@ -245,7 +242,7 @@
                 layer.msg(rdata.msg, {icon: rdata.status ? 1 : 2});
             });
         }
-    
+
           function check_connect(callback){
             var loadT = layer.msg('Checking Google drive connection status, please wait...', {icon: 16,time: 0,shade: [0.3, '#000']});
             $.post('/plugin?action=a&s=check_connect&name=gdrive',function (rdata) {
@@ -266,7 +263,7 @@
 				}
 			});
 		});
-      
+
         get_config_token();
         // $('.layui-layer-page').css('height', '670px');
     </script>
