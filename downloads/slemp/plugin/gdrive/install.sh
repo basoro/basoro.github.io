@@ -23,6 +23,7 @@ echo 'Installing script file...' > $install_tmp
 	wget -O /opt/slemp/server/panel/plugin/gdrive/info.json $download_Url/plugin/gdrive/info.json -T 5
 	wget -O /opt/slemp/server/panel/plugin/gdrive/credentials.json $download_Url/plugin/gdrive/credentials.json -T 5
   ln -s /opt/slemp/server/panel/plugin/gdrive/credentials.json /root/credentials.json
+	wget -O /opt/slemp/server/panel/data/libList.conf $download_Url/lib_gdrive.json -T 5
 
 echo 'The installation is complete' > $install_tmp
 }
