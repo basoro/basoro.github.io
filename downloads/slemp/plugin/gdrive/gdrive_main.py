@@ -90,7 +90,7 @@ class gdrive_main():
                 return
         #data = {"status": false, "opt": "gdrive", "domain": "", "help": "http://ataaka.basoro.id", "module": "os", "key": "", "check": ["/opt/slemp/server/panel/plugin/gdrive/gdrive_main.py", "/opt/slemp/server/panel/script/backup_gdrive.py"], "ps": "Back up your website or database to Google Cloud Storage.", "name": "Google Drive", "script": "gdrive", "bucket": "", "secret": "", "type": "Cron job"}
         #libList.append(data)
-        #public.writeFile("/opt/slemp/server/panel/data/lib_gdrive.conf", json.dumps(libList))
+        public.writeFile("/opt/slemp/server/panel/data/libList.conf", json.dumps(libList))
         return libList
 
     def set_creds(self):
