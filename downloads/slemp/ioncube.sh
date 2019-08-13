@@ -18,8 +18,9 @@ Install_Ioncube()
 	fi
 
 	mkdir /usr/local/ioncube
-	Is_64bit=`getconf LONG_BIT`
-	wget -O /usr/local/ioncube/ioncube_loader_lin_$vphp.so $download_Url/src/ioncube/$Is_64bit/ioncube_loader_lin_$vphp.so
+	#Is_64bit=`getconf LONG_BIT`
+	#wget -O /usr/local/ioncube/ioncube_loader_lin_$vphp.so $download_Url/src/ioncube/$Is_64bit/ioncube_loader_lin_$vphp.so
+	wget -O /usr/local/ioncube/ioncube_loader_lin_$vphp.so $download_Url/src/ioncube/ioncube_loader_lin_$vphp.so
 	sed -i -e "/;ionCube/a\zend_extension = /usr/local/ioncube/ioncube_loader_lin_${vphp}.so" /opt/slemp/server/php/$version/etc/php.ini
 	service php-fpm-$version reload
 	/opt/slemp/server/php/$version/bin/php -v
