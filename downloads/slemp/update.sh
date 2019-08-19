@@ -9,5 +9,6 @@ python -m compileall /opt/slemp/server/panel/
 rm -f /opt/slemp/server/panel/*.py
 rm -f /opt/slemp/server/panel/data/plugin.db
 rm -f panel.zip
+rm -rf panel
 chmod +x /etc/init.d/slemp
 slemp restart
