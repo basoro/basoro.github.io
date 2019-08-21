@@ -218,7 +218,7 @@
 						layer.close(_this.loading);
 					}else{
 						for (var i = 0; i < _this.master_slave_list.length; i++) {
-							if (_this.master_slave_list[i].master_ip == '本机'){
+							if (_this.master_slave_list[i].master_ip == '127.0.0.1'){
 								status_ip = _this.master_slave_list[i].slave_ip;
 								status_req = 'delSlave';
 							}else{
@@ -266,7 +266,7 @@
 				    url: _this.master_slave_list[i].slave_panel_addr +'/public?action=a&name=masterslave&fun=getStatus',
 				    type:'get',
 				    dataType: 'json',
-				    data: {ip:_this.master_slave_list[i].master_ip == '本机'?_this.master_slave_list[i].slave_ip:_this.master_slave_list[i].master_ip,password:_this.master_slave_list[i].passwd},
+				    data: {ip:_this.master_slave_list[i].master_ip == '127.0.0.1'?_this.master_slave_list[i].slave_ip:_this.master_slave_list[i].master_ip,password:_this.master_slave_list[i].passwd},
 				}).success(function(datas) {
 					$('.io_'+i).html(datas.Slave_IO_Running == 'Yes'?'<a href="#" target="_blank" style="color:#20a53a">Normal</a>':'<a href="#" target="_blank" style="color:red">Abnormal</a>');
 					$('.sql_'+i).html(datas.Slave_SQL_Running == 'Yes'?'<a href="" target="_blank" style="color:#20a53a">Normal</a>':'<a href="#" target="_blank" style="color:red">Abnormal</a>');
