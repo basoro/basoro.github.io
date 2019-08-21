@@ -6,6 +6,7 @@ import base64
 import web
 import ast
 import time
+os.chdir('/opt/slemp/server/panel');
 sys.path.append("")
 import public
 import db

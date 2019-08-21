@@ -1,5 +1,6 @@
  #coding: utf-8
 import re ,os ,sys ,time #line:9
+os.chdir('/opt/slemp/server/panel');
 sys.path.append ("")#line:10
 import public ,db ,crontab #line:11
 import re ,json #line:12
