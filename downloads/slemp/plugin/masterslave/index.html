@@ -444,7 +444,7 @@
 
 		delMaster:function(ip){
 			var _this = this;
-			SafeMessage('Delete the primary server','The primary server IP will be deleted soon:['+ip+'],确定吗？',function(){
+			SafeMessage('Delete the primary server','The primary server IP will be deleted soon:['+ip+'], sure？',function(){
 				var loadT = layer.msg('Deleting primary server IP: ['+ip+'] <img src="/static/img/ing.gif">',{icon:16,time:0,shade: [0.3, "#000"]});
 				$.get('/plugin?action=a&name=masterslave&s=delSlaveBySlave',{ip:ip},function(res){
 					layer.close(loadT);
