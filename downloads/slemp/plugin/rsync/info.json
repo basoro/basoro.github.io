@@ -4,7 +4,7 @@
 	"name":"rsync",
 	"type":"System Tool",
 	"ps":"Data synchronization tool based on rsync development",
-	"versions":"1.0",
+	"versions":"1.1",
 	"shell":"rsync.sh",
 	"checks":"/opt/slemp/server/panel/plugin/rsync",
 	"author":"Ataaka",

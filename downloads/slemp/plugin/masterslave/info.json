@@ -4,7 +4,7 @@
 	"name":"masterslave",
 	"type":"System Tool",
 	"ps":"Easy MySQL master-slave replication, master-master replication.",
-	"versions":"1.0",
+	"versions":"1.1",
 	"shell":"masterslave.sh",
 	"checks":"/opt/slemp/server/panel/plugin/masterslave",
 	"author":"Ataaka",
