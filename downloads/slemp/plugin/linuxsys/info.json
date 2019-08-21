@@ -1,9 +1,9 @@
 {
-	"title":"Linux Toolbox",
+	"title":"Server Toolbox",
 	"tip":"lib",
 	"name":"linuxsys",
 	"type":"System Tool",
-	"ps":"Linux system tool，configurate DNS、Swap、Timezone!",
+	"ps":"Server linux system tool, configurate DNS, Swap, Timezone!",
 	"versions":"1.0",
 	"shell":"linuxsys.sh",
 	"checks":"/opt/slemp/server/panel/plugin/linuxsys",

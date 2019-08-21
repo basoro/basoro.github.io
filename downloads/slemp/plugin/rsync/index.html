@@ -225,8 +225,8 @@ code{
 		<div class="clientSide" >
 			<div class="clientSide_header">
 				<div class="pull-left">
-					<button class="btn btn-success btn-sm va0" onclick="tsync.setClientView(false)">Create a send task</button>
-					<button class="btn btn-success btn-sm va0" onclick="tsync.setClientLocal()">Create local sync</button>
+					<button class="btn btn-info btn-sm va0" onclick="tsync.setClientView(false)">Create a send task</button>
+					<button class="btn btn-info btn-sm va0" onclick="tsync.setClientLocal()">Create local sync</button>
 					<button class="btn btn-default btn-sm va0" onclick="tsync.methodLogs('lsyncd_logs')">Real-time log</button>
 				</div>
 			</div>
@@ -242,7 +242,7 @@ code{
 		<div class="serverSide" style="display: none;">
 			<div class="serverSide_header">
         <div class="pull-left">
-        	<button class="btn btn-success btn-sm va0" onclick="tsync.setServerView(false)" style="margin-right: 6px;">Create a receiving task</button>
+        	<button class="btn btn-info btn-sm va0" onclick="tsync.setServerView(false)" style="margin-right: 6px;">Create a receiving task</button>
 					<button class="btn btn-default btn-sm va0" onclick="tsync.setOverallView()">Global configuration</button>
 				</div>
 				<div class="switch pull-right">
@@ -437,7 +437,7 @@ code{
 					closeBtn: 2,
 					shift: 0,
 					shadeClose: false,
-					content: "<form class='bt-form pd20 pb70' id='fromServerPath' accept-charset='utf-8' enctype='application/x-www-form-urlencoded'>\
+					content: "<form class='bt-form pd20 pb70' style='padding:10px;' id='fromServerPath' accept-charset='utf-8' enctype='application/x-www-form-urlencoded'>\
 								<div class='line'>\
 									<span class='tname'>Username</span>\
 									<div class='info-r c4'>\
@@ -465,7 +465,7 @@ code{
 								</div>\
 								<div class='bt-form-submit-btn'>\
 									<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
-									<button type='button' class='btn btn-success btn-sm btn-title setViewData'>"+ _this.setSubmit +"</button>\
+									<button type='button' class='btn btn-info btn-sm btn-title setViewData'>"+ _this.setSubmit +"</button>\
 								</div>\
 							  </form>",
 					});
@@ -518,7 +518,7 @@ code{
 					closeBtn: 2,
 					shift: 0,
 					shadeClose: false,
-					content: "<form class='bt-form pd20 pb70' id='fromServerPath' >\
+					content: "<form class='bt-form pd20 pb70' style='padding:10px;' id='fromServerPath' >\
 								<div class='line'>\
 									<span class='tname'>Listening port</span>\
 									<div class='info-r c4'>\
@@ -556,7 +556,7 @@ code{
 								</div>\
 								<div class='bt-form-submit-btn'>\
 									<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
-									<button type='button' class='btn btn-success btn-sm btn-title setViewData'>Submit</button>\
+									<button type='button' class='btn btn-info btn-sm btn-title setViewData'>Submit</button>\
 								</div>\
 							  </form>",
 					});
@@ -694,7 +694,7 @@ code{
 				closeBtn: 2,
 				shift: 0,
 				shadeClose: false,
-				content: "<form class='bt-form pd20 pb70' id='fromServerPath' accept-charset='utf-8'>\
+				content: "<form class='bt-form pd20 pb70' style='padding:10px;' id='fromServerPath' accept-charset='utf-8'>\
 							<div class='line'>\
 								<span class='tname'>Name</span>\
 								<div class='info-r c4'>\
@@ -715,7 +715,7 @@ code{
 							</div>\
 							<div class='bt-form-submit-btn'>\
 								<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
-								<button type='button' class='btn btn-success btn-sm btn-title' onclick='tsync.add_local_sync("+index+")'>"+(name==''?'Add to':'Save')+"</button>\
+								<button type='button' class='btn btn-info btn-sm btn-title' onclick='tsync.add_local_sync("+index+")'>"+(name==''?'Add to':'Save')+"</button>\
 							</div>\
 							<ul class=\"help-info-text c7\">\
 								<li>[Sync Directory]: If not ending with <code>/</code>, it means that the data is synchronized to the secondary directory</li>\
@@ -815,7 +815,7 @@ code{
 					closeBtn: 2,
 					shift: 0,
 					shadeClose: false,
-					content: "<form class='bt-form pd20 pb70 ' id='fromServerPath' accept-charset='utf-8'>\
+					content: "<form class='bt-form pd20 pb70' style='padding:10px;' id='fromServerPath' accept-charset='utf-8'>\
 								<div class='line'>\
 									<span class='tname'>Server IP</span>\
 									<div class='info-r c4'>\
@@ -887,7 +887,7 @@ code{
 								</div>\
 								<div class='bt-form-submit-btn'>\
 									<button type='button' class='btn btn-danger btn-sm btn-title colseView' onclick='layer.close(tsync.set_layer_View)'>Cancel</button>\
-									<button type='button' class='btn btn-success btn-sm btn-title setViewData'>"+ _this.setSubmit +"</button>\
+									<button type='button' class='btn btn-info btn-sm btn-title setViewData'>"+ _this.setSubmit +"</button>\
 								</div>\
 								<ul class=\"help-info-text c7\">\
 									<li>[Sync directory]: If you do not end with <code>/</code>, it means that the data is synchronized to the secondary directory. In general, the directory path ends with <code>/</code></li>\
@@ -1037,7 +1037,7 @@ code{
 					content:'<div class="setchmod bt-form pd20 pb70">'
 							+'<pre style="overflow: auto; border: 0px none; padding: 15px; margin: 0px; height: 410px; background-color: #333;color: #fff;" id ="preLogs">'+res.msg+'</pre>'
 							+'<div class="bt-form-submit-btn" style="margin-top: 0px;">'
-							+'<button type="button" class="btn btn-success btn-sm btn-delLogs" style="margin-right:10px;">Empty</button>'
+							+'<button type="button" class="btn btn-info btn-sm btn-delLogs" style="margin-right:10px;">Empty</button>'
 							+'<button type=white"button" class="btn btn-danger btn-sm" onclick="layer.close(tsync.cancelLog)">Cancel</button>'
 						    +'</div>'
 							+'</div>'
