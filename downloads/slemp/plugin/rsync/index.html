@@ -216,12 +216,12 @@ code{
 }
 </style>
 
-<div class="tsynsList" style="display: none;">
-	<div class="bt-w-menu">
-		<p class="bgw"><a href="javascript:;" onclick="tsync.getClientInfo();">Send configuration</a></p>
-		<p><a href="javascript:;" onclick="tsync.getServerInfo();">Receiving configuration</a></p>
+<div class="tasklist">
+	<div class="tab-nav">
+		<span class="on" onclick="tsync.getClientInfo();">Send configuration</span>
+		<span class="" onclick="tsync.getServerInfo();">Receiving configuration</span>
 	</div>
-	<div class="bt-w-con" style="height: 558px;">
+	<div class="tab-con" style="height: 558px;">
 		<div class="clientSide" >
 			<div class="clientSide_header">
 				<div class="pull-left">
@@ -320,10 +320,10 @@ code{
 			$('.bt-w-menu').height((height - 1) - $('.layui-layer-title').height())
 			$('.layui-layer-page').css({'left': boxwidth + 'px','top': boxheight +'px'});
 			//$('.layui-layer-page').css({'left': boxwidth + 'px'});
-			$(".bt-w-menu p").click(function(){
+			$(".tab-nav span").click(function(){
 				var index = $(this).index();
-				$(this).addClass("bgw").siblings().removeClass("bgw");
-				$('.bt-w-con>div:eq('+ index +')').show().siblings().hide();
+				$(this).addClass("on").siblings().removeClass("on");
+				$('.tab-con>div:eq('+ index +')').show().siblings().hide();
 				$('.tip').show();
 			});
 			$('.tsynsList').show();
