@@ -31,8 +31,6 @@ Remove_Service(){
 			if [ "${service}" = "mysqld" ]; then
 			 	rm -rf ${servicePath}/mysql
 			 	rm -f /etc/my.cnf
-			elif [ "${service}" = "memcached" ]; then
-				rm -rf /usr/local/memcached
 			elif [ "${service}" = "nginx" ] ; then
 				rm -rf ${servicePath}/${service}
 			fi
