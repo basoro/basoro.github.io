@@ -19,7 +19,7 @@ Remove_Slemp(){
 }
 Remove_Service(){
 	servicePath="/opt/slemp/server"
-	for service in nginx httpd mysqld pure-ftpd tomcat redis memcached php-fpm-56 php-fpm-70 php-fpm-71 php-fpm-72 php-fpm-73
+	for service in nginx mysqld php-fpm-56 php-fpm-70 php-fpm-71 php-fpm-72 php-fpm-73
 	do
 		if [ -f "/etc/init.d/${service}" ]; then
 			/etc/init.d/${service} stop
