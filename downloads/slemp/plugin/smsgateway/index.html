@@ -1,0 +1,97 @@
+<div class="tasklist" style="width:640px;height:480px;">
+	<div class="tab-nav">
+		<span class="on">Setup</span>
+		<span class="" onclick="configChange()">Config</span>
+		<span class="">Switch</span>
+  </div>
+	<div class="tab-con">
+		<div id="setup" class="SetSetup" style="display: block;">
+			<p>
+				<div class='ver'><span style='margin-right:10px'>Select version</span>
+					<select id='selectVer' name='phpVersion' class='form-control' style='width:160px'>
+						<option>April 2019</option>
+						<option>Mei 2019</option>
+						<option>Juni 2019</option>
+						<option selected>Juli 2019</option>
+					</select>
+				</div>
+				<button class="btn btn-info btn-sm" style="margin-top:10px;">Install</button>
+				<br><br><li style='color:red;'>Note: This action will installing SIMKES Khanza with latest verison. Ensure you not have 'sik' database name on your system. If any, please backup first!</li>
+			</p>
+		</div>
+		<div id="config" class="SetConfig"  style="display: none;">
+		</div>
+		<div id="setup" class="SetSwitch" style="display: none;">
+			<p>
+				<div class='ver'><span style='margin-right:10px'>Select version</span>
+					<select id='selectVer' name='phpVersion' class='form-control' style='width:160px'>
+						<option>April 2019</option>
+						<option selected>Mei 2019</option>
+						<option>Juni 2019</option>
+						<option>Juli 2019</option>
+					</select>
+				</div>
+				<button class="btn btn-info btn-sm" style="margin-top:10px;">Switch</button>
+				<br><br><li style='color:red;'>Note: This action will upgrade/downgrade yotu SIMKES Khanza. Please backup first!</li>
+			</p>
+		</div>
+  </div>
+</div>
+<script type="javascript/text">
+	$(".tab-nav span").click(function(){
+		var i = $(this).index();
+		$(this).addClass("on").siblings().removeClass("on");
+		$(".tab-con > div").hide().eq(i).show();
+		switch(i){
+			case 0:
+				SetSetup();
+				break;
+			case 1:
+				SetConfig();
+				break;
+			case 2:
+				SetSwitch();
+				break;
+		}
+	});
+
+	function configChange(){
+		var con = '<p style="color: #666; margin-bottom: 7px">Hint: Ctrl+F search keyword, Ctrl+G find next, Ctrl+S save, Ctrl+Shift+R find replace</p><textarea style="height: 320px; line-height:18px;" id="textBody"></textarea>\
+						<button id="OnlineEditFileBtn" class="btn btn-info btn-sm" style="margin-top:10px;">Submit</button>';
+		$(".SetConfig").html(con);
+		fileName = '/opt/slemp/wwwroot/webapps/conf/conf.php';
+		var loadT = layer.msg("Loading...",{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/files?action=GetFileBody', 'path=' + fileName, function(rdata) {
+			layer.close(loadT);
+			$("#textBody").empty().text(rdata.data);
+			$(".CodeMirror").remove();
+			var editor = CodeMirror.fromTextArea(document.getElementById("textBody"), {
+				extraKeys: {"Ctrl-Space": "autocomplete"},
+				lineNumbers: true,
+				matchBrackets:true,
+			});
+			editor.focus();
+			$(".CodeMirror-scroll").css({"height":"300px","margin":0,"padding":0});
+			$("#OnlineEditFileBtn").click(function(){
+				$("#textBody").text(editor.getValue());
+				confSafe(fileName);
+			})
+		})
+	}
+
+	function confSafe(fileName){
+		var data = encodeURIComponent($("#textBody").val());
+		var encoding = 'utf-8';
+		var loadT = layer.msg('Saving...', {
+			icon: 16,
+			time: 0
+		});
+		$.post('/files?action=SaveFileBody', 'data=' + data + '&path=' + fileName+'&encoding='+encoding, function(rdata) {
+			layer.close(loadT);
+			layer.msg(rdata.msg, {
+				icon: rdata.status ? 1 : 2
+			});
+		});
+	}
+
+</script>
