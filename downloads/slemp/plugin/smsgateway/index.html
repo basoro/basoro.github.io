@@ -13,7 +13,7 @@
 		</div>
 		<div id="config" class="SetConfig"  style="display: none;">
 		</div>
-		<div id="setup" class="SetSwitch" style="display: none;">
+		<div id="setup" class="SetDatabase" style="display: none;">
 			<p>
 				<div class='ver'><span style='margin-right:10px'>Select version</span>
 				</div>
@@ -34,7 +34,7 @@
 				SetConfig();
 				break;
 			case 2:
-				SetSwitch();
+				SetDatabase();
 				break;
 		}
 	});
@@ -43,7 +43,46 @@
 		var con = '<p style="color: #666; margin-bottom: 7px">Hint: Ctrl+F search keyword, Ctrl+G find next, Ctrl+S save, Ctrl+Shift+R find replace</p><textarea style="height: 320px; line-height:18px;" id="textBody"></textarea>\
 						<button id="OnlineEditFileBtn" class="btn btn-info btn-sm" style="margin-top:10px;">Submit</button>';
 		$(".SetConfig").html(con);
-		fileName = '/opt/slemp/wwwroot/webapps/conf/conf.php';
+		fileName = '/etc/gammu-smsd';
+		var loadT = layer.msg("Loading...",{icon:16,time:0,shade: [0.3, '#000']});
+		$.post('/files?action=GetFileBody', 'path=' + fileName, function(rdata) {
+			layer.close(loadT);
+			$("#textBody").empty().text(rdata.data);
+			$(".CodeMirror").remove();
+			var editor = CodeMirror.fromTextArea(document.getElementById("textBody"), {
+				extraKeys: {"Ctrl-Space": "autocomplete"},
+				lineNumbers: true,
+				matchBrackets:true,
+			});
+			editor.focus();
+			$(".CodeMirror-scroll").css({"height":"300px","margin":0,"padding":0});
+			$("#OnlineEditFileBtn").click(function(){
+				$("#textBody").text(editor.getValue());
+				confSafe(fileName);
+			})
+		})
+	}
+
+	function confSafe(fileName){
+		var data = encodeURIComponent($("#textBody").val());
+		var encoding = 'utf-8';
+		var loadT = layer.msg('Saving...', {
+			icon: 16,
+			time: 0
+		});
+		$.post('/files?action=SaveFileBody', 'data=' + data + '&path=' + fileName+'&encoding='+encoding, function(rdata) {
+			layer.close(loadT);
+			layer.msg(rdata.msg, {
+				icon: rdata.status ? 1 : 2
+			});
+		});
+	}
+
+	function configDatabase(){
+		var con = '<p style="color: #666; margin-bottom: 7px">Hint: Ctrl+F search keyword, Ctrl+G find next, Ctrl+S save, Ctrl+Shift+R find replace</p><textarea style="height: 320px; line-height:18px;" id="textBody"></textarea>\
+						<button id="OnlineEditFileBtn" class="btn btn-info btn-sm" style="margin-top:10px;">Submit</button>';
+		$(".SetDatabase").html(con);
+		fileName = '/opt/slemp/server/panel/plugin/smsgateway/sms-config.php';
 		var loadT = layer.msg("Loading...",{icon:16,time:0,shade: [0.3, '#000']});
 		$.post('/files?action=GetFileBody', 'path=' + fileName, function(rdata) {
 			layer.close(loadT);
