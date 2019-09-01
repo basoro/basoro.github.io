@@ -6,5 +6,5 @@ os.chdir('/opt/slemp/server/panel');
 sys.path.append("")
 import public,db,time
 
-class khanza_main:
-    __setupPath = '/opt/slemp/server/panel/plugin/khanza';
+class smsgateway_main:
+    __setupPath = '/opt/slemp/server/panel/plugin/smsgateway';
