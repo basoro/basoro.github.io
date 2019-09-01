@@ -40,7 +40,7 @@
 		var con = '<p style="color: #666; margin-bottom: 7px">Hint: Ctrl+F search keyword, Ctrl+G find next, Ctrl+S save, Ctrl+Shift+R find replace</p><textarea style="height: 320px; line-height:18px;" id="textBody"></textarea>\
 						<button id="OnlineEditFileBtn" class="btn btn-info btn-sm" style="margin-top:10px;">Submit</button>';
 		$(".SetConfig").html(con);
-		fileName = '/etc/gammu-smsd';
+		fileName = '/etc/gammu-smsdrc';
 		var loadT = layer.msg("Loading...",{icon:16,time:0,shade: [0.3, '#000']});
 		$.post('/files?action=GetFileBody', 'path=' + fileName, function(rdata) {
 			layer.close(loadT);
@@ -58,21 +58,6 @@
 				confSafe(fileName);
 			})
 		})
-	}
-
-	function confSafe(fileName){
-		var data = encodeURIComponent($("#textBody").val());
-		var encoding = 'utf-8';
-		var loadT = layer.msg('Saving...', {
-			icon: 16,
-			time: 0
-		});
-		$.post('/files?action=SaveFileBody', 'data=' + data + '&path=' + fileName+'&encoding='+encoding, function(rdata) {
-			layer.close(loadT);
-			layer.msg(rdata.msg, {
-				icon: rdata.status ? 1 : 2
-			});
-		});
 	}
 
 	function configDatabase(){
@@ -113,5 +98,6 @@
 			});
 		});
 	}
+
 
 </script>
