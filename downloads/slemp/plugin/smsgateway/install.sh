@@ -11,8 +11,18 @@ fi
 
 pluginPath=/opt/slemp/server/panel/plugin/smsgateway
 
+centos=1
+if [ ! -f /usr/bin/yum ];then
+	centos=0
+fi
+
 Install_Smsgateway()
 {
+	if [ $centos == 1 ];then
+	  yum install gammu gammu-smsd -y
+	else
+		apt-get install gammu gammu-smsd -y 
+  fi
 	mkdir -p $pluginPath
 	echo 'Installing script file...' > $install_tmp
 	wget -O $pluginPath/smsgateway_main.py $download_Url/plugin/smsgateway/smsgateway_main.py -T 5

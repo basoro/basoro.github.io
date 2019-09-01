@@ -1,0 +1,33 @@
+# Configuration file for Gammu SMS Daemon
+
+# Gammu library configuration, see gammurc(5)
+[gammu]
+# Please configure this!
+port = /dev/ttyUSB0
+connection = at19200
+# Debugging
+logformat = textall
+
+# SMSD configuration, see gammu-smsdrc(5)
+[smsd]
+RunOnReceive = /opt/slemp/server/panel/plugin/smsgateway/gammu_script.sh
+service = sql
+logfile = /var/log/gammulog
+driver = native_mysql
+DeliveryReport = sms
+
+# Increase for debugging information
+debuglevel = 1
+checksecurity =0
+phoneid = Modem1
+user = root
+password =
+pc = localhost
+database = sik
+#PIN = 1234
+
+# Paths where messages are stored
+inboxpath = /var/spool/gammu/inbox/
+outboxpath = /var/spool/gammu/outbox/
+sentsmspath = /var/spool/gammu/sent/
+errorsmspath = /var/spool/gammu/error/
