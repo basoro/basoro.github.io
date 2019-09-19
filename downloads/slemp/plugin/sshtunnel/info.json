@@ -1,0 +1,15 @@
+{
+	"title":"SSH Tunnel",
+	"tip":"lib",
+	"name":"sshtunnel",
+	"type":"SSH Tunnel Tools",
+	"ps":"Untuk mengonlinekan server localhost anda (tanda ip publik)",
+	"versions":"1.0",
+	"shell":"sshtunnel.sh",
+	"checks":"/opt/slemp/server/panel/plugin/sshtunnel",
+	"author":"Ataaka",
+	"home":"http://ataaka.basoro.id",
+	"date":"2019-09-19",
+	"default":false,
+	"display":1
+}
