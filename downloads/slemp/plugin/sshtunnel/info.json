@@ -3,7 +3,7 @@
 	"tip":"lib",
 	"name":"sshtunnel",
 	"type":"SSH Tunnel Tools",
-	"ps":"Untuk mengonlinekan server localhost anda (tanda ip publik)",
+	"ps":"Expose your localhost server without public IP",
 	"versions":"1.0",
 	"shell":"sshtunnel.sh",
 	"checks":"/opt/slemp/server/panel/plugin/sshtunnel",
