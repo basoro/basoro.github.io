@@ -11,34 +11,35 @@ class sshtunnel_main:
     __setupPath = '/opt/slemp/server/panel/plugin/sshtunnel';
 
     def SetConfig(self,get):
-        dnsStr = "nameserver " + get.dns1 + "\n" ;
-        public.writeFile('/etc/resolv.conf',dnsStr);
+        confStr = "USER_NAME " + get.username + "\n" ;
+        confStr += "PASS " + get.username + '\n'
+        public.writeFile('/usr/sbin/ssh_tunnel',confStr);
         return public.returnMsg(True,'Setting successed!')
 
     def GetConfig(self,get):
-        dnsStr = public.ExecShell('cat /etc/resolv.conf|grep nameserver')
-        tmp = dnsStr[0].split()
-        dnsInfo = {}
-        dnsInfo['dns1'] = ''
-        dnsInfo['dns2'] = ''
+        confStr = public.ExecShell('cat /usr/sbin/ssh_tunnel|grep USER_NAME')
+        tmp = confStr[0].split()
+        confInfo = {}
+        confInfo['username'] = ''
+        confInfo['password'] = ''
         if len(tmp) > 1:
-            dnsInfo['dns1'] = tmp[1];
+            confInfo['username'] = tmp[1];
         if len(tmp) > 2:
-            dnsInfo['dns2'] = tmp[3];
-        return dnsInfo;
+            confInfo['password'] = tmp[3];
+        return confInfo;
 
-    def TestDns(self,get):
-        resolv = '/etc/resolv.conf'
-        dnsStr = "nameserver " + get.dns1 + "\n" + "nameserver " + get.dns2;
-        backupDns = public.readFile(resolv)
-        public.writeFile(resolv,dnsStr);
+    def RunTunnel(self,get):
+        ssh_tunnel = '/usr/sbin/ssh_tunnel'
+        confStr = "USER_NAME " + get.username + "\n" + "PASS " + get.password;
+        backupDns = public.readFile(ssh_tunnel)
+        public.writeFile(ssh_tunnel,confStr);
         tmp = public.ExecShell("ping -c 1 -w 1 www.google.com")
         isPing = False
         try:
             if tmp[0].split('time=')[1].split()[0]: isPing = True
         except:
             pass
-        public.writeFile(resolv,backupDns);
+        public.writeFile(ssh_tunnel,backupDns);
         if isPing:
             return public.returnMsg(True,'Current DNS can be used!<br>'+tmp[0].replace('\n','<br>'))
         return public.returnMsg(False,'Current DNS cannot be used!<br>'+tmp[1])

@@ -51,7 +51,7 @@
 					<p><span>User</span><input class="bt-input-text" name="username" type="text" value="" /></p>
 					<p><span>Pass</span><input class="bt-input-text" name="password" type="text" value="" /></p>
 				</div>
-				<p><button class="btn btn-default btn-sm btn-title" onclick="TestDns();">Run Tunnel</button><button class="btn btn-default btn-sm btn-title" onclick="SetDnsInfo();">Save</button></p>
+				<p><button class="btn btn-default btn-sm btn-title" onclick="RunTunnel();">Run Tunnel</button><button class="btn btn-default btn-sm btn-title" onclick="SetConfig();">Save</button></p>
 			</div>
 			<div class="help-info-text c7 mtb15">
 				<p>If setting has problem, it will make your server cannot resolve the domain name, thus server cannot access domain!</p>
@@ -61,17 +61,17 @@
 </div>
 <script type="javascript/text">
 
-	function GetDnsInfo(){
+	function GetConfig(){
 		$.get('/plugin?action=a&name=sshtunnel&s=GetConfig',function(rdata){
-			$("input[name='dns1']").val(rdata.dns1);
-			$("input[name='dns2']").val(rdata.dns2);
+			$("input[name='username']").val(rdata.username);
+			$("input[name='password']").val(rdata.password);
 		});
 	}
 
-	function SetDnsInfo(){
-		var dns1 = $("input[name='dns1']").val();
-		var dns2 = $("input[name='dns2']").val();
-		var data = 'dns1='+dns1+'&dns2='+dns2;
+	function SetConfig(){
+		var username = $("input[name='username']").val();
+		var password = $("input[name='password']").val();
+		var data = 'username='+username+'&password='+password;
 		var loadT = layer.msg('Saving configuration...',{icon:16,time:0,shade: [0.3, '#000']});
 		$.post('/plugin?action=a&name=sshtunnel&s=SetConfig',data,function(rdata){
 			layer.close(loadT);
@@ -79,16 +79,16 @@
 		});
 	}
 
-	function TestDns(){
-		var dns1 = $("input[name='dns1']").val();
-		var dns2 = $("input[name='dns2']").val();
-		var data = 'dns1='+dns1+'&dns2='+dns2;
+	function RunTunnel(){
+		var username = $("input[name='username']").val();
+		var password = $("input[name='password']").val();
+		var data = 'username='+username+'&password='+password;
 		var loadT = layer.msg('Testing DNS...',{icon:16,time:0,shade: [0.3, '#000']});
-		$.post('/plugin?action=a&name=sshtunnel&s=TestDns',data,function(rdata){
+		$.post('/plugin?action=a&name=sshtunnel&s=RunTunnel',data,function(rdata){
 			layer.close(loadT);
 			layer.msg(rdata.msg,{icon:rdata.status?1:5,time:5000,area:'500px'});
 		});
 	}
 
-	GetDnsInfo();
+	GetConfig();
 </script>
