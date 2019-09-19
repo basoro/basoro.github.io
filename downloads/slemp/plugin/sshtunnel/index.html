@@ -78,7 +78,7 @@
 	}
 
 	function GetDnsInfo(){
-		$.get('/plugin?action=a&name=linuxsys&s=GetConfig',function(rdata){
+		$.get('/plugin?action=a&name=sshtunnel&s=GetConfig',function(rdata){
 			$("input[name='dns1']").val(rdata.dns1);
 			$("input[name='dns2']").val(rdata.dns2);
 		});
@@ -89,7 +89,7 @@
 		var dns2 = $("input[name='dns2']").val();
 		var data = 'dns1='+dns1+'&dns2='+dns2;
 		var loadT = layer.msg('Saving configuration...',{icon:16,time:0,shade: [0.3, '#000']});
-		$.post('/plugin?action=a&name=linuxsys&s=SetConfig',data,function(rdata){
+		$.post('/plugin?action=a&name=sshtunnel&s=SetConfig',data,function(rdata){
 			layer.close(loadT);
 			layer.msg(rdata.msg,{icon:rdata.status?1:5});
 		});
@@ -100,7 +100,7 @@
 		var dns2 = $("input[name='dns2']").val();
 		var data = 'dns1='+dns1+'&dns2='+dns2;
 		var loadT = layer.msg('Testing DNS...',{icon:16,time:0,shade: [0.3, '#000']});
-		$.post('/plugin?action=a&name=linuxsys&s=TestDns',data,function(rdata){
+		$.post('/plugin?action=a&name=sshtunnel&s=TestDns',data,function(rdata){
 			layer.close(loadT);
 			layer.msg(rdata.msg,{icon:rdata.status?1:5,time:5000,area:'500px'});
 		});
