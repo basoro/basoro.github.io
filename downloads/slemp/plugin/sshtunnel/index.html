@@ -48,34 +48,18 @@
 		<div id="dns" class="SetDns" style="display: block;">
 			<div class="clearfixDns">
 				<div class="SetAggregateOne">
-					<p><span>User</span><input class="bt-input-text" name="dns1" type="text" value="" /></p>
-					<p><span>Pass</span><input class="bt-input-text" name="dns2" type="text" value="" /></p>
+					<p><span>User</span><input class="bt-input-text" name="username" type="text" value="" /></p>
+					<p><span>Pass</span><input class="bt-input-text" name="password" type="text" value="" /></p>
 				</div>
-				<p><button class="btn btn-default btn-sm btn-title" onclick="TestDns();">Test</button><button class="btn btn-default btn-sm btn-title" onclick="SetDnsInfo();">Save</button></p>
+				<p><button class="btn btn-default btn-sm btn-title" onclick="TestDns();">Run Tunnel</button><button class="btn btn-default btn-sm btn-title" onclick="SetDnsInfo();">Save</button></p>
 			</div>
-			<ul class="help-info-text c7 mtb15">
-				<li>If setting has problem, it will make your server cannot resolve the domain name, thus server cannot access domain!</li>
-			</ul>
+			<div class="help-info-text c7 mtb15">
+				<p>If setting has problem, it will make your server cannot resolve the domain name, thus server cannot access domain!</p>
+			</div>
 		</div>
 	</div>
 </div>
 <script type="javascript/text">
-	$(".tab-nav span").click(function(){
-		var i = $(this).index();
-		$(this).addClass("on").siblings().removeClass("on");
-		$(".tab-con > div").hide().eq(i).show();
-		switch(i){
-			case 0:
-				GetDnsInfo();
-				break;
-		}
-	});
-
-	mainAd = null;
-
-	function closeF(){
-		layer.close(mainAd);
-	}
 
 	function GetDnsInfo(){
 		$.get('/plugin?action=a&name=sshtunnel&s=GetConfig',function(rdata){

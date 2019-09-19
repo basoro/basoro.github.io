@@ -9,11 +9,9 @@ import public,db,time
 
 class sshtunnel_main:
     __setupPath = '/opt/slemp/server/panel/plugin/sshtunnel';
-    
+
     def SetConfig(self,get):
         dnsStr = "nameserver " + get.dns1 + "\n" ;
-        if get.dns2:
-            dnsStr += "nameserver " + get.dns2 + '\n'
         public.writeFile('/etc/resolv.conf',dnsStr);
         return public.returnMsg(True,'Setting successed!')
 
