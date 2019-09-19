@@ -2,7 +2,7 @@
 	"title":"SSH Tunnel",
 	"tip":"lib",
 	"name":"sshtunnel",
-	"type":"SSH Tunnel Tools",
+	"type":"System Tools",
 	"ps":"Expose your localhost server without public IP",
 	"versions":"1.0",
 	"shell":"sshtunnel.sh",
