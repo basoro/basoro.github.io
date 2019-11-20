@@ -2,7 +2,7 @@
 	<div class="tab-nav">
 		<span class="on">Setup</span>
 		<span class="" onclick="configChange()">Config</span>
-		<span class="" onclick="configDatabase()">Database</span>
+		<span class="">Database</span>
   </div>
 	<div class="tab-con">
 		<div id="setup" class="SetSetup" style="display: block;">
@@ -14,7 +14,12 @@
 		</div>
 		<div id="config" class="SetConfig"  style="display: none;">
 		</div>
-		<div id="setup" class="SetDatabase" style="display: none;">
+		<div id="database" class="SetDatabase" style="display: none;">
+			<p>
+				<div class='ver'><span style='margin-right:10px'>Tutorial</span>
+					<p>How To Use</p>
+				</div>
+			</p>
 		</div>
   </div>
 </div>
@@ -60,11 +65,11 @@
 		})
 	}
 
-	function configDatabase(){
+	function ___configDatabase(){
 		var con = '<p style="color: #666; margin-bottom: 7px">Hint: Ctrl+F search keyword, Ctrl+G find next, Ctrl+S save, Ctrl+Shift+R find replace</p><textarea style="height: 320px; line-height:18px;" id="textBody"></textarea>\
 						<button id="OnlineEditFileBtn" class="btn btn-info btn-sm" style="margin-top:10px;">Submit</button>';
 		$(".SetDatabase").html(con);
-		fileName = '/opt/slemp/server/panel/plugin/smsgateway/sms-config.php';
+		fileName = '/opt/slemp/server/panel/plugin/smsgateway/sms.sql';
 		var loadT = layer.msg("Loading...",{icon:16,time:0,shade: [0.3, '#000']});
 		$.post('/files?action=GetFileBody', 'path=' + fileName, function(rdata) {
 			layer.close(loadT);

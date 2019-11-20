@@ -10,7 +10,7 @@ logformat = textall
 
 # SMSD configuration, see gammu-smsdrc(5)
 [smsd]
-RunOnReceive = /opt/slemp/server/panel/plugin/smsgateway/gammu_script.sh
+RunOnReceive = curl http://localhost/Khanza-Lite/modules/SMSGateway/run.php
 service = sql
 logfile = /var/log/gammulog
 driver = native_mysql
