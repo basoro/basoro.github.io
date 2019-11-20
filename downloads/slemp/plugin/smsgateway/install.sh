@@ -31,6 +31,8 @@ Install_Smsgateway()
 	#wget -O $pluginPath/gammu_script.sh $download_Url/plugin/smsgateway/gammu_script.sh -T 5
 	#wget -O $pluginPath/sms-config.php $download_Url/plugin/smsgateway/sms-config.php -T 5
 	#wget -O $pluginPath/sms-run.php $download_Url/plugin/smsgateway/sms-run.php -T 5
+	mv /etc/gammu-smsdrc /etc/gammu-smsdrc.original
+	wget -O /etc/gammu-smsdrc  $download_Url/plugin/smsgateway/gammu-smsdrc  -T 5
 	echo 'The installation is complete' > $install_tmp
 
 
