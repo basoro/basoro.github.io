@@ -28,9 +28,9 @@ Install_Smsgateway()
 	wget -O $pluginPath/smsgateway_main.py $download_Url/plugin/smsgateway/smsgateway_main.py -T 5
 	wget -O $pluginPath/index.html $download_Url/plugin/smsgateway/index.html -T 5
 	wget -O $pluginPath/info.json $download_Url/plugin/smsgateway/info.json -T 5
-	wget -O $pluginPath/gammu_script.sh $download_Url/plugin/smsgateway/gammu_script.sh -T 5
-	wget -O $pluginPath/sms-config.php $download_Url/plugin/smsgateway/sms-config.php -T 5
-	wget -O $pluginPath/sms-run.php $download_Url/plugin/smsgateway/sms-run.php -T 5
+	#wget -O $pluginPath/gammu_script.sh $download_Url/plugin/smsgateway/gammu_script.sh -T 5
+	#wget -O $pluginPath/sms-config.php $download_Url/plugin/smsgateway/sms-config.php -T 5
+	#wget -O $pluginPath/sms-run.php $download_Url/plugin/smsgateway/sms-run.php -T 5
 	echo 'The installation is complete' > $install_tmp
 
 
