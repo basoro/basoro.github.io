@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=http://103.224.251.67
+download_Url=https://basoro.id/downloads/slemp
 
 Root_Path=`cat /var/slemp_setupPath.conf`
 Setup_Path=$Root_Path/server/mysql
@@ -429,16 +429,16 @@ Install_Mysql(){
 	fi
 
 	if [ "${version}" == "5.7" ] || [ "${version}" == "8.0" ]; then
-		wget -O ${Setup_Path}/src.tar.gz ${download_Url}/src/mysql-boost-${sqlVersion}.tar.gz -T20
+		wget -O ${Setup_Path}/src.tar.gz ${download_Url}/src/mysql/mysql-boost-${sqlVersion}.tar.gz -T20
 	else
-		wget -O ${Setup_Path}/src.tar.gz ${download_Url}/src/${sqlName}-${sqlVersion}.tar.gz -T20
+		wget -O ${Setup_Path}/src.tar.gz ${download_Url}/src/mysql/${sqlName}-${sqlVersion}.tar.gz -T20
 	fi
 
 	tar -zxvf src.tar.gz
 
 	armCheck=$(uname -m|grep arm)
 	if [ "${version}" == "5.5" ] || [ "${armCheck}" ]; then
-		wget -O mysql-5.5-fix-arm-client_plugin.patch ${download_Url}/src/patch/mysql-5.5-fix-arm-client_plugin.patch
+		wget -O mysql-5.5-fix-arm-client_plugin.patch ${download_Url}/src/mysql/mysql-5.5-fix-arm-client_plugin.patch
 		patch -p0 < mysql-5.5-fix-arm-client_plugin.patch
 		rm -f mysql-5.5-fix-arm-client_plugin.patch
 	fi
