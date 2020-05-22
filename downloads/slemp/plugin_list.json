@@ -28,20 +28,6 @@
 	"default":false,
 	"display":1
 },{
-	"title":"File Synchronization",
-	"tip":"lib",
-	"name":"rsync",
-	"type":"System Tool",
-	"ps":"Data synchronization tool based on rsync development",
-	"versions":"1.1",
-	"shell":"rsync.sh",
-	"checks":"/opt/slemp/server/panel/plugin/rsync",
-	"author":"Ataaka",
-	"home":"https://slemp.basoro.id",
-	"date":"2018-02-28",
-	"default":false,
-	"display":1
-},{
 	"title":"phpMyAdmin",
 	"tip":"soft",
 	"name":"phpmyadmin",
