@@ -48,15 +48,9 @@ cd install
 cd setuptools
 python setup.py install
 cd ..
-
-wget -O pip-9.0.1.tar.gz http://128.1.164.196/install/src/pip-9.0.1.tar.gz -T 10
-tar xvf pip-9.0.1.tar.gz
-rm -f pip-9.0.1.tar.gz
-cd pip-9.0.1
+cd pip
 python setup.py install
 cd ..
-rm -rf pip-9.0.1
-
 isPsutil=`python -m psutil 2>&1|grep package`
 if [ "$isPsutil" != "" ];then
 	psutil_version=`python -c 'import psutil;print psutil.__version__;' |grep '5.'` 
@@ -64,24 +58,15 @@ if [ "$isPsutil" != "" ];then
 		pip uninstall psutil -y 
 	fi
 fi
-
 pip install --upgrade pip
 pip install psutil chardet web.py virtualenv
-
-wget -O Pillow-3.2.0.zip http://128.1.164.196/install/src/Pillow-3.2.0.zip -T 10
-unzip Pillow-3.2.0.zip
-rm -f Pillow-3.2.0.zip
-cd Pillow-3.2.0
+cd Pillow
 python setup.py install
 cd ..
-rm -rf Pillow-3.2.0
-
 cd psutil
 python setup.py install
 cd ..
-
 pip install mysql-python
-
 cd MySQL-python
 python setup.py install
 cd ..
