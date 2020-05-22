@@ -28,34 +28,6 @@
 	"default":false,
 	"display":1
 },{
-	"title":"SSH Tunnel",
-	"tip":"lib",
-	"name":"sshtunnel",
-	"type":"System Tools",
-	"ps":"Expose your localhost server without public IP",
-	"versions":"1.0",
-	"shell":"sshtunnel.sh",
-	"checks":"/opt/slemp/server/panel/plugin/sshtunnel",
-	"author":"Ataaka",
-	"home":"http://ataaka.basoro.id",
-	"date":"2019-09-19",
-	"default":false,
-	"display":1
-},{
-	"title":"Server Toolbox",
-	"tip":"lib",
-	"name":"linuxsys",
-	"type":"System Tool",
-	"ps":"Server linux system tool, configurate DNS, Swap, Timezone!",
-	"versions":"1.0",
-	"shell":"linuxsys.sh",
-	"checks":"/opt/slemp/server/panel/plugin/linuxsys",
-	"author":"Ataaka",
-	"home":"https://slemp.basoro.id",
-	"date":"2019-07-25",
-	"default":false,
-	"display":1
-},{
 	"title":"File Synchronization",
 	"tip":"lib",
 	"name":"rsync",
