@@ -21,7 +21,7 @@ var configuration = {
 
 var roomName = 'observable-' + roomHash;
 var room;
-var drone = new ScaleDrone('IKvvontbTUhXjvZR');
+var drone = new ScaleDrone('RRGccHsNZKTajPhU');
 var peerConnection;
 var isOfferer;
 
