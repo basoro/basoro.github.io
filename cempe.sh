@@ -183,10 +183,11 @@ http
             index index.html index.htm index.php;
             root  /opt/slemp/server/phpmyadmin;
             include enable-php-56.conf;
-    }
+        }
     include /opt/slemp/server/nginx/conf/vhost/*.conf;
 }
 END
+
 rm -rf /etc/nginx/conf.d/*
 
 rm -f /etc/init.d/nginx
