@@ -27,7 +27,7 @@ echo 'Installing script file...' > $install_tmp
 	#rm -rf /usr/lib/python2.7/site-packages/cachetools
 	#unzip -o /opt/slemp/server/panel/plugin/gdrive/cachetools.zip /usr/lib/python2.7/site-packages/ > /dev/null
 	#rm -rf /opt/slemp/server/panel/plugin/gdrive/cachetools.zip
-	slemp restart
+	#slemp restart
 echo 'The installation is complete' > $install_tmp
 }
 
