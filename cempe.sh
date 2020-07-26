@@ -277,7 +277,6 @@ interactive-timeout
 EOF
 
 
-## Ini belum fix
 ln -sf /usr/bin/mysql /opt/slemp/server/mysql/bin/mysql
 ln -sf /usr/bin/mysqldump /opt/slemp/server/mysql/bin/mysqldump
 ln -sf /usr/bin/myisamchk /opt/slemp/server/mysql/bin/myisamchk
