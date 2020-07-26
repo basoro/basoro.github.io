@@ -32,6 +32,7 @@ echo 'The installation is complete' > $install_tmp
 slemp restart
 }
 
+
 Uninstall_GDrive()
 {
 	rm -rf /opt/slemp/server/panel/plugin/gdrive
