@@ -170,19 +170,19 @@ http
 
         server_tokens off;
         access_log off;
-    server {
-        listen 80 default;
-        server_name _;
-        index index.html index.htm index.php;
-        root /opt/slemp/wwwroot/default;
-        include enable-php-56.conf;
-    }
-		server{
-        listen 1234;
-        server_name phpmyadmin.basoro.id;
-        index index.html index.htm index.php;
-        root  /opt/slemp/server/phpmyadmin;
-        include enable-php-56.conf;
+        server {
+            listen 80 default;
+            server_name _;
+            index index.html index.htm index.php;
+            root /opt/slemp/wwwroot/default;
+            include enable-php-56.conf;
+        }
+	server{
+            listen 1234;
+            server_name phpmyadmin.basoro.id;
+            index index.html index.htm index.php;
+            root  /opt/slemp/server/phpmyadmin;
+            include enable-php-56.conf;
     }
     include /opt/slemp/server/nginx/conf/vhost/*.conf;
 }
