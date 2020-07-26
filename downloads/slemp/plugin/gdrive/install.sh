@@ -29,6 +29,7 @@ echo 'Installing script file...' > $install_tmp
 	#rm -rf /opt/slemp/server/panel/plugin/gdrive/cachetools.zip
 	#slemp restart
 echo 'The installation is complete' > $install_tmp
+slemp restart
 }
 
 Uninstall_GDrive()
