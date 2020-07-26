@@ -418,16 +418,16 @@ do
 done
 
 echo -e "=================================================================="
-echo -e "\033[32mSelamat! Pemasangan SLEMP Panel Lite berhasil!\033[0m"
+echo -e "\033[32mSelamat! Pemasangan CEMPe Panel berhasil!\033[0m"
 echo -e "=================================================================="
-echo  "SLEMP-Panel: http://$address:$port"
+echo  "CEMPe-Panel: http://$address:$port"
 echo -e "username: $username"
 echo -e "password: $password"
 echo -e "Default Site Url: http://$address"
 echo -e "MySQL Password: $mysqlpwd"
 echo -e "\033[33mPeringatan:\033[0m"
 echo -e "\033[33mJika tidak bisa mengakses panel, \033[0m"
-echo -e "\033[33msilahkan buka port berikut (12345|1234|80|22) di menu keamanan\033[0m"
+echo -e "\033[33msilahkan buka port berikut (12345|1234|80|22)\033[0m"
 echo -e "=================================================================="
 
 endTime=`date +%s`
