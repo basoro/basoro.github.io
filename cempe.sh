@@ -4,9 +4,9 @@ export PATH
 LANG=en_US.UTF-8
 
 echo "
-+-------------------------------------
-| SLEMP Panel Lite 1.x  Untuk CentOS 7
-+-------------------------------------
++---------------------------------+
+| CEMPe Panel 1.x  Untuk CentOS 7 |
++---------------------------------+
 "
 download_Url=https://basoro.id/downloads/slemp
 
@@ -15,7 +15,7 @@ port='12345'
 
 while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 do
-	read -p "Yakin mau memasang SLEMP Panel Lite?(y/n): " go;
+	read -p "Yakin mau memasang CEMPe Panel?(y/n): " go;
 done
 
 if [ "$go" == 'n' ];then
@@ -40,10 +40,10 @@ mkdir -p /opt/slemp/server
 
 mkdir -pv /opt/slemp/{wwwroot/default,wwwlogs,server/{data,mysql/{bin,lib},nginx/{sbin,logs,conf/{vhost,rewrite}},php/56/{etc,bin,sbin,var/run}}}
 
-wget -O panel.zip https://github.com/basoro/panel/archive/master.zip
+wget -O panel.zip https://github.com/basoro/cempe/archive/master.zip
 
 unzip -o panel.zip -d $setup_path/server/ > /dev/null
-mv $setup_path/server/panel-master $setup_path/server/panel
+mv $setup_path/server/cempe-master $setup_path/server/panel
 
 python -m compileall $setup_path/server/panel
 rm -f $setup_path/server/panel/*.py
