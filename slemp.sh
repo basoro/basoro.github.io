@@ -58,7 +58,7 @@ if [ "$isPsutil" != "" ];then
 		pip uninstall psutil -y 
 	fi
 fi
-pip install --upgrade pip
+#pip install --upgrade pip
 pip install psutil chardet web.py virtualenv Pillow
 cd Pillow
 python setup.py install
