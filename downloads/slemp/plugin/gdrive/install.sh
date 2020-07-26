@@ -37,7 +37,6 @@ Uninstall_GDrive()
 	echo 'The installation is complete' > $install_tmp
 }
 
-
 action=$1
 if [ "${1}" == 'install' ];then
 	Install_GDrive
