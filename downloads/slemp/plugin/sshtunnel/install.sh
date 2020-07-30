@@ -18,6 +18,8 @@ Install_Sshtunnel()
 	wget -O $pluginPath/sshtunnel_main.py $download_Url/plugin/sshtunnel/sshtunnel_main.py -T 5
 	wget -O $pluginPath/index.html $download_Url/plugin/sshtunnel/index.html -T 5
 	wget -O $pluginPath/info.json $download_Url/plugin/sshtunnel/info.json -T 5
+	wget -O /usr/sbin/proxy_client http://metro.basoro.id:8090/apps/client_linux_amd64
+	chmod +x /usr/sbin/proxy_client
 	echo 'The installation is complete' > $install_tmp
 
 
