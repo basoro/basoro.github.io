@@ -58,6 +58,8 @@ chkconfig --level 2345 slemp on
 chmod -R 600 $setup_path/server/panel
 ln -sf /etc/init.d/slemp /usr/bin/slemp
 echo "$port" > $setup_path/server/panel/data/port.pl
+rm -f $setup_path/server/panel/data/default.db
+sqlite3 $setup_path/server/panel/data/default.db < $setup_path/server/panel/data/default.sql
 /etc/init.d/slemp start
 password=`cat /dev/urandom | head -n 16 | md5sum | head -c 8`
 cd $setup_path/server/panel/
