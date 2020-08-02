@@ -179,11 +179,9 @@ http
             index index.html index.htm index.php;
             root /opt/slemp/wwwroot/default;
             try_files $uri $uri/ @handler;
-
             location  /admin {
                 try_files $uri $uri/ /admin/index.php?$args;
             }
-
             location @handler {
                 if (!-e $request_filename) { rewrite / /index.php last; }
                 rewrite ^(.*.php)/ $1 last;
