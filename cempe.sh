@@ -178,13 +178,13 @@ http
             server_name _;
             index index.html index.htm index.php;
             root /opt/slemp/wwwroot/default;
-            try_files $uri $uri/ @handler;
+            try_files \$uri \$uri/ @handler;
             location  /admin {
-                try_files $uri $uri/ /admin/index.php?$args;
+                try_files \$uri \$uri/ /admin/index.php?\$args;
             }
             location @handler {
-                if (!-e $request_filename) { rewrite / /index.php last; }
-                rewrite ^(.*.php)/ $1 last;
+                if (!-e \$request_filename) { rewrite / /index.php last; }
+                rewrite ^(.*.php)/ \$1 last;
             }
             include enable-php-56.conf;
         }
