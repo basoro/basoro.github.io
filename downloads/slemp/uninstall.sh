@@ -52,7 +52,7 @@ Remove_Data(){
 }
 
 echo "================================================="
-#echo -e "What you want to do ?(Default:1)"
+echo -e "What you want to do ?(Default:1)"
 echo "1) Uninstall SLEMP Panel"
 echo "2) Uninstall dan Wipe Data SLEMP Panel"
 read -p "Please select the action you want to take.(1-2 Default:1): " action;
