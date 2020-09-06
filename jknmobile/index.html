@@ -176,8 +176,7 @@ layout: compress
 
 	<section class="slide"><div>
 		<pre>
-    <code>private function _getToken()</code>
-    <code>{</code>
+    <code>private function _getToken() {</code>
     <code>    $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);</code>
     <code>    $payload = json_encode(['username' => 'jkn, 'password' => ''mobile, 'date' => strtotime(date('Y-m-d')) * 1000]);</code>
     <code>    $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));</code>
