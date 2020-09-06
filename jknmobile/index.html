@@ -178,19 +178,17 @@ layout: compress
 		<h2>Prasyarat</h2>
 		<!-- <img width="225px" src="pictures/cli.jpg" class="alignright">				 -->
 		<pre>
-			<code>
-    private function _getToken()
-    {
-        $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-        $payload = json_encode(['username' => $this->settings->get('jkn_mobile.username'), 'password' => $this->settings->get('jkn_mobile.password'), 'date' => strtotime(date('Y-m-d')) * 1000]);
-        $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
-        $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
-        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'abC123!', true);
-        $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
-        $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
-        return $jwt;
-    }
-			</code>
+    <code>private function _getToken()</code>
+    <code>{</code>
+    <code>    $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);</code>
+    <code>    $payload = json_encode(['username' => 'jkn, 'password' => ''mobile, 'date' => strtotime(date('Y-m-d')) * 1000]);</code>
+    <code>    $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));</code>
+    <code>    $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));</code>
+    <code>    $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'abC123!', true);</code>
+    <code>    $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));</code>
+    <code>    $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;</code>
+    <code>    return $jwt;</code>
+    <code>}</code>
 		</pre>
 		<br/>
 		<figure class="clear">
