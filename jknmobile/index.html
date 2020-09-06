@@ -198,31 +198,21 @@ layout: compress
 	<section class="slide">
 		<h2>Parameter & Statement</h2>
 		<pre>
-			<code>webapps/pendaftaran/<mark>config.php</mark></code>
-			<code>webapps/dokter/<mark>config.php</mark></code>
+            <code>if(empty($decode['tanggalperiksa'])) {</code>
+            <code>   $errors[] = 'Anda belum memilih tanggal periksa';</code>
+            <code>}</code>
 		</pre>
 	</section>
 
 	<section class="slide">
 		<h2>Request & Response</h2>
 		<pre>
-			<code>define('DB_HOST', '<mark>localhost</mark>');</code>
-			<code>define('DB_USER', '<mark>user</mark>');</code>
-			<code>define('DB_PASS', '<mark>password</mark>');</code>
-			<code>define('DB_NAME', '<mark>sik</mark>');</code>
-		</pre>
-	</section>
-
-	<section class="slide">
-		<pre>
-			<code>define('HARIDAFTAR', '<mark>03</mark>');</code>
-			<code>define('LIMITJAM', '<mark>08:00:00</mark>');</code>
-			<code>define('SIGNUP', '<mark>DISABLE</mark>');</code>
-			<code>define('KODE_BERKAS', '<mark>002</mark>');</code>
-			<code>define('UKURAN_BERKAS', '<mark>5000000</mark>');</code>
-			<code>define('PENGADUAN', '<mark>ENABLE</mark>');</code>
-			<code>define('PRODUCTION', '<mark>YES</mark>');</code>
-			<code>define('URUTNOREG', '<mark>DOKTER</mark>');</code>
+            <code>$response = array(</code>
+            <code>    'metadata' => array(</code>
+            <code>        'message' => 'Access denied',</code>
+            <code>        'code' => 401</code>
+            <code>    )</code>
+            <code>);</code>
 		</pre>
 	</section>
 
@@ -230,16 +220,6 @@ layout: compress
 		<h1>How to Online?</h1>
 		<p>Pakai internet dengan IP Statik / Dinamik</p>
 	</div></section>
-
-	<section class="slide">
-		<h2>Topology</h2>
-		<figure>
-			<img class="cover" src="pictures/khanza-online.png" alt="Modul Online SIMRS Khanza">
-			<figcaption class="copyright right white">
-				<a href="https://basoro.id/">© Basoro.ID</a>
-			</figcaption>
-		</figure>
-	</section>
 
 	<section class="slide shout"><div>
 		<h1>Demo!</h1>
