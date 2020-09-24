@@ -68,3 +68,4 @@ if [ "${1}" == 'install' ];then
 elif [ "${1}" == 'uninstall' ];then
 	Uninstall_DnsManager
 fi
+
