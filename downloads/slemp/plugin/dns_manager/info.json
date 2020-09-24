@@ -1,0 +1,11 @@
+{
+	"title": "Dns Manager",
+	"name": "dns_manager",
+	"ps": "Dns graphic management tool based on PowerDns",
+	"versions": "3.2",
+	"checks": "/www/server/panel/plugin/dns_manager",
+	"author": "official",
+	"home": "http://www.aapanel.com",
+	"date": "",
+    "display": 1
+}
