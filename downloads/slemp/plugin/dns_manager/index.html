@@ -159,7 +159,7 @@
         </div>
     </div>
 </div>
-<!-- 添加SOA -->
+
 <script type="text/html" id="soaForm">
     <div class="bt-form pd20" id="soa_orm">
         <div class="line">
@@ -180,7 +180,7 @@
         </div>
     </div>
 </script>
-<!-- 添加域名表单 -->
+
 <script type="text/html" id="addDomainFrom">
     <div class="bt-form pd20">
         <div class="line">
@@ -195,7 +195,7 @@
         </div>
     </div>
 </script>
-<!-- 导出域名 -->
+
 <script type="text/html" id="exportForm">
     <div class="bt-form pd20">
         <div class="line">
@@ -204,7 +204,7 @@
         </div>
     </div>
 </script>
-<!-- 添加解析表单 -->
+
 <script type="text/html" id="addanalysisFrom">
     <div class="bt-form pd20 ">
         <div class="line">
@@ -274,7 +274,7 @@
         </div>
     </div>
 </script>
-<!-- 解析表格 -->
+
 <script type="text/html" id="analysisTable">
     <div class="divtable pd20">
         <div class="mb10"><button class="btn btn-success btn-sm va0 mb15 setAnalysis" data-type="add">Add record</button></div>
@@ -294,13 +294,13 @@
 </script>
 
 <script type="text/javascript">
-    // 获取域名列表
+
     var DnsManager = {
     	plugin_name: 'dns_manager',
     	resolve_list: {},
         domain_list: [],
         setTime: null,
-        // 初始化
+
         init:function(){
             var _this = this;
             this.createDomainList();
@@ -327,12 +327,12 @@
             $("body").on("mouseleave", "#ns_server,#admin_mail,#refresh,#retry,#expire,#minimum,#serial", function () {
                 layer.closeAll('tips');
             });
-            // 添加域名
+
             $('.addDomain').click(function(){
                 layer.open({
                     type: 1,
                     title:'Add domain name',
-                    closeBtn: 2, //不显示关闭按钮
+                    closeBtn: 2,
                     area:'450px',
                     btn:['Confirm','Cancel'],
                     content: addDomainFrom.innerHTML,
@@ -354,7 +354,7 @@
                     }
                 });
             });
-            // 解析列表
+
             $('#domainList').on('click','.analysisList',function(){
                 var domain = $(this).attr('data-domain');
                 layer.open({
@@ -365,9 +365,9 @@
                     area:['800px','550px'],
                     content:analysisTable.innerHTML,
                     success:function(){
-                        // 获取列表
+
                         _this.createAnalysisList({domain:domain});
-                        // 删除解析
+
                         $('#analsisList').on('click','.delsAnalysis',function(){
                             var domain = $(this).attr('data-domain'),
                             index = $(this).attr('data-index') +'',
@@ -375,7 +375,7 @@
                             layer.confirm('Confirm delete the selected resolution record?', {
                                 title:'Delete resolution',
                                 closeBtn:2,
-                                btn: ['Confirm','Cancel'] //按钮
+                                btn: ['Confirm','Cancel']
                             }, function(index,lyaers){
                                 var obj = {
                                     domain:domain,
@@ -405,7 +405,7 @@
                                 layer.close(index);
                             });
                         });
-                        // 添加/编辑解析
+
                         $('.analysisTable').on('click','.setAnalysis',function(){
                             var type = $(this).attr('data-type') == 'add'?true:false,
                                 index = $(this).attr('data-index') +'',
@@ -413,7 +413,7 @@
                             layer.open({
                                 type: 1,
                                 title:type?'Add record':(' [ '+ domain +' ] Edit record'),
-                                closeBtn: 2, //不显示关闭按钮
+                                closeBtn: 2,
                                 skin:'addanalysisFrom',
                                 area:'600px',
                                 btn:['Confirm','Cancel'],
@@ -421,7 +421,7 @@
                                 success:function(){
                                     var _tips = $('.domain_tips').val();
                                     $('.domain_tips').html('&nbsp;&nbsp;.'+domain);
-                                    // 点击类型
+
                                     $('.bt-select-input').click(function(e){
                                         if($('.bt-select-list').hasClass('active')){
                                             $('.bt-select-list').removeClass('active');
@@ -438,7 +438,7 @@
                                             e.stopPropagation();
                                         });
                                     });
-                                    // 解析类型选择
+
                                     $('.bt-select-list li').click(function(e){
                                         var _val = $(this).attr('data-val');
                                         if(!$('.caa_show').is(':hidden')) $('.caa_show').hide();
@@ -549,7 +549,7 @@
                     layer.open({
                         type: 1,
                         title:'SOA',
-                        closeBtn: 2, //不显示关闭按钮
+                        closeBtn: 2,
                         area:'420px',
                         btn:['Save','Cancel'],
                         content: soaForm.innerHTML,
@@ -580,15 +580,15 @@
                         }
                     })
                 })
-                
+
             });
-            // 删除域名
+
             $('#domainList').on('click','.deleteDomain',function(){
                 var domain = $(this).attr('data-domain');
                 layer.confirm('Delete [ '+ domain +'] domain name，still continue?', {
                     title:'Delete domain name',
                     closeBtn:2,
-                    btn: ['Confirm','Cancel'] //按钮
+                    btn: ['Confirm','Cancel']
                 }, function(index,lyaers){
                     _this.delDomain({domain:domain},function(res){
                         _this.createDomainList(function(){
@@ -600,13 +600,13 @@
                     layer.close(index);
                 });
             });
-            // 恢复解析
+
             $('#domainList').on('click','.analysisRenew',function(){
                 var domain = $(this).attr('data-domain');
                 layer.confirm('Restore the default resolution of the domain name [ '+ domain +' ]，still continue?', {
                     title:'Restore domain name resolution',
                     closeBtn:2,
-                    btn: ['Confirm','Cancel'] //按钮
+                    btn: ['Confirm','Cancel']
                 }, function(index,lyaers){
                     _this.restoreDefResolve({domain:domain},function(res){
                         _this.createDomainList(function(){
@@ -618,12 +618,12 @@
                     layer.close(index);
                 });
             });
-            // 导出
+
             $('.dnsExport').click(function(){
                 layer.open({
                     type: 1,
                     title:'Export Data',
-                    closeBtn: 2, //不显示关闭按钮
+                    closeBtn: 2,
                     area:'450px',
                     btn:['Download','Cancel'],
                     content: exportForm.innerHTML,
@@ -647,7 +647,7 @@
                     }
                 })
             })
-            // 停止服务
+
             $('.StopDnsServer').click(function(){
                 _this.ServiceEventBind('stop',function(res){
                     _this.createServer(function(){
@@ -655,7 +655,7 @@
                     });
                 });
             });
-            // 启动服务
+
             $('.StartDnsServer').click(function(){
                 _this.ServiceEventBind('start',function(res){
                     _this.createServer(function(){
@@ -663,7 +663,7 @@
                     });
                 });
             });
-            // 重启服务
+
             $('.RestartDnsServer').click(function(){
                 _this.ServiceEventBind('restart',function(res){
                     _this.createServer(function(){
@@ -671,7 +671,7 @@
                     });
                 });
             });
-            // 清理日志
+
             $('.clearLogs').click(function(){
                 _this.clearup_logs(function(res){
                     _this.createLogsList({p:1},function(){
@@ -679,7 +679,7 @@
                     })
                 })
             });
-            // 日志
+
             $('#logsBodyPage').on('click','a',function(e){
                 var page = $(this).attr('href').replace('p=','');
                 _this.createLogsList({p:page});
@@ -687,7 +687,7 @@
                 e.stopPropagation();
             });
         },
-        // 创建解析列表
+
         createAnalysisList:function(obj,callback){
             var _this = this;
             this.getResolveList({ domain:obj.domain },function(res){
@@ -712,7 +712,7 @@
                 if(callback) callback(res);
             });
         },
-        // 创建域名列表
+
         createDomainList:function(callback){
             var _this = this;
             this.getDomainList(function(res){
@@ -775,7 +775,7 @@
                                 e.stopPropagation();
                             });
                         });
-                        // 解析类型选择
+
                         $('.bt-select-list li').click(function(e){
                             var _val = $(this).attr('data-val');
                             $('.bt-select-val').html($(this).html()).attr('data-val',_val);
@@ -792,7 +792,7 @@
                 })
             })
         },
-         // 获取监听IP地址
+
         get_can_listen_ip:function(callback){
             this.send({
                 tips:'Getting a list of listening IP addresses, please wait...',
@@ -802,7 +802,7 @@
                 }
             })
         },
-        // 设置监听IP地址
+
         set_listen_ip:function(obj,callback){
             this.send({
                 tips:'Setting the listening IP address, please wait...',
@@ -813,7 +813,7 @@
                 }
             })
         },
-        // 选择文件
+
         select_file:function(files,start){
             var _this = this;
             setTimeout(function(){
@@ -830,12 +830,12 @@
                 form.append("f_start", start);
                 form.append("blob", _files.slice(start, end));
                 layer.confirm('Whether to import the ['+_files.name+'] file',{ title: 'import Data'},function(){
-                    //上传文件
+
                     _this.updata_file(form)
                 })
             },500)
         },
-        // 上传文件
+
         updata_file:function(form){
             var _this = this;
             $.ajax({
@@ -884,21 +884,11 @@
                 }
             })
         },
-        // 下载文件
+
         GetFileBytes:function(fileName, fileSize) {
             window.open('/download?filename=' + encodeURIComponent(fileName));
         },
-        // // 创建公共网卡
-        // createSubcard:function(callback){
-        //     this.send({
-        //         title:'正在创建公共网卡，请稍后...',
-        //         method:'create_subcard',
-        //         success:function(res){
-        //             if(callback) callback(res);
-        //         }
-        //     })
-        // },
-        // 创建日志列表
+
         createLogsList:function(obj,callback){
             if(obj == undefined) obj = {p:1}
             this.getLogsList({p:obj.p},function(res){
@@ -919,7 +909,7 @@
                 if(callback) callback(res);
             });
         },
-        // 创建服务状态界面
+
         createServer:function(callback){
             this.getServiceStatus(function(res){
                 if(res){
@@ -932,7 +922,7 @@
                 if(callback) callback(res);
             });
         },
-        // 获取域名列表
+
         getDomainList:function(callback){
             this.send({
                 tips:'Getting a list of domain names, please wait...',
@@ -943,7 +933,7 @@
                 }
             });
         },
-        // 检查Pdns
+
         dnsServerCheck:function(callback){
             this.send({
                 tips:'Checking pdns, please wait...',
@@ -954,7 +944,7 @@
                 }
             });
         },
-        // 添加域名
+
         addDomain:function(obj,callback){
             this.send({
                 tips:'Adding domain name, please wait...',
@@ -965,7 +955,7 @@
                 }
             })
         },
-        // 删除域名
+
         delDomain:function(obj,callback){
             this.send({
                 tips:'Deleting domain name, please wait...',
@@ -975,8 +965,8 @@
                     if(callback) callback(res);
                 }
             })
-        }   ,
-        // 导出域名
+        },
+
         set_export_data:function(obj,callback){
             this.send({
                 tips:'Generating download link, please wait...',
@@ -987,7 +977,7 @@
                 }
             })
         },
-        // 获取解析列表
+
         getResolveList:function(obj,callback){
             this.send({
                 tips:'Getting domain name resolution list, please wait...',
@@ -998,7 +988,7 @@
                 }
             })
         },
-        //设置SOA
+
         set_soa_record:function(obj,callback){
             this.send({
                 tips:'Setting SOA, please wait...',
@@ -1009,7 +999,7 @@
                 }
             })
         },
-        // (添加/删除/修改)列表
+
         actionResolve:function(obj,callback){
             var tips = '';
             switch(obj.act){
@@ -1032,7 +1022,7 @@
                 }
             })
         },
-        // 恢复域名解析
+
         restoreDefResolve:function(obj,callback){
             this.send({
                 tips:'Restoring domain name resolution, please wait...',
@@ -1043,7 +1033,7 @@
                 }
             })
         },
-        // 清理日志
+
         clearup_logs:function(callback){
             this.send({
                 tips:'Clearing the log, please wait...',
@@ -1064,7 +1054,7 @@
                 }
             })
         },
-        // 正在获取服务状态
+
         getServiceStatus:function(callback){
             this.send({
                 tips:'Getting service status, please wait...',
@@ -1074,7 +1064,7 @@
                 }
             })
         },
-        // 服务器事件绑定
+
         ServiceEventBind:function(type,callback){
             var _this = this;
             switch(type){
@@ -1097,7 +1087,7 @@
                 break;
             }
         },
-        // 正在停止服务
+
         stopService:function(callback){
             this.send({
                 tips:'Stopping service, please wait...',
@@ -1107,7 +1097,7 @@
                 }
             })
         },
-        // 正在启动服务
+
         startService:function(callback){
             this.send({
                 tips:'Starting service, please wait...',
@@ -1117,7 +1107,7 @@
                 }
             })
         },
-        // 请求方法
+
         send:function(obj){
             var loadT = '';
 			if (obj.load == undefined) obj.load = 0;
