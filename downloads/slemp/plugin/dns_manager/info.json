@@ -1,11 +1,14 @@
 {
 	"title": "Dns Manager",
+	"tip":"soft",
 	"name": "dns_manager",
+	"type":"Manajemen DNS",
 	"ps": "Dns graphic management tool based on PowerDns",
 	"versions": "0.1",
 	"checks": "/opt/slemp/server/panel/plugin/dns_manager",
 	"author": "Basoro",
 	"home": "https://slemp.basoro.id",
-	"date": "",
+	"date":"2020-09-01",
+	"default":false,
 	"display": 1
 }
