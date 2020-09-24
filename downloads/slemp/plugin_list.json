@@ -76,6 +76,7 @@
 	"type":"Manajemen DNS",
 	"ps": "Dns graphic management tool based on PowerDns",
 	"versions": "0.1",
+	"name": "dns_manager.sh",
 	"checks": "/opt/slemp/server/panel/plugin/dns_manager",
 	"author": "Basoro",
 	"home": "https://slemp.basoro.id",
