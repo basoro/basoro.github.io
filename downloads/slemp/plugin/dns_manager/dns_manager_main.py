@@ -84,8 +84,8 @@ ONBOOT=yes
             public.ExecShell("ifup {}".format(sub_card))
         if not self.__check_net_work():
             self.__restore_card()
-            return public.ReturnMsg(False, "Failed to create a self-network card, please contact the official staff")
-        return public.ReturnMsg(True, "Success")
+            return public.returnMsg(False, "Failed to create a self-network card, please contact the official staff")
+        return public.returnMsg(True, "Success")
 
     def get_can_listen_ip(self,get):
         public_ip = self.__check_pubilc_ip()
@@ -103,7 +103,7 @@ ONBOOT=yes
     def set_listen_ip(self,get):
         values = self.__check_give_vaule(get)
         if "listen_ip" not in values:
-            return public.ReturnMsg(False, "Please enter listen ip")
+            return public.returnMsg(False, "Please enter listen ip")
         ip = values["listen_ip"]
         if ip != "any" and not self.__check_card(ip):
             result = self.__create_subcard(ip)
@@ -120,12 +120,12 @@ ONBOOT=yes
         cc = self.__check_conf()
         if cc:
             self.__restore_file(conffile)
-            return public.ReturnMsg(False, "Configuration failed "+ str(cc))
+            return public.returnMsg(False, "Configuration failed "+ str(cc))
         config = self.__read_config(self.config)
         config["listen_ip"] = ip
         self.__write_config(self.config,config)
         public.ExecShell("systemctl restart named-chroot")
-        return public.ReturnMsg(True, "Configuration successful")
+        return public.returnMsg(True, "Configuration successful")
 
     def __get_listen_ip(self):
         config = self.__read_config(self.config)
@@ -242,7 +242,7 @@ ns2             600     IN      {2}        {1}
             resolve_file = "{0}/var/named/{1}.zone".format(self.dns_conf_path, domain)
             if os.path.exists(resolve_file):
                 os.remove(resolve_file)
-            return public.ReturnMsg(False, "Add domain name failed2 " + str(cc))
+            return public.returnMsg(False, "Add domain name failed2 " + str(cc))
         public.ExecShell("systemctl restart named-chroot")
 
     def add_domain(self, get):
@@ -253,7 +253,7 @@ ns2             600     IN      {2}        {1}
         self._make_ns_record(values)
         domain = values["domain"]
         if self.__check_domain_exist(domain):
-            return public.ReturnMsg(False, "Domain name already exists")
+            return public.returnMsg(False, "Domain name already exists")
         zone_config = """
 zone "%s" IN {
         type master;
@@ -262,7 +262,7 @@ zone "%s" IN {
 };
 """ % (domain, domain)
         self.__back_file(self.zone_file)
-        public.writeFile(self.zone_file,zone_config,"a+")
+        public.writeFile(self.zone_file,zone_config)
         if self.__create_dns_resolve(values):
             if self.dns_server_check() == 'bind':
                 self._check_bind_conf(domain)
@@ -273,18 +273,18 @@ zone "%s" IN {
                 config["domain"].append(domain)
                 self.__write_config(self.config, config)
                 public.WriteLog('DNS', 'Add domain name [' + domain + '] successful')
-                return public.ReturnMsg(True, "Add domain name successfully")
+                return public.returnMsg(True, "Add domain name successfully")
         public.WriteLog('DNS', 'Add domain name [' + domain + '] failed')
         self.__restore_file(self.zone_file)
-        return public.ReturnMsg(False, "Add domain name failed1")
+        return public.returnMsg(False, "Add domain name failed1")
 
     def get_domain_list(self, get):
         config = self.__read_config(self.config)
         if config["domain"]:
-            return public.ReturnMsg(True, config["domain"])
+            return public.returnMsg(True, config["domain"])
         if not self.__get_listen_ip():
             return "0"
-        return public.ReturnMsg(True, config["domain"])
+        return public.returnMsg(True, config["domain"])
 
     def __delete_zone(self,domain):
         zone_conf = public.readFile(self.zone_file)
@@ -309,7 +309,7 @@ zone "%s" IN {
             self.__delete_zone(domain)
             public.ExecShell("systemctl restart named-chroot")
             public.WriteLog('DNS', 'Delete domain name [' + domain + '] successful')
-            return public.ReturnMsg(True, "Delete domain name successful")
+            return public.returnMsg(True, "Delete domain name successful")
 
     def __check_resolve_exist(self,zone_file,values):
         v = values.copy()
@@ -393,7 +393,7 @@ zone "%s" IN {
             return True
         self.__back_file(zone_file)
         if act == "add" and not result:
-            public.writeFile(zone_file, add_resolve, "a+")
+            public.writeFile(zone_file, add_resolve)
         if act == "delete" and result:
             tmp = zone_conf.replace(result.group(0),"")
             new_conf = ""
@@ -429,17 +429,17 @@ zone "%s" IN {
             if values["type"] != "NS":
                 if not self.__check_domain_resolve(domain, host=v,type=values["type"],value=values) and values["act"] == "delete":
                     public.WriteLog('DNS', '{0} resolve {1} successful'.format(domain, d[act]))
-                    return public.ReturnMsg(True, '{0} successful'.format(d[act]))
+                    return public.returnMsg(True, '{0} successful'.format(d[act]))
                 elif self.__check_domain_resolve(domain, host=v,type=values["type"],value=values) and values["act"] != "delete":
                     public.WriteLog('DNS', '{0} resolve {1} successful'.format(domain, d[act]))
-                    return public.ReturnMsg(True, '{0} successful'.format(d[act]))
+                    return public.returnMsg(True, '{0} successful'.format(d[act]))
                 else:
-                    return public.ReturnMsg(False, '{0} Fail'.format(d[act]))
+                    return public.returnMsg(False, '{0} Fail'.format(d[act]))
             else:
                 public.WriteLog('DNS', '{0} resolve {1} successful'.format(domain, d[act]))
-                return public.ReturnMsg(True, '{0} successful'.format(d[act]))
+                return public.returnMsg(True, '{0} successful'.format(d[act]))
         public.WriteLog('DNS', 'resolve {0} failed, please check if the hostname already exists'.format(domain,d[act]))
-        return public.ReturnMsg(False, '{0} failed, please check if the hostname already exists'.format(d[act]))
+        return public.returnMsg(False, '{0} failed, please check if the hostname already exists'.format(d[act]))
 
     def __change_json(self, data):
         conf_json = {}
@@ -487,7 +487,7 @@ zone "%s" IN {
         self.__restore_file(resolve_file, act="def")
         public.WriteLog('DNS', 'Restore default parsing success')
         public.ExecShell("systemctl restart named-chroot")
-        return public.ReturnMsg(True, "Successful recovery")
+        return public.returnMsg(True, "Successful recovery")
 
     def get_logs(self, get):
         import page
@@ -513,7 +513,7 @@ zone "%s" IN {
 
     def clearup_logs(self,get):
         public.M('logs').where('type=?', (u'DNS',)).delete()
-        return public.ReturnMsg(True, "Clean up successfully")
+        return public.returnMsg(True, "Clean up successfully")
 
     def get_service_status(self,get):
         sh = "ps aux|grep named|grep -v 'grep'"
@@ -535,8 +535,8 @@ zone "%s" IN {
         if self.get_service_status(get):
             public.ExecShell("pkill -9 named")
         if self.get_service_status(get):
-            return public.ReturnMsg(False, "Stop service failed")
-        return public.ReturnMsg(True, "Stop service successfully")
+            return public.returnMsg(False, "Stop service failed")
+        return public.returnMsg(True, "Stop service successfully")
 
     def start_service(self,get):
         if not self.get_service_status(get):
@@ -545,9 +545,9 @@ zone "%s" IN {
                 services = 'pdns'
             public.ExecShell("systemctl start {}".format(services))
             if not self.get_service_status(get):
-                return public.ReturnMsg(False, "Stop service failed")
-            return public.ReturnMsg(True, "Start service successfully")
-        return public.ReturnMsg(False, "Service has started, no need to start")
+                return public.returnMsg(False, "Stop service failed")
+            return public.returnMsg(True, "Start service successfully")
+        return public.returnMsg(False, "Service has started, no need to start")
 
     def __first_check(self):
         if public.readFile(self.path+"first.txt"):
@@ -617,11 +617,11 @@ zone "%s" IN {
         public.writeFile(logfile,"")
         for i in data:
             if i in domain_list:
-                public.writeFile(logfile,"Domain name already exists, skip {} import\n".format(i),"a+")
+                public.writeFile(logfile,"Domain name already exists, skip {} import\n".format(i))
                 continue
             self._make_resolve_content(i,data[i])
             config["domain"].append(i)
-            public.writeFile(logfile, "Successfully imported {}\n".format(i), "a+")
+            public.writeFile(logfile, "Successfully imported {}\n".format(i))
         self.__write_config(self.config,config)
         self._dnssever_restart()
         return public.returnMsg(True,"Successfully imported")
@@ -650,7 +650,7 @@ zone "%s" IN {
         allow-update { none; };
 };""" % (domain, domain)
         public.writeFile(resolve_file,resolve_conf)
-        public.writeFile(self.zone_file,named_strs,"a+")
+        public.writeFile(self.zone_file,named_strs)
 
 
     def dns_server_check(self,get=None):
@@ -740,37 +740,37 @@ zone "%s" IN {
             if re.search(rep_domain_point, get.ns_server):
                 values["ns_server"] = str(get.ns_server)
             else:
-                return public.ReturnMsg(False, "Please check if the SOA name server domain name format is correct")
+                return public.returnMsg(False, "Please check if the SOA name server domain name format is correct")
         if hasattr(get,'admin_mail'):
             if re.search(rep_domain_point, get.admin_mail):
                 values["admin_mail"] = str(get.admin_mail)
             else:
-                return public.ReturnMsg(False, "Please check if the dns admin email format is correct")
+                return public.returnMsg(False, "Please check if the dns admin email format is correct")
         if hasattr(get,'serial'):
             if re.search(soa_reg, get.serial):
                 values["serial"] = str(get.serial)
             else:
-                return public.ReturnMsg(False, "Please check if the serial format is correct")
+                return public.returnMsg(False, "Please check if the serial format is correct")
         if hasattr(get,'refresh'):
             if re.search(soa_reg, get.refresh):
                 values["refresh"] = str(get.refresh)
             else:
-                return public.ReturnMsg(False, "Please check if the refresh format is correct")
+                return public.returnMsg(False, "Please check if the refresh format is correct")
         if hasattr(get,'retry'):
             if re.search(soa_reg, get.retry):
                 values["retry"] = str(get.retry)
             else:
-                return public.ReturnMsg(False, "Please check if the retry format is correct")
+                return public.returnMsg(False, "Please check if the retry format is correct")
         if hasattr(get,'expire'):
             if re.search(soa_reg, get.expire):
                 values["expire"] = str(get.expire)
             else:
-                return public.ReturnMsg(False, "Please check if the expire format is correct")
+                return public.returnMsg(False, "Please check if the expire format is correct")
         if hasattr(get,'minimum'):
             if re.search(soa_reg, get.minimum):
                 values["minimum"] = str(get.minimum)
             else:
-                return public.ReturnMsg(False, "Please check if the minimum format is correct")
+                return public.returnMsg(False, "Please check if the minimum format is correct")
         if hasattr(get,"ns1domain"):
             if not get.ns1domain:
                 values["ns1domain"] = None
@@ -778,7 +778,7 @@ zone "%s" IN {
                 if re.search(rep_domain,get.ns1domain):
                     values["ns1domain"] = str(get.ns1domain)
                 else:
-                    return public.ReturnMsg(False, "Please check if the NS1 domain name format is correct")
+                    return public.returnMsg(False, "Please check if the NS1 domain name format is correct")
         if hasattr(get,"ns2domain"):
             if not get.ns2domain:
                 values["ns2domain"] = None
@@ -786,7 +786,7 @@ zone "%s" IN {
                 if re.search(rep_domain,get.ns2domain):
                     values["ns2domain"] = str(get.ns2domain)
                 else:
-                    return public.ReturnMsg(False, "Please check if the NS2 domain name format is correct")
+                    return public.returnMsg(False, "Please check if the NS2 domain name format is correct")
 
         if hasattr(get,"soa"):
             if not get.soa:
@@ -795,7 +795,7 @@ zone "%s" IN {
                 if re.search(rep_domain,get.soa):
                     values["soa"] = str(get.soa)
                 else:
-                    return public.ReturnMsg(False, "Please check if the soa format is correct")
+                    return public.returnMsg(False, "Please check if the soa format is correct")
 
         if hasattr(get, "id"):
             values["id"] = int(get.id)
@@ -803,7 +803,7 @@ zone "%s" IN {
             if re.search(rep_domain, get.domain):
                 values["domain"] = str(get.domain)
             else:
-                return public.ReturnMsg(False, "Please check if the domain name format is correct")
+                return public.returnMsg(False, "Please check if the domain name format is correct")
         if hasattr(get, "host"):
             if re.search(rep_domain, get.host):
                 values["host"] = str(get.host)
@@ -816,34 +816,34 @@ zone "%s" IN {
             elif get.host == "*":
                 values["host"] = str(get.host)
             else:
-                return public.ReturnMsg(False, "Please check if the host name format is correct.")
+                return public.returnMsg(False, "Please check if the host name format is correct.")
         if hasattr(get, "type"):
             rep = "(NS|A|CNAME|MX|TXT|AAAA|SRV)"
             if re.search(rep, get.type):
                 values["type"] = str(get.type)
             else:
-                return public.ReturnMsg(False, "Please check if the parsing type format is correct.")
+                return public.returnMsg(False, "Please check if the parsing type format is correct.")
         if hasattr(get, "ttl"):
             try:
                 values["ttl"] = int(get.ttl)
             except:
-                return public.ReturnMsg(False, "Please check if the TTL value format is correct.")
+                return public.returnMsg(False, "Please check if the TTL value format is correct.")
         if hasattr(get, "mx_priority"):
             try:
                 values["mx_priority"] = int(get.mx_priority)
             except:
-                return public.ReturnMsg(False, "Please check if the MX priority format is correct.")
+                return public.returnMsg(False, "Please check if the MX priority format is correct.")
         if hasattr(get, "act"):
             l = ["delete", "add", "modify"]
             if get.act in l:
                 values["act"] = get.act
             else:
-                return public.ReturnMsg(False, "Please check if the operation type format is correct.")
+                return public.returnMsg(False, "Please check if the operation type format is correct.")
         if hasattr(get,"listen_ip"):
             if re.search(rep_ip,get.listen_ip) or re.search(rep_ipv6,get.listen_ip) or get.listen_ip == "any":
                 values["listen_ip"] = get.listen_ip
             else:
-                return public.ReturnMsg(False, "Please check if the IP address format is correct.")
+                return public.returnMsg(False, "Please check if the IP address format is correct.")
         if hasattr(get, "value"):
             try:
                 if values["type"] == "A":
@@ -882,7 +882,7 @@ zone "%s" IN {
                     values["tag"] = str(get.tag)
                     values["ca_domain_name"] = str(get.ca_domain_name) if '"' in get.ca_domain_name else str('"'+get.ca_domain_name+'"')
                     values["value"] = ''
-                if "value" not in values: return public.ReturnMsg(False, "Please check if the record value format is correct")
+                if "value" not in values: return public.returnMsg(False, "Please check if the record value format is correct")
             except:
-                return public.ReturnMsg(False, "Please check if the record value format is correct")
+                return public.returnMsg(False, "Please check if the record value format is correct")
         return values
