@@ -103,61 +103,59 @@
         width: 16px;
     }
 </style>
-<div class="bt-form">
-    <div class="bt-w-main">
-        <div class="bt-w-menu">
-            <p class="bgw">Domain name list</p>
-            <p>Service</p>
-            <p>Logs</p>
-        </div>
-        <div class="bt-w-con pd15 divtable">
-            <div class="bt-box active">
-                <div class="mb10">
-                    <button class="btn btn-success btn-sm va0 mb15 addDomain" style="margin-right: 10px">Add domain name</button>
-                    <a href="https://doc.aapanel.com/web/#/3?page_id=180" target="blank" style="color:#20a53a;font-size: 13px;display: inline-block;margin-left: 10px;">[Help]</a>
-                    <button class="btn btn-default btn-sm va0 mb15 pdns" style="display:none" onclick="DnsManager.get_can_listen_view()">Set the listening IP</button>
-                    <ul class="help-info-text c7 mtb15" style="display: none;">
-				        <li>If the set IP cannot communicate, please try setting the listening IP to [ any ]</li>
-			        </ul>
-                </div>
-                <div class="table-box" >
-                	<div class="tbThead">
-                		<table class="table table-hover">
-	                    	<thead><tr><th>Domain</th><th style="text-align: right">Operating</th></tr></thead>
-		                </table>
-                	</div>
-                	<div class="tbTbody" style="max-height: 330px;overflow: auto;">
-                		<table class="table table-hover">
-		                    <tbody id="domainList"></tbody>
-		                </table>
-                    </div>
-                </div>
-                <button class="btn btn-success btn-sm mt10 dnsExport" style="margin-right: 10px" autocomplete="off">Export</button>
-                <button class="btn btn-success btn-sm mt10 dnsImport" onclick="$('#file_input').click()">Import</button>
-                <input type="file" id="file_input" onchange="DnsManager.select_file(this.files,'0')" autocomplete="off"/>
+ 
+<div class="tasklist" style="width:640px;height:480px;">
+	<div class="tab-nav">
+		<span class="on">Domain List</span>
+		<span class="">Service</span>
+		<span class="">Logs</span>
+	</div>
+	<div class="tab-con">
+		<div id="tab1" class="SetTab1" style="display: block;">
+          <div class="mb10">
+            <button class="btn btn-info btn-sm va0 mb15 addDomain" style="margin-right: 10px">Add domain name</button>
+            <button class="btn btn-default btn-sm va0 mb15 pdns" style="display:none" onclick="DnsManager.get_can_listen_view()">Set the listening IP</button>
+            <ul class="help-info-text c7 mtb15" style="display: none;">
+              <li>If the set IP cannot communicate, please try setting the listening IP to [ any ]</li>
+            </ul>
+          </div>
+          <div class="table-box" >
+            <div class="tbThead">
+              <table class="table table-hover">
+                <thead><tr><th>Domain</th><th style="text-align: right">Action</th></tr></thead>
+              </table>
             </div>
-            <div class="bt-box" style="display: none;">
-                <div class="soft-man-con bt-form dnsServer">
-                    <p class="status">Status：<span>Running</span>
-                        <span style="color: #20a53a; margin-left: 3px;" class="glyphicon glyphicon glyphicon-play"></span>
-                    </p>
-                    <div class="sfm-opt">
-                        <button class="btn btn-default btn-sm StartDnsServer" style="display: none;">Start</button>
-                        <button class="btn btn-default btn-sm StopDnsServer" style="display: none;">Stop</button>
-                        <button class="btn btn-default btn-sm RestartDnsServer">Restart</button>
-                    </div>
-                </div>
+            <div class="tbTbody" style="max-height: 330px;overflow: auto;">
+              <table class="table table-hover">
+                <tbody id="domainList"></tbody>
+              </table>
             </div>
-            <div class="bt-box" style="display: none;">
-                <button class="btn btn-success btn-sm va0 pull-right mb15 clearLogs" disabled="disabled">Clean up logs</button>
-                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-hover">
-                    <thead><tr><th>Details</th><th>Operating time</th></tr></thead>
-                    <tbody id="logsBody"></tbody>
-                </table>
-                <div id="logsBodyPage" class="page"></div>
+          </div>
+          <button class="btn btn-info btn-sm mt10 dnsExport" style="margin-right: 10px" autocomplete="off">Export</button>
+          <button class="btn btn-info btn-sm mt10 dnsImport" onclick="$('#file_input').click()">Import</button>
+          <input type="file" id="file_input" onchange="DnsManager.select_file(this.files,'0')" autocomplete="off"/>
+		</div>
+		<div id="tab2" class="SetTab2"  style="display: none;">
+          <div class="soft-man-con bt-form dnsServer">
+            <p class="status">Status：<span>Running</span>
+              <span style="color: #20a53a; margin-left: 3px;" class="glyphicon glyphicon glyphicon-play"></span>
+            </p>
+            <div class="sfm-opt">
+              <button class="btn btn-default btn-sm StartDnsServer" style="display: none;">Start</button>
+              <button class="btn btn-default btn-sm StopDnsServer" style="display: none;">Stop</button>
+              <button class="btn btn-default btn-sm RestartDnsServer">Restart</button>
             </div>
-        </div>
-    </div>
+          </div>
+		</div>
+		<div id="tab3" class="SetTab3"  style="display: none;">
+          <button class="btn btn-info btn-sm va0 pull-right mb15 clearLogs" disabled="disabled">Clean up logs</button>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table table-hover">
+            <thead><tr><th>Details</th><th>Operating time</th></tr></thead>
+            <tbody id="logsBody"></tbody>
+          </table>
+          <div id="logsBodyPage" class="page"></div>
+		</div>
+  	</div>
 </div>
 
 <script type="text/html" id="soaForm">
@@ -277,7 +275,7 @@
 
 <script type="text/html" id="analysisTable">
     <div class="divtable pd20">
-        <div class="mb10"><button class="btn btn-success btn-sm va0 mb15 setAnalysis" data-type="add">Add record</button></div>
+        <div class="mb10"><button class="btn btn-info btn-sm va0 mb15 setAnalysis" data-type="add">Add record</button></div>
         <div class="table-box" >
         	<div class="tbThead">
         		<table class="table table-hover">
@@ -304,10 +302,10 @@
         init:function(){
             var _this = this;
             this.createDomainList();
-            $('.bt-w-main .bt-w-menu p').click(function(){
+            $('.tab-nav span').click(function(){
 				var index = $(this).index();
-				$(this).addClass('bgw').siblings().removeClass('bgw');
-                $('.bt-w-con .bt-box').eq(index).show().siblings().hide();
+				$(this).addClass('on').siblings().removeClass('on');
+                $('.tab-con > div').eq(index).show().siblings().hide();
                 switch(index){
                     case 0:
                         _this.createDomainList();
@@ -1043,7 +1041,7 @@
                 }
             })
         },
-        // 获取日志列表
+
         getLogsList:function(obj,callback){
             this.send({
                 tips:'Getting log list, please wait...',
