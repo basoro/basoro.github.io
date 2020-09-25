@@ -44,8 +44,8 @@ Install_DnsManager()
 	wget -O $pluginPath/dns_manager_main.py $download_Url/plugin/dns_manager/dns_manager_main.py -T 5
 	wget -O $pluginPath/index.html $download_Url/plugin/dns_manager/index.html -T 5
 	wget -O $pluginPath/info.json $download_Url/plugin/dns_manager/info.json -T 5
-	wget -O $pluginPath/icon.png $download_Url/plugin/dns_manager/icon.png -T 5
-	\cp -a -r /opt/slemp/server/panel/plugin/dns_manager/icon.png /opt/slemp/server/panel/static/img/soft_ico/ico-dns_manager.png
+	#wget -O $pluginPath/icon.png $download_Url/plugin/dns_manager/icon.png -T 5
+	#\cp -a -r /opt/slemp/server/panel/plugin/dns_manager/icon.png /opt/slemp/server/panel/static/img/soft_ico/ico-dns_manager.png
 
 	echo 'The installation is complete' > $install_tmp
 }
@@ -57,8 +57,8 @@ Uninstall_DnsManager()
 	mv /var/named/chroot/etc/named.rfc1912.zones /var/named/chroot/etc/named.rfc1912.zones_bak
 	mv /var/named/chroot/var/named /var/named/chroot/var/named_bak
 	rm -rf /var/named/chroot/var/named
-	/usr/bin/systemctl stop named-chroot
-	systemctl disable named-chroot
+	#/usr/bin/systemctl stop named-chroot
+	#systemctl disable named-chroot
 	systemctl stop pdns
 	systemctl disable pdns
 }
