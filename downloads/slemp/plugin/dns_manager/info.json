@@ -1,6 +1,6 @@
 {
 	"title": "Dns Manager",
-	"tip":"soft",
+	"tip":"lib",
 	"name": "dns_manager",
 	"type":"Manajemen DNS",
 	"ps": "Dns graphic management tool based on PowerDns",
