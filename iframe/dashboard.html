@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Dashboard</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+<meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+<meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+<meta name="author" content="yinqi">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/materialdesignicons.min.css" rel="stylesheet">
+<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-6 col-md-3">
+      <div class="card bg-primary">
+        <div class="card-body clearfix">
+          <div class="pull-left m-r-15"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-calendar-range fa-1-5x"></i></span> </div>
+          <div>
+            <p class="h6 text-white m-t-0">Total Kunjungan</p>
+            <p class="h3 text-white m-b-0 fa-1-5x">302,125</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="card bg-danger">
+        <div class="card-body clearfix">
+          <div class="pull-left m-r-15"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-calendar fa-1-5x"></i></span> </div>
+          <div>
+            <p class="h6 text-white m-t-0">Kunjungan Tahun Ini</p>
+            <p class="h3 text-white m-b-0 fa-1-5x">120,000</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="card bg-success">
+        <div class="card-body clearfix">
+          <div class="pull-left m-r-15"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-account-multiple fa-1-5x"></i></span> </div>
+          <div>
+            <p class="h6 text-white m-t-0">Kunjungan Bulan Ini</p>
+            <p class="h3 text-white m-b-0 fa-1-5x">3,005</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3">
+      <div class="card bg-purple">
+        <div class="card-body clearfix">
+          <div class="pull-left m-r-15"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-wheelchair-accessibility fa-1-5x"></i></span> </div>
+          <div>
+            <p class="h6 text-white m-t-0">Kunjungan Hari Ini</p>
+            <p class="h3 text-white m-b-0 fa-1-5x">153</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="row">
+    <div class="col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>开源信息</h4>
+        </div>
+        <div class="card-body">
+          <p>该项目是光年后台管理模板(Light Year Admin)的iframe版本。</p>
+  		  <p>码云下载地址：<a href="https://gitee.com/yinqi/Light-Year-Admin-Using-Iframe" target="_blank">https://gitee.com/yinqi/Light-Year-Admin-Using-Iframe</a></p>
+          <p>普通版演示地址：<a href="http://lyear.itshubao.com/" target="_blank">http://lyear.itshubao.com/</a></p>
+          <p>普通版码云地址：<a href="https://gitee.com/yinqi/Light-Year-Admin-Template" target="_blank">https://gitee.com/yinqi/Light-Year-Admin-Template</a></p>
+        </div>
+      </div>
+    </div>
+  </div>-->
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4>Rawat Jalan</h4>
+          <button type="button" class="btn btn-sm btn-info pull-right" id="ChartBars"><i class="mdi mdi-refresh"></i></button>
+        </div>
+        <div class="card-body" id="here">
+          <canvas class="js-chartjs-bars"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4>Rawat Inap</h4>
+          <button type="button" class="btn btn-sm btn-info pull-right" id="ChartLines"><i class="mdi mdi-refresh"></i></button>
+        </div>
+        <div class="card-body">
+          <canvas class="js-chartjs-lines"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Pasien Terbaru</h4>
+        </div>
+        <div class="">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>No. RM</th>
+                  <th>Nama</th>
+                  <th>Pekerjaan</th>
+                  <th>Cara Bayar</th>
+                  <th>Progres</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>000019</td>
+                  <td>SYATIR RADIAH</td>
+                  <td>PEKERJA MANDIRI</td>
+                  <td><span class="label label-warning">BPJS</span></td>
+                  <td>
+                    <div class="progress progress-striped progress-sm">
+                      <div class="progress-bar progress-bar-warning" style="width: 45%;"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>000018</td>
+                  <td>ZAKY KHAIRAN AZWAR</td>
+                  <td>PND DAERAH</td>
+                  <td><span class="label label-warning">UMUM</span></td>
+                  <td>
+                    <div class="progress progress-striped progress-sm">
+                      <div class="progress-bar progress-bar-warning" style="width: 45%;"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>000017</td>
+                  <td>Fulan Bin Fulan</td>
+                  <td>PNS</td>
+                  <td><span class="label label-warning">BPJS</span></td>
+                  <td>
+                    <div class="progress progress-striped progress-sm">
+                      <div class="progress-bar progress-bar-warning" style="width: 45%;"></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+
+<!--图表插件-->
+<script type="text/javascript" src="js/Chart.js"></script>
+<script type="text/javascript">
+$(document).ready(function(e) {
+    var $dashChartBarsCnt  = jQuery( '.js-chartjs-bars' )[0].getContext( '2d' ),
+        $dashChartLinesCnt = jQuery( '.js-chartjs-lines' )[0].getContext( '2d' );
+
+    var $dashChartBarsData = {
+		labels: ['Jan', 'Peb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+		datasets: [
+			{
+				label: 'Pasien',
+                borderWidth: 1,
+                borderColor: 'rgba(0,0,0,0)',
+				backgroundColor: 'rgba(51,202,185,0.5)',
+                hoverBackgroundColor: "rgba(51,202,185,0.7)",
+                hoverBorderColor: "rgba(0,0,0,0)",
+				data: [2500, 1500, 1200, 3200, 4800, 3500, 1500, 1500, 1200, 3200, 4800, 2500]
+			}
+		]
+	};
+    var $dashChartLinesData = {
+		labels: ['Jan', 'Peb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+		datasets: [
+			{
+				label: 'Pasien',
+				data: [20, 25, 40, 30, 45, 40, 55, 40, 48, 40, 42, 50],
+				borderColor: '#358ed7',
+				backgroundColor: 'rgba(53, 142, 215, 0.175)',
+                borderWidth: 1,
+                fill: false,
+                lineTension: 0.5
+			}
+		]
+	};
+
+    new Chart($dashChartBarsCnt, {
+        type: 'bar',
+        data: $dashChartBarsData
+    });
+
+    var myLineChart = new Chart($dashChartLinesCnt, {
+        type: 'line',
+        data: $dashChartLinesData,
+    });
+
+    $("#ChartBars").on("click", function() {
+        var $dashChartBarsCnt = jQuery( '.js-chartjs-bars' )[0].getContext( '2d' );
+        new Chart($dashChartBarsCnt, {
+            type: 'bar',
+            data: $dashChartBarsData
+        });
+    });
+
+    $("#ChartLines").on("click", function() {
+        var $dashChartLinesCnt = jQuery( '.js-chartjs-lines' )[0].getContext( '2d' );
+        new Chart($dashChartLinesCnt, {
+            type: 'line',
+            data: $dashChartLinesData
+        });
+    });
+
+});
+</script>
+</body>
+</html>
