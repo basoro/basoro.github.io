@@ -12,7 +12,7 @@
     background-color: #fff;
     vertical-align: top;  /* remove vertical gap from display:inline */
     margin-left: -1px;    /* remove 1px horizontal gap from display:inline */
-    margin-right : -10px;  /* remove 1px horizontal gap from display:inline and 3px ext padding-right, border-right from bootstrap nav*/
+    margin-right : -4px;  /* remove 1px horizontal gap from display:inline and 3px ext padding-right, border-right from bootstrap nav*/
 }
 .mt-nav-panel{
     overflow: hidden;
