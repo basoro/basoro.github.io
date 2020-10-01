@@ -2,7 +2,7 @@
   "name": "SIMRS Khanza Lite",
   "short_name": "Khanza LITE",
   "lang": "en-US",
-  "start_url": "/",
+  "start_url": "index.html",
   "display": "standalone",
   "theme_color": "#FF9800",
   "background_color": "#FF9800",
