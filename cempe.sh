@@ -11,7 +11,7 @@ echo "
 download_Url=https://basoro.id/downloads/slemp
 
 setup_path=/opt/slemp
-port='12345'
+port='7777'
 
 while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 do
@@ -27,7 +27,7 @@ startTime=`date +%s`
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
 yum install epel-release -y
-yum update -y 
+yum update -y
 for pace in wget python-pip python-devel python-imaging gcc zip unzip;
 do yum -y install $pace; done
 sleep 5
@@ -78,7 +78,7 @@ firewall-cmd --permanent --zone=public --add-port=22/tcp > /dev/null 2>&1
 firewall-cmd --permanent --zone=public --add-port=80/tcp > /dev/null 2>&1
 firewall-cmd --permanent --zone=public --add-port=443/tcp > /dev/null 2>&1
 firewall-cmd --permanent --zone=public --add-port=3306/tcp > /dev/null 2>&1
-firewall-cmd --permanent --zone=public --add-port=1234/tcp > /dev/null 2>&1
+firewall-cmd --permanent --zone=public --add-port=777/tcp > /dev/null 2>&1
 firewall-cmd --permanent --zone=public --add-port=$port/tcp > /dev/null 2>&1
 firewall-cmd --reload
 
@@ -189,7 +189,7 @@ http
             include enable-php-56.conf;
         }
 	server{
-            listen 1234;
+            listen 777;
             server_name phpmyadmin.basoro.id;
             index index.html index.htm index.php;
             root  /opt/slemp/server/phpmyadmin;
@@ -411,7 +411,7 @@ echo -e "================================================================"
 echo -e "\033[32mSabar bro! Pemasangan database SIK sedang dilakukan..!!\033[0m"
 echo -e "\033[32mKurang lebih 5 menit. Tergantung spesisifikasi server.\033[0m"
 echo -e "================================================================"
-/opt/slemp/server/mysql/bin/mysql -u root -p${mysqlpwd} sik < $setup_path/wwwroot/default/sik_kosong.sql 
+/opt/slemp/server/mysql/bin/mysql -u root -p${mysqlpwd} sik < $setup_path/wwwroot/default/sik_kosong.sql
 
 
 chkconfig syslog-ng on
@@ -456,7 +456,7 @@ echo -e "Default Site Url: http://$address"
 echo -e "MySQL Password: $mysqlpwd"
 echo -e "\033[33mPeringatan:\033[0m"
 echo -e "\033[33mJika tidak bisa mengakses panel, \033[0m"
-echo -e "\033[33msilahkan buka port berikut (12345|1234|80|22)\033[0m"
+echo -e "\033[33msilahkan buka port berikut (7777|777|80|22)\033[0m"
 echo -e "=================================================================="
 
 endTime=`date +%s`
