@@ -1,0 +1,406 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+    {% if site.analytics-google %}
+        {% include analytics-google.html %}
+    {% endif %}
+
+	<title>KHANZA DALAM GENGGAMAN</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=792, user-scalable=no">
+	<link rel="stylesheet" href="../khanza-dalam-genggaman/shower/themes/ribbon/styles/styles.css">
+	<style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+</head>
+<body class="shower list">
+
+	<header class="caption">
+		<h1>Coding Camp SIMRS Khanza</h1>
+		<p>Swiss Bell Hotel Balikpanan</p>
+	</header>
+
+	<section class="slide" id="cover">
+		<p>Coding Camp SIMRS Khanza. Swiss Bell Hotel Balikpanan, 13 - 16 September 2018</p>
+		<h2>KHANZA DALAM GENGGAMAN</h2>
+		<h4>oleh</h4>
+		<h3>BASORO</h3>
+		<figure>
+			<img class="cover" src="pictures/bg.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+		<style>
+			.shout p {position: absolute; top: 75%; left: 0; width: 100%; text-align: center;
+						font-size: 50px; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); color: #777}
+			.shout h1 {font-size: 120px; color: #555; text-align: center;}
+
+			#cover h2 {
+				margin: 0px 0 0;
+				color: white;
+				text-align: center;
+				font-size: 70px;
+			}
+
+			#cover h3 {
+				margin: -20px 0 0;
+				color: white;
+				text-align: center;
+				font-size: 40px;
+			}
+
+			#cover h4 {
+				margin: 240px 0 0;
+				color: white;
+				text-align: center;
+				font-size: 30px;
+			}
+
+			#cover p {
+				margin: 0px 0 0;
+				text-align: center;
+				color: white;
+				font-style: italic;
+				font-size: 20px;
+			}
+
+			#cover p a {
+				color: white;
+			}
+			.slide {background: #fff url(pictures/logo-modul-online.png) no-repeat right 431px;}
+		</style>
+	</section>
+
+	<section class="slide">
+		<h2 class="shout shrink">Who is BASORO</h2>
+	</section>
+
+	<section class="slide">
+		<h3>drg. Faisol Basoro, Probolinggo 17 April 1978</h3>
+		<ul>
+			<li>RSUD H. Damanhuri Barabai, Kab. Hulu Sungai Tengah, Kalimantan Selatan.</li>
+			<li class="next">Penyedia layanan SMS Gateway dan APP Quick Count (Jember, Lumajang, Banyuwangi, Murung Raya, Barito Utara, Hulu Sungai Tengah)</li>
+			<li class="next">Mensetup beberapa service server seperti webserver, sms gateway, database server, proxy squid, mail server, PHP & Bash scripting.</li>
+			<li class="next">Konsultan Server dan Jaringan Dinas Infokom Kab. Hulu Sungai Tengah.</li>
+		</ul>
+	</section>
+
+	<section class="slide"><div>
+		<h2>Table of Contents</h2>
+		<ol>
+			<li>Introduction</li>
+			<li>Motivation</li>
+			<li>Installation</li>
+			<li>Features
+			<li>Roadmap</li>
+			<li>Getting Involved</li>
+			<li>Demo</li>
+		</ol>
+	</div></section>
+	<section class="slide shout"><div>
+		<h1>Introduction</h1>
+		<p>Hello World!</p>
+	</div></section>
+
+	<section class="slide">
+		<h2>Modul Khanza Online adalah.....</h2>
+		<ul>
+			<li>Pendaftaran pasien on-line (e-Pasien)</li>
+			<li>Dashboard Dokter (e-Dokter)</li>
+			<li>Diagnosa elektronik ICD X (e-Diagnosa)</li>
+			<li>Layanan resep tanpa kertas (e-Resep)</li>
+			<li>Rekam medik elektronik (e-Rekam Medik)</li>
+			<li>Aplikasi Android</li>
+			<li>Terintegrasi langsung dengan SIMRS Khanza</li>
+		</ul>
+	</section>
+
+	<section class="slide shout"><div>
+		<h1>Motivation</h1>
+		<p>What annoyed people!</p>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Pasien</h2>
+		<!-- <img width="250px" src="pictures/broken-engine.jpg" class="alignright"> -->
+		<ul>
+			<li>Antrian terlalu lama</li>
+			<li>Nggak tahu kapan urutan diperiksa</li>
+			<li>Jadwal dokternya kapan?</li>
+			<li>Ketersediaan kamar inap</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Petugas</h2>
+		<!-- <img width="250px" src="pictures/learner-sign.jpg" class="alignright"> -->
+		<ul>
+			<li>Tidak otomatis</li>
+			<li>Human error</li>
+			<li>Medical error</li>
+			<li>Coding = Money</li>
+		</ul>
+		<figure class="clear">
+			<blockquote>
+				<p>Anything that can go wrong — will go wrong!</p>
+			</blockquote>
+			<figcaption>Murphy's Law</figcaption>
+		</figure>
+	</div></section>
+
+	<section class="slide shout"><div>
+		<h1>Installation</h1>
+		<p>Welcome to the Easy world!</p>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Prasyarat</h2>
+		<!-- <img width="225px" src="pictures/cli.jpg" class="alignright">				 -->
+		<pre>
+			<code>Server SIMRS Khanza Linux / Windows (*Better Linux)</code>
+			<code>Koneksi Internet di Server (IP Statik/Dinamik)</code>
+			<code>VPS Container (Optional jika IP Dinamik)</code>
+		</pre>
+		<br/>
+		<figure class="clear">
+			<blockquote>
+				<p>Simplicity is the ultimate sophistication!</p>
+			</blockquote>
+			<figcaption>William Gaddis</figcaption>
+		</figure>
+	</div></section>
+
+	<section class="slide">
+		<h2>Konfigurasi Server SIMRS Khanza</h2>
+		<pre>
+			<code>webapps/pendaftaran/<mark>config.php</mark></code>
+			<code>webapps/dokter/<mark>config.php</mark></code>
+		</pre>
+	</section>
+
+	<section class="slide">
+		<h2>config.php</h2>
+		<pre>
+			<code>define('DB_HOST', '<mark>localhost</mark>');</code>
+			<code>define('DB_USER', '<mark>user</mark>');</code>
+			<code>define('DB_PASS', '<mark>password</mark>');</code>
+			<code>define('DB_NAME', '<mark>sik</mark>');</code>
+		</pre>
+	</section>
+
+	<section class="slide">
+		<pre>
+			<code>define('HARIDAFTAR', '<mark>03</mark>');</code>
+			<code>define('LIMITJAM', '<mark>08:00:00</mark>');</code>
+			<code>define('SIGNUP', '<mark>DISABLE</mark>');</code>
+			<code>define('KODE_BERKAS', '<mark>002</mark>');</code>
+			<code>define('UKURAN_BERKAS', '<mark>5000000</mark>');</code>
+			<code>define('PENGADUAN', '<mark>ENABLE</mark>');</code>
+			<code>define('PRODUCTION', '<mark>YES</mark>');</code>
+			<code>define('URUTNOREG', '<mark>DOKTER</mark>');</code>
+		</pre>
+	</section>
+
+	<section class="slide shout"><div>
+		<h1>How to Online?</h1>
+		<p>Pakai internet dengan IP Statik / Dinamik</p>
+	</div></section>
+
+	<section class="slide">
+		<h2>Topology</h2>
+		<figure>
+			<img class="cover" src="pictures/khanza-online.png" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide shout"><div>
+		<h1>Features/Usage</h1>
+		<p>Screenshot and Showcase</p>
+	</div></section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/1.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/2.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/3.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/4.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/5.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/6.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/8.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/9.jpg" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide shout"><div>
+		<h1>Roadmap</h1>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Next few milestones...</h2>
+		<ul>
+			<li>Integrasi dengan No Rujukan Online</li>
+			<li><i>Approval booking registration</i> untuk pasien dengan SKDP</li>
+			<li>Notifikasi di Aplikasi Android menggunakan Firebase</li>
+			<li>Dashboard Klaim Online BPJS</li>
+			<li>Jadwal Operasi</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Beyond SIMRS......</h2>
+		<ul>
+			<li>REST API</li>
+			<li>Web-based KHANZA Lite</li>
+			<li>Integrated Mobile Apps</li>
+		</ul>
+	</div></section>
+
+	<section class="slide">
+		<figure>
+			<img class="cover" src="pictures/yaski-hub.png" alt="Modul Online SIMRS Khanza">
+			<figcaption class="copyright right white">
+				<a href="https://basoro.id/">© Basoro.ID</a>
+			</figcaption>
+		</figure>
+	</section>
+
+	<section class="slide shout"><div>
+		<h1>Involved</h1>
+		<p>For Khanza Online!</p>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>How you can help?</h2>
+		<ul>
+			<li>Coding</li>
+			<li>Documentation</li>
+			<li>Testing</li>
+			<li>Help others</li>
+			<li>Spread the word</li>
+			<li>Dontations! ;-)</li>
+		</ul>
+	</div></section>
+
+
+	<section class="slide"><div>
+		<h2>Useful Links</h2>
+		<ul>
+			<li>Homepage &nbsp;&nbsp; <a href="https://elkhanza.wordpress.com">https://elkhanza.wordpress.com/</a></li>
+			<li>Docs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/mas-elkhanza/SIMRS-Khanza/wiki/">https://github.com/mas-elkhanza/SIMRS-Khanza/wiki/</a></li>
+			<li>Github &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/mas-elkhanza/SIMRS-Khanza/">https://github.com/mas-elkhanza/SIMRS-Khanza/</a></li>
+			<li>Yaski &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.yaski.or.id">https://www.yaski.or.id</a></li
+		</ul>
+	</div></section>
+
+	<section class="slide shout"><div>
+		<h1>Demo!</h1>
+		<p>It's showtime!!!</p>
+	</div></section>
+
+	<section class="slide shout"><div>
+		<h1>Q&A</h1>
+		<p>Let's talk!</p>
+	</div></section>
+
+	<section class="slide" id="see-more">
+		<h2 class="shout">
+			<img src="pictures/logo.svg" alt="Shower logo">
+			<a href="http://github.com/mas-elkhanza/SIMRS-Khanza">Fork me on GitHub</a>
+		</h2>
+		<style>
+			#see-more h2 {
+				font-size: 100px
+			}
+
+			#see-more img {
+				width: 0.72em;
+				height: 0.72em;
+			}
+		</style>
+	</section>
+
+	<section class="slide shout"><div>
+		<h1>The End!</h1>
+		<p>Thanks :-)</p>
+	</div></section>
+
+	<footer class="badge">
+		<a href="http://github.com/mas-elkhanza/SIMRS-Khanza">13-16 September 2018</a>
+	</footer>
+
+	<div class="progress"></div>
+
+	<script src="../khanza-dalam-genggaman/shower/shower.min.js"></script>
+	<!-- Copyright © 2018 Yours Truly, Famous Inc. -->
+
+</body>
+</html>
