@@ -39,7 +39,7 @@ APAM Barabai adalah Aplikasi Pasien dan Aduan Masyarakat Barabai. Aplikasi yang 
 </div>
 <div class="docs-content">
 <div class="with-device" style="height:100vh !important;">
-<h2 data-device-preview="https://basoro.id/apam/index.html"></h2>
+<h2 data-device-preview="https://basoro.id/apam/www/index.html"></h2>
 </div>
 </div>
 <br><br><br>
