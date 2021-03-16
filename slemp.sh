@@ -97,7 +97,7 @@ python -m compileall $setup_path/server/panel
 rm -f $setup_path/server/panel/class/*.py
 rm -f $setup_path/server/panel/*.py
 
-wget https://dl.eff.org/certbot-auto --no-check-certificate -O $setup_path/server/panel/certbot-auto
+wget $download_Url/letsencrypt-auto --no-check-certificate -O $setup_path/server/panel/certbot-auto
 isCron=`cat /var/spool/cron/root|grep certbot.log`
 if [ "${isCron}" == "" ];then
 	echo "30 2 * * * $setup_path/server/panel/certbot-auto renew >> $setup_path/server/panel/logs/certbot.log" >>  /var/spool/cron/root
