@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>TEST Basoro WhatsApp API</h2>
+
+<input id="number" name="number" value="">
+<input id="message" name="message" value="">
+<button type="button" onclick="loadDoc()">SEND</button>
+
+<p id="demo"></p>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  var number = document.getElementById("number").value;
+  var message = document.getElementById("message").value;
+  console.log(number + " - " + message);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML = this.response;
+    }
+  };
+  xhttp.open("POST", "http://124.158.185.205:8000/send-message", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("number=" + number + "&message=" + message);
+}
+</script>
+
+</body>
+</html>
