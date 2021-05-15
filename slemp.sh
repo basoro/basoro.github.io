@@ -97,6 +97,7 @@ python -m compileall $setup_path/server/panel
 rm -f $setup_path/server/panel/class/*.py
 rm -f $setup_path/server/panel/*.py
 
+mkdir -p /opt/slemp/server/panel/logs
 wget $download_Url/letsencrypt-auto --no-check-certificate -O $setup_path/server/panel/certbot-auto
 isCron=`cat /var/spool/cron/root|grep certbot.log`
 if [ "${isCron}" == "" ];then
