@@ -262,7 +262,7 @@ Install_PHP_56()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_56}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz https://museum.php.net/php5/php-5.6.40.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
