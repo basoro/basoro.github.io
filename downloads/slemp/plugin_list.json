@@ -60,7 +60,7 @@
 	"tip":"lib",
 	"name": "mail_sys",
 	"type":"plugin",
-	"ps": "Build Mail Server for yourself, Supports centos7+ and ubuntu 16+",
+	"ps": "Build Mail Server for centos 7",
 	"versions": "1.0",
 	"checks": "/opt/slemp/server/panel/plugin/mail_sys",
 	"author": "ataaka",
