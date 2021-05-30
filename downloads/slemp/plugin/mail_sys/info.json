@@ -1,5 +1,6 @@
 {
 	"title": "Mail Server",
+	"tip":"lib",
 	"name": "mail_sys",
 	"type":"plugin",
 	"ps": "Build Mail Server for yourself, Supports centos7+ and ubuntu 16+",
@@ -7,6 +8,7 @@
 	"checks": "/opt/slemp/server/panel/plugin/mail_sys",
 	"author": "ataaka",
 	"home": "http://basoro.id",
-	"date": "",
-    "display": 1
+	"date":"2019-08-6",
+	"default":false,
+	"display":1
 }
