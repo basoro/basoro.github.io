@@ -1,23 +1,23 @@
 #!/bin/bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
-install_tmp='/tmp/bt_install.pl'
-public_file=/opt/slemp/server/panel/install/public.sh
-if [ ! -f $public_file ];then
-	wget -O $public_file http://download.bt.cn/install/public.sh -T 5;
-fi
-. $public_file
-download_Url=$NODE_URL
-echo 'download url...'
-echo $download_Url
-pluginPath=/opt/slemp/server/panel/plugin/mail_sys
-pluginStaticPath=/opt/slemp/server/panel/plugin/mail_sys/static
 
 cpu_arch=`arch`
 if [[ $cpu_arch != "x86_64" ]];then
   echo 'Does not support non-x86 system installation'
   exit 0
 fi
+
+download_Url=https://basoro.id/downloads/slemp
+install_tmp='/tmp/slemp_install.pl'
+public_file=/opt/slemp/server/panel/script/public.sh
+if [ ! -f $public_file ];then
+	wget -O $public_file $download_Url/public.sh -T 5;
+fi
+. $public_file
+
+pluginPath=/opt/slemp/server/panel/plugin/mail_sys
+pluginStaticPath=/opt/slemp/server/panel/plugin/mail_sys/static
 
 systemver=`cat /etc/redhat-release|sed -r 's/.* ([0-9]+)\..*/\1/'`
 postfixver=`postconf mail_version|sed -r 's/.* ([0-9\.]+)$/\1/'`
