@@ -90,12 +90,12 @@ Install()
 
   echo 'Installing script file...' > $install_tmp
 
-  wget -O $pluginPath/mail_sys_main.py $download_Url/install/plugin/mail_sys/mail_sys_main.py -T 5
-  wget -O $pluginPath/receive_mail.py $download_Url/install/plugin/mail_sys/receive_mail.py -T 5
-  wget -O $pluginPath/index.html $download_Url/install/plugin/mail_sys/index.html -T 5
-  wget -O $pluginPath/info.json $download_Url/install/plugin/mail_sys/info.json -T 5
-  wget -O $pluginStaticPath/api.zip $download_Url/install/plugin/mail_sys/api.zip -T 5
-  wget -O /opt/slemp/server/panel/static/ckeditor.zip $download_Url/install/plugin/mail_sys/ckeditor.zip -T 5
+  wget -O $pluginPath/mail_sys_main.py $download_Url/plugin/mail_sys/mail_sys_main.py -T 5
+  wget -O $pluginPath/receive_mail.py $download_Url/plugin/mail_sys/receive_mail.py -T 5
+  wget -O $pluginPath/index.html $download_Url/plugin/mail_sys/index.html -T 5
+  wget -O $pluginPath/info.json $download_Url/plugin/mail_sys/info.json -T 5
+  wget -O $pluginStaticPath/api.zip $download_Url/plugin/mail_sys/api.zip -T 5
+  wget -O /opt/slemp/server/panel/static/ckeditor.zip $download_Url/plugin/mail_sys/ckeditor.zip -T 5
 
   if [ ! -d "/opt/slemp/server/panel/static/ckeditor" ]; then
     unzip /opt/slemp/server/panel/static/ckeditor.zip -d /opt/slemp/server/panel/static
