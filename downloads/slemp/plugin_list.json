@@ -62,6 +62,7 @@
 	"type":"plugin",
 	"ps": "Build Mail Server for centos 7",
 	"versions": "1.0",
+	"shell": "mail_sys.sh",
 	"checks": "/opt/slemp/server/panel/plugin/mail_sys",
 	"author": "ataaka",
 	"home": "http://basoro.id",
