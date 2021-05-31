@@ -35,6 +35,12 @@ Install_centos7()
     yum remove postfix -y
     rm -rf /etc/postfix
   fi
+  
+  wget -O /tmp/postfix3-3.4.7-1.gf.el7.x86_64.rpm http://download.bt.cn/install/plugin/mail_sys/rpm/postfix3-3.4.7-1.gf.el7.x86_64.rpm
+  yum localinstall /tmp/postfix3-3.4.7-1.gf.el7.x86_64.rpm -y
+  wget -O /tmp/postfix3-sqlite-3.4.7-1.gf.el7.x86_64.rpm http://download.bt.cn/install/plugin/mail_sys/rpm/postfix3-sqlite-3.4.7-1.gf.el7.x86_64.rpm
+  yum localinstall /tmp/postfix3-sqlite-3.4.7-1.gf.el7.x86_64.rpm -y
+  
   if [[ ! -f "/usr/sbin/postfix" ]]; then
     yum install postfix -y
     yum install postfix-sqlite -y
@@ -45,6 +51,8 @@ Install_centos7()
     yum install dovecot -y
   fi
   # 安装opendkim
+  wget -O /tmp/opendkim-2.11.0-0.1.el7.x86_64.rpm http://download.bt.cn/install/plugin/mail_sys/rpm/opendkim-2.11.0-0.1.el7.x86_64.rpm
+  yum localinstall /tmp/opendkim-2.11.0-0.1.el7.x86_64.rpm -y  
   if [[ ! -f "/usr/sbin/opendkim" ]]; then
     yum install opendkim -y
   fi
