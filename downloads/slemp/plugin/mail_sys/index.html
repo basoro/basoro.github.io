@@ -1536,7 +1536,9 @@
 					}
 					break;
 			}
-			bt.confirm({msg: repair_tips == ''?'Sure' : '<div style="word-break: break-word;">'+repair_tips+'</div>', title:typeName+' '+service+' '+'Service'},function(){
+			layer.confirm('Are you sure?',{closeBtn:2},function(){ 
+			//layer.confirm('Are you sure to {1} {2} service?',{title: typeName+' '+service+' '+'Service'},function(){				
+			//bt.confirm({msg: repair_tips == ''?"Are you sure to {1} {2} service?", [msg, service]' : '<div style="word-break: break-word;">'+repair_tips+'</div>', title:typeName+' '+service+' '+'Service'},function(){
 				mail.send({
 					tips: typeName + service + 'Service,Please wait...',
 					method: type=='repair'?'repair_service_conf':'service_admin',
