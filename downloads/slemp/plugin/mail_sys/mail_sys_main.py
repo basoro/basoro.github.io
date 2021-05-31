@@ -23,7 +23,7 @@ if sys.version_info[0] == 2:
     reload(sys)
     sys.setdefaultencoding('utf-8')
 
-sys.path.append("class/")
+sys.path.append("")
 import public
 
 try:
