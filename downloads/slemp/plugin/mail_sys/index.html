@@ -1077,7 +1077,7 @@
 
 			$('#domain_list').on('click', '.del_domain', function () {
 				var domain = $(this).attr('data-domain');
-				layer.confirm(lan.mail_sys.confirm_del_domain.replace('{1}',domain), { icon: 0, closeBtn: 2, title: lan.mail_sys.del_domain }, function (index) {
+				layer.confirm("Whether to delete the [{1}] domain name".replace('{1}',domain), { icon: 0, closeBtn: 2, title: "Del domain" }, function (index) {
 					_this.del_domain({
 						domain: domain
 					}, function (res) {
@@ -1145,29 +1145,25 @@
 				var domain = $(this).attr('data-domain');
 				var index = $(this).attr('data-index');
 				var hostname = $(this).attr('data-hostname');
-				// if(_this.domain_list[index].mx_status == 0 && _this.domain_list[index].mx_status == 0){
-				// 	layer.msg(lan.mail_sys.domain_record_err,{icon:0})
-				// 	return false;
-				// }
 				layer.open({
 					type: 1,
-					title: lan.mail_sys.user_manager.replace('{1}',domain),
+					title: "[{1}]_User Manager".replace('{1}',domain),
 					area: ['900px', '720px'],
 					closeBtn: 2,
 					content: '<div class="pd15 user_info">\
-								<button class="btn btn-sm btn-success mb15" style="margin-right:10px;" onclick="mail.edit_mailboxs_view(true)">'+lan.mail_sys.add_user+'</button>\
+								<button class="btn btn-sm btn-success mb15" style="margin-right:10px;" onclick="mail.edit_mailboxs_view(true)">Add User</button>\
 								<div class="member_table divtable">\
 									<table class="table table-hover">\
-										<thead><tr><th>'+lan.mail_sys.email+'</th><th>'+lan.mail_sys.name+'</th><th>'+lan.mail_sys.mailbox_space+'</th><th>'+lan.mail_sys.type+'</th><th>'+lan.mail_sys.status+'</th><th style="text-align: right;">'+lan.mail_sys.operating+'</th></tr></thead>\
+										<thead><tr><th>Email</th><th>Nama</th><th>MailBox space</th><th>Type</th><th>Status</th><th style="text-align: right;">Operating</th></tr></thead>\
 										<tbody id="mailboxs_list"></tbody>\
 									</table>\
 									<div class="page" id="mailboxs_page"></div>\
 								</div>\
 								<ul class="help-info-text c7 mlr20">\
-									<li>'+lan.mail_sys.add_user_tips+'&nbsp;<a href="javascript:;" class="btlink open_btlink_down">Download the HTTP-API documentation</a> </li>\
-									<li>'+lan.mail_sys.add_user_tips1.replace('{1}',hostname)+'</li>\
-									<li>'+lan.mail_sys.add_user_tips2.replace('{1}',hostname)+'</li>\
-									<li>'+lan.mail_sys.add_user_tips3.replace('{1}',hostname)+'</li>\
+									<li>Note: The current mail server supports IMAP/POP3/SMTP/HTTP protocol.&nbsp;<a href="javascript:;" class="btlink open_btlink_down">Download the HTTP-API documentation</a> </li>\
+									<li>POP service [ ServerAddress：<b>{1}</b> Port：<b>110/995</b> ]'.replace('{1}',hostname)+'</li>\
+									<li>IMAP service [ ServerAddress：<b>{1}</b> Port：<b>143/993</b> ]'.replace('{1}',hostname)+'</li>\
+									<li>SMTP service [ ServerAddress：<b>{1}</b> Port：<b>25/465/587</b> ]'.replace('{1}',hostname)+'</li>\
 								</ul>\
 							</div>',
 					success: function () {
@@ -1205,7 +1201,7 @@
 						});
 						$('#mailboxs_list').on('click', '.del_mailboxs', function () {
 							var username = $(this).attr('data-username');
-							layer.confirm(lan.mail_sys.confirm_del_user.replace('{1}',username), { icon: 0, closeBtn: 2, title: lan.mail_sys.del_member }, function (index) {
+							layer.confirm("Whether to delete the [{1}] member".replace('{1}',username), { icon: 0, closeBtn: 2, title: "Delete member" }, function (index) {
 								_this.del_mailboxs({
 									username: username
 								}, function (res) {
@@ -1444,7 +1440,7 @@
 				$(this).parents(".dropdown").find("button b").text(txt).attr("val", type);
 			});
 			_this.check_mail_sys({tips:'Checking Mail server is normal, please wait ...',hostname:''},function(res){
-				if(res.status == false && res.msg == lan.mail_sys.not_install_mail_server){
+				if(res.status == false && res.msg == "Have not installed the mail server before, please feel free to install"){
 					layer.confirm('Mail Server is not currently installed, is it installed?', {
 						icon:0,
 						title: 'Mail Server initialization',
@@ -1516,7 +1512,7 @@
 		},
 
 		service_admin : function(service,type) {
-			var msg = lan.bt[type];
+			var msg = type;
 			var typeName = '',
 			repair_tips = '';
 			switch(type){
@@ -1540,7 +1536,7 @@
 					}
 					break;
 			}
-			bt.confirm({msg: repair_tips == ''?lan.get('service_confirm', [msg, service]) : '<div style="word-break: break-word;">'+repair_tips+'</div>', title:typeName+' '+service+' '+'Service'},function(){
+			bt.confirm({msg: repair_tips == ''?'Sure' : '<div style="word-break: break-word;">'+repair_tips+'</div>', title:typeName+' '+service+' '+'Service'},function(){
 				mail.send({
 					tips: typeName + service + 'Service,Please wait...',
 					method: type=='repair'?'repair_service_conf':'service_admin',
@@ -1655,7 +1651,7 @@
 				title: 'Set mail forward',
 				area: '450px',
 				closeBtn: 2,
-				btn: [lan.public.submit, lan.public.cancel],
+				btn: ["Submit", "Cancel"],
 				content: "<div class='bt-form pd20 forwardset'>\
 						<div class='line'>\
 							<span class='tname'>Status</span>\
@@ -1705,7 +1701,7 @@
 				title: 'Set mail forward',
 				area: '450px',
 				closeBtn: 2,
-				btn: [lan.public.submit, lan.public.cancel],
+				btn: ["Submit", "Cancel"],
 				content: "<div class='bt-form pd20 forwardset'>\
 						<div class='line'>\
 							<span class='tname'>Status</span>\
@@ -1746,7 +1742,7 @@
 		//删除转发邮件
 		delete_forward:function(user){
 			var _this = this;
-			layer.confirm('Confirm to delect this mail foward?',{title: 'Delect mail forward',btn: [lan.public.submit, lan.public.cancel],closeBtn:2},function(index, layero){
+			layer.confirm('Confirm to delect this mail foward?',{title: 'Delect mail forward',btn: ["Submit", "Cancel"],closeBtn:2},function(index, layero){
 				_this.delete_mail_forward(user,function(res){
 					_this.mail_forward();
 					layer.msg(res.msg, { icon: res.status?1:2 });
@@ -1801,42 +1797,42 @@
 			var quota_size = (obj.quota / 1024 / 1024 / 1024) < 1 ? (obj.quota / 1024 / 1024) : (obj.quota / 1024 / 1024/ 1024);
 			layer.open({
 				type: 1,
-				title: type ? lan.mail_sys.add_user : lan.mail_sys.edit_user,
+				title: type ? "Add User": "Edit User",
 				area: '450px',
 				closeBtn: 2,
-				btn: [type ? lan.public.submit : lan.public.save, lan.public.cancel],
+				btn: [type ? "Submit" : "Save", "Cancel"],
 				content: "<div class='bt-form pd20'>\
 						<div class='line'>\
-							<span class='tname'>"+lan.mail_sys.user_type+"</span>\
+							<span class='tname'>User Type</span>\
 							<div class='info-r c4'>\
 								<select name='is_admin' class='bt-input-text'>\
-									<option value='0' "+ (obj.is_admin == 0 ? 'selected' : '') + ">"+lan.mail_sys.guser+"</option>\
-									<option value='1' "+ (obj.is_admin == 1 ? 'selected' : '') + ">"+lan.mail_sys.admin+"</option>\
+									<option value='0' "+ (obj.is_admin == 0 ? 'selected' : '') + ">General user</option>\
+									<option value='1' "+ (obj.is_admin == 1 ? 'selected' : '') + ">Admin</option>\
 								</select>\
 							</div>\
 						</div>\
 						<div class='line'>\
-							<span class='tname'>"+lan.mail_sys.name+"</span>\
+							<span class='tname'>Name</span>\
 							<div class='info-r c4'>\
-								<input class='bt-input-text mr5' type='text' name='full_name' value='"+ obj.full_name + "' placeholder='"+lan.mail_sys.input_username+"' style='width:250px;' />\
+								<input class='bt-input-text mr5' type='text' name='full_name' value='"+ obj.full_name + "' placeholder='Enter the username please' style='width:250px;' />\
 							</div>\
 						</div>\
 						<div class='line'>\
-							<span class='tname'>"+lan.mail_sys.email_addr+"</span>\
+							<span class='tname'>Email</span>\
 							<div class='info-r c4'>\
-								<input class='bt-input-text mr5' type='text' name='username' "+ (!type ? 'readonly' : '') + " placeholder='"+lan.mail_sys.input_email_addr+"' value='" + obj.username.split('@')[0] + "' placeholder='' style='width:151px' />@" + mail._domain_name + "\
+								<input class='bt-input-text mr5' type='text' name='username' "+ (!type ? 'readonly' : '') + " placeholder='Enter the email address please' value='" + obj.username.split('@')[0] + "' placeholder='' style='width:151px' />@" + mail._domain_name + "\
 							</div>\
 						</div>\
 						<div class='line'>\
-							<span class='tname'>"+lan.mail_sys.mail_pass+"</span>\
+							<span class='tname'>Password</span>\
 							<div class='info-r c4'>\
-								<input class='bt-input-text mr5' type='text' name='password' value='"+ (obj.password || '') + "' placeholder='" + (!type ? lan.mail_sys.no_change_passwd : lan.mail_sys.enter_email_pass) + "' style='width:250px;' />\
+								<input class='bt-input-text mr5' type='text' name='password' value='"+ (obj.password || '') + "' placeholder='" + (!type ? "If it is empty, the password will not be changed." : "Enter your email password please") + "' style='width:250px;' />\
 							</div>\
 						</div>\
 						<div class='line'>\
-							<span class='tname'>"+lan.mail_sys.mailbox_space+"</span>\
+							<span class='tname'>MailBox space</span>\
 							<div class='info-r c4'>\
-								<input class='bt-input-text mr5' type='text' name='quota' value='"+ quota_size + "' placeholder='"+lan.mail_sys.enter_size+"' style='width:183px;' />\
+								<input class='bt-input-text mr5' type='text' name='quota' value='"+ quota_size + "' placeholder='Enter the size of MailBox' style='width:183px;' />\
 								<select name='quota_size' class='bt-input-text'>\
 									<option value=' GB' "+ (obj.quota / 1024 / 1024 / 1024 >= 1 ? 'selected' : '') + ">GB</option>\
 									<option value=' MB' "+ (obj.quota / 1024 / 1024 / 1024 < 1 ? 'selected' : '') + ">MB</option>\
@@ -1845,13 +1841,13 @@
 						</div>\
 					</div>",
 				yes: function (index, layers) {
-					var array = [['username', lan.mail_sys.email_addr_empty_err], ['quota', lan.mail_sys.email_size_empty_err], ['full_name', lan.mail_sys.username_empty_err]], _form = {}, tel_reg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/,paw_reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/
+					var array = [['username', 'Email address cannot be empty'], ['quota', 'MailBox size cannot be empty'], ['full_name', 'Username cannot be empty']], _form = {}, tel_reg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/,paw_reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/
 					for (var i = 0; i < array.length; i++) {
 						if ($('[name="' + array[i][0] + '"]').val() == '') {
 							layer.msg(array[i][1], { icon: 2 });
 							return false;
 						} else if (array[i][0] == 'phone' && !tel_reg.test($('[name="' + array[i][0] + '"]').val())) {
-							layer.msg(lan.mail_sys.phone_number_err, { icon: 2 });
+							layer.msg("Member phone number format is wrong, please try again", { icon: 2 });
 							return false;
 						}
 						_form[array[i][0]] = $('[name="' + array[i][0] + '"]').val();
@@ -1894,46 +1890,46 @@
 			var _this = this;
 			layer.open({
 				type:1,
-				title:lan.mail_sys.add_record.replace('{1}',domain),
+				title:"[{1}] add record value".replace('{1}',domain),
 				area:'750px;',
 				closeBtn:2,
 				content:"<div class='bt-body divtable pd20'>\
-					<div class='bt_tips'>"+lan.mail_sys.record_tips1+"</div>\
+					<div class='bt_tips'>Step 1: Add MX records</div>\
 					<div class='bt_conter'>\
-						<div class='bt_vice_tips'>"+lan.mail_sys.record_tips2+"</div>\
+						<div class='bt_vice_tips'>Login to the domain name service provider and add a record with the record type MX for the mailbox service (please copy the following parameters directly)</div>\
 						<div class='bt_vice_conter'>\
 							<table class='table table-hover'>\
-								<thead><tr><th>"+lan.mail_sys.record_type+"</th><th>"+lan.mail_sys.host_record+"</th><th>"+lan.mail_sys.record_value+"</th><th>"+lan.mail_sys.mx_priority+"</th></tr></thead>\
+								<thead><tr><th>Record type</th><th>Host record</th><th>Record value</th><th>MX priority</th></tr></thead>\
 								<tbody>\
 								  <tr><td>MX</td><td>@</td><td>"+ hostname + "</td><td>10</td></tr>\
 								</tbody>\
 							</table>\
 						</div>\
 					</div>\
-					<div class='bt_tips'>"+lan.mail_sys.record_tips3+"</div>\
+					<div class='bt_tips'>Step 2: Add TXT record</div>\
 					<div class='bt_conter'>\
-						<div class='bt_vice_tips'>"+lan.mail_sys.record_tips4+"</div>\
+						<div class='bt_vice_tips'>Add records with record type TXT for mailbox anti-spam (please copy the following parameters directly)</div>\
 						<div class='bt_vice_conter'>\
 							<table class='table table-hover'>\
-								<thead><tr><th>"+lan.mail_sys.record_type+"</th><th>"+lan.mail_sys.host_record+"</th><th>"+lan.mail_sys.record_value+"</th></tr> </thead>\
+								<thead><tr><th>Record type</th><th>Host record</th><th>Record value</th></tr> </thead>\
 								<tbody>\
-                                  <tr><td>TXT</td><td>@</td><td>v=spf1 a mx ~all&nbsp;<a href='javascript:;' class='btlink btn_copy' data-clipboard-text='v=spf1 a mx ~all'>( "+lan.mail_sys.copy+" )</a>&nbsp;</td></tr>\
-                                  <tr><td>TXT</td><td>default._domainkey</td><td><span style='width:150px;word-break:break-all;'>"+ dkim_value +"</span>&nbsp;<a href='javascript:;' class='btlink btn_copy' data-clipboard-text='"+ dkim_value +"'>( "+lan.mail_sys.copy+" )</a>&nbsp;</td></tr>\
-                                  <tr><td>TXT</td><td>_dmarc</td><td>"+ dmarc_value +"&nbsp;<a href='javascript:;' class='btlink btn_copy' data-clipboard-text='"+ dmarc_value +"'>( "+lan.mail_sys.copy+" )</a>&nbsp;</td></tr>\
+                                  <tr><td>TXT</td><td>@</td><td>v=spf1 a mx ~all&nbsp;<a href='javascript:;' class='btlink btn_copy' data-clipboard-text='v=spf1 a mx ~all'>( Copy )</a>&nbsp;</td></tr>\
+                                  <tr><td>TXT</td><td>default._domainkey</td><td><span style='width:150px;word-break:break-all;'>"+ dkim_value +"</span>&nbsp;<a href='javascript:;' class='btlink btn_copy' data-clipboard-text='"+ dkim_value +"'>( Copy )</a>&nbsp;</td></tr>\
+                                  <tr><td>TXT</td><td>_dmarc</td><td>"+ dmarc_value +"&nbsp;<a href='javascript:;' class='btlink btn_copy' data-clipboard-text='"+ dmarc_value +"'>( Copy )</a>&nbsp;</td></tr>\
 								</tbody>\
 							</table>\
 						</div>\
 					</div>\
-					<div class='bt_center'><button class='btn btn-success btn-sm btn_set_analysis'>"+lan.mail_sys.verify_domain_resolve+"</button></div>\
+					<div class='bt_center'><button class='btn btn-success btn-sm btn_set_analysis'>Already set, Verify domain name resolution</button></div>\
 				</div>",
 				success:function(layers,index){
 					var copyBtn = new ClipboardJS('.btn_copy');
 					copyBtn.on("success",function(e){
-						layer.msg(lan.mail_sys.success_copy,{icon:1})
+						layer.msg("Successful copy",{icon:1})
 						e.clearSelection();
 					});
 					copyBtn.on("error",function(e){
-						layer.msg(lan.mail_sys.copy_fail,{icon:2})
+						layer.msg("Copy failed, please copy the text manually",{icon:2})
 					});
 					$('.btn_set_analysis').click(function(){
                       	_this.delete_mx_txt_cache({domain:domain},function(res){
@@ -1958,10 +1954,10 @@
 			}
 			layer.open({
 				type: 1,
-				title: type ? lan.mail_sys.add_domain : lan.mail_sys.edit_domain,
+				title: type ? "Add Domain" : "Edit Domain",
 				area: '500px',
 				closeBtn: 2,
-				btn: [type ? lan.public.submit : lan.public.save, lan.public.cancel],
+				btn: [type ? "Submit" : "Save", "Cancel"],
 				content: "<div class='bt-form pd20'>\
 					<div class='line'>\
 						<span class='tname'>Domain name</span>\
@@ -1990,7 +1986,7 @@
 							layer.msg(array[i][1], { icon: 2 });
 							return false;
 						} else if (array[i][0] == 'admin_phone' && !tel_reg.test($('[name="' + array[i][0] + '"]').val())) {
-							layer.msg(lan.mail_sys.manager_phone_number_err, { icon: 2 });
+							layer.msg("Manage phone number format error, please try again", { icon: 2 });
 							return false;
 						}
 						_form[array[i][0]] = $('[name="' + array[i][0] + '"]').val();
@@ -2145,13 +2141,13 @@
 			var subject = $('[name="subject"]').val();
 			var data = CKEDITOR.instances.editor1.getData();
 			if (mail_to == '') {
-				layer.msg(lan.mail_sys.enter_recipient, { icon: 0 });
+				layer.msg("Enter the recipient please", { icon: 0 });
 				return false;
 			} else if (subject == '') {
-				layer.msg(lan.mail_sys.enter_subject, { icon: 0 });
+				layer.msg("Enter the subject of the email please", { icon: 0 });
 				return false;
 			} else if (data == '') {
-				layer.msg(lan.mail_sys.enter_content, { icon: 0 });
+				layer.msg("Enter the content of the email please", { icon: 0 });
 				return false;
 			}
 			this.send_mail_conter({
@@ -2186,7 +2182,7 @@
 				if(rdata.length > 0){
                   for (var i = 0; i < rdata.length; i++) {
                       var quota_size = (rdata[i].quota / 1024 / 1024 / 1024) < 1 ? (rdata[i].quota / 1024 / 1024)+'MB' : (rdata[i].quota / 1024 / 1024/ 1024)+'GB';
-                      _tbody += '<tr><td>' + rdata[i].username + '</td><td>' + rdata[i].full_name + '</td><td>' + quota_size + '</td><td>' + (!rdata[i].is_admin ? lan.mail_sys.guser : lan.mail_sys.admin) + '</td><td><div class="index-item"><input class="btswitch btswitch-ios open-switch-active" id="is_active_' + i + '" type="checkbox" ' + (rdata[i].active == 1 ? "checked" : "") + ' data-index="' + i + '"><label class="btswitch-btn" for="is_active_' + i + '"></label></div></td><td style="text-align: right;"><a href="javascript:;" class="btlink edit_mailboxs" data-index="' + i + '">'+lan.public.edit+'</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" class="btlink red del_mailboxs" data-username="' + rdata[i].username + '">'+lan.public.del+'</a></td></tr>';
+                      _tbody += '<tr><td>' + rdata[i].username + '</td><td>' + rdata[i].full_name + '</td><td>' + quota_size + '</td><td>' + (!rdata[i].is_admin ? "General user" : "Admin") + '</td><td><div class="index-item"><input class="btswitch btswitch-ios open-switch-active" id="is_active_' + i + '" type="checkbox" ' + (rdata[i].active == 1 ? "checked" : "") + ' data-index="' + i + '"><label class="btswitch-btn" for="is_active_' + i + '"></label></div></td><td style="text-align: right;"><a href="javascript:;" class="btlink edit_mailboxs" data-index="' + i + '">Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" class="btlink red del_mailboxs" data-username="' + rdata[i].username + '">Delete</a></td></tr>';
                   };
                 }
 				$('#mailboxs_list').html(_tbody);
@@ -2220,7 +2216,7 @@
                           <td style="text-align: right;">\
                             <a href="javascript:;" class="btlink edit_ground_domain" data-hostname="'+ rdata[i].mx_record +'" data-domain="' + rdata[i].domain + '" data-index="'+ i +'">User</a>&nbsp;|&nbsp;\
                               <a href="javascript:;" class="btlink add_certificate" onclick="mail.open_certificate_view(\''+ rdata[i].ssl_status +'\',\''+ rdata[i].domain +'\')">'+(rdata[i].ssl_status?'Edit SSL':'Add SSL')+'</a>&nbsp;|&nbsp;\
-							  <a href="javascript:;" class="btlink red del_domain" data-domain="' + rdata[i].domain + '">'+lan.public.del+'</a>\
+							  <a href="javascript:;" class="btlink red del_domain" data-domain="' + rdata[i].domain + '">Delete</a>\
                           </td>\
                           </tr>';
                   };
@@ -2485,7 +2481,7 @@
 			var item = this.mail_list[index], _this = this;
 			layer.open({
 				type: 1,
-				title: lan.mail_sys.check_mail+' [' + item.subject + ']',
+				title: 'Check Mail [' + item.subject + ']',
 				area: ['850px','800px'],
 				maxmin:true,
 				// btn: [ !_this.is_mail?lan.mail_sys.reply_mail:'Sending', lan.public.cancel],
@@ -2493,9 +2489,9 @@
 					<div class='mail_title'>\
 						<ul>\
 							<li style='margin-bottom:5px;'><h4>Theme:"+ item.subject + "</h4></li>\
-							<li>"+lan.mail_sys.sender+": "+ _this.htmlEscape(item.from) + "</li>\
-							<li>"+lan.mail_sys.time+": "+ bt.format_data(item.time) + "</li>\
-							<li>"+lan.mail_sys.recipient+": "+ _this.htmlEscape(item.to) + "</li>\
+							<li>Sender: "+ _this.htmlEscape(item.from) + "</li>\
+							<li>Time: "+ bt.format_data(item.time) + "</li>\
+							<li>Recipient: "+ _this.htmlEscape(item.to) + "</li>\
 						</ul>\
 					</div>\
 					<div class='mail_conter pd15'></div>\
@@ -2513,7 +2509,7 @@
 				yes: function (index, layers) {
 					$('.domain_input:eq(2)').val(!_this.is_mail?item.to.replace(/(.*<|>)/g,''):item.from.replace(/(.*<|>)/g,''));
 					$('[name="mail_to"]').val(_this.is_mail?item.to.replace(/(.*<|>)/g,''):item.from.replace(/(.*<|>)/g,''));
-					$('[name="subject"]').val(!_this.is_mail?lan.mail_sys.reply_mail+'[ '+item.subject +']':'');
+					$('[name="subject"]').val(!_this.is_mail?'Reply Mail [ '+item.subject +']':'');
 					$('.tab-nav span:eq(6)').click();
 					CKEDITOR.instances.editor1.setData('');
 					layer.close(index);
@@ -2529,10 +2525,10 @@
 				shift: 5,
 				closeBtn: 2,
 				area: "800px",
-				title: lan.bt.edit_title+"[" + obj.title + "]",
+				title: "Edit title [" + obj.title + "]",
 				content: '<form class="bt-form pd20 pb70">\
 							<div class="line">\
-								<p style="color:red;margin-bottom:10px">'+lan.bt.edit_ps+'\
+								<p style="color:red;margin-bottom:10px">Tips：Ctrl+F Search keyword，Ctrl+G Find next，Ctrl+S Save，Ctrl+Shift+R Find & Replace!\
 									<select class="bt-input-text" name="encoding" style="width: 74px;position: absolute;top: 20px;right: 19px;height: 22px;z-index: 9999;border-radius: 0;"></select>\
 								</p>\
 								<div style="max-height: 550px;min-height: 300px;overflow-y: auto; border:1px solid #ececec">\
@@ -2540,8 +2536,8 @@
 								</div>\
 							</div>\
 							<div class="bt-form-submit-btn" style="position:absolute; bottom:0; width:100%">\
-								<button type="button" class="btn btn-danger btn-sm btn-editor-close">'+ lan.public.close +'</button>\
-								<button id="OnlineEditFileBtn" type="button" class="btn btn-success btn-sm">'+ lan.public.save +'</button>\
+								<button type="button" class="btn btn-danger btn-sm btn-editor-close">Close</button>\
+								<button id="OnlineEditFileBtn" type="button" class="btn btn-success btn-sm">Save</button>\
 							</div>\
 						</form>',
 				success:function(layers,index){
@@ -2949,7 +2945,7 @@
 		// 获取邮箱用户列表_请求
 		get_mailboxs_list: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.get_mailbox_userlist,
+				tips: 'Getting a list of mailbox users, please wait...',
 				method: 'get_mailboxs',
 				data: {
 					domain: obj.domain || '',
@@ -2970,7 +2966,7 @@
 				return false;
 			}
 			this.send({
-				tips: lan.mail_sys.get_mailbox_userlist,
+				tips: 'Getting a list of mailbox users, please wait...',
 				method: 'get_all_user',
 				check: true,
 				success: function (res) {
@@ -3007,7 +3003,7 @@
 		// 添加邮箱用户_请求
 		add_mailboxs: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.add_mailbox_user,
+				tips: 'Adding mailbox users, please wait...',
 				method: 'add_mailbox',
 				data: {
 					quota: obj.quota,
@@ -3030,7 +3026,7 @@
 		// 删除邮箱用户列表_请求
 		del_mailboxs: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.del_mailbox_user,
+				tips: 'Deleting mailbox users, please wait...',
 				method: 'delete_mailbox',
 				data: { username: obj.username },
 				success: function (res) {
@@ -3042,7 +3038,7 @@
 		// 编辑邮箱用户_请求
 		updatae_mailboxs: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.edit_mailbox_user,
+				tips: 'Editing mailbox users, please wait...',
 				method: 'update_mailbox',
 				data: {
 					quota: obj.quota,
@@ -3066,7 +3062,7 @@
 		// 添加域名_请求
 		add_domain: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.add_domain1,
+				tips: 'Adding domain name, please wait...',
 				method: 'add_domain',
 				data: {
 					domain: obj.domain,
@@ -3084,7 +3080,7 @@
 		// 删除域名_请求
 		del_domain: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.del_domain1,
+				tips: 'Deleting domain name, please wait...',
 				method: 'delete_domain',
 				data: {
 					domain: obj.domain
@@ -3098,7 +3094,7 @@
 		// 修改域名信息_请求
 		update_domain: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.modify_domain,
+				tips: 'Modifying domain name data, please wait...',
 				method: 'update_domain',
 				data: {
 					active: obj.active,
@@ -3197,7 +3193,7 @@
 		// 发送邮件_请求
 		send_mail_conter: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.sending_mail,
+				tips: 'Sending mail, please wait...',
 				method: 'send_mail',
 				data: {
 					smtp_server: obj.smtp_server || 'localhost',
@@ -3217,7 +3213,7 @@
 		// 登录邮箱界面_请求
 		login_mail_stuats: function (obj, callback) {
 			this.send({
-				tips: lan.mail_sys.verify_email_account,
+				tips: 'Verifying the email account, please wait...',
 				method: 'login',
 				data: {
 					username: obj.username,
@@ -3401,7 +3397,7 @@
 				},
 				error: function (ex) {
 					if (!obj.error) {
-						obj.msg || obj.msg == undefined ? layer.msg(lan.public.request_err, {
+						obj.msg || obj.msg == undefined ? layer.msg("Request error", {
 							icon: 2
 						}) : '';
 						return;
