@@ -47,6 +47,9 @@ Install_centos7()
   fi
   # 安装dovecot和dovecot-sieve
   yum install dovecot-pigeonhole -y
+  wget -O /tmp/dovecot23-2.3.10-1.gf.el7.x86_64.rpm http://download.bt.cn/install/plugin/mail_sys/rpm/dovecot23-2.3.10-1.gf.el7.x86_64.rpm
+  yum localinstall /tmp/dovecot23-2.3.10-1.gf.el7.x86_64.rpm -y
+  
   if [[ ! -f "/usr/sbin/dovecot" ]]; then
     yum install dovecot -y
   fi
