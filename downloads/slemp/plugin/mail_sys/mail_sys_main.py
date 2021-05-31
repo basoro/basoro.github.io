@@ -119,7 +119,8 @@ class mail_sys_main:
 
     def __init__(self):
         # self.sys_v = system.system().GetSystemVersion().replace(' ', '').lower()
-        self.sys_v = public.get_linux_distribution().lower()
+        # self.sys_v = public.get_linux_distribution().lower()
+        self.sys_v = 'centos7'
         self._session = self._get_session()
 
         create_table_str = self.M('sqlite_master').where('type=? AND name=?', ('table', 'domain')).getField('sql')
