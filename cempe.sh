@@ -377,7 +377,7 @@ rm -f /etc/init.d/php-fpm
 mv $setup_path/server/panel/scripts/php-fpm.init /etc/init.d/php-fpm
 chmod +x /etc/init.d/php-fpm
 
-wget -O phpMyAdmin.zip $download_Url/src/phpMyAdmin-4.4.zip -T20
+wget -O phpMyAdmin.zip $download_Url/src/phpMyAdmin-4.4.zip --no-check-certificate -T20
 
 unzip -o phpMyAdmin.zip -d $setup_path/server/phpmyadmin/ > /dev/null
 rm -f phpMyAdmin.zip
