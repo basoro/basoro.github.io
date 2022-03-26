@@ -349,7 +349,7 @@ Install_PHP_70()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_70}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://www.php.net/distributions/php-${php_70}.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
@@ -429,7 +429,7 @@ Install_PHP_71()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_71}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://www.php.net/distributions/php-${php_71}.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
@@ -512,7 +512,7 @@ Install_PHP_72()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_72}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://www.php.net/distributions/php-${php_72}.tar.gz -T20
 	fi
 
 	tar zxf src.tar.gz
@@ -612,7 +612,7 @@ Install_PHP_73()
 	rm -rf ${php_setup_path}/*
 	cd ${php_setup_path}
 	if [ ! -f "${php_setup_path}/src.tar.gz" ];then
-		wget -O ${php_setup_path}/src.tar.gz http://id1.php.net/distributions/php-${php_73}.tar.gz -T20
+		wget -O ${php_setup_path}/src.tar.gz http://www.php.net/distributions/php-${php_73}.tar.gz -T20
 	fi
 
 	if [ -f "/usr/local/curl2/bin/curl" ]; then
@@ -711,7 +711,7 @@ Update_PHP_56()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_56}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://www.php.net/distributions/php-${php_56}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_56} src
@@ -744,7 +744,7 @@ Update_PHP_70()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_70}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://www.php.net/distributions/php-${php_70}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_70} src
@@ -777,7 +777,7 @@ Update_PHP_71()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_71}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://www.php.net/distributions/php-${php_71}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_71} src
@@ -810,7 +810,7 @@ Update_PHP_72()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_72}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://www.php.net/distributions/php-${php_72}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_72} src
@@ -842,7 +842,7 @@ Update_PHP_73()
 
 	cd ${php_update_path}
 	if [ ! -f "${php_update_path}/src.tar.gz" ];then
-		wget -O ${php_update_path}/src.tar.gz http://id1.php.net/distributions/php-${php_73}.tar.gz -T20
+		wget -O ${php_update_path}/src.tar.gz http://www.php.net/distributions/php-${php_73}.tar.gz -T20
 	fi
 	tar zxf src.tar.gz
 	mv php-${php_73} src
