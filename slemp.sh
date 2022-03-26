@@ -8,7 +8,7 @@ echo "
 | Panel 1.x  Setup FOR CentOS/Redhat/Fedora/Ubuntu/Debian/Mint/Deepin/Raspbian
 +-----------------------------------------------------------------------------
 "
-download_Url=https://basoro.id/downloads/slemp
+download_Url=http://basoro.id/downloads/slemp
 
 setup_path=/opt/slemp
 port='12345'
