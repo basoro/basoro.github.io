@@ -1,6 +1,6 @@
 #!/bin/bash
-wget -O panel.zip https://basoro.id/downloads/slemp/panel.zip -T 10
-wget -O /etc/init.d/slemp https://basoro.id/downloads/slemp/init/slemp.init -T 10
+wget -O panel.zip http://basoro.id/downloads/slemp/panel.zip -T 10
+wget -O /etc/init.d/slemp http://basoro.id/downloads/slemp/init/slemp.init -T 10
 unzip panel.zip
 yes | cp -a panel/*.py /opt/slemp/server/panel
 yes | cp -a panel/static/* /opt/slemp/server/panel/static/
