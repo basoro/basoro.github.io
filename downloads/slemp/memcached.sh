@@ -5,7 +5,7 @@ export PATH
 memcachedVer="1.5.16"
 memcachedPhpVer="3.1.3"
 
-download_Url=https://basoro.id/downloads/slemp
+download_Url=http://basoro.id/downloads/slemp
 srcPath='/root';
 
 System_Lib(){
