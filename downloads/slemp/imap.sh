@@ -4,7 +4,7 @@ export PATH
 LANG=en_US.UTF-8
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=https://basoro.id/downloads/slemp
+download_Url=http://basoro.id/downloads/slemp
 
 Install_Imap()
 {
