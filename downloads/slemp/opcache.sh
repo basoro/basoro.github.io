@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 . /opt/slemp/server/panel/script/public.sh
-download_Url=https://basoro.id/downloads/slemp
+download_Url=http://basoro.id/downloads/slemp
 
 Install_Opcache()
 {
