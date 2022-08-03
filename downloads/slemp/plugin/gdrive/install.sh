@@ -1,7 +1,7 @@
 #!/bin/bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
-download_Url=https://basoro.id/downloads/slemp
+download_Url=http://basoro.id/downloads/slemp
 install_tmp='/tmp/slemp_install.pl'
 public_file=/opt/slemp/server/panel/script/public.sh
 if [ ! -f $public_file ];then
