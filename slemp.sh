@@ -59,7 +59,7 @@ if [ "$isPsutil" != "" ];then
 	fi
 fi
 #pip install --upgrade pip
-pip install psutil chardet web.py==0.51 virtualenv Pillow CherryPy
+pip install psutil chardet web.py==0.51 virtualenv==15.1.0 Pillow CherryPy
 cd Pillow
 python setup.py install
 cd ..
