@@ -7,7 +7,7 @@ layout: page
 ## CURRICULUM VITAE
 <br>
 
-Nama : Faisol Basoro<br />
+Nama : drg. Faisol Basoro<br />
 Tempat/Tanggal Lahir : Probolinggo/17 April 1978<br />
 Alamat : Komplek Baraduta Jaya, Jl. Perintis Kemerdekaan, Benawa Tengah, Kab. Hulu Sungai Tengah (Barabai), Kalimantan Selatan<br />
 e-Mail : dentix.id@gmail.com<br />
