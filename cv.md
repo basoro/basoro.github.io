@@ -15,7 +15,7 @@ Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br />
 
 ### PENGALAMAN KERJA
 <br>
-**Sebagai Dokter Gigi**
+**Sebagai Dokter Gigi dan Entrepreneur**
 <ol>
 <li>2005 &#8211; 2007 : Universitas Jember Medical Center.</li>
 <li>2007 &#8211; 2008 : Puskesmas Permata Intan, Kabupaten Murung Raya, Kalimantan Tengah.</li>
