@@ -18,8 +18,11 @@ Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br />
 **Sebagai Dokter Gigi dan Entrepreneur**
 <ol>
 <li>2005 &#8211; 2007 : Universitas Jember Medical Center.</li>
+<li>2005 &#8211; 2007 : Founder Waroenk Internet.</li>
+<li>2006 &#8211; 2009 : Founder Godonk Internet.</li>
 <li>2007 &#8211; 2008 : Puskesmas Permata Intan, Kabupaten Murung Raya, Kalimantan Tengah.</li>
 <li>2008 &#8211; 2009 : Puskesmas Tumbang Olong, Kabupaten Murung Raya, Kalimantan Tengah.</li>
+<li>2008 &#8211; 2011 : Founder dan CEO Jember Banget</li>
 <li>2009 &#8211; 2010 : Rumah Sakit Krikilan, Kabupaten Banyuwangi, Jawa Timur.</li>
 <li>2011 &#8211; 2012 : Puskesmas Pringgesela, Kabupaten Lombok Timur, NTB</li>
 <li>2012 &#8211; 2015 : Puskesmas Pantai Hambawang, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
