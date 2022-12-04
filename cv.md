@@ -26,6 +26,8 @@ Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br />
 <li>2015 &#8211; 2016 : Puskesmas Haruyan, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
 <li>2016 &#8211; 2017 : Puskesmas Barabai, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
 <li>2017 &#8211; Sekarang : RSUD H. Damanhuri Barabai, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
+<li>2019 &#8211; Sekarang : Komisaris PT. ATILA MEDIA PRATAMA.</li>
+<li>2022 &#8211; Sekarang : Komisaris Startup Blue Whales Indonesia.</li>
 </ol>
 <br>
 **Sebagai Freelancer**
@@ -50,6 +52,8 @@ Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br />
 <li>2013 : Kontrak kerja di Kabupaten Murung Raya sebagai penyedia layanan SMS Gateway.</li>
 <li>2013 : Kontrak kerja di Kabupaten Barito Utara sebagai penyedia layanan SMS Gateway.</li>
 <li>2015 : Kontrak kerja di Kabupaten Hulu Sungai Tengah sebagai penyedia layanan SMS Gateway dan APP Quick Count.</li>
+<li>2018 : Pengembang Mobile App dan Web App SIMRS Khanza LITE.</li>
+<li>2020 : Mengembangkan aplikasi untuk Dokter (mDOKTER) dan FKTP.</li>
 </ol>
 <br>
 **Keterampilan Komputer**
