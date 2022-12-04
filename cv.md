@@ -29,7 +29,9 @@ Website : <a href="https://basoro.id" rel="nofollow">https://basoro.id</a><br />
 <li>2015 &#8211; 2016 : Puskesmas Haruyan, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
 <li>2016 &#8211; 2017 : Puskesmas Barabai, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
 <li>2017 &#8211; Sekarang : RSUD H. Damanhuri Barabai, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan.</li>
+<li>2018 &#8211; Sekarang : Kepala Instalasi ICT RSUD H. Damanhuri Barabai - Kalimantan Selatan.</li>
 <li>2019 &#8211; Sekarang : Komisaris PT. ATILA MEDIA PRATAMA.</li>
+<li>2022 &#8211; Sekarang : Kepala Instalasi ICT Rumah Sakit Aura Syifa Kediri - Jawa Timur.</li>
 <li>2022 &#8211; Sekarang : Komisaris Startup Blue Whales Indonesia.</li>
 </ol>
 <br>
