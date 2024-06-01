@@ -56,6 +56,34 @@
 	"default":false,
 	"display":1
 },{
+	"title": "Mail Server",
+	"tip":"lib",
+	"name": "mail_sys",
+	"type":"plugin",
+	"ps": "Build Mail Server for centos 7",
+	"versions": "1.0",
+	"shell": "mail_sys.sh",
+	"checks": "/opt/slemp/server/panel/plugin/mail_sys",
+	"author": "ataaka",
+	"home": "http://basoro.id",
+	"date":"2021-05-26",
+	"default":false,
+	"display":1
+},{
+	"title": "Dns Manager",
+	"tip":"lib",
+	"name": "dns_manager",
+	"type":"Manajemen DNS",
+	"ps": "Dns graphic management tool based on PowerDns",
+	"versions": "0.1",
+	"shell": "dns_manager.sh",
+	"checks": "/opt/slemp/server/panel/plugin/dns_manager",
+	"author": "Ataaka",
+	"home": "https://slemp.basoro.id",
+	"date":"2020-09-01",
+	"default":false,
+	"display": 1
+},{
 	"title":"File Synchronization",
 	"tip":"lib",
 	"name":"rsync",
