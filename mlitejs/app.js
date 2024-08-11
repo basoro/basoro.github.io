@@ -649,7 +649,8 @@ $(document).ready(function() {
                 localStorage.userkey = data.msg.key;
                 localStorage.token = data.msg.token;
                 if(data.msg.token !='') {
-                    alert('Successfully loged in!' + data.msg.token);
+                    // alert('Successfully loged in!' + data.msg.token);
+                    alert('Successfully loged in!');
                     location.reload();
                 } else {
                     alert("Login Failed");
