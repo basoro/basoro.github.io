@@ -477,7 +477,7 @@ $(document).ready(function() {
                             status: status
                         },
                         success: function (data) {
-                            var audio = new Audio('//mlite.io/assets/sound/' + data.status + '.mp3');
+                            var audio = new Audio('//basoro.id/mlitejs/assets/sound/' + data.status + '.mp3');
                             audio.play();
                             if(data.status === 'success') {
                                 bootbox.alert('<span class="text-success">' + data.msg + '</span>');
