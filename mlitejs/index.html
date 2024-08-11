@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>mLITE Indonesia</title>
+    <meta name="description" content="mLITE Indonesia">
+    <meta property="og:title" content="mLITE Indonesia - SIMKES Masa Kini">
+    <meta property="og:description" content="Sistem Informasi Manajemen Kesehatan Yang Aman, Ringan dan Modular">
+    <meta property="og:type" content="Website">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.1.0/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/select/2.0.3/css/select.bootstrap5.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=1">
+</head>
+
+<body>
+    <div id="loading-wrapper">
+        <div class='spin-wrapper'>
+            <div class='spin'>
+            <div class='inner'></div>
+            </div>
+            <div class='spin'>
+            <div class='inner'></div>
+            </div>
+            <div class='spin'>
+            <div class='inner'></div>
+            </div>
+            <div class='spin'>
+            <div class='inner'></div>
+            </div>
+            <div class='spin'>
+            <div class='inner'></div>
+            </div>
+            <div class='spin'>
+            <div class='inner'></div>
+            </div>
+        </div>
+    </div>
+    <div class="page-wrapper">
+        <div class="app-header d-flex align-items-center">
+            <div class="d-flex">
+            <button class="toggle-sidebar">
+                <i class="ri-menu-line"></i>
+            </button>
+            <button class="pin-sidebar">
+                <i class="ri-menu-line"></i>
+            </button>
+            </div>
+            <div class="app-brand ms-3">
+            <a href="//mlite.js" class="d-lg-block d-none">
+                <img src="favicon.png" class="logo" alt="mLITE Indonesia"> <span class="logo-text">mLITE Indonesia</span>
+            </a>
+            <a href="//mlite.js" class="d-lg-none d-md-block">
+                <img src="favicon.png" class="logo" alt="mLITE Indonesia">
+            </a>
+            </div>
+            <div class="header-actions">
+            <div class="search-container d-lg-block d-none mx-3">
+                <input type="text" class="form-control" id="term" name="term" placeholder="Cari pasien">
+                <i class="ri-search-line"></i>
+            </div>
+            <div class="d-lg-flex d-none gap-2">
+                <div class="dropdown">
+                    <a class="dropdown-toggle header-icon" href="#!" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="ri-alarm-warning-line"></i>
+                        <span class="count-label success"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-300">
+                        <h5 class="fw-semibold px-3 py-2 text-primary">Alerts</h5>
+                        <div class="scroll300">
+                            <div class="p-3">
+                                <div class="d-flex py-2">
+                                <div class="icon-box md bg-info rounded-circle me-3">
+                                    <span class="fw-bold fs-6 text-white">DS</span>
+                                </div>
+                                <div class="m-0">
+                                    <h6 class="mb-1 fw-semibold">Douglass Shaw</h6>
+                                    <p class="mb-1">
+                                    Appointed as a new President 2014-2025
+                                    </p>
+                                    <p class="small m-0 opacity-50">Today, 07:30pm</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid m-3">
+                            <a href="javascript:void(0)" class="btn btn-primary">View all</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown ms-2">
+                <a id="userSettings" class="dropdown-toggle d-flex align-items-center" href="#!" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="avatar-box"><img src="favicon.png" height="20"><span class="status busy"></span></div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                    <div class="px-3 py-2">
+                        <span class="small">Nama Lengkap</span>
+                        <h6 class="m-0">role</h6>
+                    </div>
+                    <div class="mx-3 my-2 d-grid">
+                        <span id="logout" class="btn btn-danger">Logout</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="main-container">
+            <nav id="sidebar" class="sidebar-wrapper">
+                <div class="sidebar-profile">
+                    <img src="favicon.png" class="img-shadow img-3x me-3 rounded-5" alt="Hospital Admin Templates">
+                    <div class="m-0">
+                    <h5 class="mb-1 profile-name text-nowrap text-truncate">Nama Lengkap</h5>
+                    <p class="m-0 small profile-name text-nowrap text-truncate">role</p>
+                    </div>
+                </div>
+                <div class="sidebarMenuScroll">
+                    <ul class="sidebar-menu">
+                        <!-- <li class="active current-page">
+                            <a href="#dashboard" data-section="dashboard"><i class="ri-home-6-line"></i><span class="menu-text">Dashboard</span></a>
+                        </li>
+                        <li>
+                            <a href="#pasien" data-section="pasien"><i class="ri-group-fill"></i><span class="menu-text">Pasien</span></a>
+                        </li>
+                        <li>
+                            <a href="#bangsal" data-section="bangsal"><i class="ri-hotel-bed-line"></i><span class="menu-text">Bangsal</span></a>
+                        </li> -->
+                    </ul>
+                </div>
+                <div class="sidebar-contact">
+                    <p class="fw-light mb-1 text-nowrap text-truncate">Kontak Darurat</p>
+                    <h5 class="m-0 lh-1 text-nowrap text-truncate">081250067788</h5>
+                    <i class="ri-phone-line"></i>
+                </div>
+            </nav>
+            <div class="app-container">
+            <div class="app-hero-header d-flex align-items-center">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                    <a href="index.html">Home</a>
+                </li>
+                <li id="page-section" class="breadcrumb-item text-primary" aria-current="page">
+                    Dashboard
+                </li>
+                </ol>
+            </div>
+            <div class="app-body">
+                <div id="app-content"></div>            
+            </div>
+            <div class="app-footer bg-white clearfix">
+                <span class="float-start">© mLITE Indonesia 2018 - 2024</span>
+                <span class="float-end">Crafted with <i class="ri-heart-fill text-danger"></i> by drg. F. Basoro</span>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                ...
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/selectator.js"></script>
+    <script src="assets/js/jquery.slimscroll.js"></script>
+    <script src="assets/js/scripts.js?v=1"></script>
+    <script src="assets/js/jqueryvalidation.js"></script>
+    <script src="//cdn.datatables.net/2.1.0/js/dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/2.1.0/js/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdn.datatables.net/select/2.0.3/js/dataTables.select.min.js"></script>
+    <script src="//cdn.datatables.net/select/2.0.3/js/select.bootstrap5.min.js"></script>
+    <script src="assets/vendor/jspdf/jspdf.min.js"></script>
+    <script src="assets/vendor/jspdf/jspdf.plugin.autotable.min.js"></script>
+    <script src="assets/vendor/jspdf/xlsx.js"></script>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
