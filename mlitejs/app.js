@@ -336,7 +336,7 @@ $(document).ready(function() {
                                         typeact: 'del'
                                     },
                                     success: function (data) {
-                                        var audio = new Audio('//mlite.js/assets/sound/' + data.status + '.mp3');
+                                        var audio = new Audio('//basoro.id/mlite/assets/sound/' + data.status + '.mp3');
                                         audio.play();
                                         if(data.status === 'success') {
                                             bootbox.alert('<span class="text-success">' + data.msg + '</span>');
@@ -351,7 +351,7 @@ $(document).ready(function() {
             
                     }
                     else {
-                        var audio = new Audio('//mlite.js/assets/sound/danger.mp3');
+                        var audio = new Audio('//basoro.id/mlite/assets/sound/danger.mp3');
                         audio.play();
                         bootbox.alert("Pilih satu baris untuk dihapus");
                     }
@@ -590,8 +590,8 @@ $(document).ready(function() {
             html += '<div class="container">';
             html += '    <div class="auth-wrapper">';
             html += '        <div class="auth-box">';
-            html += '            <a href="//mlite.js" class="auth-logo mb-4">';
-            html += '                <img src="//mlite.js/favicon.png" alt="Bootstrap Gallery"> <span class="auth-logo-text">mLITE Indonesia</span>';
+            html += '            <a href="//basoro.id/mlite" class="auth-logo mb-4">';
+            html += '                <img src="//basoro.id/mlite/favicon.png" alt="Bootstrap Gallery"> <span class="auth-logo-text">mLITE Indonesia</span>';
             html += '            </a>';
             html += '            <h4 class="mb-4">Login</h4>';
             html += '            <div class="mb-3">';
@@ -608,7 +608,7 @@ $(document).ready(function() {
             html += '                </div>';
             html += '            </div>';
             html += '            <div class="d-flex justify-content-end mb-3">';
-            html += '                <a href="//mlite.js" class="text-decoration-underline">Lupa kata sandi?</a>';
+            html += '                <a href="//basoro.id/mlite" class="text-decoration-underline">Lupa kata sandi?</a>';
             html += '            </div>';
             html += '            <div class="mb-3 d-grid gap-2">';
             html += '                <button type="button" id="login" class="btn btn-primary">Login</button>';
