@@ -15,17 +15,15 @@ function OpenModal(loadURL)
 function titleCase(str) {
     var splitStr = str.toLowerCase().split(' ');
     for (var i = 0; i < splitStr.length; i++) {
-        // You do not need to check if i is larger than splitStr length, as your for does that for you
-        // Assign it back to the array
         splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
     }
-    // Directly return the joined string
     return splitStr.join(' '); 
 }
 
 $(document).ready(function() {
 
     var api_url = '//mlite.rshd.app/api';
+    var app_url = '//basoro.id/mlitejs';
     var nama_instansi = 'mLITE Indonesia';
     var alamat = 'Jl. Perintis Kemerdekaan 45';
     var kota = 'Barabai';
@@ -336,7 +334,7 @@ $(document).ready(function() {
                                         typeact: 'del'
                                     },
                                     success: function (data) {
-                                        var audio = new Audio('//basoro.id/mlitejs/assets/sound/' + data.status + '.mp3');
+                                        var audio = new Audio(app_url + '/assets/sound/' + data.status + '.mp3');
                                         audio.play();
                                         if(data.status === 'success') {
                                             bootbox.alert('<span class="text-success">' + data.msg + '</span>');
@@ -351,7 +349,7 @@ $(document).ready(function() {
             
                     }
                     else {
-                        var audio = new Audio('//basoro.id/mlitejs/assets/sound/danger.mp3');
+                        var audio = new Audio(app_url + '/assets/sound/danger.mp3');
                         audio.play();
                         bootbox.alert("Pilih satu baris untuk dihapus");
                     }
@@ -477,7 +475,7 @@ $(document).ready(function() {
                             status: status
                         },
                         success: function (data) {
-                            var audio = new Audio('//basoro.id/mlitejs/assets/sound/' + data.status + '.mp3');
+                            var audio = new Audio(app_url + '/assets/sound/' + data.status + '.mp3');
                             audio.play();
                             if(data.status === 'success') {
                                 bootbox.alert('<span class="text-success">' + data.msg + '</span>');
@@ -590,8 +588,8 @@ $(document).ready(function() {
             html += '<div class="container">';
             html += '    <div class="auth-wrapper">';
             html += '        <div class="auth-box">';
-            html += '            <a href="//basoro.id/mlitejs" class="auth-logo mb-4">';
-            html += '                <img src="//basoro.id/mlitejs/favicon.png" alt="Bootstrap Gallery"> <span class="auth-logo-text">mLITE Indonesia</span>';
+            html += '            <a href="' + app_url + '" class="auth-logo mb-4">';
+            html += '                <img src="' + app_url + '/favicon.png" alt="Bootstrap Gallery"> <span class="auth-logo-text">mLITE Indonesia</span>';
             html += '            </a>';
             html += '            <h4 class="mb-4">Login</h4>';
             html += '            <div class="mb-3">';
@@ -608,7 +606,7 @@ $(document).ready(function() {
             html += '                </div>';
             html += '            </div>';
             html += '            <div class="d-flex justify-content-end mb-3">';
-            html += '                <a href="//basoro.id/mlitejs" class="text-decoration-underline">Lupa kata sandi?</a>';
+            html += '                <a href="' + app_url +'" class="text-decoration-underline">Lupa kata sandi?</a>';
             html += '            </div>';
             html += '            <div class="mb-3 d-grid gap-2">';
             html += '                <button type="button" id="login" class="btn btn-primary">Login</button>';
