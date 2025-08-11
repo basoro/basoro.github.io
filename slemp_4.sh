@@ -23,7 +23,7 @@ python3 -m venv /opt/venv
 echo "===> Install Python Requirements..."
 /opt/venv/bin/pip install -r /var/www/panel/requirements.txt
 
-systemctl start supervisor
+systemctl restart supervisor
 systemctl enable supervisor
 
 echo "===> Create supervisord.conf..."
