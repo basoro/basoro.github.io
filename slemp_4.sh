@@ -39,6 +39,6 @@ EOF
 
 supervisorctl reread
 supervisorctl update
-supervisorctl start slemp
+supervisorctl restart slemp
 
 echo "===> Setup complete!"
