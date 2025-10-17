@@ -171,7 +171,7 @@ fi
 # ==========================================================
 # 🔍 Baca variabel dari docker/.env
 # ==========================================================
-ENV_FILE="docker/.env"
+ENV_FILE=".env"
 if [ -f "$ENV_FILE" ]; then
   yellow "Loading environment variables from $ENV_FILE..."
   # Hindari error jika .env kosong
