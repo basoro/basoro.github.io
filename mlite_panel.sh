@@ -28,7 +28,7 @@ fi
 
 if ! id nginx &>/dev/null; then
   yellow "Adding user 'nginx' with no-login shell..."
-  useradd --system --no-create-home --shell /usr/sbin/nologin nginx
+  useradd --system --no-create-home --shell /usr/sbin/nologin -g nginx nginx
   green "✅ User 'nginx' created (nologin)."
 else
   green "ℹ️ User 'nginx' already exists."
