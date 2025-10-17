@@ -18,6 +18,14 @@ fi
 # 🧑‍💻 Tambahkan user nginx dengan nologin
 # ==========================================================
 
+if ! getent group nginx >/dev/null; then
+  yellow "Creating group 'nginx'..."
+  groupadd --system nginx
+  green "✅ Group 'nginx' created."
+else
+  green "ℹ️ Group 'nginx' already exists."
+fi
+
 if ! id nginx &>/dev/null; then
   yellow "Adding user 'nginx' with no-login shell..."
   useradd --system --no-create-home --shell /usr/sbin/nologin nginx
